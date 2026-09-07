@@ -1559,8 +1559,8 @@ if (logoutBtnEl && !logoutBtnEl.dataset.bound) {
 }
 
 /* ── Cache ── */
-const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],volunteerOpportunities:[],workshop_registrations:[],admin_notifications:[],notifications:[],settings:{}};
-const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:false,workshops:false,volunteerOpportunities:false,workshop_registrations:false,admin_notifications:false,notifications:false,settings:false};
+const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],volunteerOpportunities:[],workshop_registrations:[],surveys:[],survey_responses:[],admin_notifications:[],notifications:[],settings:{}};
+const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:false,workshops:false,volunteerOpportunities:false,workshop_registrations:false,surveys:false,survey_responses:false,admin_notifications:false,notifications:false,settings:false};
 
 async function loadCol(col){
   if(loaded[col]) return C[col];
@@ -2378,11 +2378,14 @@ let selectedWorkshopId = null;
 let wsTab = 'info';
 let wsRegQ = '';
 
+/* ── WORKSHOPS MANAGEMENT (Master-Detail System) ── */
 async function vWorkshops(el) {
-  const [workshops, registrants, siteSettings] = await Promise.all([
+  const [workshops, registrants, siteSettings, surveys, responses] = await Promise.all([
     loadCol('workshops'),
     loadCol('workshop_registrations'),
-    loadSettings()
+    loadSettings(),
+    loadCol('surveys'),
+    loadCol('survey_responses')
   ]);
 
   await renderNav();
@@ -2393,7 +2396,7 @@ async function vWorkshops(el) {
   if (selectedWorkshopId) {
     const ws = workshops.find(w => w.id === selectedWorkshopId);
     if (ws) {
-      await vWorkshopDetail(el, ws, registrants);
+      await vWorkshopDetail(el, ws, registrants, surveys, responses);
       return;
     } else {
       selectedWorkshopId = null;
@@ -2417,7 +2420,7 @@ async function vWorkshops(el) {
     <div>
       <div class="page-eyebrow"><span class="e-dot"></span><span class="e-latin">Workshops · الورش التدريبية</span><span class="e-label">نظام إدارة الورش</span></div>
       <h1 class="page-title">إدارة <span class="accent">ورش العمل</span></h1>
-      <p class="page-sub">انقر على أي ورشة للدخول لصفحة إدارتها المستقلة ومتابعة المتقدمين والإحصائيات.</p>
+      <p class="page-sub">انقر على أي ورشة للدخول لصفحة إدارتها المستقلة ومتابعة المتقدمين والاستبيانات والإحصائيات.</p>
     </div>
     <button class="btn btn-primary" id="btnCreateWorkshop" style="gap:8px;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
@@ -2567,13 +2570,20 @@ function renderWorkshopMinimalCardHTML(w, allRegistrants) {
 }
 
 /* ── Single Workshop Management Page View ── */
-async function vWorkshopDetail(el, w, allRegistrants) {
+async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allResponses = []) {
   const total = parseInt(w.totalSeats || 0, 10);
   const wRegs = allRegistrants.filter(r => r.workshopId === w.id);
   const regCount = wRegs.length;
   const remaining = Math.max(0, total - regCount);
   const fillRate = total > 0 ? Math.min(100, Math.round((regCount / total) * 100)) : 0;
   const isVis = w.isVisible !== false;
+
+  // Survey data for this workshop
+  const wsSurvey = allSurveys.find(s => s.workshopId === w.id);
+  const surveyResponses = wsSurvey ? allResponses.filter(r => r.surveyId === wsSurvey.id) : [];
+  const answeredCount = surveyResponses.length;
+  const unansweredCount = Math.max(0, wRegs.length - answeredCount);
+  const responseRate = wRegs.length > 0 ? Math.min(100, Math.round((answeredCount / wRegs.length) * 100)) : 0;
 
   let lastRegDateStr = 'لا يوجد مسجلين بعد';
   if (wRegs.length > 0) {
@@ -2639,6 +2649,7 @@ async function vWorkshopDetail(el, w, allRegistrants) {
     <div class="filters" style="margin-bottom:20px;border-bottom:1px solid var(--line-soft);padding-bottom:12px;">
       <button class="chip ${wsTab === 'info' ? 'active' : ''}" id="tabWsInfo">معلومات الورشة</button>
       <button class="chip ${wsTab === 'registrants' ? 'active' : ''}" id="tabWsRegs">المسجلون (${regCount})</button>
+      <button class="chip ${wsTab === 'survey' ? 'active' : ''}" id="tabWsSurvey">الاستبيان ${wsSurvey ? (wsSurvey.status === 'published' ? '<span class="chip-count" style="background:#e6f4ea;color:#137333;">منشور</span>' : (wsSurvey.status === 'closed' ? '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">مغلق</span>' : '<span class="chip-count" style="background:#fef7e0;color:#b06000;">مسودة</span>')) : ''}</button>
       <button class="chip ${wsTab === 'stats' ? 'active' : ''}" id="tabWsStats">الإحصائيات</button>
     </div>
 
@@ -2742,7 +2753,128 @@ async function vWorkshopDetail(el, w, allRegistrants) {
       </div>
     </div>
 
-    <!-- SECTION 3: STATISTICS -->
+    <!-- SECTION 3: SURVEY -->
+    <div id="wsTabContentSurvey" style="display:${wsTab === 'survey' ? 'block' : 'none'};">
+      ${!wsSurvey ? `
+        <!-- Empty State -->
+        <div class="card" style="padding:48px 24px;text-align:center;background:var(--paper);border-radius:16px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--gold-pale);color:var(--gold-deep);display:grid;place-items:center;margin:0 auto 18px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:32px;height:32px;">
+              <path d="M9 11l3 3L22 4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:8px;">لا يوجد استبيان لهذه الورشة</h3>
+          <p style="font-size:14px;color:var(--ink-muted);max-width:440px;margin:0 auto 24px;line-height:1.6;">
+            أنشئ استبيانًا لقياس رضا المشاركين وجمع آرائهم بعد حضور الورشة.
+          </p>
+          <button class="btn btn-primary" id="btnCreateSurvey" style="margin:0 auto;gap:8px;padding:12px 24px;width:auto;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+            <span>+ إنشاء استبيان</span>
+          </button>
+        </div>
+      ` : `
+        <!-- Existing Survey Management View -->
+        <div class="card" style="padding:24px;background:var(--paper);border-radius:16px;margin-bottom:24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:20px;">
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+                <span class="nc-meta">استبيان الورشة</span>
+                ${wsSurvey.status === 'published' ? '<span class="chip-count" style="background:#e6f4ea;color:#137333;">منشور ومتاح للجمهور</span>' : (wsSurvey.status === 'closed' ? '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">مغلق حاليًا</span>' : '<span class="chip-count" style="background:#fef7e0;color:#b06000;">مسودة — غير متاح للزوار</span>')}
+              </div>
+              <h2 style="font-size:22px;font-weight:800;color:var(--ink);margin-bottom:6px;">${esc(wsSurvey.title || '')}</h2>
+              <p style="font-size:13.5px;color:var(--ink-mid);margin:0;">${esc(wsSurvey.description || '')}</p>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${wsSurvey.status === 'published' ? `
+                <button class="btn btn-outline" id="btnToggleSurveyStatus" data-status="closed">إغلاق الاستبيان</button>
+              ` : (wsSurvey.status === 'closed' ? `
+                <button class="btn btn-primary" id="btnToggleSurveyStatus" data-status="published">إعادة نشر الاستبيان</button>
+              ` : `
+                <button class="btn btn-primary" id="btnToggleSurveyStatus" data-status="published">نشر الاستبيان الآن</button>
+              `)}
+              <button class="btn btn-outline" id="btnEditSurveyMeta">تعديل البيانات</button>
+              <button class="btn btn-ghost del" id="btnDeleteSurvey">حذف الاستبيان</button>
+            </div>
+          </div>
+
+          <!-- Public Link Box -->
+          <div style="padding:16px;background:var(--parchment-2);border:1px solid var(--line-soft);border-radius:12px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <strong style="font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                رابط الاستبيان المباشر للجمهور:
+              </strong>
+              <span style="font-size:11px;color:var(--ink-muted);">لا يحتوي إطلاقاً على مسارات إدارية</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <input type="text" id="surveyPublicUrlInput" readonly value="${window.location.origin}/workspace/${wsSurvey.publicToken}" style="flex:1;min-width:240px;padding:10px 14px;background:#ffffff;border:1px solid var(--line);border-radius:8px;font-size:13.5px;color:var(--ink-soft);font-family:monospace;" dir="ltr"/>
+              <button class="btn btn-sm btn-primary" id="btnCopySurveyUrl" style="width:auto;gap:6px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <span>نسخ الرابط</span>
+              </button>
+              <button class="btn btn-sm btn-outline" id="btnOpenSurveyUrl" style="width:auto;gap:6px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                <span>فتح الاستبيان</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Questions Builder Section -->
+        <div class="card" style="padding:24px;background:var(--paper);border-radius:16px;margin-bottom:24px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+            <div>
+              <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:0;">أسئلة الاستبيان (${(wsSurvey.questions || []).length})</h3>
+              <p style="font-size:12px;color:var(--ink-muted);margin-top:2px;">يمكنك إضافة وإعادة ترتيب وإدارة أسئلة الاستبيان بسهولة.</p>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btnAddQuestion" style="gap:6px;width:auto;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              <span>+ إضافة سؤال جديد</span>
+            </button>
+          </div>
+
+          ${(wsSurvey.questions || []).length === 0 ? `
+            <div style="text-align:center;padding:32px;background:var(--parchment-2);border-radius:12px;color:var(--ink-muted);">
+              لم يتم إضافة أي أسئلة لهذا الاستبيان بعد. انقر فوق "+ إضافة سؤال جديد" للبدء.
+            </div>
+          ` : `
+            <div style="display:flex;flex-direction:column;gap:14px;" id="questionsListAdmin">
+              ${(wsSurvey.questions || []).map((q, idx) => renderAdminQuestionItemHTML(q, idx, wsSurvey.questions.length)).join('')}
+            </div>
+          `}
+        </div>
+
+        <!-- Results Analytics Section -->
+        <div class="card" style="padding:24px;background:var(--paper);border-radius:16px;">
+          <div style="margin-bottom:20px;">
+            <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:0;">نتائج الاستبيان والإحصائيات</h3>
+            <p style="font-size:12px;color:var(--ink-muted);margin-top:2px;">تحليل استجابات وتقييمات المشاركين بشكل تجميعي وحفظ الخصوصية.</p>
+          </div>
+
+          <!-- Stats Metrics Grid -->
+          <div class="stats-grid" style="margin-bottom:24px;">
+            ${sCard('TotalRegs', 'المسجلون بالورشة', wRegs.length, 'مشارك بالورشة')}
+            ${sCard('Responded', 'أجابوا على الاستبيان', answeredCount, 'مشارك أكمل')}
+            ${sCard('Unanswered', 'لم يجيبوا', unansweredCount, 'مشارك لم يكمل')}
+            ${sCard('ResponseRate', 'نسبة المشاركة', responseRate + '%', `${answeredCount} من أصل ${wRegs.length}`)}
+          </div>
+
+          ${answeredCount === 0 ? `
+            <div style="text-align:center;padding:40px;background:var(--parchment-2);border-radius:12px;color:var(--ink-muted);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px;height:36px;margin:0 auto 10px;color:var(--ink-faint);"><path d="M12 20v-6M6 20V10M18 20V4" stroke-linecap="round"/></svg>
+              لا توجد استجابات مسجلة حتى الآن لهذا الاستبيان.
+            </div>
+          ` : `
+            <div style="display:flex;flex-direction:column;gap:20px;">
+              ${(wsSurvey.questions || []).map((q, idx) => renderAdminQuestionResultsHTML(q, idx + 1, surveyResponses)).join('')}
+            </div>
+          `}
+        </div>
+      `}
+    </div>
+
+    <!-- SECTION 4: STATISTICS -->
     <div id="wsTabContentStats" style="display:${wsTab === 'stats' ? 'block' : 'none'};">
       <div class="stats-grid" style="margin-bottom:20px;">
         ${sCard('Total', 'عدد المسجلين', regCount, 'متقدم')}
@@ -2752,7 +2884,7 @@ async function vWorkshopDetail(el, w, allRegistrants) {
       </div>
 
       <div class="card" style="padding:24px;background:var(--paper);border-radius:16px;">
-        <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px;">القسم الثالث: الإحصائيات والمؤشرات</h3>
+        <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px;">القسم الرابع: الإحصائيات والمؤشرات</h3>
         
         <div style="margin-bottom:20px;">
           <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
@@ -2787,7 +2919,7 @@ async function vWorkshopDetail(el, w, allRegistrants) {
       toast(newVis ? 'تم إظهار الورشة للعملاء' : 'تم إخفاء الورشة عن العملاء');
       const freshWorkshops = await loadCol('workshops');
       const freshWs = freshWorkshops.find(x => x.id === w.id);
-      vWorkshopDetail(el, freshWs, allRegistrants);
+      vWorkshopDetail(el, freshWs, allRegistrants, allSurveys, allResponses);
     } catch (err) { console.error(err); toast('حدث خطأ أثناء تعديل الظهور', 'err'); }
   });
 
@@ -2807,18 +2939,227 @@ async function vWorkshopDetail(el, w, allRegistrants) {
   // Tab switching
   const switchTab = (tab) => {
     wsTab = tab;
-    vWorkshopDetail(el, w, allRegistrants);
+    vWorkshopDetail(el, w, allRegistrants, allSurveys, allResponses);
   };
   el.querySelector('#tabWsInfo')?.addEventListener('click', () => switchTab('info'));
   el.querySelector('#tabWsRegs')?.addEventListener('click', () => switchTab('registrants'));
+  el.querySelector('#tabWsSurvey')?.addEventListener('click', () => switchTab('survey'));
   el.querySelector('#tabWsStats')?.addEventListener('click', () => switchTab('stats'));
+
+  // Survey Event Listeners
+  el.querySelector('#btnCreateSurvey')?.addEventListener('click', async () => {
+    try {
+      const newSurvey = {
+        workshopId: w.id,
+        workshopTitle: w.title || '',
+        title: `استبيان قياس رضا المشاركين — ${w.title || ''}`,
+        description: 'يسعدنا مشاركتك في تقييم هذه الورشة لتطوير البرامج القادمة.',
+        welcomeMessage: '',
+        thankYouMessage: 'شكرًا جزيلًا لمشاركتك في الاستبيان وتفاعلك معنا!',
+        status: 'draft',
+        publicToken: generatePublicToken(),
+        questions: [
+          { id: uid(), text: 'ما مدى رضاك العام عن محتوى الورشة التدريبية؟', type: 'rating', required: true },
+          { id: uid(), text: 'هل كانت الموضوعات المطروحة مفيدة لك؟', type: 'boolean', required: true },
+          { id: uid(), text: 'ما أكثر ما أعجبك في هذه الورشة وما هي اقتراحاتك للتطوير؟', type: 'long_text', required: false }
+        ],
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      };
+
+      await addDoc(collection(db, 'surveys'), newSurvey);
+      loaded.surveys = false;
+      toast('تم إنشاء استبيان جديد للورشة بنجاح');
+      const freshSurveys = await loadCol('surveys');
+      const freshResponses = await loadCol('survey_responses');
+      wsTab = 'survey';
+      vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+    } catch (err) {
+      console.error('Error creating survey:', err);
+      toast('حدث خطأ أثناء إنشاء الاستبيان', 'err');
+    }
+  });
+
+  el.querySelector('#btnToggleSurveyStatus')?.addEventListener('click', async (e) => {
+    if (!wsSurvey) return;
+    const targetStatus = e.target.dataset.status || (wsSurvey.status === 'published' ? 'closed' : 'published');
+    try {
+      const p = { status: targetStatus, updatedAt: serverTimestamp() };
+      if (targetStatus === 'published' && !wsSurvey.publishedAt) {
+        p.publishedAt = serverTimestamp();
+      }
+      await updateDoc(doc(db, 'surveys', wsSurvey.id), p);
+      loaded.surveys = false;
+      const label = targetStatus === 'published' ? 'تم نشر الاستبيان وتفعيله' : 'تم إغلاق الاستبيان';
+      toast(label);
+      const freshSurveys = await loadCol('surveys');
+      const freshResponses = await loadCol('survey_responses');
+      vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+    } catch (err) {
+      console.error(err);
+      toast('حدث خطأ أثناء تغيير حالة الاستبيان', 'err');
+    }
+  });
+
+  el.querySelector('#btnCopySurveyUrl')?.addEventListener('click', () => {
+    const input = el.querySelector('#surveyPublicUrlInput');
+    if (input) {
+      navigator.clipboard.writeText(input.value).then(() => {
+        toast('تم نسخ رابط الاستبيان للحافظة بنجاح');
+      }).catch(() => {
+        input.select();
+        document.execCommand('copy');
+        toast('تم نسخ رابط الاستبيان');
+      });
+    }
+  });
+
+  el.querySelector('#btnOpenSurveyUrl')?.addEventListener('click', () => {
+    if (wsSurvey?.publicToken) {
+      window.open(`/workspace/${wsSurvey.publicToken}`, '_blank');
+    }
+  });
+
+  el.querySelector('#btnEditSurveyMeta')?.addEventListener('click', () => {
+    if (!wsSurvey) return;
+    openSurveyMetaModal(wsSurvey, async (metaData) => {
+      try {
+        await updateDoc(doc(db, 'surveys', wsSurvey.id), { ...metaData, updatedAt: serverTimestamp() });
+        loaded.surveys = false;
+        toast('تم تحديث بيانات الاستبيان بنجاح');
+        const freshSurveys = await loadCol('surveys');
+        const freshResponses = await loadCol('survey_responses');
+        vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+      } catch (err) {
+        console.error(err);
+        toast('حدث خطأ أثناء التحديث', 'err');
+      }
+    });
+  });
+
+  el.querySelector('#btnDeleteSurvey')?.addEventListener('click', async () => {
+    if (!wsSurvey) return;
+    if (!confirm('هل أنت تأكد من حذف هذا الاستبيان وكافة أسئلته؟')) return;
+    try {
+      await deleteDoc(doc(db, 'surveys', wsSurvey.id));
+      loaded.surveys = false;
+      toast('تم حذف الاستبيان بنجاح');
+      const freshSurveys = await loadCol('surveys');
+      const freshResponses = await loadCol('survey_responses');
+      vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+    } catch (err) {
+      console.error(err);
+      toast('حدث خطأ أثناء الحذف', 'err');
+    }
+  });
+
+  el.querySelector('#btnAddQuestion')?.addEventListener('click', () => {
+    if (!wsSurvey) return;
+    openQuestionFormModal(wsSurvey, null, async (newQ) => {
+      try {
+        const updatedQuestions = [...(wsSurvey.questions || []), newQ];
+        await updateDoc(doc(db, 'surveys', wsSurvey.id), { questions: updatedQuestions, updatedAt: serverTimestamp() });
+        loaded.surveys = false;
+        toast('تم إضافة السؤال بنجاح');
+        const freshSurveys = await loadCol('surveys');
+        const freshResponses = await loadCol('survey_responses');
+        vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+      } catch (err) {
+        console.error(err);
+        toast('حدث خطأ أثناء إضافة السؤال', 'err');
+      }
+    });
+  });
+
+  el.querySelectorAll('[data-action-q-edit]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const qIdx = parseInt(btn.dataset.actionQEdit, 10);
+      const qObj = (wsSurvey.questions || [])[qIdx];
+      if (!qObj) return;
+
+      openQuestionFormModal(wsSurvey, qObj, async (editedQ) => {
+        try {
+          const updatedQuestions = [...(wsSurvey.questions || [])];
+          updatedQuestions[qIdx] = editedQ;
+          await updateDoc(doc(db, 'surveys', wsSurvey.id), { questions: updatedQuestions, updatedAt: serverTimestamp() });
+          loaded.surveys = false;
+          toast('تم تعديل السؤال بنجاح');
+          const freshSurveys = await loadCol('surveys');
+          const freshResponses = await loadCol('survey_responses');
+          vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+        } catch (err) {
+          console.error(err);
+          toast('حدث خطأ أثناء تعديل السؤال', 'err');
+        }
+      });
+    });
+  });
+
+  el.querySelectorAll('[data-action-q-del]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const qIdx = parseInt(btn.dataset.actionQDel, 10);
+      if (!confirm('هل تريد حذف هذا السؤال؟')) return;
+      try {
+        const updatedQuestions = [...(wsSurvey.questions || [])];
+        updatedQuestions.splice(qIdx, 1);
+        await updateDoc(doc(db, 'surveys', wsSurvey.id), { questions: updatedQuestions, updatedAt: serverTimestamp() });
+        loaded.surveys = false;
+        toast('تم حذف السؤال بنجاح');
+        const freshSurveys = await loadCol('surveys');
+        const freshResponses = await loadCol('survey_responses');
+        vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+      } catch (err) {
+        console.error(err);
+        toast('حدث خطأ أثناء حذف السؤال', 'err');
+      }
+    });
+  });
+
+  el.querySelectorAll('[data-action-q-moveup]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const qIdx = parseInt(btn.dataset.actionQMoveup, 10);
+      if (qIdx <= 0) return;
+      try {
+        const updatedQuestions = [...(wsSurvey.questions || [])];
+        const temp = updatedQuestions[qIdx];
+        updatedQuestions[qIdx] = updatedQuestions[qIdx - 1];
+        updatedQuestions[qIdx - 1] = temp;
+
+        await updateDoc(doc(db, 'surveys', wsSurvey.id), { questions: updatedQuestions, updatedAt: serverTimestamp() });
+        loaded.surveys = false;
+        const freshSurveys = await loadCol('surveys');
+        const freshResponses = await loadCol('survey_responses');
+        vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+      } catch (err) { console.error(err); }
+    });
+  });
+
+  el.querySelectorAll('[data-action-q-movedown]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const qIdx = parseInt(btn.dataset.actionQMovedown, 10);
+      const questions = wsSurvey.questions || [];
+      if (qIdx >= questions.length - 1) return;
+      try {
+        const updatedQuestions = [...questions];
+        const temp = updatedQuestions[qIdx];
+        updatedQuestions[qIdx] = updatedQuestions[qIdx + 1];
+        updatedQuestions[qIdx + 1] = temp;
+
+        await updateDoc(doc(db, 'surveys', wsSurvey.id), { questions: updatedQuestions, updatedAt: serverTimestamp() });
+        loaded.surveys = false;
+        const freshSurveys = await loadCol('surveys');
+        const freshResponses = await loadCol('survey_responses');
+        vWorkshopDetail(el, w, allRegistrants, freshSurveys, freshResponses);
+      } catch (err) { console.error(err); }
+    });
+  });
 
   // Registrants Search
   const regSearchInput = el.querySelector('#wsRegSearchInput');
   if (regSearchInput) {
     regSearchInput.addEventListener('input', e => {
       wsRegQ = e.target.value;
-      vWorkshopDetail(el, w, allRegistrants);
+      vWorkshopDetail(el, w, allRegistrants, allSurveys, allResponses);
       el.querySelector('#wsRegSearchInput')?.focus();
     });
   }
@@ -2835,7 +3176,7 @@ async function vWorkshopDetail(el, w, allRegistrants) {
       if (regObj) openRegistrantEditModal(regObj, 'workshop_registrations', async () => {
         loaded.workshop_registrations = false;
         const fresh = await loadCol('workshop_registrations');
-        vWorkshopDetail(el, w, fresh);
+        vWorkshopDetail(el, w, fresh, allSurveys, allResponses);
       });
     });
   });
@@ -2849,9 +3190,349 @@ async function vWorkshopDetail(el, w, allRegistrants) {
         loaded.workshop_registrations = false;
         toast('تم حذف المسجل بنجاح');
         const fresh = await loadCol('workshop_registrations');
-        vWorkshopDetail(el, w, fresh);
+        vWorkshopDetail(el, w, fresh, allSurveys, allResponses);
       } catch (err) { console.error(err); toast('حدث خطأ أثناء الحذف', 'err'); }
     });
+  });
+}
+
+/* ── Survey Renderer Helpers for Admin ── */
+function generatePublicToken() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let result = '';
+  for (let i = 0; i < 8; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+function renderAdminQuestionItemHTML(q, idx, totalCount) {
+  const typeLabels = {
+    mc: 'اختيار من متعدد',
+    rating: 'تقييم من 1 إلى 5 نجوم',
+    boolean: 'نعم / لا',
+    short_text: 'إجابة نصية قصيرة',
+    long_text: 'إجابة نصية طويلة'
+  };
+
+  return `
+  <div class="card" style="padding:16px;background:var(--parchment-2);border:1px solid var(--line-soft);border-radius:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:240px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+        <span class="chip-count" style="background:var(--gold-pale);color:var(--gold-deep);font-weight:700;">سؤال ${idx + 1}</span>
+        <span class="chip-count" style="background:#ffffff;color:var(--ink-mid);">${typeLabels[q.type] || q.type}</span>
+        ${q.required ? '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">مطلوب</span>' : '<span class="chip-count" style="background:#f1f3f8;color:var(--ink-muted);">اختياري</span>'}
+      </div>
+      <h4 style="font-size:15px;font-weight:800;color:var(--ink);margin:0 0 6px 0;">${esc(q.text || '')}</h4>
+      ${q.type === 'mc' && (q.options || []).length > 0 ? `
+        <div style="font-size:12.5px;color:var(--ink-muted);display:flex;flex-wrap:wrap;gap:6px;">
+          <span>الخيارات:</span>
+          ${q.options.map(opt => `<span style="padding:2px 8px;background:#ffffff;border-radius:4px;border:1px solid var(--line);">${esc(opt)}</span>`).join('')}
+        </div>
+      ` : ''}
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+      <button class="btn btn-sm btn-ghost" data-action-q-moveup="${idx}" ${idx === 0 ? 'disabled style="opacity:0.3"' : ''} title="تحريك لأعلى">▲</button>
+      <button class="btn btn-sm btn-ghost" data-action-q-movedown="${idx}" ${idx === totalCount - 1 ? 'disabled style="opacity:0.3"' : ''} title="تحريك لأسفل">▼</button>
+      <button class="btn btn-sm btn-outline" data-action-q-edit="${idx}">تعديل</button>
+      <button class="btn btn-sm btn-ghost del" data-action-q-del="${idx}">حذف</button>
+    </div>
+  </div>
+  `;
+}
+
+function renderAdminQuestionResultsHTML(q, qNum, responses) {
+  const answers = responses.map(r => (r.answers || {})[q.id]).filter(a => a !== undefined && a !== null && a !== '');
+  const totalAns = answers.length;
+
+  let contentHTML = '';
+
+  if (q.type === 'rating') {
+    const numAnswers = answers.map(a => parseInt(a, 10)).filter(n => !isNaN(n));
+    const sum = numAnswers.reduce((acc, v) => acc + v, 0);
+    const avg = numAnswers.length > 0 ? (sum / numAnswers.length).toFixed(1) : '0.0';
+
+    const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    numAnswers.forEach(n => { if (counts[n] !== undefined) counts[n]++; });
+
+    contentHTML = `
+      <div style="display:flex;align-items:center;gap:20px;margin-bottom:16px;flex-wrap:wrap;">
+        <div style="text-align:center;padding:14px 20px;background:#ffffff;border:1px solid var(--line);border-radius:12px;">
+          <div style="font-size:28px;font-weight:800;color:var(--gold-deep);line-height:1;">${avg} <span style="font-size:16px;">/ 5</span></div>
+          <div style="font-size:11px;color:var(--ink-muted);margin-top:4px;">متوسط التقييم</div>
+        </div>
+        <div style="flex:1;min-width:240px;display:flex;flex-direction:column;gap:6px;">
+          ${[5, 4, 3, 2, 1].map(v => {
+            const cnt = counts[v] || 0;
+            const pct = totalAns > 0 ? Math.round((cnt / totalAns) * 100) : 0;
+            return `
+              <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;">
+                <span style="width:40px;font-weight:700;color:var(--ink-soft);">${v} نجوم</span>
+                <div style="flex:1;height:8px;background:var(--parchment-3);border-radius:999px;overflow:hidden;">
+                  <div style="height:100%;width:${pct}%;background:var(--gold);border-radius:999px;"></div>
+                </div>
+                <span style="width:60px;text-align:left;color:var(--ink-muted);font-weight:700;">${cnt} (${pct}%)</span>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  } else if (q.type === 'mc' || q.type === 'boolean') {
+    const options = q.type === 'boolean' ? ['نعم', 'لا'] : (q.options || []);
+    const counts = {};
+    options.forEach(opt => { counts[opt] = 0; });
+    answers.forEach(ans => {
+      if (counts[ans] !== undefined) counts[ans]++;
+      else counts[ans] = (counts[ans] || 0) + 1;
+    });
+
+    contentHTML = `
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${Object.keys(counts).map(opt => {
+          const cnt = counts[opt] || 0;
+          const pct = totalAns > 0 ? Math.round((cnt / totalAns) * 100) : 0;
+          return `
+            <div style="padding:10px 14px;background:#ffffff;border:1px solid var(--line);border-radius:8px;">
+              <div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:6px;">
+                <span>${esc(opt)}</span>
+                <span style="color:var(--gold-deep);">${cnt} مشارك (${pct}%)</span>
+              </div>
+              <div style="height:8px;background:var(--parchment-3);border-radius:999px;overflow:hidden;">
+                <div style="height:100%;width:${pct}%;background:var(--ink);border-radius:999px;"></div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } else {
+    // Short Text / Long Text
+    contentHTML = `
+      <div>
+        ${answers.length === 0 ? `
+          <div style="font-size:13px;color:var(--ink-muted);">لا توجد إجابات نصية مسجلة لهذا السؤال.</div>
+        ` : `
+          <div style="display:flex;flex-direction:column;gap:8px;max-height:260px;overflow-y:auto;padding-left:4px;">
+            ${answers.map((ansText, aIdx) => `
+              <div style="padding:12px;background:#ffffff;border:1px solid var(--line-soft);border-radius:8px;font-size:13.5px;color:var(--ink-soft);line-height:1.5;">
+                <span style="font-size:11px;color:var(--gold-deep);font-weight:700;display:block;margin-bottom:4px;">إجابة #${aIdx + 1}</span>
+                ${esc(ansText)}
+              </div>
+            `).join('')}
+          </div>
+        `}
+      </div>
+    `;
+  }
+
+  return `
+    <div style="padding:18px;background:var(--parchment-2);border:1px solid var(--line-soft);border-radius:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <h4 style="font-size:15px;font-weight:800;color:var(--ink);margin:0;">
+          <span style="color:var(--gold-deep);">${qNum}.</span> ${esc(q.text || '')}
+        </h4>
+        <span class="chip-count" style="background:#ffffff;color:var(--ink-muted);">${totalAns} إجابة</span>
+      </div>
+      ${contentHTML}
+    </div>
+  `;
+}
+
+/* Question Add / Edit Modal */
+function openQuestionFormModal(survey, qToEdit = null, onSave) {
+  let existingModal = document.getElementById('questionEditorModal');
+  if (existingModal) existingModal.remove();
+
+  const isEdit = !!qToEdit;
+  let qText = qToEdit ? (qToEdit.text || '') : '';
+  let qType = qToEdit ? (qToEdit.type || 'mc') : 'mc';
+  let qReq = qToEdit ? (qToEdit.required !== false) : true;
+  let qOptions = qToEdit && qToEdit.options ? [...qToEdit.options] : ['ممتاز', 'جيد جداً', 'جيد', 'مقبول'];
+
+  const modalHTML = `
+  <div class="modal-overlay active" id="questionEditorModal">
+    <div class="modal-card" style="max-width:540px;text-align:right;">
+      <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px;text-align:center;">
+        ${isEdit ? 'تعديل السؤال' : 'إضافة سؤال جديد للاستبيان'}
+      </h3>
+
+      <div class="login-field">
+        <label for="qTextIp">نص السؤال <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="qTextIp" class="form-input" placeholder="مثال: ما مدى رضاك عن محتوى الورشة؟" value="${escA(qText)}"/>
+      </div>
+
+      <div class="login-field">
+        <label for="qTypeIp">نوع السؤال <span style="color:var(--danger)">*</span></label>
+        <select id="qTypeIp" class="form-input" style="background:#ffffff;">
+          <option value="mc" ${qType === 'mc' ? 'selected' : ''}>اختيار من متعدد</option>
+          <option value="rating" ${qType === 'rating' ? 'selected' : ''}>تقييم من 1 إلى 5 نجوم</option>
+          <option value="boolean" ${qType === 'boolean' ? 'selected' : ''}>نعم / لا</option>
+          <option value="short_text" ${qType === 'short_text' ? 'selected' : ''}>إجابة نصية قصيرة</option>
+          <option value="long_text" ${qType === 'long_text' ? 'selected' : ''}>إجابة نصية طويلة</option>
+        </select>
+      </div>
+
+      <div class="login-field" style="flex-direction:row;align-items:center;gap:10px;margin-bottom:18px;">
+        <input type="checkbox" id="qReqIp" ${qReq ? 'checked' : ''} style="width:18px;height:18px;accent-color:var(--gold-deep);"/>
+        <label for="qReqIp" style="cursor:pointer;margin:0;">هذا السؤال إجباري ومطلوب (*)</label>
+      </div>
+
+      <!-- Options Editor (Only for Multiple Choice mc) -->
+      <div id="qOptionsBox" style="display:${qType === 'mc' ? 'block' : 'none'};margin-bottom:20px;padding:14px;background:var(--parchment-2);border-radius:10px;">
+        <label style="font-size:13px;font-weight:700;color:var(--ink);display:block;margin-bottom:8px;">خيارات الإجابة:</label>
+        <div id="qOptionsContainer" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;"></div>
+        <button type="button" class="btn btn-sm btn-outline" id="btnAddOptionRow" style="width:auto;font-size:12px;">+ إضافة خيار جديد</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;">
+        <button type="button" class="btn btn-primary" id="btnSaveQuestion">${isEdit ? 'حفظ التعديلات' : 'إضافة السؤال'}</button>
+        <button type="button" class="btn" id="btnCancelQuestion" style="background:var(--parchment-3);color:var(--ink);">إلغاء</button>
+      </div>
+    </div>
+  </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  const m = document.getElementById('questionEditorModal');
+
+  const renderOptionsList = () => {
+    const container = m.querySelector('#qOptionsContainer');
+    container.innerHTML = qOptions.map((opt, oIdx) => `
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input type="text" class="form-input q-opt-input" data-oidx="${oIdx}" value="${escA(opt)}" style="background:#ffffff;" placeholder="الخيار ${oIdx + 1}"/>
+        <button type="button" class="btn btn-sm btn-ghost del btn-del-opt" data-oidx="${oIdx}" style="padding:6px 10px;">✕</button>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('.q-opt-input').forEach(inp => {
+      inp.addEventListener('input', e => {
+        const idx = parseInt(e.target.dataset.oidx, 10);
+        qOptions[idx] = e.target.value;
+      });
+    });
+
+    container.querySelectorAll('.btn-del-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.oidx, 10);
+        qOptions.splice(idx, 1);
+        renderOptionsList();
+      });
+    });
+  };
+
+  renderOptionsList();
+
+  m.querySelector('#qTypeIp').addEventListener('change', e => {
+    qType = e.target.value;
+    m.querySelector('#qOptionsBox').style.display = qType === 'mc' ? 'block' : 'none';
+  });
+
+  m.querySelector('#btnAddOptionRow').addEventListener('click', () => {
+    qOptions.push(`خيار ${qOptions.length + 1}`);
+    renderOptionsList();
+  });
+
+  m.querySelector('#btnCancelQuestion').addEventListener('click', () => m.remove());
+
+  m.querySelector('#btnSaveQuestion').addEventListener('click', async () => {
+    const text = m.querySelector('#qTextIp').value.trim();
+    const req = m.querySelector('#qReqIp').checked;
+    const type = m.querySelector('#qTypeIp').value;
+
+    if (!text) {
+      toast('يرجى كتابة نص السؤال', 'err');
+      return;
+    }
+
+    if (type === 'mc') {
+      qOptions = qOptions.map(o => o.trim()).filter(o => o.length > 0);
+      if (qOptions.length < 2) {
+        toast('يرجى إضافة خيارين على الأقل لسؤال الاختيار من متعدد', 'err');
+        return;
+      }
+    }
+
+    const qData = {
+      id: qToEdit ? qToEdit.id : uid(),
+      text,
+      type,
+      required: req,
+      options: type === 'mc' ? qOptions : []
+    };
+
+    m.remove();
+    await onSave(qData);
+  });
+}
+
+/* Survey Metadata Edit Modal */
+function openSurveyMetaModal(survey, onSave) {
+  let existingModal = document.getElementById('surveyMetaModal');
+  if (existingModal) existingModal.remove();
+
+  const modalHTML = `
+  <div class="modal-overlay active" id="surveyMetaModal">
+    <div class="modal-card" style="max-width:540px;text-align:right;">
+      <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px;text-align:center;">
+        تعديل بيانات الاستبيان
+      </h3>
+
+      <div class="login-field">
+        <label for="smTitle">عنوان الاستبيان <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="smTitle" class="form-input" value="${escA(survey.title || '')}"/>
+      </div>
+
+      <div class="login-field">
+        <label for="smDesc">وصف الاستبيان</label>
+        <textarea id="smDesc" class="form-input" style="min-height:70px;">${esc(survey.description || '')}</textarea>
+      </div>
+
+      <div class="login-field">
+        <label for="smWelcome">رسالة ترحيبية (اختيارية)</label>
+        <input type="text" id="smWelcome" class="form-input" value="${escA(survey.welcomeMessage || '')}"/>
+      </div>
+
+      <div class="login-field">
+        <label for="smThankYou">رسالة الشكر بعد الإرسال</label>
+        <input type="text" id="smThankYou" class="form-input" value="${escA(survey.thankYouMessage || '')}"/>
+      </div>
+
+      <div class="login-field">
+        <label for="smStatus">حالة الاستبيان</label>
+        <select id="smStatus" class="form-input" style="background:#ffffff;">
+          <option value="draft" ${survey.status === 'draft' ? 'selected' : ''}>مسودة (غير متاح للجمهور)</option>
+          <option value="published" ${survey.status === 'published' ? 'selected' : ''}>منشور (متاح للتعبئة)</option>
+          <option value="closed" ${survey.status === 'closed' ? 'selected' : ''}>مغلق (إيقاف استقبال الإجابات)</option>
+        </select>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;">
+        <button type="button" class="btn btn-primary" id="btnSaveSurveyMeta">حفظ البيانات</button>
+        <button type="button" class="btn" id="btnCancelSurveyMeta" style="background:var(--parchment-3);color:var(--ink);">إلغاء</button>
+      </div>
+    </div>
+  </div>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  const m = document.getElementById('surveyMetaModal');
+
+  m.querySelector('#btnCancelSurveyMeta').addEventListener('click', () => m.remove());
+  m.querySelector('#btnSaveSurveyMeta').addEventListener('click', async () => {
+    const title = m.querySelector('#smTitle').value.trim();
+    const description = m.querySelector('#smDesc').value.trim();
+    const welcomeMessage = m.querySelector('#smWelcome').value.trim();
+    const thankYouMessage = m.querySelector('#smThankYou').value.trim();
+    const status = m.querySelector('#smStatus').value;
+
+    if (!title) {
+      toast('يرجى كتابة عنوان الاستبيان', 'err');
+      return;
+    }
+
+    m.remove();
+    await onSave({ title, description, welcomeMessage, thankYouMessage, status });
   });
 }
 

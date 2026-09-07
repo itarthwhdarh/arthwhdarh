@@ -34,6 +34,10 @@
       "التراث والحرف/**"
     ],
     "cleanUrls": true,
+    "rewrites": [
+      { "source": "/workspace/**", "destination": "/workspace/index.html" },
+      { "source": "/workspace", "destination": "/workspace/index.html" }
+    ],
     "headers": [
       {
         "source": "/portal/firebase-sw.js",

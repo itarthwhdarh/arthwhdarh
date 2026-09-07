@@ -1,9 +1,10 @@
 {
-  "cleanUrls": false,
+  "public": ".",
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/share/:id", "destination": "/cloud/share.html" },
-    { "source": "/cloud/share/:id", "destination": "/cloud/share.html" },
-    { "source": "/share", "destination": "/cloud/share.html" },
-    { "source": "/cloud/share", "destination": "/cloud/share.html" }
+    { "source": "workspace/**", "destination": "/workspace/index.html" },
+    { "source": "workspace", "destination": "/workspace/index.html" },
+    { "source": "/workspace/**", "destination": "/workspace/index.html" },
+    { "source": "/workspace", "destination": "/workspace/index.html" }
   ]
 }

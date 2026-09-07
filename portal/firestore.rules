@@ -284,6 +284,22 @@ service cloud.firestore {
       allow read, update, delete: if isSiteAdmin();
     }
 
+    // ── الاستبيانات الخاصة بورش العمل (surveys) ──
+    match /surveys/{id} {
+      // قراءة الاستبيان متاحة للجمهور (لقراءة الاستبيانات المنشورة) وللمدير
+      allow read: if true;
+      // الإنشاء والتعديل والحذف محصور بالإدارة فقط
+      allow create, update, delete: if isSiteAdmin();
+    }
+
+    // ── إجابات الاستبيانات (survey_responses) ──
+    match /survey_responses/{id} {
+      // تتيح للمشارك إرسال إجابته فقط إن لم تكن موجودة مسبقاً لمنع التكرار على مستوى قاعدة البيانات
+      allow create: if !exists(/databases/$(database)/documents/survey_responses/$(id));
+      // قراءة التقييمات والإحصائيات وتعديلها وحذفها محصورة بمديري النظام لحفظ الخصوصية
+      allow read, update, delete: if isSiteAdmin();
+    }
+
     // ── حسابات مديري النظام ومستخدمي لوحة الإدارة ──
     match /users/{uid} {
       allow read: if signedIn() && (request.auth.uid == uid || isSiteAdmin());

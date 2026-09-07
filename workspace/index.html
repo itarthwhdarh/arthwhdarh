@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>استبيان الورشة التدريبية — جمعية إرث وحضارة</title>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --parchment: #ffffff;
+  --parchment-2: #f8f9fc;
+  --parchment-3: #f1f3f8;
+  --paper: #ffffff;
+  --ink: #0f1117;
+  --ink-soft: #1c2030;
+  --ink-mid: #4a5068;
+  --ink-muted: #7c85a0;
+  --ink-faint: #a8b0c8;
+  --gold: #c09a62;
+  --gold-soft: #b28a5a;
+  --gold-deep: #9c6e38;
+  --gold-pale: #f0e4d0;
+  --line: rgba(15,17,23,0.08);
+  --line-soft: rgba(15,17,23,0.05);
+  --danger: #dc2626;
+  --success: #16a34a;
+  --ease: cubic-bezier(0.22,1,0.36,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #f4f6fb;
+  color: var(--ink);
+  font-family: "Almarai", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 24px 16px 48px;
+}
+
+.ws-container {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.brand-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.brand-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin: 0 auto 14px;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.brand-sub {
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--ink-muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.brand-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.lo-line {
+  height: 1px;
+  width: 48px;
+  background: linear-gradient(90deg, transparent, rgba(192,154,98,.4));
+}
+
+.lo-line.r {
+  background: linear-gradient(90deg, rgba(192,154,98,.4), transparent);
+}
+
+.lo-diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--gold);
+  transform: rotate(45deg);
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 4px 24px -4px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 54px;
+  background: var(--gold);
+  border-radius: 0 16px 0 0;
+}
+
+.ws-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--gold-pale);
+  color: var(--gold-deep);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.survey-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.survey-desc {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.alert-box {
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.alert-err {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.alert-ok {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.alert-info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.form-group label .req {
+  color: var(--danger);
+  margin-right: 2px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--parchment-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14.5px;
+  color: var(--ink);
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.form-input:focus {
+  background: #ffffff;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(192,154,98,0.2);
+}
+
+.form-input::placeholder {
+  color: var(--ink-faint);
+}
+
+textarea.form-input {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(15,17,23,0.18);
+}
+
+.btn-primary:hover {
+  background: var(--ink-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15,17,23,0.22);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Question items */
+.q-card {
+  padding: 20px;
+  background: var(--parchment-2);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.q-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.q-num {
+  color: var(--gold-deep);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* Choices list */
+.choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choice-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: all 0.2s ease;
+}
+
+.choice-label:hover {
+  border-color: var(--gold-soft);
+  background: #fafafc;
+}
+
+.choice-label input[type="radio"],
+.choice-label input[type="checkbox"] {
+  accent-color: var(--gold-deep);
+  width: 18px;
+  height: 18px;
+}
+
+/* Rating 1-5 Pills */
+.rating-pills {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.rating-pill-label {
+  flex: 1;
+  text-align: center;
+  padding: 12px 6px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.rating-pill-label:hover {
+  border-color: var(--gold-soft);
+}
+
+.rating-pill-label.active {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+}
+
+.rating-pill-label input {
+  display: none;
+}
+
+.rating-scale-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+.footer-text {
+  text-align: center;
+  margin-top: 24px;
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15,17,23,0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 440px;
+  width: 100%;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+}
+</style>
+</head>
+<body>
+
+<div class="ws-container">
+  <div class="brand-header">
+    <img src="/assets/الشعار/الشعار.png" alt="شعار الجمعية" class="brand-logo"/>
+    <div class="brand-title">جمعية إرث وحضارة بالقريات</div>
+    <div class="brand-sub">Al-Qurayyat Cultural Heritage Association</div>
+    <div class="brand-ornament">
+      <div class="lo-line"></div>
+      <div class="lo-diamond"></div>
+      <div class="lo-line r"></div>
+    </div>
+  </div>
+
+  <div class="card" id="mainCard">
+    <!-- Initial Loading State -->
+    <div id="stateLoading" style="text-align:center;padding:40px 10px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:36px;height:36px;color:var(--gold);margin:0 auto 16px;" class="spinning">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/>
+      </svg>
+      <p style="font-size:15px;color:var(--ink-muted);font-weight:700;">جارٍ تحميل الاستبيان…</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="stateError" style="display:none;text-align:center;padding:20px 10px;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#fef2f2;color:#b91c1c;display:grid;place-items:center;margin:0 auto 16px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      </div>
+      <h2 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:8px;" id="errTitle">عذرًا، الاستبيان غير متاح</h2>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;" id="errMsg">يرجى التثبت من الرابط والمحاولة ثانية.</p>
+    </div>
+
+    <!-- STEP 1: Verification -->
+    <div id="stepVerify" style="display:none;">
+      <div class="ws-badge" id="vWsBadge">ورشة عمل</div>
+      <h1 class="survey-title" id="vSurveyTitle">استبيان تقييم الورشة</h1>
+      <p class="survey-desc" id="vSurveyDesc">يسعدنا مشاركتك في تقييم هذه الورشة لتطوير البرامج القادمة.</p>
+
+      <div class="alert-box alert-err" id="verifyErr"></div>
+
+      <form id="formVerify" novalidate>
+        <div class="form-group">
+          <label for="inputNationalId">رقم الهوية الوطنية / الإقامة <span class="req">*</span></label>
+          <input type="text" id="inputNationalId" class="form-input" placeholder="أدخل رقم الهوية المكون من 10 أرقام" required dir="ltr"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnVerify">
+          <span id="btnVerifyText">التحقق والمتابعة</span>
+          <svg id="spinVerify" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:none;" class="spinning">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- STEP 2: Questions Form -->
+    <div id="stepQuestions" style="display:none;">
+      <div class="ws-badge" id="qWsBadge">ورشة عمل</div>
+      <h1 class="survey-title" id="qSurveyTitle">أسئلة الاستبيان</h1>
+      <p class="survey-desc" id="qWelcomeMsg">يرجى الإجابة على الأسئلة التالية بكل موضوعية.</p>
+
+      <div class="alert-box alert-ok" id="verifyOk" style="display:block;">
+        ✓ تم التحقق من تسجيلك بنجاح. يمكنك الآن تعبئة الاستبيان.
+      </div>
+
+      <div class="alert-box alert-err" id="submitErr"></div>
+
+      <form id="formQuestions" novalidate>
+        <div id="questionsContainer"></div>
+
+        <button type="submit" class="btn btn-primary" id="btnSubmitSurvey" style="margin-top:12px;">
+          <span id="btnSubmitText">إرسال الاستبيان</span>
+          <svg id="spinSubmit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;display:none;" class="spinning">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    <!-- STEP 3: Thank You / Success -->
+    <div id="stepSuccess" style="display:none;text-align:center;padding:24px 10px;">
+      <div style="width:64px;height:64px;border-radius:50%;background:#f0fdf4;color:#15803d;display:grid;place-items:center;margin:0 auto 20px;border:1px solid #bbf7d0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:32px;height:32px;"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 style="font-size:22px;font-weight:800;color:var(--ink);margin-bottom:10px;">تم إرسال الاستبيان بنجاح</h2>
+      <p style="font-size:15px;color:var(--ink-mid);line-height:1.6;" id="thankYouMsg">شكرًا جزيلًا لمشاركتك في الاستبيان وتفاعلك معنا!</p>
+    </div>
+  </div>
+
+  <div class="footer-text">
+    جمعية إرث وحضارة بالقريات · نظام الاستبيانات المعتمد
+  </div>
+</div>
+
+<!-- Confirm Submit Modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-card">
+    <div style="width:48px;height:48px;border-radius:50%;background:var(--gold-pale);color:var(--gold-deep);display:grid;place-items:center;margin:0 auto 14px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;height:24px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    </div>
+    <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:8px;">تأكيد الإرسال</h3>
+    <p style="font-size:14px;color:var(--ink-mid);margin-bottom:24px;">هل أنت متأكد من إرسال إجاباتك للاستبيان؟ لن تتمكن من التعديل عليها لاحقاً.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <button type="button" class="btn btn-primary" id="btnConfirmSubmit">نعم، إرسال</button>
+      <button type="button" class="btn" id="btnCancelSubmit" style="background:var(--parchment-3);color:var(--ink);">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyDnWUCjJKkMqORT8SeLYHszAIP0bv8PCSg",
+  authDomain: "arthwhdarh-782ec.firebaseapp.com",
+  projectId: "arthwhdarh-782ec",
+  storageBucket: "arthwhdarh-782ec.firebasestorage.app",
+  messagingSenderId: "597405952213",
+  appId: "1:597405952213:web:5ffeab6adc7e451a265a5c"
+});
+const db = getFirestore(app);
+
+/* Helper Utils */
+const esc = s => (s ?? '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const escA = s => (s ?? '').toString().replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const normId = s => (s ?? '').toString().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^0-9]/g, '').trim();
+
+function getPublicToken() {
+  const path = window.location.pathname;
+  const match = path.match(/\/workspace\/([^\/\?#]+)/);
+  if (match && match[1]) return match[1];
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('token')) return params.get('token');
+  if (params.get('id')) return params.get('id');
+  if (window.location.hash) return window.location.hash.replace('#', '').trim();
+  return null;
+}
+
+let activeSurvey = null;
+let activeWorkshop = null;
+let verifiedRegistration = null;
+
+async function initPage() {
+  const token = getPublicToken();
+  if (!token) {
+    showError('رابط الاستبيان غير صحيح', 'يرجى التأكد من استخدام الرابط الصحيح الذي تم مشاركته معك.');
+    return;
+  }
+
+  try {
+    const q = query(collection(db, 'surveys'), where('publicToken', '==', token));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      showError('الاستبيان غير موجود', 'لم نتمكن من العثور على الاستبيان المطلوب.');
+      return;
+    }
+
+    const surveyDoc = snap.docs[0];
+    activeSurvey = { id: surveyDoc.id, ...surveyDoc.data() };
+
+    if (activeSurvey.status === 'draft') {
+      showError('الاستبيان غير متاح حاليًا', 'هذا الاستبيان في حالة مسودة وغير متاح للجمهور.');
+      return;
+    }
+
+    if (activeSurvey.status === 'closed') {
+      showError('الاستبيان مغلق حاليًا', 'شكرًا لاهتمامك، تم إغلاق استقبال الإجابات على هذا الاستبيان.');
+      return;
+    }
+
+    // Load workshop title
+    if (activeSurvey.workshopId) {
+      try {
+        const wsSnap = await getDoc(doc(db, 'workshops', activeSurvey.workshopId));
+        if (wsSnap.exists()) {
+          activeWorkshop = wsSnap.data();
+        }
+      } catch (e) {
+        console.warn('Could not load workshop title:', e);
+      }
+    }
+
+    renderStepVerify();
+  } catch (err) {
+    console.error('Error loading survey:', err);
+    showError('حدث خطأ في الاتصال', 'تعذر تحميل بيانات الاستبيان. يرجى محاولة التحديث لاحقًا.');
+  }
+}
+
+function showError(title, msg) {
+  document.getElementById('stateLoading').style.display = 'none';
+  document.getElementById('stateError').style.display = 'block';
+  document.getElementById('errTitle').textContent = title;
+  document.getElementById('errMsg').textContent = msg;
+}
+
+function renderStepVerify() {
+  document.getElementById('stateLoading').style.display = 'none';
+  document.getElementById('stepVerify').style.display = 'block';
+
+  const wsName = activeWorkshop?.title || activeSurvey.workshopTitle || 'ورشة عمل';
+  document.getElementById('vWsBadge').textContent = wsName;
+  document.getElementById('vSurveyTitle').textContent = activeSurvey.title || 'استبيان الورشة';
+  document.getElementById('vSurveyDesc').textContent = activeSurvey.description || 'يسعدنا مشاركتك في تقييم هذه الورشة لتطوير البرامج القادمة.';
+}
+
+/* Step 1: Verification Submit */
+document.getElementById('formVerify').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const inputEl = document.getElementById('inputNationalId');
+  const errEl = document.getElementById('verifyErr');
+  const btn = document.getElementById('btnVerify');
+  const txt = document.getElementById('btnVerifyText');
+  const spin = document.getElementById('spinVerify');
+
+  const rawInput = inputEl.value;
+  const cleanId = normId(rawInput);
+
+  errEl.style.display = 'none';
+
+  if (!cleanId || cleanId.length < 5) {
+    errEl.textContent = 'يرجى إدخال رقم هوية صحيح مكون من أرقام فقط.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  spin.style.display = 'inline-block';
+  txt.textContent = 'جارٍ التحقق…';
+
+  try {
+    // Search registrations for this workshop
+    const wsId = activeSurvey.workshopId;
+    const q1 = query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('nationalId', '==', cleanId)
+    );
+    let regSnap = await getDocs(q1);
+
+    if (regSnap.empty) {
+      // Fallback check on idNumber field
+      const q2 = query(
+        collection(db, 'workshop_registrations'),
+        where('workshopId', '==', wsId),
+        where('idNumber', '==', cleanId)
+      );
+      regSnap = await getDocs(q2);
+    }
+
+    if (regSnap.empty) {
+      errEl.textContent = 'عذرًا، هذا الاستبيان متاح فقط للمسجلين في هذه الورشة.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const regDoc = regSnap.docs[0];
+    verifiedRegistration = { id: regDoc.id, ...regDoc.data() };
+
+    // Check if participant already answered this survey
+    const respId = `${activeSurvey.id}_${regDoc.id}`;
+    const respSnap = await getDoc(doc(db, 'survey_responses', respId));
+
+    if (respSnap.exists()) {
+      errEl.className = 'alert-box alert-info';
+      errEl.textContent = 'تم استلام إجابتك مسبقًا — شكرًا لمشاركتك وتفاعلك في الاستبيان.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    // Verification successful -> Show Questions
+    renderStepQuestions();
+  } catch (err) {
+    console.error('Verification error:', err);
+    errEl.className = 'alert-box alert-err';
+    errEl.textContent = 'حدث خطأ أثناء التحقق من الهوية. يرجى المحاولة ثانية.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    spin.style.display = 'none';
+    txt.textContent = 'التحقق والمتابعة';
+  }
+});
+
+function renderStepQuestions() {
+  document.getElementById('stepVerify').style.display = 'none';
+  document.getElementById('stepQuestions').style.display = 'block';
+
+  const wsName = activeWorkshop?.title || activeSurvey.workshopTitle || 'ورشة عمل';
+  document.getElementById('qWsBadge').textContent = wsName;
+  document.getElementById('qSurveyTitle').textContent = activeSurvey.title || 'أسئلة الاستبيان';
+  if (activeSurvey.welcomeMessage) {
+    document.getElementById('qWelcomeMsg').textContent = activeSurvey.welcomeMessage;
+  } else {
+    document.getElementById('qWelcomeMsg').textContent = 'يرجى الإجابة على الأسئلة التالية بكل موضوعية.';
+  }
+
+  const container = document.getElementById('questionsContainer');
+  const questions = activeSurvey.questions || [];
+
+  if (questions.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:30px;color:var(--ink-muted);">لا توجد أسئلة مضافة في هذا الاستبيان بعد.</div>`;
+    return;
+  }
+
+  container.innerHTML = questions.map((q, idx) => renderQuestionCardHTML(q, idx + 1)).join('');
+}
+
+function renderQuestionCardHTML(q, num) {
+  const reqBadge = q.required ? '<span class="req">*</span>' : '';
+  let controlHTML = '';
+
+  if (q.type === 'mc') {
+    const opts = q.options || [];
+    controlHTML = `
+      <div class="choices-list">
+        ${opts.map((opt, oIdx) => `
+          <label class="choice-label">
+            <input type="radio" name="q_${q.id}" value="${escA(opt)}" ${q.required ? 'required' : ''}/>
+            <span>${esc(opt)}</span>
+          </label>
+        `).join('')}
+      </div>
+    `;
+  } else if (q.type === 'rating') {
+    controlHTML = `
+      <div>
+        <div class="rating-pills" id="rp_${q.id}">
+          ${[1, 2, 3, 4, 5].map(v => `
+            <label class="rating-pill-label" data-q="${q.id}" data-val="${v}">
+              <input type="radio" name="q_${q.id}" value="${v}" ${q.required ? 'required' : ''}/>
+              <span>${v} ★</span>
+            </label>
+          `).join('')}
+        </div>
+        <div class="rating-scale-legend">
+          <span>1 = غير راضٍ تماماً</span>
+          <span>5 = ممتاز جداً</span>
+        </div>
+      </div>
+    `;
+  } else if (q.type === 'boolean') {
+    controlHTML = `
+      <div class="choices-list" style="flex-direction:row;gap:12px;">
+        <label class="choice-label" style="flex:1;justify-content:center;">
+          <input type="radio" name="q_${q.id}" value="نعم" ${q.required ? 'required' : ''}/>
+          <span>نعم</span>
+        </label>
+        <label class="choice-label" style="flex:1;justify-content:center;">
+          <input type="radio" name="q_${q.id}" value="لا" ${q.required ? 'required' : ''}/>
+          <span>لا</span>
+        </label>
+      </div>
+    `;
+  } else if (q.type === 'short_text') {
+    controlHTML = `
+      <input type="text" class="form-input" name="q_${q.id}" placeholder="اكتب إجابتك هنا…" ${q.required ? 'required' : ''}/>
+    `;
+  } else if (q.type === 'long_text') {
+    controlHTML = `
+      <textarea class="form-input" name="q_${q.id}" placeholder="اكتب تفاصيل إجابتك هنا…" ${q.required ? 'required' : ''}></textarea>
+    `;
+  }
+
+  return `
+    <div class="q-card" data-qid="${q.id}">
+      <div class="q-title">
+        <span class="q-num">${num}.</span>
+        <span>${esc(q.text || '')} ${reqBadge}</span>
+      </div>
+      ${controlHTML}
+    </div>
+  `;
+}
+
+// Rating Pill Click Handler
+document.addEventListener('change', e => {
+  if (e.target.matches('.rating-pill-label input')) {
+    const qid = e.target.name;
+    document.querySelectorAll(`.rating-pill-label[data-q="${qid.replace('q_', '')}"]`).forEach(l => l.classList.remove('active'));
+    e.target.closest('.rating-pill-label')?.classList.add('active');
+  }
+});
+
+/* Step 2: Questions Submit Confirmation */
+const modal = document.getElementById('confirmModal');
+document.getElementById('formQuestions').addEventListener('submit', e => {
+  e.preventDefault();
+  const errEl = document.getElementById('submitErr');
+  errEl.style.display = 'none';
+
+  // Validate required questions
+  const questions = activeSurvey.questions || [];
+  let missing = false;
+
+  for (const q of questions) {
+    if (q.required) {
+      if (q.type === 'mc' || q.type === 'rating' || q.type === 'boolean') {
+        const checked = document.querySelector(`input[name="q_${q.id}"]:checked`);
+        if (!checked) { missing = true; break; }
+      } else {
+        const input = document.querySelector(`[name="q_${q.id}"]`);
+        if (!input || !input.value.trim()) { missing = true; break; }
+      }
+    }
+  }
+
+  if (missing) {
+    errEl.textContent = 'يرجى الإجابة على كافة الأسئلة المطلوبة (*) للمتابعة.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  modal.classList.add('active');
+});
+
+document.getElementById('btnCancelSubmit').addEventListener('click', () => {
+  modal.classList.remove('active');
+});
+
+document.getElementById('btnConfirmSubmit').addEventListener('click', async () => {
+  modal.classList.remove('active');
+  await submitSurveyData();
+});
+
+async function submitSurveyData() {
+  const btn = document.getElementById('btnSubmitSurvey');
+  const txt = document.getElementById('btnSubmitText');
+  const spin = document.getElementById('spinSubmit');
+  const errEl = document.getElementById('submitErr');
+
+  btn.disabled = true;
+  spin.style.display = 'inline-block';
+  txt.textContent = 'جارٍ إرسال الإجابات…';
+
+  try {
+    const questions = activeSurvey.questions || [];
+    const answersMap = {};
+
+    questions.forEach(q => {
+      if (q.type === 'mc' || q.type === 'rating' || q.type === 'boolean') {
+        const checked = document.querySelector(`input[name="q_${q.id}"]:checked`);
+        answersMap[q.id] = checked ? checked.value : '';
+      } else {
+        const input = document.querySelector(`[name="q_${q.id}"]`);
+        answersMap[q.id] = input ? input.value.trim() : '';
+      }
+    });
+
+    const responseId = `${activeSurvey.id}_${verifiedRegistration.id}`;
+    const payload = {
+      surveyId: activeSurvey.id,
+      workshopId: activeSurvey.workshopId,
+      registrationId: verifiedRegistration.id,
+      submittedAt: serverTimestamp(),
+      answers: answersMap
+    };
+
+    await setDoc(doc(db, 'survey_responses', responseId), payload);
+
+    // Show Success Step
+    document.getElementById('stepQuestions').style.display = 'none';
+    document.getElementById('stepSuccess').style.display = 'block';
+
+    if (activeSurvey.thankYouMessage) {
+      document.getElementById('thankYouMsg').textContent = activeSurvey.thankYouMessage;
+    }
+  } catch (err) {
+    console.error('Error submitting survey:', err);
+    errEl.textContent = 'حدث خطأ أثناء إرسال الإجابات. يرجى المحاولة ثانية.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    spin.style.display = 'none';
+    txt.textContent = 'إرسال الاستبيان';
+  }
+}
+
+initPage();
+</script>
+</body>
+</html>
