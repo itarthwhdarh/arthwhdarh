@@ -902,6 +902,7 @@ async function submitSurveyData() {
       workshopId: activeSurvey.workshopId,
       registrationId: verifiedRegistration.id,
       submittedAt: serverTimestamp(),
+      createdAt: serverTimestamp(),
       answers: answersMap
     };
 

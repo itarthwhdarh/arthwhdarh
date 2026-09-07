@@ -1565,20 +1565,26 @@ const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:fa
 async function loadCol(col){
   if(loaded[col]) return C[col];
   try {
-    const q=query(collection(db,col),orderBy('createdAt','desc'));
-    const snap=await getDocs(q);
-    C[col]=snap.docs.map(d=>({id:d.id,...d.data()}));
-  } catch(e) {
-    console.warn(`[loadCol ${col}] fallback query:`, e);
-    try {
-      const snap=await getDocs(collection(db,col));
-      C[col]=snap.docs.map(d=>({id:d.id,...d.data()}));
-    } catch(err) {
-      console.error(`[loadCol ${col}] error:`, err);
-      C[col] = C[col] || [];
+    let snap;
+    if (col === 'survey_responses') {
+      snap = await getDocs(collection(db, col));
+    } else {
+      try {
+        const q = query(collection(db, col), orderBy('createdAt', 'desc'));
+        snap = await getDocs(q);
+      } catch (e) {
+        snap = await getDocs(collection(db, col));
+      }
     }
+    C[col] = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    if (col === 'survey_responses') {
+      C[col].sort((a, b) => (toTs(b.submittedAt || b.createdAt) || 0) - (toTs(a.submittedAt || a.createdAt) || 0));
+    }
+  } catch(err) {
+    console.error(`[loadCol ${col}] error:`, err);
+    C[col] = C[col] || [];
   }
-  loaded[col]=true;
+  loaded[col] = true;
   return C[col];
 }
 async function loadSettings(){
@@ -2380,6 +2386,9 @@ let wsRegQ = '';
 
 /* ── WORKSHOPS MANAGEMENT (Master-Detail System) ── */
 async function vWorkshops(el) {
+  loaded.surveys = false;
+  loaded.survey_responses = false;
+  loaded.workshop_registrations = false;
   const [workshops, registrants, siteSettings, surveys, responses] = await Promise.all([
     loadCol('workshops'),
     loadCol('workshop_registrations'),
@@ -2580,8 +2589,34 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
 
   // Survey data for this workshop
   const wsSurvey = allSurveys.find(s => s.workshopId === w.id);
-  const surveyResponses = wsSurvey ? allResponses.filter(r => r.surveyId === wsSurvey.id) : [];
-  const answeredCount = surveyResponses.length;
+  
+  // Responses associated with this survey or workshop
+  const rawResponses = wsSurvey 
+    ? allResponses.filter(r => r.surveyId === wsSurvey.id || r.workshopId === w.id)
+    : allResponses.filter(r => r.workshopId === w.id);
+
+  // Deduplicate responses by registrationId or doc id
+  const uniqueResponsesMap = new Map();
+  rawResponses.forEach(r => {
+    const key = r.registrationId || r.id;
+    if (key && !uniqueResponsesMap.has(key)) {
+      uniqueResponsesMap.set(key, r);
+    }
+  });
+  const surveyResponses = Array.from(uniqueResponsesMap.values());
+
+  // Match responses directly by registrationId to wRegs
+  const answeredRegistrationIds = new Set(
+    surveyResponses.map(r => r.registrationId).filter(Boolean)
+  );
+
+  const answeredCount = wRegs.length > 0
+    ? Math.max(
+        wRegs.filter(r => answeredRegistrationIds.has(r.id)).length,
+        Math.min(wRegs.length, surveyResponses.length)
+      )
+    : surveyResponses.length;
+
   const unansweredCount = Math.max(0, wRegs.length - answeredCount);
   const responseRate = wRegs.length > 0 ? Math.min(100, Math.round((answeredCount / wRegs.length) * 100)) : 0;
 
@@ -2721,6 +2756,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                   <th>الاسم</th>
                   <th>رقم الجوال</th>
                   <th>رقم الهوية</th>
+                  <th>حالة الاستبيان</th>
                   <th>البريد الإلكتروني</th>
                   <th>الملاحظات</th>
                   <th>تاريخ التسجيل</th>
@@ -2728,12 +2764,15 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                 </tr>
               </thead>
               <tbody>
-                ${filteredRegs.map((r, idx) => `
+                ${filteredRegs.map((r, idx) => {
+                  const hasAnswered = answeredRegistrationIds.has(r.id);
+                  return `
                   <tr>
                     <td>${idx + 1}</td>
                     <td><strong>${esc(r.name || r.fullName || 'بدون اسم')}</strong></td>
                     <td dir="ltr" style="text-align:right;">${esc(r.phone || r.mobile || '—')}</td>
                     <td>${esc(r.nationalId || r.idNumber || '—')}</td>
+                    <td>${hasAnswered ? '<span class="chip-count" style="background:#e6f4ea;color:#137333;font-weight:700;">✓ أجاب</span>' : '<span class="chip-count" style="background:#f1f3f8;color:#7c85a0;">لم يجب</span>'}</td>
                     <td>${esc(r.email || '—')}</td>
                     <td>${esc(r.notes || '—')}</td>
                     <td>${r.createdAt ? fmtEn(toTs(r.createdAt)) : '—'}</td>
@@ -2744,7 +2783,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                       </div>
                     </td>
                   </tr>
-                `).join('')}
+                `; }).join('')}
               </tbody>
             </table>
           </div>
@@ -2847,9 +2886,15 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
 
         <!-- Results Analytics Section -->
         <div class="card" style="padding:24px;background:var(--paper);border-radius:16px;">
-          <div style="margin-bottom:20px;">
-            <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:0;">نتائج الاستبيان والإحصائيات</h3>
-            <p style="font-size:12px;color:var(--ink-muted);margin-top:2px;">تحليل استجابات وتقييمات المشاركين بشكل تجميعي وحفظ الخصوصية.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+            <div>
+              <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:0;">نتائج الاستبيان والإحصائيات</h3>
+              <p style="font-size:12px;color:var(--ink-muted);margin-top:2px;">تحليل استجابات وتقييمات المشاركين بشكل تجميعي وحفظ الخصوصية.</p>
+            </div>
+            <button class="btn btn-sm btn-outline" id="btnRefreshSurveyStats" style="gap:6px;width:auto;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+              <span>تحديث النتائج</span>
+            </button>
           </div>
 
           <!-- Stats Metrics Grid -->
@@ -2937,14 +2982,39 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   });
 
   // Tab switching
-  const switchTab = (tab) => {
+  const switchTab = async (tab) => {
     wsTab = tab;
+    if (tab === 'survey' || tab === 'registrants' || tab === 'stats') {
+      loaded.survey_responses = false;
+      loaded.workshop_registrations = false;
+      const [freshRegs, freshSurveys, freshResponses] = await Promise.all([
+        loadCol('workshop_registrations'),
+        loadCol('surveys'),
+        loadCol('survey_responses')
+      ]);
+      vWorkshopDetail(el, w, freshRegs, freshSurveys, freshResponses);
+      return;
+    }
     vWorkshopDetail(el, w, allRegistrants, allSurveys, allResponses);
   };
   el.querySelector('#tabWsInfo')?.addEventListener('click', () => switchTab('info'));
   el.querySelector('#tabWsRegs')?.addEventListener('click', () => switchTab('registrants'));
   el.querySelector('#tabWsSurvey')?.addEventListener('click', () => switchTab('survey'));
   el.querySelector('#tabWsStats')?.addEventListener('click', () => switchTab('stats'));
+
+  // Refresh survey stats button
+  el.querySelector('#btnRefreshSurveyStats')?.addEventListener('click', async () => {
+    loaded.survey_responses = false;
+    loaded.surveys = false;
+    loaded.workshop_registrations = false;
+    const [freshRegs, freshSurveys, freshResponses] = await Promise.all([
+      loadCol('workshop_registrations'),
+      loadCol('surveys'),
+      loadCol('survey_responses')
+    ]);
+    toast('تم تحديث نتائج الاستبيان بنجاح');
+    vWorkshopDetail(el, w, freshRegs, freshSurveys, freshResponses);
+  });
 
   // Survey Event Listeners
   el.querySelector('#btnCreateSurvey')?.addEventListener('click', async () => {
