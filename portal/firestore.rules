@@ -12,16 +12,27 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function hasPortalUser() {
+      return signedIn() && exists(/databases/$(database)/documents/portal_users/$(request.auth.uid));
+    }
+
     function userDoc() {
       return get(/databases/$(database)/documents/portal_users/$(request.auth.uid)).data;
     }
 
     function role() {
-      return userDoc().role;
+      return hasPortalUser() ? userDoc().get('role', '') : '';
     }
 
     function isTechAdmin() {
-      return signedIn() && (userDoc().isTechAdmin == true || userDoc().role == 'tech_admin');
+      return signedIn() && (
+        request.auth.uid == 'dDcYQljmYFR1gq6cD0lG3wBaHys2' ||
+        (request.auth.token.email != null && (
+          request.auth.token.email.lower() == '2falilh2@gmail.com' ||
+          request.auth.token.email.lower() == 'it@arthwhdarh.com'
+        )) ||
+        (hasPortalUser() && (userDoc().get('isTechAdmin', false) == true || userDoc().get('role', '') == 'tech_admin'))
+      );
     }
 
     function isExec() {
@@ -33,7 +44,30 @@ service cloud.firestore {
     }
 
     function myDept() {
-      return userDoc().department;
+      return hasPortalUser() ? userDoc().get('department', '') : '';
+    }
+
+    // ── التحقق الأمني من صلاحيات الإدارة للموقع ولوحة التحكم /admin ──
+    function isSiteAdmin() {
+      return signedIn() && (
+        request.auth.uid == 'dDcYQljmYFR1gq6cD0lG3wBaHys2' ||
+        (request.auth.token.email != null && (
+          request.auth.token.email.lower() == '2falilh2@gmail.com' ||
+          request.auth.token.email.lower() == 'it@arthwhdarh.com' ||
+          request.auth.token.email.lower() == 'info@arthwhdarh.com' ||
+          request.auth.token.email.lower().matches('.*@arthwhdarh[.]com$')
+        )) ||
+        (hasPortalUser() && (
+          userDoc().get('isTechAdmin', false) == true ||
+          userDoc().get('isAdmin', false) == true ||
+          userDoc().get('role', '') in ['admin', 'tech_admin', 'executive', 'hr', 'general_manager', 'board_chairman', 'exec', 'manager']
+        )) ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('isTechAdmin', false) == true ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('isAdmin', false) == true ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', '') in ['admin', 'tech_admin', 'executive', 'hr', 'general_manager', 'board_chairman', 'exec', 'manager']
+        ))
+      );
     }
 
     // ════════════════ بوابة الموظفين ════════════════
@@ -192,53 +226,87 @@ service cloud.firestore {
       }
     }
 
-    // ════════════════ الموقع العام (زوار بلا مصادقة) ════════════════
+    // ════════════════ الموقع العام ولوحة الإدارة (/admin) ════════════════
 
+    // ── المتطوعون ──
     match /volunteers/{id} {
       allow create: if true;
-      allow read, update, delete: if signedIn();
+      allow read, update, delete: if isSiteAdmin();
     }
 
+    // ── الحرف والأعمال اليدوية ──
     match /crafts/{id} {
       allow create: if true;
-      allow read, update, delete: if signedIn();
+      allow read, update, delete: if isSiteAdmin();
     }
 
+    // ── الورش التدريبية ──
     match /workshops/{id} {
       allow read: if true;
-      allow create, update, delete: if signedIn();
+      allow create, delete: if isSiteAdmin();
+      allow update: if isSiteAdmin() ||
+                    (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['registeredCount']));
     }
 
+    // ── الفرص التطوعية ──
     match /volunteerOpportunities/{id} {
       allow read: if true;
-      allow create, update, delete: if signedIn();
+      allow create, update, delete: if isSiteAdmin();
     }
 
+    // ── طلبات التطوع ──
     match /volunteer_applications/{id} {
       allow create: if true;
-      allow read, update, delete: if signedIn();
+      allow read, update, delete: if isSiteAdmin();
     }
 
+    // ── تسجيلات الورش التدريبية ──
     match /workshop_registrations/{id} {
       allow create: if true;
-      allow read, update, delete: if signedIn();
+      allow read, update, delete: if isSiteAdmin();
     }
 
+    // ── الأخبار والمقالات ──
     match /news/{id} {
       allow read: if true;
-      allow create, update, delete: if signedIn();
+      allow create, update, delete: if isSiteAdmin();
     }
 
+    // ── إعدادات الموقع العام ──
     match /settings/{id} {
       allow read: if true;
-      allow write: if signedIn();
+      allow write: if isSiteAdmin();
     }
 
     // ── إشعارات الأدمن (طلب تسجيل زوار الموقع العام) ──
     match /admin_notifications/{id} {
       allow create: if true;
-      allow read, update: if signedIn();
-      allow delete: if signedIn();
+      allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ── حسابات مديري النظام ومستخدمي لوحة الإدارة ──
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSiteAdmin());
+      allow write: if isSiteAdmin();
+    }
+
+    // ════════════════ سحابة إرث وحضارة (Cloud Platform) ════════════════
+    // ── روابط المشاركة (cloud_shares) ──
+    match /cloud_shares/{shareId} {
+      // قراءة بيانات الرابط المشترك للجمهور العام (كلمة المرور مشفرة بـ Salted SHA-256)
+      allow read: if true;
+      // إنشاء الرابط مسموح للمستخدمين المعتمدين في الجمعية فقط
+      allow create: if signedIn();
+      // التعديل والإلغاء محصور بمالك الرابط أو المسؤول التقني أو زيادة عداد المشاهدات
+      allow update: if (signedIn() && (resource.data.createdBy == request.auth.uid || isTechAdmin()))
+                    || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['viewCount', 'downloadCount']));
+      // الحذف محصور بالمالك أو المسؤول التقني
+      allow delete: if signedIn() && (resource.data.createdBy == request.auth.uid || isTechAdmin());
+    }
+
+    // ── العناصر المفضلة (cloud_favorites) ──
+    match /cloud_favorites/{favId} {
+      allow read, write: if signedIn();
     }
   }
 }

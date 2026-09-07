@@ -34,28 +34,44 @@ a{color:inherit;text-decoration:none;}
 img{display:block;max-width:100%;}
 
 /* ── LOGIN SCREEN ── */
-#loginScreen{position:fixed;inset:0;z-index:900;background:#f0f4ff;display:flex;align-items:center;justify-content:center;padding:24px;}
+#loginScreen{position:fixed;inset:0;z-index:900;background:#f0f4ff;display:flex;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
 #loginScreen.hidden{display:none;}
-.login-box{width:100%;max-width:440px;text-align:center;}
+.login-box{width:100%;max-width:440px;text-align:center;margin:auto;}
 .login-logo{width:64px;height:64px;object-fit:contain;margin:0 auto 20px;}
 .login-brand{font-weight:800;font-size:22px;color:var(--ink);letter-spacing:-.02em;margin-bottom:6px;}
-.login-sub{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:36px;}
-.login-ornament{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px;}
+.login-sub{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:32px;}
+.login-ornament{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:30px;}
 .lo-line{height:1px;width:48px;background:linear-gradient(90deg,transparent,rgba(192,154,98,.4));}
 .lo-line.r{background:linear-gradient(90deg,rgba(192,154,98,.4),transparent);}
 .lo-diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
-.login-card{background:#ffffff;border:1px solid var(--line-soft);border-radius:12px;padding:36px 32px 32px;position:relative;box-shadow:0 4px 24px -4px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);}
-.login-card::before{content:"";position:absolute;top:0;right:0;width:3px;height:44px;background:var(--gold);border-radius:0 12px 0 0;}
-.login-title{font-weight:800;font-size:20px;color:var(--ink);margin-bottom:24px;text-align:right;}
+.login-card{background:#ffffff;border:1px solid var(--line-soft);border-radius:14px;padding:34px 28px 30px;position:relative;box-shadow:0 4px 24px -4px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);}
+.login-card::before{content:"";position:absolute;top:0;right:0;width:4px;height:48px;background:var(--gold);border-radius:0 14px 0 0;}
+.login-card-heading{font-size:20px;font-weight:800;color:var(--ink);margin-bottom:6px;text-align:center;}
+.login-card-sub{font-size:13px;color:var(--ink-muted);margin-bottom:22px;line-height:1.5;text-align:center;}
 .login-field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;text-align:right;}
 .login-field label{font-size:12.5px;color:var(--ink-mid);font-weight:700;}
-.login-field input{padding:11px 13px;background:var(--parchment);border:1px solid var(--line);border-radius:6px;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s;}
-.login-field input:hover{border-color:var(--gold-soft);}
-.login-field input:focus{border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(192,154,98,.20);}
-.login-err{font-size:12.5px;color:var(--danger);margin-bottom:14px;min-height:18px;text-align:right;}
-.login-btn{width:100%;padding:12px;background:var(--ink);color:var(--parchment);border:none;border-radius:6px;font-size:14px;font-weight:700;font-family:"Almarai",sans-serif;cursor:pointer;transition:background .25s;display:flex;align-items:center;justify-content:center;gap:8px;}
-.login-btn:hover{background:var(--ink-soft);}
-.login-btn:disabled{opacity:.5;cursor:not-allowed;}
+.login-input-wrap{position:relative;display:flex;align-items:center;}
+.login-input-wrap input{width:100%;padding:11px 38px 11px 38px;background:var(--parchment-2);border:1px solid var(--line);border-radius:8px;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s,background .2s;}
+.login-input-wrap input:hover{border-color:var(--gold-soft);}
+.login-input-wrap input:focus{background:#ffffff;border-color:var(--gold);box-shadow:0 0 0 3px rgba(192,154,98,.20);}
+.login-input-wrap .input-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--ink-faint);display:flex;align-items:center;pointer-events:none;}
+.login-input-wrap .input-icon svg{width:16px;height:16px;}
+.toggle-pwd-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;transition:color .2s;}
+.toggle-pwd-btn:hover{color:var(--gold-deep);}
+.toggle-pwd-btn svg{width:17px;height:17px;}
+.login-btn{width:100%;padding:12px 18px;border:none;border-radius:8px;font-size:14px;font-weight:700;font-family:"Almarai",sans-serif;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:10px;}
+.primary-login-btn{background:var(--ink);color:#ffffff;box-shadow:0 2px 6px rgba(15,17,23,.18);}
+.primary-login-btn:hover{background:var(--ink-soft);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,17,23,.22);}
+.primary-login-btn:active{transform:translateY(0);}
+.primary-login-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.login-divider{display:flex;align-items:center;text-align:center;margin:20px 0;color:var(--ink-muted);font-size:12px;font-weight:600;}
+.login-divider::before,.login-divider::after{content:'';flex:1;border-bottom:1px solid rgba(15,17,23,0.08);}
+.login-divider::before{margin-left:14px;}
+.login-divider::after{margin-right:14px;}
+.google-login-btn{background:#ffffff;color:#3c4043;border:1px solid #dadce0;box-shadow:0 1px 3px rgba(0,0,0,0.08);}
+.google-login-btn:hover{background:#f8f9fa;border-color:#c6c6c6;color:#202124;}
+.google-login-btn:disabled{opacity:.6;cursor:not-allowed;}
+.login-err{display:none;margin-bottom:18px;padding:12px 14px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#b91c1c;font-size:13px;font-weight:700;text-align:center;line-height:1.5;}
 .login-footer{margin-top:24px;font-family:"Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;}
 
 /* ── APP SHELL ── */
@@ -863,13 +879,54 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
       <div class="lo-diamond"></div>
       <div class="lo-line r"></div>
     </div>
-    <div class="login-card" style="padding:36px 28px;text-align:center;">
-      <h2 style="text-align:center;margin-bottom:10px;font-size:20px;font-weight:800;color:var(--ink);">تسجيل الدخول للإدارة</h2>
-      <p style="font-size:13px;color:var(--ink-muted);margin-bottom:24px;line-height:1.5;">يرجى تسجيل الدخول باستخدام حساب Google المعتمد للوصول إلى لوحة التحكم.</p>
+    <div class="login-card">
+      <h2 class="login-card-heading">تسجيل الدخول للإدارة</h2>
+      <p class="login-card-sub">يرجى تسجيل الدخول بحسابك المصرح له للوصول إلى لوحة التحكم.</p>
       
-      <div class="login-err" id="loginErr" style="display:none;margin-bottom:20px;padding:12px;background:#fce8e6;border:1px solid #f5c6cb;border-radius:8px;color:#c5221f;font-size:13.5px;font-weight:700;text-align:center;"></div>
+      <div class="login-err" id="loginErr" role="alert"></div>
       
-      <button class="login-btn" id="googleLoginBtn" style="width:100%;padding:14px 20px;background:#ffffff;color:#3c4043;border:1px solid #dadce0;border-radius:8px;font-size:15px;font-weight:700;font-family:'Almarai',sans-serif;cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+      <!-- Email & Password Form -->
+      <form id="emailLoginForm" novalidate>
+        <div class="login-field">
+          <label for="loginEmail">البريد الإلكتروني</label>
+          <div class="login-input-wrap">
+            <input type="email" id="loginEmail" placeholder="admin@arthwhdarh.com" required autocomplete="username" dir="ltr"/>
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="login-field">
+          <label for="loginPassword">كلمة المرور</label>
+          <div class="login-input-wrap">
+            <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" dir="ltr"/>
+            <button type="button" class="toggle-pwd-btn" id="togglePasswordBtn" title="إظهار / إخفاء كلمة المرور" aria-label="إظهار / إخفاء كلمة المرور">
+              <svg id="pwdEyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn primary-login-btn" id="emailLoginBtn">
+          <span id="emailBtnText">تسجيل الدخول</span>
+          <svg id="emailSpinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spinning" style="width:18px;height:18px;display:none;">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <div class="login-divider">
+        <span>أو المتابعة عبر</span>
+      </div>
+
+      <!-- Google Sign In -->
+      <button type="button" class="login-btn google-login-btn" id="googleLoginBtn">
         <svg width="20" height="20" viewBox="0 0 24 24">
           <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
           <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -882,7 +939,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
         </svg>
       </button>
     </div>
-    <div class="login-footer" style="margin-top:24px;">Google Auth Access · جمعية إرث وحضارة بالقريات</div>
+    <div class="login-footer">Firebase Auth Secure Access · جمعية إرث وحضارة بالقريات</div>
   </div>
 </div>
 
@@ -1014,7 +1071,7 @@ import {
   query, where, orderBy, limit, onSnapshot, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, updatePassword
+  getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 /* ── Firebase init ── */
@@ -1212,7 +1269,7 @@ onAuthStateChanged(auth, async (user) => {
       console.warn('Unauthorized access attempt by:', user.email, user.uid);
       await signOut(auth);
       currentUser = null;
-      showLogin('ليس لديك صلاحية للوصول إلى لوحة الإدارة.');
+      showLogin('الحساب غير مصرح له بالوصول إلى لوحة الإدارة. ليس لديك الصلاحيات الكافية.', true);
     }
   } else {
     currentUser = null;
@@ -1220,7 +1277,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-function showLogin(msg = ''){
+function showLogin(msg = '', isError = true){
   const ls = document.getElementById('loginScreen');
   if (ls) {
     ls.classList.remove('hidden');
@@ -1231,9 +1288,26 @@ function showLogin(msg = ''){
 
   const errEl = document.getElementById('loginErr');
   if (errEl) {
-    errEl.textContent = msg || '';
-    errEl.style.display = msg ? 'block' : 'none';
+    if (msg) {
+      errEl.textContent = msg;
+      errEl.style.display = 'block';
+      if (!isError) {
+        errEl.style.background = '#f0fdf4';
+        errEl.style.borderColor = '#bbf7d0';
+        errEl.style.color = '#15803d';
+      } else {
+        errEl.style.background = '#fef2f2';
+        errEl.style.borderColor = '#fecaca';
+        errEl.style.color = '#b91c1c';
+      }
+    } else {
+      errEl.textContent = '';
+      errEl.style.display = 'none';
+    }
   }
+
+  const pwdInput = document.getElementById('loginPassword');
+  if (pwdInput) pwdInput.value = '';
 }
 
 function showApp(user){
@@ -1313,6 +1387,104 @@ function startNotifWatch(){
   }, err => console.warn('[notif watch]', err?.code || err));
 }
 
+/* ── Email & Password Sign-In Handler ── */
+const emailFormEl = document.getElementById('emailLoginForm');
+if (emailFormEl && !emailFormEl.dataset.bound) {
+  emailFormEl.dataset.bound = 'true';
+  emailFormEl.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const emailEl = document.getElementById('loginEmail');
+    const pwdEl   = document.getElementById('loginPassword');
+    const errEl   = document.getElementById('loginErr');
+    const btnEl   = document.getElementById('emailLoginBtn');
+    const txtEl   = document.getElementById('emailBtnText');
+    const spinEl  = document.getElementById('emailSpinner');
+
+    const email = (emailEl?.value || '').trim();
+    const password = pwdEl?.value || '';
+
+    if (!email || !password) {
+      if (errEl) {
+        errEl.textContent = 'يرجى إدخال البريد الإلكتروني وكلمة المرور.';
+        errEl.style.display = 'block';
+        errEl.style.background = '#fef2f2';
+        errEl.style.borderColor = '#fecaca';
+        errEl.style.color = '#b91c1c';
+      }
+      return;
+    }
+
+    if (errEl) { errEl.textContent = ''; errEl.style.display = 'none'; }
+    if (btnEl) btnEl.disabled = true;
+    if (spinEl) spinEl.style.display = 'inline-block';
+    if (txtEl) txtEl.textContent = 'جارٍ تسجيل الدخول…';
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      const isAuthorized = await isAuthorizedAdmin(user);
+      if (!isAuthorized) {
+        console.warn('Unauthorized Email/Password login:', user.email, user.uid);
+        await signOut(auth);
+        currentUser = null;
+        if (errEl) {
+          errEl.textContent = 'الحساب غير مصرح له بالوصول إلى لوحة الإدارة. ليس لديك الصلاحيات الكافية.';
+          errEl.style.display = 'block';
+          errEl.style.background = '#fef2f2';
+          errEl.style.borderColor = '#fecaca';
+          errEl.style.color = '#b91c1c';
+        }
+      }
+    } catch (error) {
+      console.error('Email Sign-In Error:', error);
+      let errMsg = 'حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة لاحقاً.';
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+        errMsg = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+      } else if (error.code === 'auth/user-not-found') {
+        errMsg = 'لا يوجد حساب مسجل بهذا البريد الإلكتروني.';
+      } else if (error.code === 'auth/invalid-email') {
+        errMsg = 'صيغة البريد الإلكتروني غير صحيحة.';
+      } else if (error.code === 'auth/user-disabled') {
+        errMsg = 'تم تعطيل هذا الحساب. يرجى مراجعة المسؤول.';
+      } else if (error.code === 'auth/too-many-requests') {
+        errMsg = 'تم تعليق المحاولات مؤقتاً لكثرة المحاولات غير الصحيحة. يرجى الانتظار والمحاولة لاحقاً.';
+      } else if (error.code === 'auth/network-request-failed') {
+        errMsg = 'تعذر الاتصال بالشبكة. يرجى التحقق من اتصال الإنترنت.';
+      }
+      if (errEl) {
+        errEl.textContent = errMsg;
+        errEl.style.display = 'block';
+        errEl.style.background = '#fef2f2';
+        errEl.style.borderColor = '#fecaca';
+        errEl.style.color = '#b91c1c';
+      }
+    } finally {
+      if (btnEl) btnEl.disabled = false;
+      if (spinEl) spinEl.style.display = 'none';
+      if (txtEl) txtEl.textContent = 'تسجيل الدخول';
+    }
+  });
+}
+
+/* ── Toggle Password Visibility ── */
+const togglePwdBtn = document.getElementById('togglePasswordBtn');
+if (togglePwdBtn && !togglePwdBtn.dataset.bound) {
+  togglePwdBtn.dataset.bound = 'true';
+  togglePwdBtn.addEventListener('click', () => {
+    const pwdInput = document.getElementById('loginPassword');
+    const eyeIcon = document.getElementById('pwdEyeIcon');
+    if (!pwdInput) return;
+    const isPassword = pwdInput.type === 'password';
+    pwdInput.type = isPassword ? 'text' : 'password';
+    if (eyeIcon) {
+      eyeIcon.innerHTML = isPassword
+        ? `<path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>`
+        : `<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+  });
+}
+
 /* ── Google Sign-In Handler ── */
 const googleBtnEl = document.getElementById('googleLoginBtn');
 if (googleBtnEl && !googleBtnEl.dataset.bound) {
@@ -1337,8 +1509,11 @@ if (googleBtnEl && !googleBtnEl.dataset.bound) {
         console.warn('Unauthorized Google login:', user.email, user.uid);
         await signOut(auth);
         if (errEl) {
-          errEl.textContent = 'ليس لديك صلاحية للوصول إلى لوحة الإدارة.';
+          errEl.textContent = 'الحساب غير مصرح له بالوصول إلى لوحة الإدارة. ليس لديك الصلاحيات الكافية.';
           errEl.style.display = 'block';
+          errEl.style.background = '#fef2f2';
+          errEl.style.borderColor = '#fecaca';
+          errEl.style.color = '#b91c1c';
         }
       }
     } catch (error) {
@@ -1352,6 +1527,9 @@ if (googleBtnEl && !googleBtnEl.dataset.bound) {
           errEl.textContent = `حدث خطأ أثناء تسجيل الدخول عبر Google (${error.message || error.code})`;
         }
         errEl.style.display = 'block';
+        errEl.style.background = '#fef2f2';
+        errEl.style.borderColor = '#fecaca';
+        errEl.style.color = '#b91c1c';
       }
     } finally {
       googleBtnEl.disabled = false;
@@ -1361,11 +1539,24 @@ if (googleBtnEl && !googleBtnEl.dataset.bound) {
   });
 }
 
-/* ── Logout ── */
-document.getElementById('logoutBtn').addEventListener('click', async()=>{
+/* ── Unified Logout ── */
+async function performLogout() {
   if(!confirm('هل تريد تسجيل الخروج؟')) return;
-  await signOut(auth);
-});
+  try {
+    await signOut(auth);
+    currentUser = null;
+    Object.keys(loaded).forEach(k => { loaded[k] = false; });
+    showLogin('تم تسجيل الخروج بنجاح.', false);
+  } catch(err) {
+    console.error('Logout error:', err);
+  }
+}
+
+const logoutBtnEl = document.getElementById('logoutBtn');
+if (logoutBtnEl && !logoutBtnEl.dataset.bound) {
+  logoutBtnEl.dataset.bound = 'true';
+  logoutBtnEl.addEventListener('click', performLogout);
+}
 
 /* ── Cache ── */
 const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],volunteerOpportunities:[],workshop_registrations:[],admin_notifications:[],notifications:[],settings:{}};
@@ -6035,10 +6226,11 @@ async function vSettings(el){
     }
   });
 
-  document.getElementById('settLogoutBtn').addEventListener('click',async()=>{
-    if(!confirm('هل تريد تسجيل الخروج؟')) return;
-    await signOut(auth);
-  });
+  const settLogoutBtnEl = document.getElementById('settLogoutBtn');
+  if (settLogoutBtnEl && !settLogoutBtnEl.dataset.bound) {
+    settLogoutBtnEl.dataset.bound = 'true';
+    settLogoutBtnEl.addEventListener('click', performLogout);
+  }
 }
 
 /* ── SHARED UI HELPERS ── */

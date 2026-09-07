@@ -607,4 +607,16 @@ exports.renderLeaveRequestPdfWithPuppeteer = onCall(sharePointCorsOptions, async
   return await executePuppeteerPdfRender(htmlString, pdfOptions);
 });
 
+/* ════════ دوال المستودع السحابي لملفات الجمعية (SharePoint Cloud Repository) ════════ */
+const spCloud = require("./sharepointCloud");
+exports.spCloudGetStats     = spCloud.spCloudGetStats;
+exports.spCloudListItems    = spCloud.spCloudListItems;
+exports.spCloudCreateFolder = spCloud.spCloudCreateFolder;
+exports.spCloudUploadFile   = spCloud.spCloudUploadFile;
+exports.spCloudRenameItem   = spCloud.spCloudRenameItem;
+exports.spCloudDeleteItem   = spCloud.spCloudDeleteItem;
+exports.spCloudGetPreview   = spCloud.spCloudGetPreview;
+exports.spCloudSearch       = spCloud.spCloudSearch;
+
+
 

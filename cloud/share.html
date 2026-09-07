@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#9c6e38"/>
+  <title>رابط مشترك — سحابة إرث وحضارة</title>
+  <meta name="description" content="محتوى مشترك من سحابة جمعية إرث وحضارة بالقريات."/>
+  <meta name="robots" content="noindex, nofollow"/>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+
+  <!-- الخطوط والأيقونات الرسمية (بدون أي إيموجي) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- تصميم سحابة إرث وحضارة -->
+  <link rel="stylesheet" href="cloud.css?v=2.0"/>
+
+  <style>
+    /* تنسيقات خاصة بصفحة المشاركة العامة */
+    .share-page-wrapper {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--canvas);
+    }
+
+    .share-public-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+
+    .share-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+
+    .share-brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .share-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .share-brand-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--ink-900);
+    }
+
+    .share-brand-tag {
+      font-size: 0.72rem;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .share-container {
+      flex: 1;
+      max-width: 960px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .share-card-shell {
+      background: var(--shell);
+      border-radius: var(--radius-outer);
+      padding: 0.5rem;
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-ambient);
+    }
+
+    .share-card-core {
+      background: var(--surface);
+      border-radius: var(--radius-inner);
+      padding: 2rem;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    /* حالة القفل لكلمات المرور */
+    .lock-box {
+      text-align: center;
+      max-width: 440px;
+      margin: 3rem auto;
+    }
+
+    .lock-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-pill);
+      background: var(--gold-subtle);
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .lock-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .lock-desc {
+      font-size: 0.875rem;
+      color: var(--ink-500);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* تفاصيل الملف المشترك */
+    .shared-file-hero {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 600px) {
+      .shared-file-hero {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .shared-file-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 1.25rem;
+      background: var(--surface-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.25rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      border: 1px solid var(--border-hairline);
+    }
+
+    .shared-file-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .shared-file-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--ink-900);
+      word-break: break-all;
+    }
+
+    .shared-file-sub {
+      font-size: 0.85rem;
+      color: var(--ink-400);
+      margin-top: 0.35rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .shared-actions-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .preview-stage {
+      width: 100%;
+      min-height: 380px;
+      max-height: 600px;
+      border-radius: 1rem;
+      background: var(--canvas);
+      border: 1px solid var(--border-hairline);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-stage iframe {
+      width: 100%;
+      height: 550px;
+      border: none;
+    }
+
+    .preview-stage img {
+      max-width: 100%;
+      max-height: 550px;
+      object-fit: contain;
+    }
+
+    .share-public-footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: var(--ink-400);
+      border-top: 1px solid var(--border-hairline);
+      background: var(--surface);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="share-page-wrapper">
+    
+    <!-- الرأس الرسمي المعتمد -->
+    <header class="share-public-header">
+      <a href="/" class="share-brand">
+        <img src="logo.png" alt="شعار جمعية إرث وحضارة" class="share-brand-logo"/>
+        <div class="share-brand-text">
+          <span class="share-brand-title">سحابة إرث وحضارة</span>
+          <span class="share-brand-tag">جمعية إرث وحضارة بالقريات</span>
+        </div>
+      </a>
+      <div id="headerAccessBadge"></div>
+    </header>
+
+    <!-- مساحة المحتوى -->
+    <main class="share-container" id="shareMainContainer">
+      
+      <!-- شاشة التحميل الأولية -->
+      <div class="empty-state" id="shareLoading" style="margin-top:4rem;">
+        <div class="boot-spinner"></div>
+        <div class="empty-title" style="margin-top:1.5rem;">جاري فحص رابط المشاركة...</div>
+        <div class="empty-desc">يتم التحقق من الصلاحيات والاتصال بسحابة SharePoint</div>
+      </div>
+
+      <!-- حالة الخطأ أو الرابط غير الصالح -->
+      <div class="share-card-shell" id="shareErrorBox" style="display:none;margin-top:3rem;">
+        <div class="share-card-core" style="text-align:center;padding:3rem 1.5rem;">
+          <div class="lock-icon-wrap" style="background:var(--danger-bg);color:var(--danger);">
+            <i class="fa-solid fa-triangle-exclamation" id="shareErrIcon"></i>
+          </div>
+          <h2 class="lock-title" id="shareErrTitle" style="color:var(--danger);">تعذر فتح الرابط</h2>
+          <p class="lock-desc" id="shareErrMsg">الرابط غير صالح أو تم حذفه.</p>
+          <a href="/" class="btn-secondary" style="display:inline-flex;margin-top:0.5rem;">
+            <i class="fa-solid fa-house"></i> العودة للموقع الرئيسي
+          </a>
+        </div>
+      </div>
+
+      <!-- حالة القفل لكلمات المرور -->
+      <div class="share-card-shell" id="shareLockBox" style="display:none;margin-top:3rem;">
+        <div class="share-card-core">
+          <div class="lock-box">
+            <div class="lock-icon-wrap">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h2 class="lock-title">هذا المحتوى محمي بكلمة مرور</h2>
+            <p class="lock-desc">
+              تمت حماية هذا الرابط بكلمة مرور من قِبل مرسل الرابط في جمعية إرث وحضارة. يرجى إدخال كلمة المرور للمتابعة.
+            </p>
+
+            <form id="unlockForm">
+              <div class="input-field">
+                <div class="input-shell">
+                  <div class="input-core">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" id="unlockPassInput" placeholder="أدخل كلمة المرور..." required/>
+                    <button type="button" id="toggleUnlockPassBtn" style="color:var(--ink-400);cursor:pointer;">
+                      <i class="fa-regular fa-eye" id="unlockPassEye"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="login-err-box" id="unlockErrBox" style="margin-top:0.75rem;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="unlockErrMsg">كلمة المرور غير صحيحة</span>
+              </div>
+
+              <button type="submit" class="btn-primary" id="unlockSubmitBtn" style="width:100%;justify-content:center;margin-top:1rem;">
+                <span>فتح المحتوى المشترك</span>
+                <div class="btn-icon-wrapper">
+                  <i class="fa-solid fa-unlock"></i>
+                </div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- حالة استعراض الملف المشترك -->
+      <div class="share-card-shell" id="shareContentBox" style="display:none;">
+        <div class="share-card-core">
+          
+          <div class="shared-file-hero">
+            <div class="shared-file-icon" id="sharedIcon">
+              <i class="fa-solid fa-file"></i>
+            </div>
+            <div class="shared-file-meta">
+              <h1 class="shared-file-title" id="sharedTitle">اسم الملف</h1>
+              <div class="shared-file-sub" id="sharedSub">
+                <span id="sharedSize">0 بايت</span>
+                <span>•</span>
+                <span id="sharedDate">-</span>
+                <span>•</span>
+                <span id="sharedSender">جمعية إرث وحضارة</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- مساحة المعاينة للملف -->
+          <div class="preview-stage" id="sharedPreviewStage">
+            <div class="preview-spinner"><i class="fa-solid fa-spinner fa-spin"></i> جاري إعداد المعاينة...</div>
+          </div>
+
+          <!-- شريط الإجراءات والتحميل -->
+          <div class="shared-actions-bar">
+            <div style="font-size:0.85rem;color:var(--ink-500);" id="accessNoticeText">
+              <i class="fa-solid fa-shield-halved"></i> رابط مشاركة آمن وموثق من سحابة جمعية إرث وحضارة
+            </div>
+            <div style="display:flex;gap:0.75rem;">
+              <a href="#" id="sharedDownloadBtn" class="btn-primary" download target="_blank">
+                <i class="fa-solid fa-download"></i> تنزيل الملف الآن
+              </a>
+            </div>
+          </div>
+
+          <!-- قسم إذا كان العنصر المشترك مجلداً -->
+          <div id="sharedFolderSection" style="display:none;margin-top:2rem;">
+            <div class="section-header">
+              <div class="section-title">
+                <i class="fa-solid fa-folder-open" style="color:var(--gold);"></i>
+                <span>محتويات المجلد المشترك</span>
+                <span class="section-count" id="sharedFolderCount">0</span>
+              </div>
+            </div>
+
+            <!-- منطقة الرفع إذا كانت الصلاحية تسمح -->
+            <div id="sharedFolderUploadZone" class="drop-zone-overlay active" style="display:none;position:static;margin-bottom:1.5rem;min-height:110px;cursor:pointer;">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>انقر هنا أو أسقط الملفات لرفعها مباشرة داخل هذا المجلد المشترك</span>
+              <input type="file" id="sharedFolderFileInput" multiple style="display:none;"/>
+            </div>
+
+            <div class="files-grid" id="sharedFolderGrid"></div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- التذييل الرسمي -->
+    <footer class="share-public-footer">
+      <div>جميع الحقوق محفوظة © جمعية إرث وحضارة بالقريات 2026</div>
+      <div style="margin-top:0.25rem;">منصة التخزين السحابية الرسمية لملفات الجمعية عبر Microsoft SharePoint</div>
+    </footer>
+
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- محرك صفحة المشاركة -->
+  <script type="module" src="share.js?v=2.0"></script>
+</body>
+</html>

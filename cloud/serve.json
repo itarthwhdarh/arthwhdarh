@@ -1,0 +1,9 @@
+{
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/share", "destination": "/share.html" },
+    { "source": "/cloud/share", "destination": "/share.html" },
+    { "source": "/share/:id", "destination": "/share.html" },
+    { "source": "/cloud/share/:id", "destination": "/cloud/share.html" }
+  ]
+}

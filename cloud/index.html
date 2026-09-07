@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#9c6e38"/>
+  <title>سحابة إرث وحضارة — منصة التخزين السحابية الرسمية</title>
+  <meta name="description" content="منصة التخزين السحابية الرسمية لجمعية إرث وحضارة بالقريات عبر Microsoft SharePoint."/>
+  <meta name="robots" content="noindex, nofollow"/>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+
+  <!-- الخطوط والأيقونات الرسمية (بدون أي إيموجي) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- تصميم سحابة إرث وحضارة -->
+  <link rel="stylesheet" href="cloud.css?v=2.0"/>
+</head>
+<body>
+
+  <!-- ════════ شاشة الكشف والتحقق الافتتاحية ════════ -->
+  <div id="bootScreen">
+    <div class="boot-card">
+      <img class="boot-logo" src="logo.png" alt="شعار جمعية إرث وحضارة"/>
+      <div class="boot-title">سحابة إرث وحضارة</div>
+      <div class="boot-sub">منصة التخزين السحابية الرسمية للجمعية</div>
+      <div class="boot-spinner"></div>
+    </div>
+  </div>
+
+  <!-- ════════ شاشة تسجيل الدخول ════════ -->
+  <div id="loginScreen" class="hidden">
+    <div class="login-shell">
+      <div class="login-core">
+        <div class="login-header">
+          <img class="login-logo" src="logo.png" alt="شعار جمعية إرث وحضارة"/>
+          <div class="login-badge">
+            <i class="fa-solid fa-cloud-arrow-up"></i> سحابة إرث وحضارة
+          </div>
+          <h1 class="login-title">تسجيل الدخول</h1>
+          <p class="login-subtitle">ادخل بيانات حسابك للوصول إلى السحابة التخزينية للجمعية</p>
+        </div>
+
+        <form class="login-form" id="loginForm" autocomplete="on">
+          <div class="input-field">
+            <label class="input-label" for="loginEmail">البريد الإلكتروني</label>
+            <div class="input-shell">
+              <div class="input-core">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="email" id="loginEmail" placeholder="name@erth.sa" autocomplete="username" required/>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-field">
+            <label class="input-label" for="loginPassword">كلمة المرور</label>
+            <div class="input-shell">
+              <div class="input-core">
+                <i class="fa-regular fa-lock"></i>
+                <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" required/>
+                <button type="button" id="togglePassBtn" style="color:var(--ink-400);cursor:pointer;" title="إظهار/إخفاء">
+                  <i class="fa-regular fa-eye" id="togglePassIcon"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- صندوق التنبيه بالأخطاء -->
+          <div class="login-err-box" id="loginErrBox">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span id="loginErrMsg"></span>
+          </div>
+
+          <button type="submit" class="btn-primary" id="loginSubmitBtn">
+            <span id="loginBtnText">الدخول إلى سحابة الجمعية</span>
+            <div class="btn-icon-wrapper">
+              <i class="fa-solid fa-arrow-left"></i>
+            </div>
+          </button>
+        </form>
+
+        <a href="/" class="login-back-link">
+          <i class="fa-solid fa-house"></i> العودة للموقع الرئيسي للجمعية
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ تطبيق السحابة (App Shell) ════════ -->
+  <div id="appShell" class="hidden">
+    
+    <!-- الشريط الجانبي (Sidebar) -->
+    <aside class="cloud-sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <img class="sidebar-logo" src="logo.png" alt="شعار جمعية إرث وحضارة"/>
+        <div class="brand-text">
+          <span class="brand-title">سحابة إرث وحضارة</span>
+          <span class="brand-tag">منصة التخزين السحابية</span>
+        </div>
+      </div>
+
+      <!-- أقسام التنقل الرئيسية -->
+      <nav class="nav-section">
+        <div class="nav-label">الرئيسية والتنقل</div>
+        
+        <a href="#" class="nav-item" id="navHome" data-view="home">
+          <i class="fa-solid fa-house"></i>
+          <span>الرئيسية</span>
+        </a>
+
+        <a href="#" class="nav-item active" id="navAllFiles" data-view="files">
+          <i class="fa-solid fa-folder-tree"></i>
+          <span>ملفاتي</span>
+        </a>
+
+        <a href="#" class="nav-item" id="navFolders" data-view="folders">
+          <i class="fa-solid fa-folder"></i>
+          <span>المجلدات</span>
+        </a>
+
+        <a href="#" class="nav-item" id="navRecentFiles" data-view="recent">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>العناصر الأخيرة</span>
+        </a>
+
+        <a href="#" class="nav-item" id="navFavorites" data-view="favorites">
+          <i class="fa-solid fa-star"></i>
+          <span>المفضلة</span>
+        </a>
+
+        <a href="#" class="nav-item" id="navSharedLinks" data-view="shares">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>روابط المشاركة</span>
+        </a>
+
+        <a href="#" class="nav-item" id="navRecycleBin" data-view="recycle">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>سلة المحذوفات</span>
+        </a>
+
+        <a href="#" class="nav-item" id="navSettings" data-view="settings">
+          <i class="fa-solid fa-gear"></i>
+          <span>الإعدادات والسعة</span>
+        </a>
+      </nav>
+
+      <!-- سعة التخزين في SharePoint -->
+      <div class="quota-card">
+        <div class="quota-header">
+          <span><i class="fa-solid fa-hard-drive"></i> سعة SharePoint</span>
+          <span id="quotaPercent">0%</span>
+        </div>
+        <div class="quota-bar-track">
+          <div class="quota-bar-fill" id="quotaBarFill"></div>
+        </div>
+        <div class="quota-text" id="quotaText">جاري تحميل بيانات السعة...</div>
+      </div>
+
+      <!-- معلومات المستخدم المسجل -->
+      <div class="sidebar-user-card">
+        <div class="user-avatar" id="userAvatar">م</div>
+        <div class="user-meta">
+          <span class="user-name" id="userName">المستخدم</span>
+          <span class="user-role-badge" id="userRoleBadge">موظف</span>
+        </div>
+        <button class="btn-logout" id="logoutBtn" title="تسجيل الخروج">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- منطقة المحتوى الرئيسية -->
+    <main class="cloud-main">
+
+      <!-- الرأس العلوي (Header) -->
+      <header class="cloud-header">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="فتح القائمة">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="header-search-wrap">
+          <div class="search-shell">
+            <div class="search-core">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="searchInput" placeholder="ابحث في الملفات والمجلدات بالسحابة..."/>
+              <button class="search-clear-btn" id="searchClearBtn" title="مسح البحث">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn-secondary" id="refreshBtn" title="تحديث السحابة من SharePoint">
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+          
+          <button class="btn-secondary" id="newFolderBtn">
+            <i class="fa-solid fa-folder-plus"></i>
+            <span>مجلد جديد</span>
+          </button>
+
+          <button class="btn-primary" id="uploadBtn">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>رفع ملفات</span>
+            <div class="btn-icon-wrapper">
+              <i class="fa-solid fa-plus"></i>
+            </div>
+          </button>
+        </div>
+      </header>
+
+      <!-- شريط المسار والتحكم بالعرض (يظهر في عرض الملفات) -->
+      <div class="sub-bar" id="subBar">
+        <div class="breadcrumb-nav" id="breadcrumbNav">
+          <span class="bc-item current" data-id="root">
+            <i class="fa-solid fa-cloud"></i> سحابة إرث وحضارة
+          </span>
+        </div>
+
+        <div class="bar-controls">
+          <button class="btn-secondary" id="goBackBtn" style="display:none;" title="الرجوع للمجلد السابق">
+            <i class="fa-solid fa-arrow-right"></i> رجوع
+          </button>
+
+          <!-- الترتيب -->
+          <div class="sort-select-wrap">
+            <i class="fa-solid fa-arrow-down-short-wide"></i>
+            <select id="sortSelect">
+              <option value="name_asc">الاسم (أ - ي)</option>
+              <option value="name_desc">الاسم (ي - أ)</option>
+              <option value="date_desc" selected>الأحدث تعديلاً</option>
+              <option value="date_asc">الأقدم تعديلاً</option>
+              <option value="size_desc">الحجم (الأكبر)</option>
+              <option value="size_asc">الحجم (الأصغر)</option>
+            </select>
+          </div>
+
+          <!-- تبديل العرض بين الشبكة والقائمة -->
+          <div class="control-btn-group">
+            <button class="view-toggle-btn active" id="viewGridBtn" title="عرض الشبكة">
+              <i class="fa-solid fa-grip"></i>
+            </button>
+            <button class="view-toggle-btn" id="viewListBtn" title="عرض القائمة">
+              <i class="fa-solid fa-list-ul"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- مساحة المستكشف والواجهات (Explorer Canvas) -->
+      <div class="explorer-canvas" id="explorerCanvas">
+
+        <!-- منطقة السحب والإفلات التفاعلية -->
+        <div class="drop-zone-overlay" id="dropZoneOverlay">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <span>أفلت الملفات هنا لرفعها إلى SharePoint مباشرة</span>
+        </div>
+
+        <!-- شاشة التحميل (Skeleton) -->
+        <div id="loadingSkeleton" style="display:none;">
+          <div style="display:flex;flex-direction:column;gap:1.5rem;">
+            <div style="display:flex;gap:1rem;">
+              <div class="skeleton" style="width:200px;height:40px;"></div>
+              <div class="skeleton" style="width:120px;height:40px;"></div>
+            </div>
+            <div class="folders-grid">
+              <div class="skeleton" style="height:70px;border-radius:1.15rem;"></div>
+              <div class="skeleton" style="height:70px;border-radius:1.15rem;"></div>
+              <div class="skeleton" style="height:70px;border-radius:1.15rem;"></div>
+            </div>
+            <div class="files-grid" style="margin-top:1rem;">
+              <div class="skeleton" style="height:140px;border-radius:1.25rem;"></div>
+              <div class="skeleton" style="height:140px;border-radius:1.25rem;"></div>
+              <div class="skeleton" style="height:140px;border-radius:1.25rem;"></div>
+              <div class="skeleton" style="height:140px;border-radius:1.25rem;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ════ 1. واجهة الرئيسية (Home Overview) ════ -->
+        <div class="view-panel" id="viewHome" style="display:none;">
+          <div class="home-hero">
+            <div class="home-hero-text">
+              <h2 class="home-greeting">مرحباً بك في سحابة إرث وحضارة</h2>
+              <p class="home-sub">المستودع السحابي الآمن لملفات ومستندات جمعية إرث وحضارة بالقريات عبر Microsoft SharePoint.</p>
+            </div>
+            <div class="home-hero-actions">
+              <button class="btn-primary" id="homeUploadBtn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> رفع ملفات جديدة
+              </button>
+              <button class="btn-secondary" id="homeNewFolderBtn">
+                <i class="fa-solid fa-folder-plus"></i> إنشاء مجلد
+              </button>
+            </div>
+          </div>
+
+          <!-- بطاقات الإحصائيات الأربع -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrap"><i class="fa-solid fa-database"></i></div>
+              <div class="stat-content">
+                <span class="stat-label">سعة التخزين المستخدمة</span>
+                <span class="stat-value" id="homeStatUsed">0 بايت</span>
+                <span class="stat-hint">من إجمالي 25 تيرابايت</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap"><i class="fa-solid fa-folder-tree"></i></div>
+              <div class="stat-content">
+                <span class="stat-label">المجلدات النشطة</span>
+                <span class="stat-value" id="homeStatFolders">0</span>
+                <span class="stat-hint">في مستودع SharePoint</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap"><i class="fa-solid fa-file-shield"></i></div>
+              <div class="stat-content">
+                <span class="stat-label">الملفات المخزنة</span>
+                <span class="stat-value" id="homeStatFiles">0</span>
+                <span class="stat-hint">ملف ومستند رسمي</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon-wrap"><i class="fa-solid fa-share-nodes"></i></div>
+              <div class="stat-content">
+                <span class="stat-label">روابط المشاركة النشطة</span>
+                <span class="stat-value" id="homeStatShares">0</span>
+                <span class="stat-hint">محمية ومؤمنة بالكامل</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم الوصول السريع للمجلدات الشائعة -->
+          <div class="home-section-title">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>المجلدات الرئيسية</span>
+          </div>
+          <div class="folders-grid" id="homeFoldersGrid"></div>
+
+          <!-- قسم الملفات المحدثة مؤخراً -->
+          <div class="home-section-title" style="margin-top:2rem;">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>أحدث الملفات المرفوعة</span>
+          </div>
+          <div class="files-grid" id="homeRecentFilesGrid"></div>
+        </div>
+
+        <!-- ════ 2. واجهة ملفاتي القياسية (Files View) ════ -->
+        <div class="view-panel" id="viewFiles">
+          <!-- قسم المجلدات -->
+          <section id="foldersSection" style="display:none;">
+            <div class="section-header">
+              <div class="section-title">
+                <i class="fa-solid fa-folder" style="color:var(--gold);"></i>
+                <span>المجلدات</span>
+                <span class="section-count" id="foldersCount">0</span>
+              </div>
+            </div>
+            <div class="folders-grid" id="foldersGrid"></div>
+          </section>
+
+          <!-- قسم الملفات -->
+          <section id="filesSection" style="display:none;">
+            <div class="section-header">
+              <div class="section-title">
+                <i class="fa-solid fa-file" style="color:var(--ink-500);"></i>
+                <span>الملفات</span>
+                <span class="section-count" id="filesCount">0</span>
+              </div>
+            </div>
+
+            <!-- عرض الشبكة -->
+            <div class="files-grid" id="filesGrid"></div>
+
+            <!-- عرض القائمة / الجدول -->
+            <div class="files-list-view" id="filesListView" style="display:none;">
+              <table class="files-table">
+                <thead>
+                  <tr>
+                    <th style="width:36px;"></th>
+                    <th>الاسم</th>
+                    <th>النوع</th>
+                    <th>الحجم</th>
+                    <th>آخر تعديل</th>
+                    <th>بواسطة</th>
+                    <th style="text-align:center;">إجراءات</th>
+                  </tr>
+                </thead>
+                <tbody id="filesTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+        <!-- ════ 3. واجهة روابط المشاركة (Shared Links Hub) ════ -->
+        <div class="view-panel" id="viewShares" style="display:none;">
+          <div class="section-header">
+            <div class="section-title">
+              <i class="fa-solid fa-share-nodes" style="color:var(--gold);"></i>
+              <span>إدارة روابط المشاركة</span>
+              <span class="section-count" id="sharesCount">0</span>
+            </div>
+          </div>
+          <p class="shares-desc">جميع روابط المشاركة العامة التي أنشأتها لملفاتك ومجلداتك مع إمكانية إلغائها أو نسخها في أي وقت.</p>
+
+          <div class="files-list-view" style="margin-top:1.25rem;">
+            <table class="files-table">
+              <thead>
+                <tr>
+                  <th>العنصر المشترك</th>
+                  <th>النوع</th>
+                  <th>نوع الوصول</th>
+                  <th>الحماية بكلمة مرور</th>
+                  <th>تاريخ الانتهاء</th>
+                  <th>المشاهدات</th>
+                  <th>الحالة</th>
+                  <th style="text-align:center;">إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="sharesTableBody"></tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="emptySharesState" style="display:none;">
+            <div class="empty-icon-wrap"><i class="fa-solid fa-share-nodes"></i></div>
+            <div class="empty-title">لا توجد روابط مشاركة نشطة</div>
+            <div class="empty-desc">يمكنك إنشاء رابط مشاركة محمي لأي ملف أو مجلد بالضغط على زر "مشاركة" في قائمة الخيارات.</div>
+          </div>
+        </div>
+
+        <!-- ════ 4. واجهة المفضلة (Favorites View) ════ -->
+        <div class="view-panel" id="viewFavorites" style="display:none;">
+          <div class="section-header">
+            <div class="section-title">
+              <i class="fa-solid fa-star" style="color:#d97706;"></i>
+              <span>العناصر المفضلة</span>
+              <span class="section-count" id="favoritesCount">0</span>
+            </div>
+          </div>
+          <div class="files-grid" id="favoritesGrid" style="margin-top:1.25rem;"></div>
+          <div class="empty-state" id="emptyFavoritesState" style="display:none;">
+            <div class="empty-icon-wrap"><i class="fa-solid fa-star"></i></div>
+            <div class="empty-title">لا توجد عناصر مفضلة حتى الآن</div>
+            <div class="empty-desc">اضغط على أيقونة النجمة بجانب أي ملف أو مجلد لإضافته هنا للوصول السريع.</div>
+          </div>
+        </div>
+
+        <!-- ════ 5. واجهة سلة المحذوفات (Recycle Bin View) ════ -->
+        <div class="view-panel" id="viewRecycle" style="display:none;">
+          <div class="section-header">
+            <div class="section-title">
+              <i class="fa-solid fa-trash-can" style="color:var(--danger);"></i>
+              <span>سلة المحذوفات (SharePoint)</span>
+              <span class="section-count" id="recycleCount">0</span>
+            </div>
+          </div>
+          <p class="shares-desc">العناصر المحذوفة من مكتبة SharePoint تخزن مؤقتاً في سلة مهملات المستودع قبل الحذف النهائي.</p>
+          <div class="files-grid" id="recycleGrid" style="margin-top:1.25rem;"></div>
+          <div class="empty-state" id="emptyRecycleState" style="display:none;">
+            <div class="empty-icon-wrap"><i class="fa-solid fa-trash-can"></i></div>
+            <div class="empty-title">سلة المحذوفات فارغة</div>
+            <div class="empty-desc">لا توجد عناصر محذوفة حالياً في سلة محذوفات SharePoint.</div>
+          </div>
+        </div>
+
+        <!-- ════ 6. واجهة الإعدادات والسعة (Settings View) ════ -->
+        <div class="view-panel" id="viewSettings" style="display:none;">
+          <div class="section-header">
+            <div class="section-title">
+              <i class="fa-solid fa-gear" style="color:var(--ink-500);"></i>
+              <span>إعدادات السحابة وسعة التخزين</span>
+            </div>
+          </div>
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h3 class="settings-card-title"><i class="fa-solid fa-user-shield"></i> بيانات المستخدم المعتمد</h3>
+              <div class="settings-row">
+                <span class="s-label">الاسم:</span>
+                <span class="s-val" id="settUserName">-</span>
+              </div>
+              <div class="settings-row">
+                <span class="s-label">البريد الإلكتروني:</span>
+                <span class="s-val" id="settUserEmail">-</span>
+              </div>
+              <div class="settings-row">
+                <span class="s-label">الدور الوظيفي:</span>
+                <span class="s-val" id="settUserRole">-</span>
+              </div>
+              <div class="settings-row">
+                <span class="s-label">صلاحية الحذف:</span>
+                <span class="s-val" id="settCanDelete">-</span>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <h3 class="settings-card-title"><i class="fa-solid fa-server"></i> إعدادات خادم التخزين</h3>
+              <div class="settings-row">
+                <span class="s-label">محرك التخزين الفعلي:</span>
+                <span class="s-val">Microsoft SharePoint (Graph API)</span>
+              </div>
+              <div class="settings-row">
+                <span class="s-label">شبكة الربط:</span>
+                <span class="s-val">Cloudflare Edge Worker (Secure)</span>
+              </div>
+              <div class="settings-row">
+                <span class="s-label">السعة الإجمالية:</span>
+                <span class="s-val">25 تيرابايت (27,487,790,694,400 بايت)</span>
+              </div>
+              <div class="settings-row">
+                <span class="s-label">حالة الاتصال:</span>
+                <span class="s-val" style="color:var(--success);font-weight:700;">متصل ومؤمّن بنجاح</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- الحالة الفارغة للمستكشف (Empty State) -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <div class="empty-icon-wrap">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+          <div class="empty-title">هذا المجلد فارغ حالياً</div>
+          <div class="empty-desc">يمكنك إنشاء مجلد جديد أو سحب الملفات وإفلاتها هنا لبدء رفعها إلى سحابة الجمعية.</div>
+          <button class="btn-primary" id="emptyUploadBtn" style="margin-top:0.5rem;">
+            <i class="fa-solid fa-cloud-arrow-up"></i> رفع ملفات الآن
+          </button>
+        </div>
+
+        <!-- حالة الخطأ مع زر إعادة المحاولة (Error State) -->
+        <div class="empty-state" id="errorState" style="display:none;">
+          <div class="empty-icon-wrap" style="background:var(--danger-bg);color:var(--danger);">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div class="empty-title" style="color:var(--danger);">تعذر الاتصال بسحابة الملفات</div>
+          <div class="empty-desc" id="errorStateDesc">حدث خطأ أثناء جلب الملفات من SharePoint. يرجى التحقق وإعادة المحاولة.</div>
+          <button class="btn-primary" id="retryBtn" style="margin-top:0.5rem;">
+            <i class="fa-solid fa-rotate-right"></i> إعادة المحاولة
+          </button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ════════ النوافذ المنبثقة (Modals) ════════ -->
+
+  <!-- 1. نافذة إنشاء مجلد جديد -->
+  <div class="modal-backdrop" id="newFolderModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fa-solid fa-folder-plus" style="color:var(--gold);"></i>
+          إنشاء مجلد جديد
+        </h3>
+        <button class="modal-close-btn" data-close="newFolderModal" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="newFolderForm">
+        <div class="modal-body">
+          <div class="input-field">
+            <label class="input-label" for="folderNameInput">اسم المجلد الجديد</label>
+            <div class="input-shell">
+              <div class="input-core">
+                <i class="fa-solid fa-folder"></i>
+                <input type="text" id="folderNameInput" placeholder="مثلاً: محاضر اجتماعات 2026" required/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" data-close="newFolderModal">إلغاء</button>
+          <button type="submit" class="btn-primary" id="createFolderSubmitBtn">
+            <span>إنشاء المجلد</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. نافذة رفع الملفات القديمة (احتياطية عند الحاجة) -->
+  <div class="modal-backdrop" id="uploadModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fa-solid fa-cloud-arrow-up" style="color:var(--gold);"></i>
+          رفع ملفات إلى السحابة
+        </h3>
+        <button class="modal-close-btn" data-close="uploadModal" id="closeUploadModalBtn" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-drop-zone" id="modalDropZone">
+          <i class="fa-solid fa-cloud-arrow-up drop-zone-icon"></i>
+          <span class="drop-zone-text">اسحب وأفلت الملفات هنا، أو انقر للاختيار من جهازك</span>
+          <span class="drop-zone-sub">يدعم جميع أنواع المستندات، ملفات PDF، الصور، مقاطع الفيديو والأرشيف</span>
+          <input type="file" id="filePickerInput" multiple style="display:none;"/>
+        </div>
+        <div class="upload-queue-list" id="uploadQueueList"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-close="uploadModal">إلغاء</button>
+        <button type="button" class="btn-primary" id="startUploadBtn" style="display:none;">
+          <span>بدء الرفع إلى SharePoint</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. نافذة المشاركة المتقدمة وحماية كلمة المرور (Share Modal) -->
+  <div class="modal-backdrop" id="shareModal">
+    <div class="modal-dialog" style="max-width:540px;">
+      <div class="modal-header">
+        <h3 class="modal-title">
+          <i class="fa-solid fa-share-nodes" style="color:var(--gold);"></i>
+          <span>مشاركة العنصر</span>
+        </h3>
+        <button class="modal-close-btn" data-close="shareModal" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="shareForm">
+        <div class="modal-body">
+          <div class="share-item-card">
+            <i class="fa-solid fa-file share-item-icon" id="shareItemIcon"></i>
+            <div class="share-item-text">
+              <span class="share-item-name" id="shareItemName">اسم الملف</span>
+              <span class="share-item-size" id="shareItemMeta">0 بايت</span>
+            </div>
+          </div>
+
+          <!-- خيارات الصلاحية والوصول -->
+          <div class="input-field" style="margin-top:1rem;">
+            <label class="input-label">نوع الوصول الممنوح للرابط</label>
+            <div class="share-access-options">
+              <label class="access-radio-card active" id="optAccessDownload">
+                <input type="radio" name="accessType" value="download" checked/>
+                <div class="arc-content">
+                  <span class="arc-title"><i class="fa-solid fa-download"></i> عرض وتنزيل</span>
+                  <span class="arc-desc">يتيح للمستلم معاينة وتحميل الملف أو محتويات المجلد</span>
+                </div>
+              </label>
+
+              <label class="access-radio-card" id="optAccessView">
+                <input type="radio" name="accessType" value="view"/>
+                <div class="arc-content">
+                  <span class="arc-title"><i class="fa-solid fa-eye"></i> عرض فقط (بدون تنزيل)</span>
+                  <span class="arc-desc">يتيح المعاينة فقط مع تعطيل أزرار التنزيل</span>
+                </div>
+              </label>
+
+              <label class="access-radio-card" id="optAccessUpload" style="display:none;">
+                <input type="radio" name="accessType" value="upload"/>
+                <div class="arc-content">
+                  <span class="arc-title"><i class="fa-solid fa-cloud-arrow-up"></i> إيداع ورفع ملفات</span>
+                  <span class="arc-desc">يتيح للزائر رفع ملفات داخل هذا المجلد المشترك</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- خيار الحماية بكلمة مرور -->
+          <div class="share-toggle-block">
+            <div class="st-row">
+              <div class="st-label">
+                <i class="fa-solid fa-lock"></i>
+                <div>
+                  <strong>حماية بكلمة مرور</strong>
+                  <span>لن يتمكن المستلم من الوصول إلا بعد إدخال كلمة المرور</span>
+                </div>
+              </div>
+              <input type="checkbox" id="enablePasswordToggle" class="toggle-checkbox"/>
+            </div>
+            
+            <div class="st-sub-field" id="passwordFieldWrap" style="display:none;margin-top:0.75rem;">
+              <div class="input-shell">
+                <div class="input-core">
+                  <i class="fa-solid fa-key"></i>
+                  <input type="password" id="sharePasswordInput" placeholder="أدخل كلمة مرور قوية لحماية الرابط..."/>
+                  <button type="button" id="toggleSharePassBtn" style="cursor:pointer;color:var(--ink-400);">
+                    <i class="fa-regular fa-eye" id="sharePassEye"></i>
+                  </button>
+                </div>
+              </div>
+              <span class="field-hint">يتم تشفير كلمة المرور بـ Salted SHA-256 قبل الحفظ ولا تُحفظ كنص صريح إطلاقاً.</span>
+            </div>
+          </div>
+
+          <!-- خيار تاريخ الانتهاء -->
+          <div class="share-toggle-block" style="margin-top:0.75rem;">
+            <div class="st-row">
+              <div class="st-label">
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <div>
+                  <strong>تحديد تاريخ انتهاء الصلاحية</strong>
+                  <span>يتوقف الرابط عن العمل تلقائياً بعد هذا التاريخ</span>
+                </div>
+              </div>
+              <input type="checkbox" id="enableExpiryToggle" class="toggle-checkbox"/>
+            </div>
+
+            <div class="st-sub-field" id="expiryFieldWrap" style="display:none;margin-top:0.75rem;">
+              <input type="datetime-local" id="shareExpiryInput" class="custom-date-input"/>
+            </div>
+          </div>
+
+          <!-- صندوق الرابط المنشأ بعد النجاح -->
+          <div class="share-result-box" id="shareResultBox" style="display:none;margin-top:1rem;">
+            <div class="srb-header">
+              <i class="fa-solid fa-circle-check text-success"></i>
+              <span>تم إنشاء رابط المشاركة بنجاح</span>
+            </div>
+            <div class="srb-input-row">
+              <input type="text" id="shareGeneratedUrl" readonly/>
+              <button type="button" class="btn-primary" id="copyShareUrlBtn">
+                <i class="fa-solid fa-copy"></i>
+                <span>نسخ</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" data-close="shareModal">إغلاق</button>
+          <button type="submit" class="btn-primary" id="createShareBtn">
+            <i class="fa-solid fa-link"></i>
+            <span>إنشاء رابط المشاركة</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. نافذة المعاينة المباشرة (Preview Modal) -->
+  <div class="modal-backdrop" id="previewModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 class="modal-title" id="previewFileName">معاينة الملف</h3>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <a href="#" id="previewDownloadBtn" class="btn-primary" target="_blank" download>
+            <i class="fa-solid fa-download"></i> تنزيل
+          </a>
+          <button class="modal-close-btn" data-close="previewModal" title="إغلاق">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body" style="padding:0;overflow:hidden;">
+        <div class="preview-viewer" id="previewViewer">
+          <div class="preview-spinner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. نافذة إعادة التسمية (Rename Modal) -->
+  <div class="modal-backdrop" id="renameModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="renameModalTitle">إعادة تسمية العنصر</h3>
+        <button class="modal-close-btn" data-close="renameModal" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <form id="renameForm">
+        <div class="modal-body">
+          <div class="input-field">
+            <label class="input-label" for="renameInput">الاسم الجديد</label>
+            <div class="input-shell">
+              <div class="input-core">
+                <i class="fa-solid fa-pen"></i>
+                <input type="text" id="renameInput" required/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" data-close="renameModal">إلغاء</button>
+          <button type="submit" class="btn-primary" id="renameSubmitBtn">
+            <span>حفظ التعديل</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. نافذة تأكيد الحذف النهائي (Delete Modal) -->
+  <div class="modal-backdrop" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color:var(--danger);">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          تأكيد الحذف
+        </h3>
+        <button class="modal-close-btn" data-close="deleteModal" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>هل أنت متأكد من رغبتك في حذف <strong id="deleteItemName" style="color:var(--ink-900);"></strong> نهائياً من سحابة SharePoint؟</p>
+        <p class="field-hint" style="color:var(--danger);margin-top:0.5rem;">
+          لا يمكن التراجع عن هذه العملية بعد اكتمالها.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-close="deleteModal">إلغاء</button>
+        <button type="button" class="btn-primary" id="confirmDeleteBtn" style="background:var(--danger);">
+          <i class="fa-solid fa-trash"></i>
+          <span>حذف نهائي</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- حاوية الإشعارات العائمة (Toast Container) -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- تطبيق السحابة الرئيسي -->
+  <script type="module" src="cloud.js?v=2.0"></script>
+</body>
+</html>
