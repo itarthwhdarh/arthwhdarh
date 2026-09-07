@@ -530,7 +530,7 @@ textarea.form-input {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, serverTimestamp
+  getFirestore, collection, doc, getDoc, getDocs, setDoc, query, where, limit, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp({
@@ -662,12 +662,13 @@ document.getElementById('formVerify').addEventListener('submit', async (e) => {
   txt.textContent = 'جارٍ التحقق…';
 
   try {
-    // Search registrations for this workshop
+    // Search registrations for this workshop with limit(1) for privacy and performance
     const wsId = activeSurvey.workshopId;
     const q1 = query(
       collection(db, 'workshop_registrations'),
       where('workshopId', '==', wsId),
-      where('nationalId', '==', cleanId)
+      where('nationalId', '==', cleanId),
+      limit(1)
     );
     let regSnap = await getDocs(q1);
 
@@ -676,19 +677,34 @@ document.getElementById('formVerify').addEventListener('submit', async (e) => {
       const q2 = query(
         collection(db, 'workshop_registrations'),
         where('workshopId', '==', wsId),
-        where('idNumber', '==', cleanId)
+        where('idNumber', '==', cleanId),
+        limit(1)
       );
       regSnap = await getDocs(q2);
     }
 
     if (regSnap.empty) {
+      errEl.className = 'alert-box alert-err';
       errEl.textContent = 'عذرًا، هذا الاستبيان متاح فقط للمسجلين في هذه الورشة.';
       errEl.style.display = 'block';
       return;
     }
 
     const regDoc = regSnap.docs[0];
-    verifiedRegistration = { id: regDoc.id, ...regDoc.data() };
+    const regData = regDoc.data() || {};
+
+    if (regData.status === 'مرفوض') {
+      errEl.className = 'alert-box alert-err';
+      errEl.textContent = 'عذرًا، حالة التسجيل غير مؤهلة للمشاركة في هذا الاستبيان.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    // Only store registration ID internally without storing sensitive data
+    verifiedRegistration = { id: regDoc.id };
+
+    // Clear input field immediately for privacy
+    inputEl.value = '';
 
     // Check if participant already answered this survey
     const respId = `${activeSurvey.id}_${regDoc.id}`;

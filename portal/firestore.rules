@@ -263,7 +263,16 @@ service cloud.firestore {
     // ── تسجيلات الورش التدريبية ──
     match /workshop_registrations/{id} {
       allow create: if true;
-      allow read, update, delete: if isSiteAdmin();
+      allow update, delete: if isSiteAdmin();
+      // قراءة المستند الفردي مباشرة محصورة بالمدير فقط
+      allow get: if isSiteAdmin();
+      // الاستعلام محصور بالمدير أو للمشارك للاستبيان بحد أقصى مستند واحد للتحقق بالهوية وورشة العمل
+      allow list: if isSiteAdmin() || (
+        request.query.limit <= 2 &&
+        resource.data.workshopId != null &&
+        (resource.data.nationalId != null || resource.data.idNumber != null) &&
+        resource.data.get('status', 'جديد') != 'مرفوض'
+      );
     }
 
     // ── الأخبار والمقالات ──
@@ -295,9 +304,13 @@ service cloud.firestore {
     // ── إجابات الاستبيانات (survey_responses) ──
     match /survey_responses/{id} {
       // تتيح للمشارك إرسال إجابته فقط إن لم تكن موجودة مسبقاً لمنع التكرار على مستوى قاعدة البيانات
-      allow create: if !exists(/databases/$(database)/documents/survey_responses/$(id));
-      // قراءة التقييمات والإحصائيات وتعديلها وحذفها محصورة بمديري النظام لحفظ الخصوصية
-      allow read, update, delete: if isSiteAdmin();
+      allow create: if !exists(/databases/$(database)/documents/survey_responses/$(id))
+        && request.resource.data.keys().hasAll(['surveyId', 'workshopId', 'registrationId', 'answers', 'submittedAt'])
+        && id == request.resource.data.surveyId + '_' + request.resource.data.registrationId;
+      // تتيح فحص وجود إجابة سابقة بالمعرف المحدد فقط لمنع التكرار قبل تعبئة الأسئلة
+      allow get: if true;
+      // قراءة التقييمات الشاملة والإحصائيات وتعديلها وحذفها محصورة بمديري النظام لحفظ الخصوصية
+      allow list, update, delete: if isSiteAdmin();
     }
 
     // ── حسابات مديري النظام ومستخدمي لوحة الإدارة ──
