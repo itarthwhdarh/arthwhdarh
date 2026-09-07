@@ -548,10 +548,19 @@ const esc = s => (s ?? '').toString().replace(/&/g, '&amp;').replace(/</g, '&lt;
 const escA = s => (s ?? '').toString().replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const normId = s => (s ?? '').toString().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^0-9]/g, '').trim();
 
+// Restore exact URL if redirected from 404.html (GitHub Pages SPA Redirect)
+try {
+  const redirectUrl = sessionStorage.getItem('gh_spa_redirect');
+  if (redirectUrl) {
+    sessionStorage.removeItem('gh_spa_redirect');
+    window.history.replaceState(null, null, redirectUrl);
+  }
+} catch (e) {}
+
 function getPublicToken() {
   const path = window.location.pathname;
   const match = path.match(/\/workspace\/([^\/\?#]+)/);
-  if (match && match[1]) return match[1];
+  if (match && match[1] && match[1] !== 'index.html') return match[1];
   const params = new URLSearchParams(window.location.search);
   if (params.get('token')) return params.get('token');
   if (params.get('id')) return params.get('id');

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>جمعية إرث وحضارة — جارٍ التوجيه…</title>
+  <script>
+    (function() {
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+      
+      // Match /workspace/{token} or /workspace/{token}/
+      var wsMatch = path.match(/\/workspace\/([^\/\?#]+)/);
+      if (wsMatch && wsMatch[1] && wsMatch[1] !== 'index.html') {
+        var token = wsMatch[1];
+        try {
+          sessionStorage.setItem('gh_spa_redirect', path + search + hash);
+        } catch(e) {}
+        window.location.replace('/workspace/index.html?token=' + encodeURIComponent(token));
+        return;
+      }
+      
+      // Match /workspace or /workspace/
+      if (path === '/workspace' || path === '/workspace/') {
+        window.location.replace('/workspace/index.html' + search + hash);
+        return;
+      }
+
+      // Default fallback to index.html for other unknown paths
+      window.location.replace('/index.html' + search + hash);
+    })();
+  </script>
+</head>
+<body style="font-family: system-ui, -apple-system, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f8f9fc; color: #1c2030;">
+  <div style="text-align: center;">
+    <div style="width: 40px; height: 40px; border: 3px solid #c09a62; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 16px;"></div>
+    <p style="font-size: 15px; font-weight: 600;">جارٍ تحويلك إلى الصفحة المطلوبة…</p>
+  </div>
+  <style>
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+</body>
+</html>
