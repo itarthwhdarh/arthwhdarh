@@ -278,6 +278,10 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 /* ── MODAL ── */
 .modal-shroud{position:fixed;inset:0;z-index:300;background:rgba(30,22,10,.5);display:none;align-items:flex-start;justify-content:center;padding:50px 20px;overflow-y:auto;backdrop-filter:blur(4px);}
 .modal-shroud.open{display:flex;}
+.modal-overlay{position:fixed;inset:0;z-index:400;background:rgba(15,17,23,.55);display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;backdrop-filter:blur(4px);}
+.modal-overlay.active{display:flex;}
+.modal-card{background:#ffffff;border:1px solid var(--line);border-radius:12px;width:100%;max-width:560px;padding:30px 28px 24px;position:relative;box-shadow:0 24px 60px -15px rgba(15,17,23,.3);margin:auto;animation:modalIn .3s var(--ease) both;direction:rtl;text-align:right;}
+.modal-card::before{content:"";position:absolute;top:0;right:0;width:3px;height:48px;background:var(--gold);border-radius:0 12px 0 0;}
 .modal{background:#ffffff;border:1px solid var(--line);border-radius:10px;width:100%;max-width:740px;padding:36px 40px 30px;position:relative;box-shadow:0 30px 70px -20px rgba(30,22,10,.35);animation:modalIn .38s var(--ease) both;}
 @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 .modal::before{content:"";position:absolute;top:0;right:0;width:3px;height:52px;background:var(--gold);border-radius:0 10px 0 0;}
@@ -2383,6 +2387,7 @@ let wQ = '', wStatusFilter = 'all';
 let selectedWorkshopId = null;
 let wsTab = 'info';
 let wsRegQ = '';
+let wsCertQ = '', wsCertFilter = 'all';
 
 /* ── WORKSHOPS MANAGEMENT (Master-Detail System) ── */
 async function vWorkshops(el) {
@@ -2643,6 +2648,25 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
     );
   }
 
+  // Certificates stats and filter
+  const certsUploadedCount = wRegs.filter(r => r.certificateAvailable === true || r.certificateFile).length;
+  const certsPendingCount = Math.max(0, wRegs.length - certsUploadedCount);
+
+  let filteredCertRegs = [...wRegs];
+  if (wsCertFilter === 'available') {
+    filteredCertRegs = filteredCertRegs.filter(r => r.certificateAvailable === true || r.certificateFile);
+  } else if (wsCertFilter === 'pending') {
+    filteredCertRegs = filteredCertRegs.filter(r => !r.certificateAvailable && !r.certificateFile);
+  }
+  if (wsCertQ.trim()) {
+    const q = wsCertQ.trim().toLowerCase();
+    filteredCertRegs = filteredCertRegs.filter(r =>
+      (r.name || r.fullName || '').toLowerCase().includes(q) ||
+      (r.phone || r.mobile || '').includes(q) ||
+      (r.nationalId || r.idNumber || '').includes(q)
+    );
+  }
+
   el.innerHTML = `
   <div style="margin-bottom:20px;">
     <button class="btn btn-sm btn-ghost" id="btnBackToWorkshops" style="gap:6px;font-size:13px;font-weight:700;color:var(--ink-mid);margin-bottom:16px;">
@@ -2685,6 +2709,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
       <button class="chip ${wsTab === 'info' ? 'active' : ''}" id="tabWsInfo">معلومات الورشة</button>
       <button class="chip ${wsTab === 'registrants' ? 'active' : ''}" id="tabWsRegs">المسجلون (${regCount})</button>
       <button class="chip ${wsTab === 'survey' ? 'active' : ''}" id="tabWsSurvey">الاستبيان ${wsSurvey ? (wsSurvey.status === 'published' ? '<span class="chip-count" style="background:#e6f4ea;color:#137333;">منشور</span>' : (wsSurvey.status === 'closed' ? '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">مغلق</span>' : '<span class="chip-count" style="background:#fef7e0;color:#b06000;">مسودة</span>')) : ''}</button>
+      <button class="chip ${wsTab === 'certificates' ? 'active' : ''}" id="tabWsCerts">الشهادات <span class="chip-count" style="background:${certsUploadedCount > 0 ? '#e6f4ea' : '#f1f3f8'};color:${certsUploadedCount > 0 ? '#137333' : '#7c85a0'};">${certsUploadedCount} / ${regCount}</span></button>
       <button class="chip ${wsTab === 'stats' ? 'active' : ''}" id="tabWsStats">الإحصائيات</button>
     </div>
 
@@ -2947,6 +2972,119 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
         </div>
       </div>
     </div>
+
+    <!-- SECTION 5: CERTIFICATES -->
+    <div id="wsTabContentCerts" style="display:${wsTab === 'certificates' ? 'block' : 'none'};">
+      <input type="file" id="wsCertHiddenInput" accept="application/pdf" style="display:none;" />
+
+      <div class="stats-grid" style="margin-bottom:20px;">
+        ${sCard('CertTotal', 'إجمالي المسجلين', regCount, 'مشارك بالورشة')}
+        ${sCard('CertAvailable', 'الشهادات المتاحة', certsUploadedCount, 'شهادة تم رفعها')}
+        ${sCard('CertPending', 'بانتظار الرفع', certsPendingCount, 'شهادة متبقية')}
+      </div>
+
+      <div class="card" style="padding:24px;background:var(--paper);border-radius:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+          <div>
+            <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin:0;">القسم الخامس: شهادات المشاركين</h3>
+            <p style="font-size:12px;color:var(--ink-muted);margin-top:2px;">ارفع ملف شهادة PDF لكل مشارك في الورشة ليتمكن من تحميلها فور إتمام الاستبيان بالهوية الوطنية.</p>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button type="button" class="chip ${wsCertFilter === 'all' ? 'active' : ''}" data-cf="all">الكل (${wRegs.length})</button>
+            <button type="button" class="chip ${wsCertFilter === 'available' ? 'active' : ''}" data-cf="available">متاحة (${certsUploadedCount})</button>
+            <button type="button" class="chip ${wsCertFilter === 'pending' ? 'active' : ''}" data-cf="pending">لم ترفع (${certsPendingCount})</button>
+          </div>
+        </div>
+
+        <div class="search-box" style="margin-bottom:16px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+          <input type="text" id="wsCertSearchInput" placeholder="بحث باسم المشارك أو رقم الهوية أو رقم الجوال…" value="${escA(wsCertQ)}"/>
+        </div>
+
+        ${filteredCertRegs.length === 0
+          ? `<div style="text-align:center;padding:40px;color:var(--ink-muted);">لا يوجد مشاركون مطابقون لخيارات البحث أو التصفية</div>`
+          : `
+          <div style="overflow-x:auto;">
+            <table class="tbl" style="width:100%;">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>اسم المشارك</th>
+                  <th>رقم الهوية الوطنية</th>
+                  <th>رقم الجوال</th>
+                  <th>حالة الاستبيان</th>
+                  <th>حالة الشهادة</th>
+                  <th>ملف الشهادة</th>
+                  <th>تاريخ الرفع</th>
+                  <th style="text-align:center;">الإجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${filteredCertRegs.map((r, idx) => {
+                  const hasCert = !!(r.certificateAvailable === true || r.certificateFile);
+                  const hasAnswered = answeredRegistrationIds.has(r.id);
+                  const certStatusBadge = hasCert
+                    ? `<span class="chip-count" style="background:#e6f4ea;color:#137333;font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px;"><polyline points="20 6 9 17 4 12"/></svg>
+                        متاحة
+                       </span>`
+                    : `<span class="chip-count" style="background:#f1f3f8;color:#7c85a0;font-weight:600;">لم ترفع</span>`;
+                  const surveyBadge = hasAnswered
+                    ? `<span class="chip-count" style="background:#e6f4ea;color:#137333;font-weight:700;">✓ مكتمل</span>`
+                    : `<span class="chip-count" style="background:#fef7e0;color:#b06000;font-weight:600;">بانتظار الإكمال</span>`;
+
+                  return `
+                  <tr>
+                    <td>${idx + 1}</td>
+                    <td><strong>${esc(r.name || r.fullName || 'بدون اسم')}</strong></td>
+                    <td><code style="font-family:monospace;font-size:13px;padding:2px 6px;background:var(--parchment-2);border-radius:4px;">${esc(r.nationalId || r.idNumber || '—')}</code></td>
+                    <td dir="ltr" style="text-align:right;">${esc(r.phone || r.mobile || '—')}</td>
+                    <td>${surveyBadge}</td>
+                    <td>${certStatusBadge}</td>
+                    <td>
+                      ${hasCert
+                        ? `<span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-mid);" title="${escA(r.certificateName || 'شهادة.pdf')}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#e02424" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(r.certificateName || 'شهادة.pdf')}</span>
+                           </span>`
+                        : '<span style="color:var(--ink-muted);font-size:12px;">—</span>'
+                      }
+                    </td>
+                    <td style="font-size:12px;color:var(--ink-muted);">
+                      ${r.certificateUploadedAt ? fmtEn(toTs(r.certificateUploadedAt)) : '—'}
+                    </td>
+                    <td style="text-align:center;">
+                      <div style="display:inline-flex;gap:6px;align-items:center;justify-content:center;">
+                        ${hasCert ? `
+                          <button class="btn btn-sm btn-outline" data-action-cert-view="${r.id}" title="عرض وتنزيل الشهادة" style="padding:4px 10px;gap:4px;font-size:12px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <span>عرض</span>
+                          </button>
+                          <button class="btn btn-sm btn-ghost" data-action-cert-upload="${r.id}" title="استبدال ملف الشهادة" style="padding:4px 10px;gap:4px;font-size:12px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            <span>استبدال</span>
+                          </button>
+                          <button class="btn btn-sm btn-ghost del" data-action-cert-del="${r.id}" title="حذف الشهادة" style="padding:4px 10px;gap:4px;font-size:12px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                            <span>حذف</span>
+                          </button>
+                        ` : `
+                          <button class="btn btn-sm btn-primary" data-action-cert-upload="${r.id}" style="padding:5px 14px;gap:6px;font-size:12px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            <span>إضافة شهادة</span>
+                          </button>
+                        `}
+                      </div>
+                    </td>
+                  </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        `}
+      </div>
+    </div>
   </div>
   `;
 
@@ -2984,7 +3122,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   // Tab switching
   const switchTab = async (tab) => {
     wsTab = tab;
-    if (tab === 'survey' || tab === 'registrants' || tab === 'stats') {
+    if (tab === 'survey' || tab === 'registrants' || tab === 'stats' || tab === 'certificates') {
       loaded.survey_responses = false;
       loaded.workshop_registrations = false;
       const [freshRegs, freshSurveys, freshResponses] = await Promise.all([
@@ -3000,6 +3138,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   el.querySelector('#tabWsInfo')?.addEventListener('click', () => switchTab('info'));
   el.querySelector('#tabWsRegs')?.addEventListener('click', () => switchTab('registrants'));
   el.querySelector('#tabWsSurvey')?.addEventListener('click', () => switchTab('survey'));
+  el.querySelector('#tabWsCerts')?.addEventListener('click', () => switchTab('certificates'));
   el.querySelector('#tabWsStats')?.addEventListener('click', () => switchTab('stats'));
 
   // Refresh survey stats button
@@ -3264,6 +3403,130 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
       } catch (err) { console.error(err); toast('حدث خطأ أثناء الحذف', 'err'); }
     });
   });
+
+  // ── Certificates Tab Event Listeners ──
+  let currentTargetCertRegId = null;
+  const certFileInput = el.querySelector('#wsCertHiddenInput');
+
+  el.querySelectorAll('[data-action-cert-upload]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentTargetCertRegId = btn.dataset.actionCertUpload;
+      if (certFileInput) {
+        certFileInput.value = '';
+        certFileInput.click();
+      }
+    });
+  });
+
+  if (certFileInput) {
+    certFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file || !currentTargetCertRegId) return;
+
+      if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        toast('يرجى اختيار ملف بصيغة PDF فقط', 'err');
+        return;
+      }
+
+      // Max 800 KB limit to safely fit within Firestore 1MB document limit as Base64 Data URL
+      if (file.size > 800 * 1024) {
+        toast('حجم ملف الشهادة كبير جدًا. الحد الأقصى المسموح به هو 800 كيلوبايت', 'err');
+        return;
+      }
+
+      toast('جاري قراءة وحفظ ملف الشهادة...');
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const base64Data = reader.result;
+          await updateDoc(doc(db, 'workshop_registrations', currentTargetCertRegId), {
+            certificateFile: base64Data,
+            certificateName: file.name,
+            certificateSize: file.size,
+            certificateAvailable: true,
+            certificateUploadedAt: serverTimestamp()
+          });
+          loaded.workshop_registrations = false;
+          toast('تم رفع وحفظ الشهادة للمشارك بنجاح');
+          const freshRegs = await loadCol('workshop_registrations');
+          vWorkshopDetail(el, w, freshRegs, allSurveys, allResponses);
+        } catch (err) {
+          console.error('Cert upload error:', err);
+          toast('حدث خطأ أثناء حفظ ملف الشهادة', 'err');
+        }
+      };
+      reader.onerror = () => {
+        toast('تعذر قراءة ملف الشهادة من جهازك', 'err');
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // View / Download Certificate
+  el.querySelectorAll('[data-action-cert-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const regId = btn.dataset.actionCertView;
+      const regObj = wRegs.find(r => r.id === regId);
+      if (regObj && regObj.certificateFile) {
+        const link = document.createElement('a');
+        link.href = regObj.certificateFile;
+        link.download = regObj.certificateName || `شهادة_${regObj.name || regObj.fullName || 'مشارك'}.pdf`;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      } else {
+        toast('ملف الشهادة غير متوفر', 'err');
+      }
+    });
+  });
+
+  // Delete Certificate
+  el.querySelectorAll('[data-action-cert-del]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const regId = btn.dataset.actionCertDel;
+      const regObj = wRegs.find(r => r.id === regId);
+      if (!regObj) return;
+
+      const pName = regObj.name || regObj.fullName || 'المشارك';
+      if (!confirm(`هل أنت متأكد من حذف شهادة المشارك "${pName}"؟`)) return;
+
+      try {
+        await updateDoc(doc(db, 'workshop_registrations', regId), {
+          certificateFile: null,
+          certificateName: null,
+          certificateSize: null,
+          certificateAvailable: false,
+          certificateUploadedAt: null
+        });
+        loaded.workshop_registrations = false;
+        toast('تم حذف الشهادة بنجاح');
+        const freshRegs = await loadCol('workshop_registrations');
+        vWorkshopDetail(el, w, freshRegs, allSurveys, allResponses);
+      } catch (err) {
+        console.error('Cert delete error:', err);
+        toast('حدث خطأ أثناء حذف الشهادة', 'err');
+      }
+    });
+  });
+
+  // Search in certificates
+  const certSearchInput = el.querySelector('#wsCertSearchInput');
+  if (certSearchInput) {
+    certSearchInput.addEventListener('input', e => {
+      wsCertQ = e.target.value;
+      vWorkshopDetail(el, w, allRegistrants, allSurveys, allResponses);
+      el.querySelector('#wsCertSearchInput')?.focus();
+    });
+  }
+
+  // Filter chips in certificates
+  el.querySelectorAll('[data-cf]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      wsCertFilter = btn.dataset.cf;
+      vWorkshopDetail(el, w, allRegistrants, allSurveys, allResponses);
+    });
+  });
 }
 
 /* ── Survey Renderer Helpers for Admin ── */
@@ -3423,18 +3686,26 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
   const modalHTML = `
   <div class="modal-overlay active" id="questionEditorModal">
     <div class="modal-card" style="max-width:540px;text-align:right;">
-      <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px;text-align:center;">
-        ${isEdit ? 'تعديل السؤال' : 'إضافة سؤال جديد للاستبيان'}
-      </h3>
-
-      <div class="login-field">
-        <label for="qTextIp">نص السؤال <span style="color:var(--danger)">*</span></label>
-        <input type="text" id="qTextIp" class="form-input" placeholder="مثال: ما مدى رضاك عن محتوى الورشة؟" value="${escA(qText)}"/>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-style:italic;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Survey · Question</div>
+          <h3 style="font-size:19px;font-weight:800;color:var(--ink);margin:0;">
+            ${isEdit ? 'تعديل السؤال' : 'إضافة سؤال جديد'}
+          </h3>
+        </div>
+        <button type="button" class="close-btn" id="btnCloseQModalTop" aria-label="إغلاق">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+        </button>
       </div>
 
-      <div class="login-field">
+      <div class="field" style="margin-bottom:14px;">
+        <label for="qTextIp">نص السؤال <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="qTextIp" placeholder="مثال: ما مدى رضاك عن محتوى الورشة؟" value="${escA(qText)}"/>
+      </div>
+
+      <div class="field" style="margin-bottom:14px;">
         <label for="qTypeIp">نوع السؤال <span style="color:var(--danger)">*</span></label>
-        <select id="qTypeIp" class="form-input" style="background:#ffffff;">
+        <select id="qTypeIp">
           <option value="mc" ${qType === 'mc' ? 'selected' : ''}>اختيار من متعدد</option>
           <option value="rating" ${qType === 'rating' ? 'selected' : ''}>تقييم من 1 إلى 5 نجوم</option>
           <option value="boolean" ${qType === 'boolean' ? 'selected' : ''}>نعم / لا</option>
@@ -3443,21 +3714,24 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
         </select>
       </div>
 
-      <div class="login-field" style="flex-direction:row;align-items:center;gap:10px;margin-bottom:18px;">
-        <input type="checkbox" id="qReqIp" ${qReq ? 'checked' : ''} style="width:18px;height:18px;accent-color:var(--gold-deep);"/>
-        <label for="qReqIp" style="cursor:pointer;margin:0;">هذا السؤال إجباري ومطلوب (*)</label>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <input type="checkbox" id="qReqIp" ${qReq ? 'checked' : ''} style="width:18px;height:18px;accent-color:var(--gold-deep);cursor:pointer;"/>
+        <label for="qReqIp" style="cursor:pointer;margin:0;font-size:13px;font-weight:700;color:var(--ink-mid);">هذا السؤال إجباري ومطلوب (*)</label>
       </div>
 
       <!-- Options Editor (Only for Multiple Choice mc) -->
-      <div id="qOptionsBox" style="display:${qType === 'mc' ? 'block' : 'none'};margin-bottom:20px;padding:14px;background:var(--parchment-2);border-radius:10px;">
+      <div id="qOptionsBox" style="display:${qType === 'mc' ? 'block' : 'none'};margin-bottom:20px;padding:14px;background:var(--parchment-2);border:1px solid var(--line-soft);border-radius:10px;">
         <label style="font-size:13px;font-weight:700;color:var(--ink);display:block;margin-bottom:8px;">خيارات الإجابة:</label>
         <div id="qOptionsContainer" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;"></div>
-        <button type="button" class="btn btn-sm btn-outline" id="btnAddOptionRow" style="width:auto;font-size:12px;">+ إضافة خيار جديد</button>
+        <button type="button" class="btn btn-sm btn-outline" id="btnAddOptionRow" style="width:auto;font-size:12px;gap:6px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+          <span>+ إضافة خيار جديد</span>
+        </button>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line-soft);">
         <button type="button" class="btn btn-primary" id="btnSaveQuestion">${isEdit ? 'حفظ التعديلات' : 'إضافة السؤال'}</button>
-        <button type="button" class="btn" id="btnCancelQuestion" style="background:var(--parchment-3);color:var(--ink);">إلغاء</button>
+        <button type="button" class="btn btn-outline" id="btnCancelQuestion">إلغاء</button>
       </div>
     </div>
   </div>
@@ -3466,12 +3740,27 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
   document.body.insertAdjacentHTML('beforeend', modalHTML);
   const m = document.getElementById('questionEditorModal');
 
+  const closeModal = () => {
+    document.removeEventListener('keydown', handleEsc);
+    m.remove();
+  };
+  const handleEsc = (e) => {
+    if (e.key === 'Escape') closeModal();
+  };
+  document.addEventListener('keydown', handleEsc);
+
+  m.querySelector('#btnCancelQuestion').addEventListener('click', closeModal);
+  m.querySelector('#btnCloseQModalTop')?.addEventListener('click', closeModal);
+  m.addEventListener('click', (e) => {
+    if (e.target === m) closeModal();
+  });
+
   const renderOptionsList = () => {
     const container = m.querySelector('#qOptionsContainer');
     container.innerHTML = qOptions.map((opt, oIdx) => `
       <div style="display:flex;gap:6px;align-items:center;">
-        <input type="text" class="form-input q-opt-input" data-oidx="${oIdx}" value="${escA(opt)}" style="background:#ffffff;" placeholder="الخيار ${oIdx + 1}"/>
-        <button type="button" class="btn btn-sm btn-ghost del btn-del-opt" data-oidx="${oIdx}" style="padding:6px 10px;">✕</button>
+        <input type="text" class="q-opt-input" data-oidx="${oIdx}" value="${escA(opt)}" style="flex:1;padding:8px 12px;background:#ffffff;border:1px solid var(--line);border-radius:6px;font-size:13.5px;color:var(--ink);outline:none;" placeholder="الخيار ${oIdx + 1}"/>
+        <button type="button" class="btn btn-sm btn-ghost del btn-del-opt" data-oidx="${oIdx}" title="حذف الخيار" style="padding:6px 10px;line-height:1;">✕</button>
       </div>
     `).join('');
 
@@ -3503,8 +3792,6 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
     renderOptionsList();
   });
 
-  m.querySelector('#btnCancelQuestion').addEventListener('click', () => m.remove());
-
   m.querySelector('#btnSaveQuestion').addEventListener('click', async () => {
     const text = m.querySelector('#qTextIp').value.trim();
     const req = m.querySelector('#qReqIp').checked;
@@ -3512,6 +3799,7 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
 
     if (!text) {
       toast('يرجى كتابة نص السؤال', 'err');
+      m.querySelector('#qTextIp')?.focus();
       return;
     }
 
@@ -3531,7 +3819,7 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
       options: type === 'mc' ? qOptions : []
     };
 
-    m.remove();
+    closeModal();
     await onSave(qData);
   });
 }
@@ -3544,42 +3832,48 @@ function openSurveyMetaModal(survey, onSave) {
   const modalHTML = `
   <div class="modal-overlay active" id="surveyMetaModal">
     <div class="modal-card" style="max-width:540px;text-align:right;">
-      <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:16px;text-align:center;">
-        تعديل بيانات الاستبيان
-      </h3>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-style:italic;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Survey · Settings</div>
+          <h3 style="font-size:19px;font-weight:800;color:var(--ink);margin:0;">تعديل بيانات الاستبيان</h3>
+        </div>
+        <button type="button" class="close-btn" id="btnCloseSMModalTop" aria-label="إغلاق">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+        </button>
+      </div>
 
-      <div class="login-field">
+      <div class="field" style="margin-bottom:14px;">
         <label for="smTitle">عنوان الاستبيان <span style="color:var(--danger)">*</span></label>
-        <input type="text" id="smTitle" class="form-input" value="${escA(survey.title || '')}"/>
+        <input type="text" id="smTitle" value="${escA(survey.title || '')}"/>
       </div>
 
-      <div class="login-field">
+      <div class="field" style="margin-bottom:14px;">
         <label for="smDesc">وصف الاستبيان</label>
-        <textarea id="smDesc" class="form-input" style="min-height:70px;">${esc(survey.description || '')}</textarea>
+        <textarea id="smDesc" style="min-height:70px;">${esc(survey.description || '')}</textarea>
       </div>
 
-      <div class="login-field">
+      <div class="field" style="margin-bottom:14px;">
         <label for="smWelcome">رسالة ترحيبية (اختيارية)</label>
-        <input type="text" id="smWelcome" class="form-input" value="${escA(survey.welcomeMessage || '')}"/>
+        <input type="text" id="smWelcome" value="${escA(survey.welcomeMessage || '')}"/>
       </div>
 
-      <div class="login-field">
+      <div class="field" style="margin-bottom:14px;">
         <label for="smThankYou">رسالة الشكر بعد الإرسال</label>
-        <input type="text" id="smThankYou" class="form-input" value="${escA(survey.thankYouMessage || '')}"/>
+        <input type="text" id="smThankYou" value="${escA(survey.thankYouMessage || '')}"/>
       </div>
 
-      <div class="login-field">
+      <div class="field" style="margin-bottom:18px;">
         <label for="smStatus">حالة الاستبيان</label>
-        <select id="smStatus" class="form-input" style="background:#ffffff;">
+        <select id="smStatus">
           <option value="draft" ${survey.status === 'draft' ? 'selected' : ''}>مسودة (غير متاح للجمهور)</option>
           <option value="published" ${survey.status === 'published' ? 'selected' : ''}>منشور (متاح للتعبئة)</option>
           <option value="closed" ${survey.status === 'closed' ? 'selected' : ''}>مغلق (إيقاف استقبال الإجابات)</option>
         </select>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line-soft);">
         <button type="button" class="btn btn-primary" id="btnSaveSurveyMeta">حفظ البيانات</button>
-        <button type="button" class="btn" id="btnCancelSurveyMeta" style="background:var(--parchment-3);color:var(--ink);">إلغاء</button>
+        <button type="button" class="btn btn-outline" id="btnCancelSurveyMeta">إلغاء</button>
       </div>
     </div>
   </div>
@@ -3588,7 +3882,11 @@ function openSurveyMetaModal(survey, onSave) {
   document.body.insertAdjacentHTML('beforeend', modalHTML);
   const m = document.getElementById('surveyMetaModal');
 
-  m.querySelector('#btnCancelSurveyMeta').addEventListener('click', () => m.remove());
+  const closeSM = () => m.remove();
+  m.querySelector('#btnCancelSurveyMeta').addEventListener('click', closeSM);
+  m.querySelector('#btnCloseSMModalTop')?.addEventListener('click', closeSM);
+  m.addEventListener('click', e => { if (e.target === m) closeSM(); });
+
   m.querySelector('#btnSaveSurveyMeta').addEventListener('click', async () => {
     const title = m.querySelector('#smTitle').value.trim();
     const description = m.querySelector('#smDesc').value.trim();
@@ -3601,7 +3899,7 @@ function openSurveyMetaModal(survey, onSave) {
       return;
     }
 
-    m.remove();
+    closeSM();
     await onSave({ title, description, welcomeMessage, thankYouMessage, status });
   });
 }

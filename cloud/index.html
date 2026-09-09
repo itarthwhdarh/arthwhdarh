@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <meta name="theme-color" content="#9c6e38"/>
   <title>سحابة إرث وحضارة — منصة التخزين السحابية الرسمية</title>
-  <meta name="description" content="منصة التخزين السحابية الرسمية لجمعية إرث وحضارة بالقريات عبر Microsoft SharePoint."/>
+  <meta name="description" content="منصة التخزين السحابية الرسمية لجمعية إرث وحضارة بالقريات."/>
   <meta name="robots" content="noindex, nofollow"/>
 
   <!-- Favicon -->
@@ -150,10 +150,10 @@
         </a>
       </nav>
 
-      <!-- سعة التخزين في SharePoint -->
+      <!-- سعة التخزين السحابي -->
       <div class="quota-card">
         <div class="quota-header">
-          <span><i class="fa-solid fa-hard-drive"></i> سعة SharePoint</span>
+          <span><i class="fa-solid fa-hard-drive"></i> سعة التخزين السحابي</span>
           <span id="quotaPercent">0%</span>
         </div>
         <div class="quota-bar-track">
@@ -197,7 +197,7 @@
         </div>
 
         <div class="header-actions">
-          <button class="btn-secondary" id="refreshBtn" title="تحديث السحابة من SharePoint">
+          <button class="btn-secondary" id="refreshBtn" title="تحديث محتويات السحابة">
             <i class="fa-solid fa-rotate-right"></i>
           </button>
           
@@ -260,7 +260,7 @@
         <!-- منطقة السحب والإفلات التفاعلية -->
         <div class="drop-zone-overlay" id="dropZoneOverlay">
           <i class="fa-solid fa-cloud-arrow-up"></i>
-          <span>أفلت الملفات هنا لرفعها إلى SharePoint مباشرة</span>
+          <span>أفلت الملفات هنا لرفعها إلى السحابة مباشرة</span>
         </div>
 
         <!-- شاشة التحميل (Skeleton) -->
@@ -289,7 +289,7 @@
           <div class="home-hero">
             <div class="home-hero-text">
               <h2 class="home-greeting">مرحباً بك في سحابة إرث وحضارة</h2>
-              <p class="home-sub">المستودع السحابي الآمن لملفات ومستندات جمعية إرث وحضارة بالقريات عبر Microsoft SharePoint.</p>
+              <p class="home-sub">المستودع السحابي الآمن لملفات ومستندات جمعية إرث وحضارة بالقريات.</p>
             </div>
             <div class="home-hero-actions">
               <button class="btn-primary" id="homeUploadBtn">
@@ -317,7 +317,7 @@
               <div class="stat-content">
                 <span class="stat-label">المجلدات النشطة</span>
                 <span class="stat-value" id="homeStatFolders">0</span>
-                <span class="stat-hint">في مستودع SharePoint</span>
+                <span class="stat-hint">في المستودع السحابي</span>
               </div>
             </div>
 
@@ -459,16 +459,16 @@
           <div class="section-header">
             <div class="section-title">
               <i class="fa-solid fa-trash-can" style="color:var(--danger);"></i>
-              <span>سلة المحذوفات (SharePoint)</span>
+              <span>سلة المحذوفات</span>
               <span class="section-count" id="recycleCount">0</span>
             </div>
           </div>
-          <p class="shares-desc">العناصر المحذوفة من مكتبة SharePoint تخزن مؤقتاً في سلة مهملات المستودع قبل الحذف النهائي.</p>
+          <p class="shares-desc">العناصر المحذوفة تخزن مؤقتاً في سلة مهملات المستودع قبل الحذف النهائي.</p>
           <div class="files-grid" id="recycleGrid" style="margin-top:1.25rem;"></div>
           <div class="empty-state" id="emptyRecycleState" style="display:none;">
             <div class="empty-icon-wrap"><i class="fa-solid fa-trash-can"></i></div>
             <div class="empty-title">سلة المحذوفات فارغة</div>
-            <div class="empty-desc">لا توجد عناصر محذوفة حالياً في سلة محذوفات SharePoint.</div>
+            <div class="empty-desc">لا توجد عناصر محذوفة حالياً في سلة المحذوفات.</div>
           </div>
         </div>
 
@@ -505,7 +505,7 @@
               <h3 class="settings-card-title"><i class="fa-solid fa-server"></i> إعدادات خادم التخزين</h3>
               <div class="settings-row">
                 <span class="s-label">محرك التخزين الفعلي:</span>
-                <span class="s-val">Microsoft SharePoint (Graph API)</span>
+                <span class="s-val">سحابة إرث وحضارة (Cloud Storage)</span>
               </div>
               <div class="settings-row">
                 <span class="s-label">شبكة الربط:</span>
@@ -541,7 +541,7 @@
             <i class="fa-solid fa-triangle-exclamation"></i>
           </div>
           <div class="empty-title" style="color:var(--danger);">تعذر الاتصال بسحابة الملفات</div>
-          <div class="empty-desc" id="errorStateDesc">حدث خطأ أثناء جلب الملفات من SharePoint. يرجى التحقق وإعادة المحاولة.</div>
+          <div class="empty-desc" id="errorStateDesc">حدث خطأ أثناء جلب الملفات من السحابة. يرجى التحقق وإعادة المحاولة.</div>
           <button class="btn-primary" id="retryBtn" style="margin-top:0.5rem;">
             <i class="fa-solid fa-rotate-right"></i> إعادة المحاولة
           </button>
@@ -611,7 +611,7 @@
       <div class="modal-footer">
         <button type="button" class="btn-secondary" data-close="uploadModal">إلغاء</button>
         <button type="button" class="btn-primary" id="startUploadBtn" style="display:none;">
-          <span>بدء الرفع إلى SharePoint</span>
+          <span>بدء رفع الملفات</span>
         </button>
       </div>
     </div>
@@ -807,7 +807,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>هل أنت متأكد من رغبتك في حذف <strong id="deleteItemName" style="color:var(--ink-900);"></strong> نهائياً من سحابة SharePoint؟</p>
+        <p>هل أنت متأكد من رغبتك في حذف <strong id="deleteItemName" style="color:var(--ink-900);"></strong> نهائياً من السحابة؟</p>
         <p class="field-hint" style="color:var(--danger);margin-top:0.5rem;">
           لا يمكن التراجع عن هذه العملية بعد اكتمالها.
         </p>

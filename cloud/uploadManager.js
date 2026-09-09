@@ -166,7 +166,7 @@ export class UploadManager {
     } catch (err) {
       console.error("[Upload Manager Error]:", item.name, err);
       item.status = "error";
-      item.errorMsg = err.message || "فشل الرفع إلى SharePoint";
+      item.errorMsg = err.message || "فشل الرفع إلى السحابة";
       this.updateItemUI(item);
     }
 

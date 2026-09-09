@@ -213,19 +213,19 @@ async function callSharePointApi(action, payload = {}) {
       body: JSON.stringify(payload)
     });
   } catch (netErr) {
-    console.error("[SharePoint API Network Error]:", netErr);
-    throw new Error("تعذر الاتصال بخادم SharePoint السحابي. يرجى التأكد من اتصال الإنترنت وإعادة المحاولة.");
+    console.error("[Cloud API Network Error]:", netErr);
+    throw new Error("تعذر الاتصال بالخادم السحابي. يرجى التأكد من اتصال الإنترنت وإعادة المحاولة.");
   }
 
   let data;
   try {
     data = await response.json();
   } catch (jsonErr) {
-    throw new Error(`استجابة غير صالحة من خادم SharePoint (HTTP ${response.status})`);
+    throw new Error(`استجابة غير صالحة من الخادم السحابي (HTTP ${response.status})`);
   }
 
   if (!response.ok || !data.ok) {
-    const msg = data?.error || `فشل استدعاء SharePoint (HTTP ${response.status})`;
+    const msg = data?.error || `فشل استدعاء الخادم السحابي (HTTP ${response.status})`;
     throw new Error(msg);
   }
 
@@ -289,7 +289,7 @@ export async function uploadFileToSharePoint(file, parentFolderId = null, onProg
   if (onProgress) onProgress(15, "جاري قراءة وتجهيز الملف...");
   const base64Data = await fileToBase64(file);
 
-  if (onProgress) onProgress(50, "جاري إرسال الملف إلى SharePoint...");
+  if (onProgress) onProgress(50, "جاري إرسال الملف إلى السحابة...");
   const data = await callSharePointApi("upload", {
     fileName: file.name,
     fileBase64: base64Data,

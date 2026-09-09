@@ -911,16 +911,17 @@ a {
 }
 
 /* ── شبكة المجلدات (Folders Grid) ── */
+/* ── شبكة المجلدات (Folders Grid) ── */
 .folders-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.15rem;
 }
 
 .folder-card {
   background: var(--surface);
   border: 1px solid var(--border-hairline);
-  border-radius: 1.15rem;
+  border-radius: 1.25rem;
   padding: 1rem 1.15rem;
   display: flex;
   align-items: center;
@@ -929,6 +930,7 @@ a {
   transition: all var(--duration-fast) var(--ease-spring);
   cursor: pointer;
   position: relative;
+  gap: 0.85rem;
 }
 
 .folder-card:hover {
@@ -938,71 +940,103 @@ a {
 }
 
 .folder-card:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .folder-info {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.95rem;
+  flex: 1;
   min-width: 0;
 }
 
 .folder-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 0.85rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 1rem;
   background: rgba(192, 154, 98, 0.14);
   color: var(--gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.folder-card:hover .folder-icon {
+  transform: scale(1.06);
 }
 
 .folder-text {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
   min-width: 0;
 }
 
 .folder-name {
-  font-size: 0.875rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--ink-900);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
 .folder-meta {
-  font-size: 0.725rem;
-  color: var(--ink-400);
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: var(--ink-500);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  line-height: 1;
 }
 
-.folder-menu-btn {
-  width: 28px;
-  height: 28px;
+.folder-meta-fav {
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+/* زر قائمة الإجراءات الثلاثية (⋯) */
+.item-menu-btn {
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-400);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink-400);
-  transition: all var(--duration-fast);
+  font-size: 0.95rem;
+  cursor: pointer;
   flex-shrink: 0;
+  transition: all 140ms var(--ease-spring);
+  padding: 0;
 }
 
-.folder-menu-btn:hover {
+.item-menu-btn:hover {
   background: var(--shell);
   color: var(--ink-900);
+  border-color: var(--border-hairline);
+  box-shadow: var(--shadow-ambient);
+}
+
+.item-menu-btn:active {
+  transform: scale(0.92);
 }
 
 /* ── شبكة الملفات (Files Grid) ── */
 .files-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
 }
 
 .file-card {
@@ -1012,36 +1046,101 @@ a {
   padding: 1.15rem;
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 0.95rem;
   box-shadow: var(--shadow-ambient);
   transition: all var(--duration-fast) var(--ease-spring);
   position: relative;
+  cursor: pointer;
 }
 
 .file-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(156, 110, 56, 0.25);
+  border-color: rgba(156, 110, 56, 0.28);
   box-shadow: var(--shadow-floating);
 }
 
-.file-top {
+.file-card:active {
+  transform: scale(0.99);
+}
+
+.file-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
-.file-type-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 0.95rem;
+.file-card-preview {
+  height: 120px;
+  border-radius: 1rem;
+  background: var(--shell);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.35rem;
-  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border-hairline);
 }
 
-/* أيقونات الأنواع بألوانها المعيارية */
+.file-card-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.file-card:hover .file-card-preview img {
+  transform: scale(1.03);
+}
+
+.file-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.file-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-900);
+  line-height: 1.45;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: -0.01em;
+}
+
+.file-sub-meta {
+  font-size: 0.775rem;
+  font-weight: 500;
+  color: var(--ink-500);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  line-height: 1.2;
+}
+
+.file-sub-meta .sep {
+  color: var(--ink-400);
+  opacity: 0.6;
+}
+
+/* شارات وأيقونات الأنواع المعيارية */
+.file-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.725rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .file-type-pdf    { background: rgba(220, 38, 38, 0.1);  color: #DC2626; }
 .file-type-word   { background: rgba(37, 99, 235, 0.1);  color: #2563EB; }
 .file-type-excel  { background: rgba(22, 163, 74, 0.1);  color: #16A34A; }
@@ -1053,6 +1152,21 @@ a {
 .file-type-code   { background: rgba(71, 85, 105, 0.1);  color: #475569; }
 .file-type-other  { background: rgba(100, 116, 139, 0.1); color: #64748B; }
 
+.file-thumb-icon {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.file-card:hover .file-thumb-icon {
+  transform: scale(1.08);
+}
+
+/* زر ومجموعة الإجراءات القديمة (للتوافق) */
 .file-actions {
   display: flex;
   align-items: center;
@@ -1081,30 +1195,95 @@ a {
   color: var(--danger);
 }
 
-.file-details {
+/* ── قائمة الإجراءات المنسدلة الذكية (Context Dropdown Menu) ── */
+.cloud-dropdown-menu {
+  position: fixed;
+  z-index: 2000;
+  min-width: 195px;
+  background: var(--surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 1.15rem;
+  padding: 0.45rem;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.14), 0 6px 14px -2px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
+  direction: rtl;
+  text-align: right;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform-origin: top right;
+  animation: dropdownFadeScale 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.file-name {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--ink-900);
-  line-height: 1.35;
-  word-break: break-word;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+@keyframes dropdownFadeScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-.file-subtext {
-  font-size: 0.725rem;
-  color: var(--ink-400);
+.cloud-dropdown-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-800);
+  background: transparent;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  width: 100%;
+  text-decoration: none;
+  transition: all 120ms ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.cloud-dropdown-item i {
+  font-size: 0.95rem;
+  width: 20px;
+  text-align: center;
+  color: var(--ink-400);
+  transition: color 120ms ease;
+}
+
+.cloud-dropdown-item:hover {
+  background: var(--shell);
+  color: var(--ink-900);
+}
+
+.cloud-dropdown-item:hover i {
+  color: var(--gold);
+}
+
+.cloud-dropdown-item.active-fav i {
+  color: var(--gold);
+}
+
+.cloud-dropdown-item.danger {
+  color: var(--danger);
+}
+
+.cloud-dropdown-item.danger i {
+  color: var(--danger);
+}
+
+.cloud-dropdown-item.danger:hover {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.cloud-dropdown-divider {
+  height: 1px;
+  background: var(--border-hairline);
+  margin: 0.3rem 0.4rem;
 }
 
 /* ── قائمة الملفات (Files Table / List View) ── */
@@ -1157,22 +1336,29 @@ a {
   display: flex;
   align-items: center;
   gap: 0.85rem;
+  min-width: 0;
 }
 
 .table-file-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 0.65rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 
 .table-file-name {
   font-weight: 700;
+  font-size: 0.925rem;
   color: var(--ink-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
+  line-height: 1.35;
 }
 
 /* ── الحالات الفارغة (Empty State) ── */

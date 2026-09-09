@@ -504,6 +504,9 @@ textarea.form-input {
       </div>
       <h2 style="font-size:22px;font-weight:800;color:var(--ink);margin-bottom:10px;">تم إرسال الاستبيان بنجاح</h2>
       <p style="font-size:15px;color:var(--ink-mid);line-height:1.6;" id="thankYouMsg">شكرًا جزيلًا لمشاركتك في الاستبيان وتفاعلك معنا!</p>
+
+      <!-- Certificate Download Box -->
+      <div id="certDownloadArea" style="margin-top:28px;"></div>
     </div>
   </div>
 
@@ -700,8 +703,8 @@ document.getElementById('formVerify').addEventListener('submit', async (e) => {
       return;
     }
 
-    // Only store registration ID internally without storing sensitive data
-    verifiedRegistration = { id: regDoc.id };
+    // Store registration data for this verified participant
+    verifiedRegistration = { id: regDoc.id, ...regData };
 
     // Clear input field immediately for privacy
     inputEl.value = '';
@@ -711,9 +714,13 @@ document.getElementById('formVerify').addEventListener('submit', async (e) => {
     const respSnap = await getDoc(doc(db, 'survey_responses', respId));
 
     if (respSnap.exists()) {
-      errEl.className = 'alert-box alert-info';
-      errEl.textContent = 'تم استلام إجابتك مسبقًا — شكرًا لمشاركتك وتفاعلك في الاستبيان.';
-      errEl.style.display = 'block';
+      // Participant already completed the survey -> Show success screen & certificate download directly
+      document.getElementById('stepVerify').style.display = 'none';
+      document.getElementById('stepSuccess').style.display = 'block';
+      if (activeSurvey.thankYouMessage) {
+        document.getElementById('thankYouMsg').textContent = activeSurvey.thankYouMessage;
+      }
+      renderCertificateBox(verifiedRegistration);
       return;
     }
 
@@ -915,6 +922,8 @@ async function submitSurveyData() {
     if (activeSurvey.thankYouMessage) {
       document.getElementById('thankYouMsg').textContent = activeSurvey.thankYouMessage;
     }
+
+    renderCertificateBox(verifiedRegistration);
   } catch (err) {
     console.error('Error submitting survey:', err);
     errEl.textContent = 'حدث خطأ أثناء إرسال الإجابات. يرجى المحاولة ثانية.';
@@ -923,6 +932,52 @@ async function submitSurveyData() {
     btn.disabled = false;
     spin.style.display = 'none';
     txt.textContent = 'إرسال الاستبيان';
+  }
+}
+
+function renderCertificateBox(reg) {
+  const container = document.getElementById('certDownloadArea');
+  if (!container) return;
+
+  const hasCert = !!(reg && reg.certificateAvailable !== false && reg.certificateFile);
+
+  if (hasCert) {
+    container.innerHTML = `
+      <div style="background:#ffffff;border:1px solid var(--line);border-radius:16px;padding:24px 20px;box-shadow:0 10px 30px -10px rgba(15,17,23,0.08);text-align:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;right:0;width:4px;height:44px;background:var(--gold);border-radius:0 16px 0 0;"></div>
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--gold-pale);color:var(--gold-deep);display:grid;place-items:center;margin:0 auto 14px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:28px;height:28px;">
+            <circle cx="12" cy="8" r="6"/>
+            <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+          </svg>
+        </div>
+        <h3 style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px;">شهادة حضور معتمدة</h3>
+        <p style="font-size:13.5px;color:var(--ink-mid);margin-bottom:18px;line-height:1.5;">
+          مرحبًا <strong>${esc(reg.name || reg.fullName || 'بك')}</strong>، تم اعتماد شهادتك بنجاح وجاهزة للتحميل.
+        </p>
+        <button type="button" class="btn btn-primary" id="btnDownloadCertPdf" style="margin:0 auto;gap:8px;padding:12px 28px;font-size:14px;width:auto;display:inline-flex;align-items:center;border-radius:8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>تحميل الشهادة PDF</span>
+        </button>
+      </div>
+    `;
+
+    document.getElementById('btnDownloadCertPdf')?.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.href = reg.certificateFile;
+      link.download = reg.certificateName || `شهادة_${reg.name || 'حضور'}.pdf`;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    });
+  } else {
+    container.innerHTML = `
+      <div style="background:var(--parchment-2);border:1px solid var(--line-soft);border-radius:12px;padding:16px;font-size:13px;color:var(--ink-muted);line-height:1.6;text-align:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-inline-end:6px;color:var(--gold-deep);"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        سيتم إتاحة تحميل شهادات الحضور المعتمدة فور رفعها واعتمادها من إدارة الجمعية.
+      </div>
+    `;
   }
 }
 

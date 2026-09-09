@@ -301,7 +301,7 @@ async function renderUnlockedContent() {
     if (share.allowDownload && item.downloadUrl) {
       UI.sharedDownloadBtn.href = item.downloadUrl;
       UI.sharedDownloadBtn.style.display = "inline-flex";
-      UI.accessNoticeText.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i> المصرح به: المعاينة والتنزيل المباشر من سحابة SharePoint.';
+      UI.accessNoticeText.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i> المصرح به: المعاينة والتنزيل المباشر من سحابة إرث وحضارة.';
     } else {
       UI.sharedDownloadBtn.style.display = "none";
       UI.accessNoticeText.innerHTML = '<i class="fa-solid fa-eye text-gold"></i> المصرح به: المعاينة فقط (التنزيل معطّل من قِبل المالك).';
@@ -329,7 +329,7 @@ async function renderUnlockedContent() {
 
   } catch (err) {
     console.error("[Render Content Error]:", err);
-    showError("تعذر قراءة بيانات العنصر من SharePoint", err.message || "الملف ربما تم نقله أو حذفه.");
+    showError("تعذر قراءة بيانات العنصر من السحابة", err.message || "الملف ربما تم نقله أو حذفه.");
   }
 }
 

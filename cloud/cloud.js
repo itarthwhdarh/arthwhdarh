@@ -458,18 +458,13 @@ UI.logoutBtn.addEventListener("click", async () => {
 function initUploadManager() {
   if (uploadManager) return;
   uploadManager = new UploadManager({
-    onItemComplete: (uploadedItem, targetFolderId) => {
-      // إذا كان المستخدم يتصفح نفس المجلد المستهدف، نحدث الواجهة فورياً
-      if (State.activeView === "files" && State.currentFolderId === targetFolderId) {
-        loadFolder(targetFolderId, true);
-      } else if (State.activeView === "home") {
-        loadHomeView();
-      }
-      loadStorageQuota();
+    onItemComplete: async (uploadedItem, targetFolderId) => {
+      // تحديث فوري مباشر لواجهة المستخدم دون الحاجة لإعادة تحميل الصفحة
+      await refreshActiveView(true, true);
     },
-    onQueueComplete: () => {
-      showToast("اكتملت جميع عمليات الرفع بنجاح إلى SharePoint", "success");
-      loadStorageQuota();
+    onQueueComplete: async () => {
+      showToast("اكتملت جميع عمليات الرفع بنجاح إلى السحابة", "success");
+      await refreshActiveView(true, true);
     }
   });
 
@@ -642,12 +637,41 @@ async function loadStorageQuota() {
   }
 }
 
+/* ═══════════════ محرك التحديث الفوري الموحد (Unified In-Place Refresh Engine) ═══════════════ */
+
+export async function refreshActiveView(forceRefresh = true, silent = false) {
+  if (forceRefresh) {
+    folderCache.clear();
+  }
+  loadStorageQuota();
+
+  switch (State.activeView) {
+    case "home":
+      return await loadHomeView(forceRefresh);
+    case "files":
+      return await loadFolder(State.currentFolderId, false, forceRefresh, silent);
+    case "folders":
+      return await loadFoldersOnlyView(forceRefresh, silent);
+    case "recent":
+      return await loadRecentFilesView(forceRefresh, silent);
+    case "favorites":
+      return loadFavoritesView();
+    case "shares":
+      return await loadSharesView();
+    case "recycle":
+      return await loadRecycleView();
+    default:
+      return await loadFolder(State.currentFolderId, false, forceRefresh, silent);
+  }
+}
+
 /* ═══════════════ 1. واجهة الرئيسية (Home Dashboard) ═══════════════ */
 
-async function loadHomeView() {
+async function loadHomeView(forceRefresh = false) {
   try {
-    // جلب عناصر الجذر من الكاش أو SharePoint
-    const rootData = await listFolderItems("root", true);
+    if (forceRefresh) folderCache.invalidate("root");
+    // جلب عناصر الجذر من السحابة أو الكاش
+    const rootData = await listFolderItems("root", !forceRefresh);
     const items = rootData.items || [];
     const folders = items.filter(i => i.isFolder);
     const files = items.filter(i => !i.isFolder);
@@ -682,17 +706,22 @@ async function loadHomeView() {
 
 /* ═══════════════ 2. واجهة ملفاتي (File Manager Explorer) ═══════════════ */
 
-export async function loadFolder(folderId = "root", isBack = false) {
+export async function loadFolder(folderId = "root", isBack = false, forceRefresh = false, silent = false) {
   State.currentFolderId = folderId;
 
-  UI.loadingSkeleton.style.display = "block";
-  UI.foldersSection.style.display = "none";
-  UI.filesSection.style.display = "none";
-  UI.emptyState.style.display = "none";
+  if (!silent) {
+    UI.loadingSkeleton.style.display = "block";
+    UI.foldersSection.style.display = "none";
+    UI.filesSection.style.display = "none";
+    UI.emptyState.style.display = "none";
+  }
   if (UI.errorState) UI.errorState.style.display = "none";
 
   try {
-    const res = await listFolderItems(folderId === "root" ? null : folderId, true);
+    if (forceRefresh) {
+      folderCache.invalidate(folderId === "root" ? null : folderId);
+    }
+    const res = await listFolderItems(folderId === "root" ? null : folderId, !forceRefresh);
     State.currentFolderName = res.currentFolder?.name || "سحابة إرث وحضارة";
 
     // تحديث سجل المسار
@@ -720,12 +749,14 @@ export async function loadFolder(folderId = "root", isBack = false) {
       UI.emptyState.style.display = "none";
       UI.errorState.style.display = "flex";
       if (UI.errorStateDesc) {
-        UI.errorStateDesc.textContent = err.message || "تعذر الاتصال بـ SharePoint. يرجى المحاولة مرة أخرى.";
+        UI.errorStateDesc.textContent = err.message || "تعذر الاتصال بالسحابة. يرجى المحاولة مرة أخرى.";
       }
     }
     showToast(err.message || "تعذر جلب ملفات المجلد", "error");
   } finally {
-    UI.loadingSkeleton.style.display = "none";
+    if (!silent) {
+      UI.loadingSkeleton.style.display = "none";
+    }
   }
 }
 
@@ -774,13 +805,14 @@ UI.goBackBtn.addEventListener("click", () => {
 });
 
 /* عرض المجلدات فقط */
-async function loadFoldersOnlyView() {
+async function loadFoldersOnlyView(forceRefresh = false, silent = false) {
   UI.breadcrumbNav.innerHTML = '<span class="bc-item current"><i class="fa-solid fa-folder"></i> جميع مجلدات السحابة</span>';
   UI.goBackBtn.style.display = "none";
-  UI.loadingSkeleton.style.display = "block";
+  if (!silent) UI.loadingSkeleton.style.display = "block";
 
   try {
-    const rootData = await listFolderItems("root", true);
+    if (forceRefresh) folderCache.invalidate("root");
+    const rootData = await listFolderItems("root", !forceRefresh);
     const folders = (rootData.items || []).filter(i => i.isFolder);
 
     UI.foldersSection.style.display = "block";
@@ -792,18 +824,19 @@ async function loadFoldersOnlyView() {
   } catch (e) {
     showToast("تعذر جلب المجلدات", "error");
   } finally {
-    UI.loadingSkeleton.style.display = "none";
+    if (!silent) UI.loadingSkeleton.style.display = "none";
   }
 }
 
 /* عرض العناصر الأخيرة */
-async function loadRecentFilesView() {
+async function loadRecentFilesView(forceRefresh = false, silent = false) {
   UI.breadcrumbNav.innerHTML = '<span class="bc-item current"><i class="fa-solid fa-clock-rotate-left"></i> العناصر الأخيرة</span>';
   UI.goBackBtn.style.display = "none";
-  UI.loadingSkeleton.style.display = "block";
+  if (!silent) UI.loadingSkeleton.style.display = "block";
 
   try {
-    const rootData = await listFolderItems("root", true);
+    if (forceRefresh) folderCache.invalidate("root");
+    const rootData = await listFolderItems("root", !forceRefresh);
     const files = (rootData.items || []).filter(i => !i.isFolder);
     files.sort((a, b) => new Date(b.lastModifiedDateTime || 0) - new Date(a.lastModifiedDateTime || 0));
 
@@ -815,7 +848,7 @@ async function loadRecentFilesView() {
   } catch (e) {
     showToast("تعذر جلب الملفات الأخيرة", "error");
   } finally {
-    UI.loadingSkeleton.style.display = "none";
+    if (!silent) UI.loadingSkeleton.style.display = "none";
   }
 }
 
@@ -895,11 +928,166 @@ function renderItems(items) {
   }
 }
 
+/* ═══════════════ محرك القائمة المنسدلة الذكية للإجراءات (⋯) ═══════════════ */
+
+let activeDropdownMenu = null;
+
+function closeItemMenu() {
+  if (activeDropdownMenu) {
+    activeDropdownMenu.remove();
+    activeDropdownMenu = null;
+  }
+}
+
+document.addEventListener("click", (e) => {
+  if (activeDropdownMenu && !activeDropdownMenu.contains(e.target)) {
+    closeItemMenu();
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeItemMenu();
+  }
+});
+
+window.addEventListener("resize", closeItemMenu);
+window.addEventListener("scroll", closeItemMenu, true);
+
+function openItemMenu({ item, isFolder, triggerElement, isFav }) {
+  closeItemMenu();
+
+  const menu = document.createElement("div");
+  menu.className = "cloud-dropdown-menu";
+
+  if (isFolder) {
+    menu.innerHTML = `
+      <button type="button" class="cloud-dropdown-item" data-action="open">
+        <i class="fa-solid fa-folder-open"></i>
+        <span>فتح المجلد</span>
+      </button>
+      <button type="button" class="cloud-dropdown-item" data-action="share">
+        <i class="fa-solid fa-share-nodes"></i>
+        <span>مشاركة المجلد</span>
+      </button>
+      <button type="button" class="cloud-dropdown-item ${isFav ? 'active-fav' : ''}" data-action="fav">
+        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
+        <span>${isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}</span>
+      </button>
+      <button type="button" class="cloud-dropdown-item" data-action="rename">
+        <i class="fa-solid fa-pen"></i>
+        <span>إعادة تسمية</span>
+      </button>
+      ${State.currentUser?.canDelete ? `
+        <div class="cloud-dropdown-divider"></div>
+        <button type="button" class="cloud-dropdown-item danger" data-action="delete">
+          <i class="fa-solid fa-trash"></i>
+          <span>حذف المجلد</span>
+        </button>
+      ` : ""}
+    `;
+  } else {
+    menu.innerHTML = `
+      <button type="button" class="cloud-dropdown-item" data-action="preview">
+        <i class="fa-solid fa-eye"></i>
+        <span>معاينة وفتح</span>
+      </button>
+      <a href="${item.downloadUrl || '#'}" download class="cloud-dropdown-item" data-action="download">
+        <i class="fa-solid fa-download"></i>
+        <span>تنزيل الملف</span>
+      </a>
+      <button type="button" class="cloud-dropdown-item" data-action="share">
+        <i class="fa-solid fa-share-nodes"></i>
+        <span>مشاركة الرابط</span>
+      </button>
+      <button type="button" class="cloud-dropdown-item ${isFav ? 'active-fav' : ''}" data-action="fav">
+        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
+        <span>${isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}</span>
+      </button>
+      <button type="button" class="cloud-dropdown-item" data-action="rename">
+        <i class="fa-solid fa-pen"></i>
+        <span>إعادة تسمية</span>
+      </button>
+      ${State.currentUser?.canDelete ? `
+        <div class="cloud-dropdown-divider"></div>
+        <button type="button" class="cloud-dropdown-item danger" data-action="delete">
+          <i class="fa-solid fa-trash"></i>
+          <span>حذف الملف</span>
+        </button>
+      ` : ""}
+    `;
+  }
+
+  menu.querySelector('[data-action="open"]')?.addEventListener("click", () => {
+    closeItemMenu();
+    switchView("files");
+    loadFolder(item.id);
+  });
+
+  menu.querySelector('[data-action="preview"]')?.addEventListener("click", () => {
+    closeItemMenu();
+    openPreviewModal(item);
+  });
+
+  menu.querySelector('[data-action="download"]')?.addEventListener("click", () => {
+    closeItemMenu();
+  });
+
+  menu.querySelector('[data-action="share"]')?.addEventListener("click", () => {
+    closeItemMenu();
+    openShareModal(item);
+  });
+
+  menu.querySelector('[data-action="fav"]')?.addEventListener("click", () => {
+    closeItemMenu();
+    handleToggleFavorite(item);
+    if (State.activeView === "home") {
+      loadHomeView();
+    } else if (State.activeView === "favorites") {
+      loadFavoritesView();
+    } else {
+      applySortingAndRender();
+    }
+  });
+
+  menu.querySelector('[data-action="rename"]')?.addEventListener("click", () => {
+    closeItemMenu();
+    openRenameModal(item);
+  });
+
+  menu.querySelector('[data-action="delete"]')?.addEventListener("click", () => {
+    closeItemMenu();
+    openDeleteModal(item);
+  });
+
+  document.body.appendChild(menu);
+  activeDropdownMenu = menu;
+
+  const rect = triggerElement.getBoundingClientRect();
+  const menuRect = menu.getBoundingClientRect();
+
+  let left = rect.right - menuRect.width;
+  if (left < 10) left = 10;
+  if (left + menuRect.width > window.innerWidth - 10) {
+    left = window.innerWidth - menuRect.width - 10;
+  }
+
+  let top = rect.bottom + 6;
+  if (top + menuRect.height > window.innerHeight - 10) {
+    top = Math.max(10, rect.top - menuRect.height - 6);
+  }
+
+  menu.style.left = `${left}px`;
+  menu.style.top = `${top}px`;
+}
+
 /* بطاقة المجلد الموحدة */
 function createFolderCardElement(folder) {
   const isFav = State.currentUser ? isItemFavorite(folder.id, State.currentUser.uid) : false;
   const card = document.createElement("div");
   card.className = "folder-card";
+  card.setAttribute("role", "button");
+  card.setAttribute("tabindex", "0");
   card.innerHTML = `
     <div class="folder-info">
       <div class="folder-icon">
@@ -907,50 +1095,36 @@ function createFolderCardElement(folder) {
       </div>
       <div class="folder-text">
         <span class="folder-name" title="${escapeHtml(folder.name)}">${escapeHtml(folder.name)}</span>
-        <span class="folder-meta">${folder.childCount} عنصر</span>
+        <span class="folder-meta">
+          <span>${folder.childCount || 0} عنصر</span>
+          ${isFav ? '<i class="fa-solid fa-star folder-meta-fav" title="في المفضلة"></i>' : ''}
+        </span>
       </div>
     </div>
-    <div class="file-actions">
-      <button class="star-btn ${isFav ? 'active' : ''}" data-action="fav" title="إضافة للمفضلة">
-        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
-      </button>
-      <button class="action-icon-btn" data-action="share" title="مشاركة المجلد">
-        <i class="fa-solid fa-share-nodes"></i>
-      </button>
-      <button class="action-icon-btn" data-action="rename" title="إعادة التسمية">
-        <i class="fa-solid fa-pen"></i>
-      </button>
-      ${State.currentUser?.canDelete ? `
-        <button class="action-icon-btn danger" data-action="delete" title="حذف المجلد">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      ` : ""}
-    </div>
+    <button type="button" class="item-menu-btn" data-action="menu" title="المزيد من الخيارات" aria-label="المزيد من الخيارات">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
   `;
 
-  card.querySelector(".folder-info").addEventListener("click", () => {
+  card.addEventListener("click", (e) => {
+    if (e.target.closest('[data-action="menu"]')) return;
     switchView("files");
     loadFolder(folder.id);
   });
 
-  card.querySelector('[data-action="fav"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    handleToggleFavorite(folder, e.currentTarget);
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      if (e.target.closest('[data-action="menu"]')) return;
+      e.preventDefault();
+      switchView("files");
+      loadFolder(folder.id);
+    }
   });
 
-  card.querySelector('[data-action="share"]')?.addEventListener("click", (e) => {
+  const menuBtn = card.querySelector('[data-action="menu"]');
+  menuBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    openShareModal(folder);
-  });
-
-  card.querySelector('[data-action="rename"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openRenameModal(folder);
-  });
-
-  card.querySelector('[data-action="delete"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openDeleteModal(folder);
+    openItemMenu({ item: folder, isFolder: true, triggerElement: menuBtn, isFav });
   });
 
   return card;
@@ -964,76 +1138,55 @@ function createFileCardElement(file) {
 
   const card = document.createElement("div");
   card.className = "file-card";
+  card.setAttribute("role", "button");
+  card.setAttribute("tabindex", "0");
   card.innerHTML = `
-    <div class="file-thumb">
-      ${isImage ? `
-        <img src="${file.downloadUrl || ''}" alt="${escapeHtml(file.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
+    <div class="file-card-header">
+      <span class="file-type-badge ${typeInfo.class}">
+        <i class="${typeInfo.icon}"></i> ${typeInfo.label}
+      </span>
+      <button type="button" class="item-menu-btn" data-action="menu" title="المزيد من الخيارات" aria-label="المزيد من الخيارات">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+    </div>
+
+    <div class="file-card-preview">
+      ${isImage && file.downloadUrl ? `
+        <img src="${file.downloadUrl}" alt="${escapeHtml(file.name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"/>
         <div class="file-thumb-icon ${typeInfo.class}" style="display:none;"><i class="${typeInfo.icon}"></i></div>
       ` : `
         <div class="file-thumb-icon ${typeInfo.class}"><i class="${typeInfo.icon}"></i></div>
       `}
-      <span class="file-type-badge">${typeInfo.label}</span>
-      <button class="star-btn card-star ${isFav ? 'active' : ''}" data-action="fav" title="إضافة للمفضلة">
-        <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
-      </button>
     </div>
 
-    <div class="file-body">
+    <div class="file-card-body">
       <div class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</div>
       <div class="file-sub-meta">
         <span>${formatBytes(file.size)}</span>
-        <span>•</span>
+        <span class="sep">•</span>
         <span>${formatDate(file.lastModifiedDateTime)}</span>
-      </div>
-      <div class="file-actions" style="margin-top:0.6rem;justify-content:space-between;">
-        <div style="display:flex;gap:0.35rem;">
-          <button class="action-icon-btn" data-action="preview" title="معاينة">
-            <i class="fa-solid fa-eye"></i>
-          </button>
-          <a href="${file.downloadUrl || '#'}" download class="action-icon-btn" title="تنزيل">
-            <i class="fa-solid fa-download"></i>
-          </a>
-          <button class="action-icon-btn" data-action="share" title="مشاركة">
-            <i class="fa-solid fa-share-nodes"></i>
-          </button>
-        </div>
-        <div style="display:flex;gap:0.35rem;">
-          <button class="action-icon-btn" data-action="rename" title="إعادة التسمية">
-            <i class="fa-solid fa-pen"></i>
-          </button>
-          ${State.currentUser?.canDelete ? `
-            <button class="action-icon-btn danger" data-action="delete" title="حذف">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          ` : ""}
-        </div>
+        ${isFav ? '<span class="sep">•</span><i class="fa-solid fa-star folder-meta-fav" title="في المفضلة"></i>' : ''}
       </div>
     </div>
   `;
 
-  card.querySelector('[data-action="fav"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    handleToggleFavorite(file, e.currentTarget);
-  });
-
-  card.querySelector('[data-action="preview"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
+  card.addEventListener("click", (e) => {
+    if (e.target.closest('[data-action="menu"]')) return;
     openPreviewModal(file);
   });
 
-  card.querySelector('[data-action="share"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openShareModal(file);
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      if (e.target.closest('[data-action="menu"]')) return;
+      e.preventDefault();
+      openPreviewModal(file);
+    }
   });
 
-  card.querySelector('[data-action="rename"]')?.addEventListener("click", (e) => {
+  const menuBtn = card.querySelector('[data-action="menu"]');
+  menuBtn.addEventListener("click", (e) => {
     e.stopPropagation();
-    openRenameModal(file);
-  });
-
-  card.querySelector('[data-action="delete"]')?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    openDeleteModal(file);
+    openItemMenu({ item: file, isFolder: false, triggerElement: menuBtn, isFav });
   });
 
   return card;
@@ -1053,54 +1206,47 @@ function renderFilesList(files) {
     const typeInfo = getFileTypeDetails(file.name, file.mimeType);
     const isFav = State.currentUser ? isItemFavorite(file.id, State.currentUser.uid) : false;
     const tr = document.createElement("tr");
+    tr.style.cursor = "pointer";
     tr.innerHTML = `
-      <td>
-        <button class="star-btn ${isFav ? 'active' : ''}" data-action="fav" title="المفضلة">
+      <td style="width:40px;text-align:center;">
+        <button type="button" class="star-btn ${isFav ? 'active' : ''}" data-action="fav" title="${isFav ? 'إزالة من المفضلة' : 'إضافة للمفضلة'}">
           <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
         </button>
       </td>
       <td>
         <div class="table-file-cell">
-          <i class="${typeInfo.icon} ${typeInfo.class}"></i>
-          <span class="file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
+          <div class="table-file-icon ${typeInfo.class}">
+            <i class="${typeInfo.icon}"></i>
+          </div>
+          <span class="table-file-name" title="${escapeHtml(file.name)}">${escapeHtml(file.name)}</span>
         </div>
       </td>
-      <td><span class="file-type-badge">${typeInfo.label}</span></td>
+      <td><span class="file-type-badge ${typeInfo.class}">${typeInfo.label}</span></td>
       <td style="direction:ltr;text-align:right;">${formatBytes(file.size)}</td>
       <td>${formatDate(file.lastModifiedDateTime)}</td>
       <td>${escapeHtml(file.lastModifiedBy || "مستخدم الجمعية")}</td>
-      <td>
-        <div style="display:flex;gap:0.35rem;justify-content:center;">
-          <button class="action-icon-btn" data-action="preview" title="معاينة">
-            <i class="fa-solid fa-eye"></i>
-          </button>
-          <a href="${file.downloadUrl || '#'}" download class="action-icon-btn" title="تنزيل">
-            <i class="fa-solid fa-download"></i>
-          </a>
-          <button class="action-icon-btn" data-action="share" title="مشاركة">
-            <i class="fa-solid fa-share-nodes"></i>
-          </button>
-          <button class="action-icon-btn" data-action="rename" title="تعديل الاسم">
-            <i class="fa-solid fa-pen"></i>
-          </button>
-          ${State.currentUser?.canDelete ? `
-            <button class="action-icon-btn danger" data-action="delete" title="حذف">
-              <i class="fa-solid fa-trash"></i>
-            </button>
-          ` : ""}
-        </div>
+      <td style="width:60px;text-align:center;">
+        <button type="button" class="item-menu-btn" data-action="menu" title="المزيد من الخيارات" aria-label="المزيد من الخيارات">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
       </td>
     `;
+
+    tr.addEventListener("click", (e) => {
+      if (e.target.closest('[data-action="fav"]') || e.target.closest('[data-action="menu"]')) return;
+      openPreviewModal(file);
+    });
 
     tr.querySelector('[data-action="fav"]')?.addEventListener("click", (e) => {
       e.stopPropagation();
       handleToggleFavorite(file, e.currentTarget);
     });
 
-    tr.querySelector('[data-action="preview"]')?.addEventListener("click", () => openPreviewModal(file));
-    tr.querySelector('[data-action="share"]')?.addEventListener("click", () => openShareModal(file));
-    tr.querySelector('[data-action="rename"]')?.addEventListener("click", () => openRenameModal(file));
-    tr.querySelector('[data-action="delete"]')?.addEventListener("click", () => openDeleteModal(file));
+    const menuBtn = tr.querySelector('[data-action="menu"]');
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openItemMenu({ item: file, isFolder: false, triggerElement: menuBtn, isFav });
+    });
 
     UI.filesTableBody.appendChild(tr);
   });
@@ -1129,23 +1275,15 @@ UI.sortSelect.addEventListener("change", (e) => {
   applySortingAndRender();
 });
 
-UI.refreshBtn.addEventListener("click", () => {
-  showToast("جاري تحديث السحابة من SharePoint...", "info", 1500);
-  folderCache.clear();
-  if (State.activeView === "home") {
-    loadHomeView();
-  } else {
-    loadFolder(State.currentFolderId, true);
-  }
-  loadStorageQuota();
+UI.refreshBtn.addEventListener("click", async () => {
+  showToast("جاري تحديث السحابة...", "info", 1500);
+  await refreshActiveView(true);
 });
 
 if (UI.retryBtn) {
-  UI.retryBtn.addEventListener("click", () => {
+  UI.retryBtn.addEventListener("click", async () => {
     showToast("جاري إعادة محاولة الاتصال...", "info", 1500);
-    folderCache.clear();
-    loadFolder(State.currentFolderId, true);
-    loadStorageQuota();
+    await refreshActiveView(true);
   });
 }
 
@@ -1179,7 +1317,7 @@ UI.searchInput.addEventListener("keydown", async (e) => {
     const q = UI.searchInput.value.trim();
     if (!q) return;
 
-    showToast(`جاري البحث العميق عن "${q}" في SharePoint...`, "info", 2000);
+    showToast(`جاري البحث العميق عن "${q}" في السحابة...`, "info", 2000);
     try {
       const results = await searchFilesAndFolders(q);
       if (results.length > 0) {
@@ -1209,18 +1347,17 @@ UI.newFolderForm.addEventListener("submit", async (e) => {
 
   const btn = $("#createFolderSubmitBtn");
   btn.disabled = true;
-  btn.innerHTML = '<span>جاري الإنشاء في SharePoint...</span>';
+  btn.innerHTML = '<span>جاري إنشاء المجلد...</span>';
 
   try {
     const parentId = State.currentFolderId === "root" ? null : State.currentFolderId;
     await createFolderInSharePoint(name, parentId);
-    showToast(`تم إنشاء المجلد "${name}" في SharePoint بنجاح`, "success");
+    showToast(`تم إنشاء المجلد "${name}" بنجاح`, "success");
     closeModal(UI.newFolderModal);
-    loadFolder(State.currentFolderId, true);
-    loadStorageQuota();
+    await refreshActiveView(true);
   } catch (err) {
     console.error("[Create Folder Error]:", err);
-    showToast(err.message || "تعذر إنشاء المجلد في SharePoint", "error");
+    showToast(err.message || "تعذر إنشاء المجلد في السحابة", "error");
   } finally {
     btn.disabled = false;
     btn.innerHTML = '<span>إنشاء المجلد</span>';
@@ -1305,6 +1442,13 @@ UI.shareForm.addEventListener("submit", async (e) => {
     UI.shareGeneratedUrl.value = res.shareUrl;
     UI.shareResultBox.style.display = "block";
     showToast("تم إنشاء رابط المشاركة بنجاح", "success");
+
+    // تحديث فوري مباشر لإحصائيات وروابط المشاركة
+    if (State.activeView === "shares") {
+      loadSharesView();
+    } else if (State.activeView === "home") {
+      loadHomeView(false);
+    }
 
   } catch (err) {
     console.error("[Create Share Error]:", err);
@@ -1397,6 +1541,7 @@ async function loadSharesView() {
           await revokeShareLink(s.shareId);
           showToast("تم إلغاء رابط المشاركة بنجاح", "info");
           loadSharesView();
+          if (State.activeView === "home") loadHomeView(false);
         }
       });
 
@@ -1418,12 +1563,22 @@ function handleToggleFavorite(item, btnElement) {
     if (added) {
       btnElement.classList.add("active");
       btnElement.querySelector("i").className = "fa-solid fa-star";
-      showToast(`تمت إضافة "${item.name}" إلى المفضلة`, "success", 2000);
     } else {
       btnElement.classList.remove("active");
       btnElement.querySelector("i").className = "fa-regular fa-star";
-      showToast(`تمت إزالة "${item.name}" من المفضلة`, "info", 2000);
     }
+  }
+  if (added) {
+    showToast(`تمت إضافة "${item.name}" إلى المفضلة`, "success", 2000);
+  } else {
+    showToast(`تمت إزالة "${item.name}" من المفضلة`, "info", 2000);
+  }
+
+  // تحديث فوري مباشر لواجهة المفضلة أو الرئيسية إذا كانت معروضة
+  if (State.activeView === "favorites") {
+    loadFavoritesView();
+  } else if (State.activeView === "home") {
+    loadHomeView(false);
   }
 }
 
@@ -1453,7 +1608,7 @@ function loadFavoritesView() {
 /* ═══════════════ 5. سلة المحذوفات (Recycle Bin) ═══════════════ */
 
 async function loadRecycleView() {
-  UI.recycleGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fa-solid fa-spinner fa-spin"></i> جاري فحص سلة مهملات SharePoint...</div>';
+  UI.recycleGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><i class="fa-solid fa-spinner fa-spin"></i> جاري فحص سلة المحذوفات...</div>';
   UI.emptyRecycleState.style.display = "none";
 
   try {
@@ -1575,18 +1730,43 @@ UI.renameForm.addEventListener("submit", async (e) => {
   const newName = UI.renameInput.value.trim();
   if (!newName || !State.activeTargetItem) return;
 
+  if (newName === State.activeTargetItem.name) {
+    closeModal(UI.renameModal);
+    return;
+  }
+
   const btn = $("#renameSubmitBtn");
   btn.disabled = true;
-  btn.innerHTML = '<span>جاري التعديل في SharePoint...</span>';
+  btn.innerHTML = '<span>جاري حفظ الاسم الجديد...</span>';
 
   try {
-    await renameSharePointItem(State.activeTargetItem.id, newName, State.currentFolderId);
+    const targetId = State.activeTargetItem.id;
+    await renameSharePointItem(targetId, newName, State.currentFolderId);
+
+    // تحديث فوري محلي في الذاكرة (Optimistic In-Place Update)
+    State.activeTargetItem.name = newName;
+    const localItem = State.items.find(i => i.id === targetId);
+    if (localItem) localItem.name = newName;
+
+    // تحديث الاسم في المفضلة إذا كان مضافاً
+    if (State.currentUser) {
+      const favs = getFavorites(State.currentUser.uid);
+      const favItem = favs.find(f => f.id === targetId);
+      if (favItem) {
+        favItem.name = newName;
+        saveFavorites(favs, State.currentUser.uid);
+      }
+    }
+
     showToast(`تمت إعادة التسمية إلى "${newName}" بنجاح`, "success");
     closeModal(UI.renameModal);
-    loadFolder(State.currentFolderId, true);
+
+    // إعادة فرز وعرض فورية، ثم مزامنة من السحابة في الخلفية دون وميض
+    applySortingAndRender();
+    await refreshActiveView(true, true);
   } catch (err) {
     console.error("[Rename Error]:", err);
-    showToast(err.message || "تعذر إعادة التسمية في SharePoint", "error");
+    showToast(err.message || "تعذر إعادة التسمية في السحابة", "error");
   } finally {
     btn.disabled = false;
     btn.innerHTML = '<span>حفظ التعديل</span>';
@@ -1610,17 +1790,34 @@ UI.confirmDeleteBtn.addEventListener("click", async () => {
   if (!State.activeTargetItem) return;
 
   UI.confirmDeleteBtn.disabled = true;
-  UI.confirmDeleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحذف من SharePoint...';
+  UI.confirmDeleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري حذف العنصر...';
 
   try {
-    await deleteSharePointItem(State.activeTargetItem.id, State.currentFolderId);
-    showToast(`تم حذف "${State.activeTargetItem.name}" نهائياً من SharePoint`, "success");
+    const deletedName = State.activeTargetItem.name;
+    const deletedId = State.activeTargetItem.id;
+    await deleteSharePointItem(deletedId, State.currentFolderId);
+
+    // إزالة فورية من عناصر الصفحة (Optimistic In-Place Removal)
+    State.items = State.items.filter(i => i.id !== deletedId);
+
+    // إزالة من المفضلة إن كان مضافاً
+    if (State.currentUser) {
+      const favs = getFavorites(State.currentUser.uid);
+      const remainingFavs = favs.filter(f => f.id !== deletedId);
+      if (remainingFavs.length !== favs.length) {
+        saveFavorites(remainingFavs, State.currentUser.uid);
+      }
+    }
+
+    showToast(`تم حذف "${deletedName}" نهائياً`, "success");
     closeModal(UI.deleteModal);
-    loadFolder(State.currentFolderId, true);
-    loadStorageQuota();
+
+    // إعادة عرض فورية، ثم مزامنة السحابة وتحديث المساحة
+    applySortingAndRender();
+    await refreshActiveView(true, true);
   } catch (err) {
     console.error("[Delete Error]:", err);
-    showToast(err.message || "تعذر حذف العنصر من SharePoint", "error");
+    showToast(err.message || "تعذر حذف العنصر من السحابة", "error");
   } finally {
     UI.confirmDeleteBtn.disabled = false;
     UI.confirmDeleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i> حذف نهائي';
