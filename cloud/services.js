@@ -27,6 +27,7 @@ import {
   query,
   where,
   getDocs,
+  onSnapshot,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -125,6 +126,13 @@ export function generateShareId(length = 14) {
 
 /* ═══════════════ خدمات المصادقة والمستخدمين ═══════════════ */
 
+const userProfileCache = new Map();
+const sharedItemCache = new Map();
+const pendingSharedItemRequests = new Map();
+const pendingListRequests = new Map();
+let cachedStorageStats = null;
+let cachedStorageStatsTime = 0;
+
 export async function loginWithEmail(email, password) {
   const cred = await signInWithEmailAndPassword(auth, email.trim(), password);
   return cred.user;
@@ -132,6 +140,12 @@ export async function loginWithEmail(email, password) {
 
 export async function logoutUser() {
   folderCache.clear();
+  userProfileCache.clear();
+  sharedItemCache.clear();
+  pendingSharedItemRequests.clear();
+  pendingListRequests.clear();
+  cachedStorageStats = null;
+  cachedStorageStatsTime = 0;
   await signOut(auth);
 }
 
@@ -141,6 +155,12 @@ export function onAuthUserChanged(callback) {
 
 export async function verifyAndFetchUserProfile(firebaseUser) {
   const uid = typeof firebaseUser === "string" ? firebaseUser : firebaseUser?.uid;
+  if (!uid) return { authorized: false, reason: "لم يتم العثور على المستخدم" };
+
+  if (userProfileCache.has(uid)) {
+    return userProfileCache.get(uid);
+  }
+
   const email = (firebaseUser?.email || "").toLowerCase().trim();
 
   const isExplicitMaster = uid === "dDcYQljmYFR1gq6cD0lG3wBaHys2" ||
@@ -165,17 +185,19 @@ export async function verifyAndFetchUserProfile(firebaseUser) {
   }
 
   if (!data && !isExplicitMaster) {
-    return {
+    const unauth = {
       authorized: false,
       reason: "الحساب غير مسجل في قائمة مستخدمي الجمعية المصرح لهم"
     };
+    return unauth;
   }
 
   if (data && (data.status === "inactive" || data.status === "disabled")) {
-    return {
+    const disabled = {
       authorized: false,
       reason: "تم تعطيل هذا الحساب، يرجى مراجعة إدارة الجمعية"
     };
+    return disabled;
   }
 
   const role = data?.role || (isExplicitMaster ? "tech_admin" : "employee");
@@ -183,7 +205,7 @@ export async function verifyAndFetchUserProfile(firebaseUser) {
   const isExec = role === "executive" || isTechAdmin;
   const isHR = role === "hr" || isExec;
 
-  return {
+  const result = {
     authorized: true,
     user: {
       uid,
@@ -198,6 +220,9 @@ export async function verifyAndFetchUserProfile(firebaseUser) {
       canManage: isHR || isExec || isTechAdmin
     }
   };
+
+  userProfileCache.set(uid, result);
+  return result;
 }
 
 /* ═══════════════ محرك الاتصال بـ SharePoint الإنتاجي ═══════════════ */
@@ -232,12 +257,17 @@ async function callSharePointApi(action, payload = {}) {
   return data;
 }
 
-export async function fetchStorageStats() {
+export async function fetchStorageStats(useCache = true) {
+  if (useCache && cachedStorageStats && (Date.now() - cachedStorageStatsTime < 60000)) {
+    return cachedStorageStats;
+  }
   const data = await callSharePointApi("stats");
-  return {
+  cachedStorageStats = {
     name: data.name,
     quota: data.quota
   };
+  cachedStorageStatsTime = Date.now();
+  return cachedStorageStats;
 }
 
 export async function listFolderItems(folderId = null, useCache = true) {
@@ -248,20 +278,33 @@ export async function listFolderItems(folderId = null, useCache = true) {
     if (cached) return cached;
   }
 
-  const data = await callSharePointApi("list", {
-    folderId: key === "root" ? null : key
-  });
+  if (pendingListRequests.has(key)) {
+    return await pendingListRequests.get(key);
+  }
 
-  const result = {
-    currentFolder: data.currentFolder,
-    items: data.items || [],
-    canDelete: data.canDelete !== false,
-    canUpload: true,
-    canCreateFolder: true
-  };
+  const fetchPromise = (async () => {
+    try {
+      const data = await callSharePointApi("list", {
+        folderId: key === "root" ? null : key
+      });
 
-  folderCache.set(key, result);
-  return result;
+      const result = {
+        currentFolder: data.currentFolder,
+        items: data.items || [],
+        canDelete: data.canDelete !== false,
+        canUpload: true,
+        canCreateFolder: true
+      };
+
+      folderCache.set(key, result);
+      return result;
+    } finally {
+      pendingListRequests.delete(key);
+    }
+  })();
+
+  pendingListRequests.set(key, fetchPromise);
+  return await fetchPromise;
 }
 
 export async function createFolderInSharePoint(folderName, parentFolderId = null) {
@@ -341,12 +384,33 @@ export async function fetchRecycleBin() {
   return data.items || [];
 }
 
-export async function fetchSharedItemDetails(itemId) {
-  const data = await callSharePointApi("shared_item", { itemId });
-  return {
-    item: data.item,
-    children: data.children || []
-  };
+export async function fetchSharedItemDetails(itemId, useCache = true) {
+  if (!itemId) return { item: null, children: [] };
+
+  if (useCache && sharedItemCache.has(itemId)) {
+    return sharedItemCache.get(itemId);
+  }
+
+  if (pendingSharedItemRequests.has(itemId)) {
+    return await pendingSharedItemRequests.get(itemId);
+  }
+
+  const fetchPromise = (async () => {
+    try {
+      const data = await callSharePointApi("shared_item", { itemId });
+      const result = {
+        item: data.item,
+        children: data.children || []
+      };
+      sharedItemCache.set(itemId, result);
+      return result;
+    } finally {
+      pendingSharedItemRequests.delete(itemId);
+    }
+  })();
+
+  pendingSharedItemRequests.set(itemId, fetchPromise);
+  return await fetchPromise;
 }
 
 /* ═══════════════ نظام الروابط والمشاركة المشفرة (Share Links Hub) ═══════════════ */
@@ -536,17 +600,93 @@ export async function verifySharePassword(shareInfo, enteredPassword) {
 }
 
 /**
+ * تسجيل فتح رابط المشاركة
+ */
+export async function recordShareOpen(shareId) {
+  if (!shareId) return;
+  try {
+    const ref = doc(db, "cloud_shares", shareId);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      const cur = snap.data().openCount || 0;
+      await updateDoc(ref, {
+        openCount: cur + 1,
+        lastVisitedAt: new Date().toISOString()
+      });
+    }
+  } catch (e) {
+    console.warn("[Record Share Open Error]:", e);
+  }
+}
+
+/**
  * تسجيل زيادة عدد المشاهدات
  */
 export async function recordShareView(shareId) {
+  if (!shareId) return;
   try {
     const ref = doc(db, "cloud_shares", shareId);
     const snap = await getDoc(ref);
     if (snap.exists()) {
       const cur = snap.data().viewCount || 0;
-      await updateDoc(ref, { viewCount: cur + 1 });
+      await updateDoc(ref, {
+        viewCount: cur + 1,
+        lastVisitedAt: new Date().toISOString()
+      });
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn("[Record Share View Error]:", e);
+  }
+}
+
+/**
+ * تسجيل عملية تنزيل الملفات
+ */
+export async function recordShareDownload(shareId) {
+  if (!shareId) return;
+  try {
+    const ref = doc(db, "cloud_shares", shareId);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      const cur = snap.data().downloadCount || 0;
+      await updateDoc(ref, {
+        downloadCount: cur + 1,
+        lastVisitedAt: new Date().toISOString()
+      });
+    }
+  } catch (e) {
+    console.warn("[Record Share Download Error]:", e);
+  }
+}
+
+/**
+ * الاشتراك اللحظي الفوري لروابط مشاركة المستخدم
+ */
+export function subscribeUserShareLinks(uid, callback) {
+  if (!uid) return () => {};
+  try {
+    const q = query(
+      collection(db, "cloud_shares"),
+      where("createdBy", "==", uid)
+    );
+    return onSnapshot(q, (snap) => {
+      const list = [];
+      snap.forEach(d => {
+        const data = d.data();
+        if (data.expiresAt && new Date(data.expiresAt) < new Date() && data.status === "active") {
+          data.status = "expired";
+        }
+        list.push(data);
+      });
+      list.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+      callback(list);
+    }, (err) => {
+      console.warn("[Subscribe Shares Error]:", err);
+    });
+  } catch (err) {
+    console.warn("[Subscribe Shares Error]:", err);
+    return () => {};
+  }
 }
 
 /* ═══════════════ نظام العناصر المفضلة (Favorites) ═══════════════ */

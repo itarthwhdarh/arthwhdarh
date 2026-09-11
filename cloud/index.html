@@ -109,12 +109,12 @@
       <nav class="nav-section">
         <div class="nav-label">الرئيسية والتنقل</div>
         
-        <a href="#" class="nav-item" id="navHome" data-view="home">
+        <a href="#" class="nav-item active" id="navHome" data-view="home">
           <i class="fa-solid fa-house"></i>
           <span>الرئيسية</span>
         </a>
 
-        <a href="#" class="nav-item active" id="navAllFiles" data-view="files">
+        <a href="#" class="nav-item" id="navAllFiles" data-view="files">
           <i class="fa-solid fa-folder-tree"></i>
           <span>ملفاتي</span>
         </a>
@@ -195,25 +195,6 @@
             </div>
           </div>
         </div>
-
-        <div class="header-actions">
-          <button class="btn-secondary" id="refreshBtn" title="تحديث محتويات السحابة">
-            <i class="fa-solid fa-rotate-right"></i>
-          </button>
-          
-          <button class="btn-secondary" id="newFolderBtn">
-            <i class="fa-solid fa-folder-plus"></i>
-            <span>مجلد جديد</span>
-          </button>
-
-          <button class="btn-primary" id="uploadBtn">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <span>رفع ملفات</span>
-            <div class="btn-icon-wrapper">
-              <i class="fa-solid fa-plus"></i>
-            </div>
-          </button>
-        </div>
       </header>
 
       <!-- شريط المسار والتحكم بالعرض (يظهر في عرض الملفات) -->
@@ -228,6 +209,19 @@
           <button class="btn-secondary" id="goBackBtn" style="display:none;" title="الرجوع للمجلد السابق">
             <i class="fa-solid fa-arrow-right"></i> رجوع
           </button>
+
+          <!-- أزرار التحكم بالمجلد المفتوح (تظهر للمستخدم الإداري فقط) -->
+          <div class="folder-action-buttons" id="folderActionBtns" style="display:none;">
+            <button type="button" class="btn-primary folder-act-btn" id="folderUploadBtn" title="رفع ملفات إلى هذا المجلد">
+              <i class="fa-solid fa-cloud-arrow-up"></i> <span>رفع ملفات</span>
+            </button>
+            <button type="button" class="btn-secondary folder-act-btn" id="folderNewFolderBtn" title="إنشاء مجلد جديد داخل هذا المجلد">
+              <i class="fa-solid fa-folder-plus"></i> <span>مجلد جديد</span>
+            </button>
+            <button type="button" class="btn-secondary folder-act-btn" id="folderRefreshBtn" title="تحديث محتويات المجلد">
+              <i class="fa-solid fa-rotate"></i> <span>تحديث</span>
+            </button>
+          </div>
 
           <!-- الترتيب -->
           <div class="sort-select-wrap">
@@ -293,10 +287,16 @@
             </div>
             <div class="home-hero-actions">
               <button class="btn-primary" id="homeUploadBtn">
-                <i class="fa-solid fa-cloud-arrow-up"></i> رفع ملفات جديدة
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>رفع ملفات جديدة</span>
               </button>
               <button class="btn-secondary" id="homeNewFolderBtn">
-                <i class="fa-solid fa-folder-plus"></i> إنشاء مجلد
+                <i class="fa-solid fa-folder-plus"></i>
+                <span>إنشاء مجلد</span>
+              </button>
+              <button class="btn-secondary" id="refreshBtn" title="تحديث ومزامنة محتويات السحابة">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>تحديث</span>
               </button>
             </div>
           </div>
@@ -410,9 +410,11 @@
               <span>إدارة روابط المشاركة</span>
               <span class="section-count" id="sharesCount">0</span>
             </div>
+            <button class="btn-secondary back-to-home-btn" title="الرجوع إلى الصفحة الرئيسية">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>الرجوع للرئيسية</span>
+            </button>
           </div>
-          <p class="shares-desc">جميع روابط المشاركة العامة التي أنشأتها لملفاتك ومجلداتك مع إمكانية إلغائها أو نسخها في أي وقت.</p>
-
           <div class="files-list-view" style="margin-top:1.25rem;">
             <table class="files-table">
               <thead>
@@ -445,6 +447,10 @@
               <span>العناصر المفضلة</span>
               <span class="section-count" id="favoritesCount">0</span>
             </div>
+            <button class="btn-secondary back-to-home-btn" title="الرجوع إلى الصفحة الرئيسية">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>الرجوع للرئيسية</span>
+            </button>
           </div>
           <div class="files-grid" id="favoritesGrid" style="margin-top:1.25rem;"></div>
           <div class="empty-state" id="emptyFavoritesState" style="display:none;">
@@ -462,6 +468,10 @@
               <span>سلة المحذوفات</span>
               <span class="section-count" id="recycleCount">0</span>
             </div>
+            <button class="btn-secondary back-to-home-btn" title="الرجوع إلى الصفحة الرئيسية">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>الرجوع للرئيسية</span>
+            </button>
           </div>
           <p class="shares-desc">العناصر المحذوفة تخزن مؤقتاً في سلة مهملات المستودع قبل الحذف النهائي.</p>
           <div class="files-grid" id="recycleGrid" style="margin-top:1.25rem;"></div>
@@ -479,6 +489,10 @@
               <i class="fa-solid fa-gear" style="color:var(--ink-500);"></i>
               <span>إعدادات السحابة وسعة التخزين</span>
             </div>
+            <button class="btn-secondary back-to-home-btn" title="الرجوع إلى الصفحة الرئيسية">
+              <i class="fa-solid fa-arrow-right"></i>
+              <span>الرجوع للرئيسية</span>
+            </button>
           </div>
           <div class="settings-grid">
             <div class="settings-card">
@@ -619,7 +633,7 @@
 
   <!-- 3. نافذة المشاركة المتقدمة وحماية كلمة المرور (Share Modal) -->
   <div class="modal-backdrop" id="shareModal">
-    <div class="modal-dialog" style="max-width:540px;">
+    <div class="modal-dialog">
       <div class="modal-header">
         <h3 class="modal-title">
           <i class="fa-solid fa-share-nodes" style="color:var(--gold);"></i>
@@ -656,14 +670,6 @@
                 <div class="arc-content">
                   <span class="arc-title"><i class="fa-solid fa-eye"></i> عرض فقط (بدون تنزيل)</span>
                   <span class="arc-desc">يتيح المعاينة فقط مع تعطيل أزرار التنزيل</span>
-                </div>
-              </label>
-
-              <label class="access-radio-card" id="optAccessUpload" style="display:none;">
-                <input type="radio" name="accessType" value="upload"/>
-                <div class="arc-content">
-                  <span class="arc-title"><i class="fa-solid fa-cloud-arrow-up"></i> إيداع ورفع ملفات</span>
-                  <span class="arc-desc">يتيح للزائر رفع ملفات داخل هذا المجلد المشترك</span>
                 </div>
               </label>
             </div>
@@ -726,6 +732,10 @@
                 <i class="fa-solid fa-copy"></i>
                 <span>نسخ</span>
               </button>
+              <button type="button" class="btn-secondary" id="downloadQrBtn" title="تحميل رمز QR للرابط">
+                <i class="fa-solid fa-qrcode"></i>
+                <span>رمز QR</span>
+              </button>
             </div>
           </div>
 
@@ -743,11 +753,11 @@
 
   <!-- 4. نافذة المعاينة المباشرة (Preview Modal) -->
   <div class="modal-backdrop" id="previewModal">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-preview-dialog">
       <div class="modal-header">
         <h3 class="modal-title" id="previewFileName">معاينة الملف</h3>
         <div style="display:flex;gap:0.5rem;align-items:center;">
-          <a href="#" id="previewDownloadBtn" class="btn-primary" target="_blank" download>
+          <a href="#" id="previewDownloadBtn" class="btn-primary" download style="display:none;">
             <i class="fa-solid fa-download"></i> تنزيل
           </a>
           <button class="modal-close-btn" data-close="previewModal" title="إغلاق">
@@ -755,8 +765,8 @@
           </button>
         </div>
       </div>
-      <div class="modal-body" style="padding:0;overflow:hidden;">
-        <div class="preview-viewer" id="previewViewer">
+      <div class="modal-body preview-modal-body" id="previewModalBody">
+        <div class="preview-content-area" id="previewViewer">
           <div class="preview-spinner"></div>
         </div>
       </div>
@@ -822,10 +832,134 @@
     </div>
   </div>
 
+  <!-- 7. نافذة تأكيد إلغاء رابط المشاركة (Revoke Share Modal) -->
+  <div class="modal-backdrop" id="revokeShareModal">
+    <div class="modal-dialog" style="max-width:440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color:var(--danger);">
+          <i class="fa-solid fa-link-slash"></i>
+          <span>إلغاء رابط المشاركة؟</span>
+        </h3>
+        <button class="modal-close-btn" data-close="revokeShareModal" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--ink-800);font-size:0.95rem;line-height:1.6;margin:0;">
+          هل تريد بالتأكيد إلغاء رابط المشاركة لـ <strong id="revokeShareItemName" style="color:var(--ink-900);"></strong>؟
+        </p>
+        <p class="field-hint" style="color:var(--danger);margin-top:0.35rem;font-size:0.825rem;">
+          لن يكون هذا الرابط متاحاً للوصول بعد الإلغاء.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-close="revokeShareModal">إلغاء</button>
+        <button type="button" class="btn-primary" id="confirmRevokeShareBtn" style="background:var(--danger);border-color:var(--danger);">
+          <i class="fa-solid fa-ban"></i>
+          <span>إلغاء الرابط</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. نافذة إحصائيات الرابط (Share Stats Modal) -->
+  <div class="modal-backdrop" id="shareStatsModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-chart-pie" style="color:var(--gold);"></i>
+          <span>إحصائيات الرابط</span>
+        </div>
+        <button class="modal-close-btn" data-close="shareStatsModal" title="إغلاق">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--shell);border:1px solid var(--border-hairline);border-radius:var(--radius-md);padding:0.75rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.65rem;">
+          <i class="fa-solid fa-link" style="color:var(--gold);font-size:1.1rem;"></i>
+          <div style="min-width:0;">
+            <div style="font-size:0.75rem;color:var(--ink-400);">العنصر المشترك</div>
+            <strong id="modalStatItemName" style="color:var(--ink-900);font-size:0.95rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></strong>
+          </div>
+        </div>
+
+        <div class="share-stats-modal-grid">
+          <div class="ssm-card">
+            <div class="ssm-icon" style="background:rgba(156, 110, 56, 0.12);color:var(--gold-dark);">
+              <i class="fa-solid fa-arrow-pointer"></i>
+            </div>
+            <div class="ssm-info">
+              <span class="ssm-label">عدد مرات فتح الرابط</span>
+              <span class="ssm-val" id="modalStatOpenCount">0 مرة</span>
+            </div>
+          </div>
+
+          <div class="ssm-card">
+            <div class="ssm-icon" style="background:rgba(37, 99, 235, 0.12);color:#2563eb;">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <div class="ssm-info">
+              <span class="ssm-label">عدد المشاهدات</span>
+              <span class="ssm-val" id="modalStatViewCount">0 مشاهدة</span>
+            </div>
+          </div>
+
+          <div class="ssm-card">
+            <div class="ssm-icon" style="background:rgba(16, 185, 129, 0.12);color:#10b981;">
+              <i class="fa-solid fa-download"></i>
+            </div>
+            <div class="ssm-info">
+              <span class="ssm-label">عدد مرات التنزيل</span>
+              <span class="ssm-val" id="modalStatDownloadCount">0 مرة</span>
+            </div>
+          </div>
+
+          <div class="ssm-card">
+            <div class="ssm-icon" style="background:rgba(139, 92, 246, 0.12);color:#8b5cf6;">
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="ssm-info">
+              <span class="ssm-label">آخر زيارة</span>
+              <span class="ssm-val" id="modalStatLastVisited">لم يزر بعد</span>
+            </div>
+          </div>
+
+          <div class="ssm-card">
+            <div class="ssm-icon" style="background:rgba(245, 158, 11, 0.12);color:#d97706;">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="ssm-info">
+              <span class="ssm-label">حالة الرابط</span>
+              <span class="ssm-val" id="modalStatLinkStatus">نشط</span>
+            </div>
+          </div>
+
+          <div class="ssm-card">
+            <div class="ssm-icon" style="background:rgba(14, 165, 233, 0.12);color:#0ea5e9;">
+              <i class="fa-solid fa-folder-tree"></i>
+            </div>
+            <div class="ssm-info">
+              <span class="ssm-label">العناصر المتاحة</span>
+              <span class="ssm-val" id="modalStatAccessedItems">0 عنصر</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-close="shareStatsModal">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مستطيل التحديد السريع والقائمة السياقية (Windows Explorer Selection & Context Menu) -->
+  <div class="selection-marquee" id="selectionMarquee"></div>
+  <div class="cloud-context-menu" id="customContextMenu" style="display:none;"></div>
+
   <!-- حاوية الإشعارات العائمة (Toast Container) -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- تطبيق السحابة الرئيسي -->
-  <script type="module" src="cloud.js?v=2.0"></script>
+  <!-- مكتبة QR Code وتطبيق السحابة الرئيسي -->
+  <script src="qrcode.min.js"></script>
+  <script type="module" src="cloud.js?v=2.4"></script>
 </body>
 </html>

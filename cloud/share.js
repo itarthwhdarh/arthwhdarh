@@ -4,16 +4,18 @@
    ──────────────────────────────────────────────────────────
    التحقق من صحة الروابط وصلاحيتها
    فك التشفير والتحقق من كلمات المرور عبر Salted SHA-256
-   عرض وتنزيل الملفات ومعاينة محتويات المجلدات المشتركة
+   تنزيل الملفات مباشرة إلى جهاز المستخدم دون فتح SharePoint
+   واجهة بسيطة وواضحة تركز على اسم الملف/المجلد ومحتوياته فقط
    خلو تام من الرموز التعبيرية (Emojis)
 ══════════════════════════════════════════════════════════ */
 
 import {
   fetchShareByToken,
   verifySharePassword,
+  recordShareOpen,
   recordShareView,
-  fetchSharedItemDetails,
-  uploadFileToSharePoint
+  recordShareDownload,
+  fetchSharedItemDetails
 } from "./services.js";
 
 const $ = (s) => document.querySelector(s);
@@ -32,26 +34,39 @@ const UI = {
   unlockSubmitBtn: $("#unlockSubmitBtn"),
   
   contentBox: $("#shareContentBox"),
+  singleFileView: $("#sharedSingleFileView"),
   sharedIcon: $("#sharedIcon"),
   sharedTitle: $("#sharedTitle"),
   sharedSize: $("#sharedSize"),
-  sharedDate: $("#sharedDate"),
-  sharedSender: $("#sharedSender"),
-  sharedPreviewStage: $("#sharedPreviewStage"),
+  sharedPreviewBtn: $("#sharedPreviewBtn"),
   sharedDownloadBtn: $("#sharedDownloadBtn"),
-  accessNoticeText: $("#accessNoticeText"),
   
   sharedFolderSection: $("#sharedFolderSection"),
+  sharedFolderTitle: $("#sharedFolderTitle"),
   sharedFolderCount: $("#sharedFolderCount"),
-  sharedFolderUploadZone: $("#sharedFolderUploadZone"),
-  sharedFolderFileInput: $("#sharedFolderFileInput"),
-  sharedFolderGrid: $("#sharedFolderGrid"),
+  sharedNavBar: $("#sharedNavBar"),
+  shareGoBackBtn: $("#shareGoBackBtn"),
+  shareBreadcrumbs: $("#shareBreadcrumbs"),
+  shareViewListBtn: $("#shareViewListBtn"),
+  shareViewGridBtn: $("#shareViewGridBtn"),
+  shareFolderLoading: $("#shareFolderLoading"),
+  sharedItemsContainer: $("#sharedItemsContainer"),
   
-  headerAccessBadge: $("#headerAccessBadge"),
+  previewModal: $("#sharePreviewModal"),
+  previewModalFileName: $("#previewModalFileName"),
+  closePreviewModalBtn: $("#closePreviewModalBtn"),
+  closePreviewFooterBtn: $("#closePreviewFooterBtn"),
+  previewLoadingState: $("#previewLoadingState"),
+  previewContentArea: $("#previewContentArea"),
+  previewDownloadBtn: $("#previewDownloadBtn"),
+  
   toastContainer: $("#toastContainer")
 };
 
 let currentShareInfo = null;
+let currentShareItem = null;
+let folderNavStack = []; // [{ id, name, item, children }]
+let currentViewMode = localStorage.getItem("share_view_mode") || "list"; // الافتراضي هو وضع القائمة
 
 function showToast(message, type = "info", duration = 4000) {
   const toast = document.createElement("div");
@@ -91,22 +106,6 @@ function formatBytes(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
 }
 
-function formatDate(isoStr) {
-  if (!isoStr) return "غير متوفر";
-  try {
-    const d = new Date(isoStr);
-    return new Intl.DateTimeFormat("ar-SA", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }).format(d);
-  } catch (e) {
-    return isoStr;
-  }
-}
-
 function getFileTypeDetails(fileName = "", mimeType = "") {
   const ext = fileName.split(".").pop().toLowerCase();
   if (ext === "pdf" || mimeType.includes("pdf")) return { class: "file-type-pdf", icon: "fa-solid fa-file-pdf", label: "PDF" };
@@ -129,12 +128,237 @@ function showError(title, msg) {
   UI.errorBox.style.display = "block";
 }
 
+/* ═══════════════ آلية التنزيل المباشر ═══════════════ */
+
+/**
+ * تنزيل الملف مباشرة إلى جهاز المستخدم دون فتح أو توجيه إلى SharePoint
+ */
+function triggerDirectDownload(url, fileName) {
+  if (!url || url === "#") {
+    showToast("رابط التنزيل غير متوفر حالياً", "error");
+    return;
+  }
+
+  // تحسين الرابط لضمان تنزيل مباشر
+  let directUrl = url;
+  if (directUrl.includes("sharepoint.com") && !directUrl.includes("download.aspx") && !directUrl.includes("download=1")) {
+    directUrl += (directUrl.includes("?") ? "&" : "?") + "download=1";
+  }
+
+  // تسجيل عملية التنزيل في إحصائيات السحابة
+  if (currentShareInfo?.share?.shareId) {
+    recordShareDownload(currentShareInfo.share.shareId);
+  }
+
+  showToast(`جاري بدء تنزيل "${fileName || 'الملف'}"...`, "info", 3000);
+
+  // تشغيل التنزيل عبر رابط خفي بدون target="_blank"
+  const a = document.createElement("a");
+  a.href = directUrl;
+  if (fileName) {
+    a.setAttribute("download", fileName);
+  }
+  a.style.display = "none";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    try {
+      a.remove();
+    } catch (e) {}
+  }, 1000);
+}
+
+// ربط زر التنزيل الرئيسي للملف
+UI.sharedDownloadBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (currentShareItem && currentShareItem.downloadUrl) {
+    triggerDirectDownload(currentShareItem.downloadUrl, currentShareItem.name);
+  } else {
+    showToast("رابط التنزيل غير متوفر حالياً", "error");
+  }
+});
+
+/* ═══════════════ محرك المعاينة المباشرة للملفات ═══════════════ */
+
+function isPreviewable(fileName = "", mimeType = "") {
+  const ext = (fileName.split(".").pop() || "").toLowerCase();
+  const previewExts = [
+    "png", "jpg", "jpeg", "gif", "webp", "svg", "bmp", "ico",
+    "pdf",
+    "mp4", "webm", "mov", "mp3", "wav", "m4a",
+    "txt", "csv", "doc", "docx", "xls", "xlsx", "ppt", "pptx"
+  ];
+  return previewExts.includes(ext) ||
+         mimeType.startsWith("image/") ||
+         mimeType.includes("pdf") ||
+         mimeType.startsWith("video/") ||
+         mimeType.startsWith("audio/");
+}
+
+let activePreviewItem = null;
+
+async function openSharePreview(fileItem) {
+  if (!fileItem) return;
+  activePreviewItem = fileItem;
+
+  // تسجيل مشاهدة الملف في إحصائيات السحابة فقط إذا لم تُسجّل الزيارة لهذه الجلسة
+  if (currentShareInfo?.share?.shareId) {
+    const sId = currentShareInfo.share.shareId;
+    if (!sessionStorage.getItem(`viewed_share_${sId}`)) {
+      sessionStorage.setItem(`viewed_share_${sId}`, "true");
+      recordShareView(sId);
+    }
+  }
+
+  const ext = (fileItem.name.split(".").pop() || "").toLowerCase();
+  const mime = fileItem.mimeType || "";
+  const isImage = ["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp"].includes(ext) || mime.startsWith("image/");
+  const isPdf = ext === "pdf" || mime.includes("pdf");
+  const isVideo = ["mp4", "webm", "mov"].includes(ext) || mime.startsWith("video/");
+  const isAudio = ["mp3", "wav", "m4a"].includes(ext) || mime.startsWith("audio/");
+
+  UI.previewModalFileName.textContent = fileItem.name;
+  UI.previewContentArea.innerHTML = "";
+  UI.previewLoadingState.style.display = "flex";
+  UI.previewModal.style.display = "flex";
+
+  // إدارة زر التنزيل داخل نافذة المعاينة حسب الصلاحية
+  const canDownload = Boolean(currentShareInfo?.share?.allowDownload && fileItem.downloadUrl);
+  if (canDownload) {
+    UI.previewDownloadBtn.style.display = "inline-flex";
+  } else {
+    UI.previewDownloadBtn.style.display = "none";
+  }
+
+  try {
+    if (isImage) {
+      const img = document.createElement("img");
+      img.className = "preview-media-img";
+      img.alt = fileItem.name;
+      img.onload = () => {
+        UI.previewLoadingState.style.display = "none";
+      };
+      img.onerror = () => {
+        UI.previewLoadingState.style.display = "none";
+        UI.previewContentArea.innerHTML = `
+          <div class="preview-unsupported-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h3>تعذر تحميل الصورة</h3>
+            <p>قد يكون الرابط انتهت صلاحيته أو تعذر الوصول للمحتوى.</p>
+          </div>
+        `;
+      };
+      img.src = fileItem.downloadUrl;
+      UI.previewContentArea.appendChild(img);
+      return;
+    }
+
+    if (isVideo) {
+      UI.previewLoadingState.style.display = "none";
+      const video = document.createElement("video");
+      video.className = "preview-media-video";
+      video.controls = true;
+      video.autoplay = true;
+      video.src = fileItem.downloadUrl;
+      UI.previewContentArea.appendChild(video);
+      return;
+    }
+
+    if (isAudio) {
+      UI.previewLoadingState.style.display = "none";
+      const audio = document.createElement("audio");
+      audio.className = "preview-media-audio";
+      audio.controls = true;
+      audio.autoplay = true;
+      audio.src = fileItem.downloadUrl;
+      UI.previewContentArea.appendChild(audio);
+      return;
+    }
+
+    // لملفات PDF أو مستندات الأوفيس
+    let targetPreviewUrl = fileItem.previewUrl;
+    if (!targetPreviewUrl && fileItem.id) {
+      try {
+        const details = await fetchSharedItemDetails(fileItem.id);
+        targetPreviewUrl = details.item?.previewUrl;
+      } catch (e) {
+        console.warn("[Fetch Item Preview Error]:", e);
+      }
+    }
+
+    if (targetPreviewUrl) {
+      const iframe = document.createElement("iframe");
+      iframe.className = "preview-iframe-viewer";
+      iframe.title = fileItem.name;
+      iframe.onload = () => {
+        UI.previewLoadingState.style.display = "none";
+      };
+      iframe.src = targetPreviewUrl;
+      UI.previewContentArea.appendChild(iframe);
+    } else if (fileItem.downloadUrl && isPdf) {
+      const iframe = document.createElement("iframe");
+      iframe.className = "preview-iframe-viewer";
+      iframe.title = fileItem.name;
+      iframe.onload = () => {
+        UI.previewLoadingState.style.display = "none";
+      };
+      iframe.src = fileItem.downloadUrl;
+      UI.previewContentArea.appendChild(iframe);
+    } else {
+      UI.previewLoadingState.style.display = "none";
+      UI.previewContentArea.innerHTML = `
+        <div class="preview-unsupported-box">
+          <i class="fa-solid fa-file-lines"></i>
+          <h3>المعاينة غير متاحة لهذا الملف</h3>
+          <p>${canDownload ? "يمكنك تنزيل الملف لعرضه على جهازك." : "هذا الملف للمعاينة فقط ولكن صيغته تتطلب تطبيقاً مخصصاً."}</p>
+        </div>
+      `;
+    }
+
+  } catch (err) {
+    console.error("[Open Preview Error]:", err);
+    UI.previewLoadingState.style.display = "none";
+    UI.previewContentArea.innerHTML = `
+      <div class="preview-unsupported-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <h3>حدث خطأ أثناء تحميل المعاينة</h3>
+        <p>${escapeHtml(err.message || "")}</p>
+      </div>
+    `;
+  }
+}
+
+function closeSharePreview() {
+  UI.previewModal.style.display = "none";
+  UI.previewContentArea.innerHTML = "";
+  activePreviewItem = null;
+}
+
+// أزرار ومستمعات إغلاق المعاينة
+UI.closePreviewModalBtn.addEventListener("click", closeSharePreview);
+UI.closePreviewFooterBtn.addEventListener("click", closeSharePreview);
+UI.previewModal.addEventListener("click", (e) => {
+  if (e.target === UI.previewModal) closeSharePreview();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && UI.previewModal.style.display === "flex") {
+    closeSharePreview();
+  }
+});
+
+// زر التنزيل داخل نافذة المعاينة
+UI.previewDownloadBtn.addEventListener("click", () => {
+  if (activePreviewItem && activePreviewItem.downloadUrl) {
+    triggerDirectDownload(activePreviewItem.downloadUrl, activePreviewItem.name);
+  }
+});
+
 /* ═══════════════ استخراج معرّف المشاركة الذكي ═══════════════ */
 
 /**
  * استخراج معرّف المشاركة بذكاء وموثوقية عالية من عدة مصادر محتملة:
  * 1. معاملات الاستعلام: ?s=... أو ?shareId=... أو ?id=...
- * 2. أجزاء الهاش: #s=... أو #id=... أو #SHARE_ID (حصانة ضد إسقاط الاستعلام عند تحويل 301)
+ * 2. أجزاء الهاش: #s=... أو #id=... أو #SHARE_ID
  * 3. مقاطع المسار: /share/:id أو /cloud/share/:id
  */
 function extractShareId() {
@@ -203,14 +427,12 @@ async function initSharePage() {
     currentShareInfo = result;
     const share = result.share;
 
-    // شارة نوع الوصول في الرأس
-    let accessBadgeHtml = `<span class="badge-tag badge-active"><i class="fa-solid fa-download"></i> عرض وتنزيل</span>`;
-    if (share.accessType === "view") {
-      accessBadgeHtml = `<span class="badge-tag badge-password"><i class="fa-solid fa-eye"></i> عرض فقط</span>`;
-    } else if (share.accessType === "upload") {
-      accessBadgeHtml = `<span class="badge-tag badge-active"><i class="fa-solid fa-cloud-arrow-up"></i> إيداع ملفات</span>`;
+    // تسجيل فتح الرابط في إحصائيات السحابة فقط عند زيارة جلسة جديدة (وليس Refresh)
+    const sessionOpenKey = `opened_share_${share.shareId}`;
+    if (!sessionStorage.getItem(sessionOpenKey)) {
+      sessionStorage.setItem(sessionOpenKey, "true");
+      recordShareOpen(share.shareId);
     }
-    UI.headerAccessBadge.innerHTML = accessBadgeHtml;
 
     // فحص الحماية بكلمة مرور
     if (share.hasPassword) {
@@ -278,53 +500,63 @@ async function renderUnlockedContent() {
   UI.loading.style.display = "flex";
   const share = currentShareInfo.share;
 
-  // تسجيل المشاهدة في Firestore
-  recordShareView(share.shareId);
+  // تسجيل المشاهدة في Firestore فقط عند زيارة جلسة جديدة (وليس Refresh)
+  const sessionViewKey = `viewed_share_${share.shareId}`;
+  if (!sessionStorage.getItem(sessionViewKey)) {
+    sessionStorage.setItem(sessionViewKey, "true");
+    recordShareView(share.shareId);
+  }
 
   try {
     const details = await fetchSharedItemDetails(share.itemId);
     const item = details.item;
+    currentShareItem = item;
 
     UI.loading.style.display = "none";
     UI.contentBox.style.display = "block";
 
-    // تعبئة البيانات العامة
-    UI.sharedTitle.textContent = item.name;
-    UI.sharedSize.textContent = item.isFolder ? `${item.childCount || 0} عنصر` : formatBytes(item.size);
-    UI.sharedDate.textContent = `آخر تعديل: ${formatDate(item.lastModifiedDateTime)}`;
-    UI.sharedSender.textContent = `بواسطة: ${escapeHtml(share.creatorName || "جمعية إرث وحضارة")}`;
-
-    const typeInfo = getFileTypeDetails(item.name, item.mimeType);
-    UI.sharedIcon.innerHTML = `<i class="${typeInfo.icon}"></i>`;
-
-    // إدارة زر التنزيل بحسب الصلاحيات
-    if (share.allowDownload && item.downloadUrl) {
-      UI.sharedDownloadBtn.href = item.downloadUrl;
-      UI.sharedDownloadBtn.style.display = "inline-flex";
-      UI.accessNoticeText.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i> المصرح به: المعاينة والتنزيل المباشر من سحابة إرث وحضارة.';
-    } else {
-      UI.sharedDownloadBtn.style.display = "none";
-      UI.accessNoticeText.innerHTML = '<i class="fa-solid fa-eye text-gold"></i> المصرح به: المعاينة فقط (التنزيل معطّل من قِبل المالك).';
-    }
-
     if (item.isFolder) {
       // استعراض محتويات المجلد
-      UI.sharedPreviewStage.style.display = "none";
+      UI.singleFileView.style.display = "none";
       UI.sharedFolderSection.style.display = "block";
-      UI.sharedFolderCount.textContent = (details.children || []).length;
-      renderSharedFolderChildren(details.children || [], share.allowDownload);
 
-      // تفعيل رفع الملفات إذا كانت الصلاحية تسمح
-      if (share.allowUpload) {
-        UI.sharedFolderUploadZone.style.display = "flex";
-        setupSharedFolderUpload(item.id);
+      // تهيئة سجل تنقل المجلدات
+      folderNavStack = [{
+        id: item.id,
+        name: item.name,
+        item: item,
+        children: details.children || []
+      }];
+
+      setViewMode(currentViewMode, false);
+      renderFolderCurrentView();
+    } else {
+      // استعراض ملف منفرد: الاسم والحجم والمعاينة وزر التنزيل
+      UI.sharedFolderSection.style.display = "none";
+      UI.singleFileView.style.display = "block";
+
+      UI.sharedTitle.textContent = item.name;
+      UI.sharedSize.textContent = formatBytes(item.size);
+
+      const typeInfo = getFileTypeDetails(item.name, item.mimeType);
+      UI.sharedIcon.innerHTML = `<i class="${typeInfo.icon}"></i>`;
+
+      const canPrev = isPreviewable(item.name, item.mimeType);
+      if (canPrev) {
+        UI.sharedPreviewBtn.style.display = "inline-flex";
+        UI.sharedPreviewBtn.onclick = (e) => {
+          e.preventDefault();
+          openSharePreview(item);
+        };
+      } else {
+        UI.sharedPreviewBtn.style.display = "none";
       }
 
-    } else {
-      // استعراض ملف منفرد
-      UI.sharedFolderSection.style.display = "none";
-      UI.sharedPreviewStage.style.display = "flex";
-      renderFilePreview(item, item.previewUrl || item.downloadUrl);
+      if (share.allowDownload && item.downloadUrl) {
+        UI.sharedDownloadBtn.style.display = "inline-flex";
+      } else {
+        UI.sharedDownloadBtn.style.display = "none";
+      }
     }
 
   } catch (err) {
@@ -333,107 +565,381 @@ async function renderUnlockedContent() {
   }
 }
 
-function renderFilePreview(item, url) {
-  const typeInfo = getFileTypeDetails(item.name, item.mimeType);
+/* ═══════════════ إدارة وضع العرض (قائمة / مربعات) ═══════════════ */
 
-  if (typeInfo.class === "file-type-image") {
-    UI.sharedPreviewStage.innerHTML = `<img src="${url}" alt="${escapeHtml(item.name)}"/>`;
-    return;
+function setViewMode(mode, rerender = true) {
+  currentViewMode = mode;
+  try {
+    localStorage.setItem("share_view_mode", mode);
+  } catch (e) {}
+
+  if (mode === "grid") {
+    UI.sharedItemsContainer?.classList.remove("mode-list");
+    UI.sharedItemsContainer?.classList.add("mode-grid");
+    UI.shareViewGridBtn?.classList.add("active");
+    UI.shareViewListBtn?.classList.remove("active");
+  } else {
+    UI.sharedItemsContainer?.classList.remove("mode-grid");
+    UI.sharedItemsContainer?.classList.add("mode-list");
+    UI.shareViewListBtn?.classList.add("active");
+    UI.shareViewGridBtn?.classList.remove("active");
   }
 
-  if (typeInfo.class === "file-type-pdf") {
-    UI.sharedPreviewStage.innerHTML = `<iframe src="${url}" title="${escapeHtml(item.name)}"></iframe>`;
-    return;
+  if (rerender && folderNavStack.length > 0) {
+    const cur = folderNavStack[folderNavStack.length - 1];
+    renderSharedItems(cur.children, currentShareInfo?.share?.allowDownload);
   }
-
-  if (typeInfo.class === "file-type-video") {
-    UI.sharedPreviewStage.innerHTML = `<video src="${url}" controls style="max-width:100%;max-height:500px;"></video>`;
-    return;
-  }
-
-  if (typeInfo.class === "file-type-audio") {
-    UI.sharedPreviewStage.innerHTML = `
-      <div style="text-align:center;padding:2rem;">
-        <i class="fa-solid fa-music" style="font-size:3.5rem;color:var(--gold);"></i>
-        <div style="margin-top:1rem;font-weight:700;">${escapeHtml(item.name)}</div>
-        <audio src="${url}" controls style="margin-top:1.5rem;width:80%;max-width:400px;"></audio>
-      </div>
-    `;
-    return;
-  }
-
-  if (url && (url.includes("sharepoint.com") || url.includes("office.com"))) {
-    UI.sharedPreviewStage.innerHTML = `<iframe src="${url}" title="${escapeHtml(item.name)}"></iframe>`;
-    return;
-  }
-
-  UI.sharedPreviewStage.innerHTML = `
-    <div style="text-align:center;padding:3rem 1rem;">
-      <i class="${typeInfo.icon}" style="font-size:4rem;color:var(--gold);"></i>
-      <h3 style="font-size:1.15rem;font-weight:700;margin-top:1rem;">${escapeHtml(item.name)}</h3>
-      <p style="color:var(--ink-400);font-size:0.85rem;margin-top:0.25rem;">${formatBytes(item.size)} • ${typeInfo.label}</p>
-    </div>
-  `;
 }
 
-function renderSharedFolderChildren(items, allowDownload) {
-  UI.sharedFolderGrid.innerHTML = "";
-  if (items.length === 0) {
-    UI.sharedFolderGrid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--ink-400);">هذا المجلد لا يحتوي على ملفات حالياً.</div>';
-    return;
+UI.shareViewListBtn?.addEventListener("click", () => setViewMode("list"));
+UI.shareViewGridBtn?.addEventListener("click", () => setViewMode("grid"));
+
+/* ═══════════════ محرك التنقل داخل المجلدات المشتركة ═══════════════ */
+
+function renderFolderCurrentView() {
+  if (folderNavStack.length === 0) return;
+  const currentLevel = folderNavStack[folderNavStack.length - 1];
+
+  UI.sharedFolderTitle.textContent = currentLevel.name;
+  const count = (currentLevel.children || []).length;
+  UI.sharedFolderCount.textContent = `${count} عنصر`;
+
+  // تحديث مسار المجلد (Breadcrumbs)
+  renderBreadcrumbs();
+
+  // زر الرجوع
+  if (folderNavStack.length > 1) {
+    UI.shareGoBackBtn.style.display = "inline-flex";
+  } else {
+    UI.shareGoBackBtn.style.display = "none";
   }
 
-  items.forEach(child => {
-    const typeInfo = getFileTypeDetails(child.name, child.mimeType);
-    const card = document.createElement("div");
-    card.className = "file-card";
-    card.innerHTML = `
-      <div class="file-thumb">
-        <div class="file-thumb-icon ${typeInfo.class}"><i class="${child.isFolder ? 'fa-solid fa-folder' : typeInfo.icon}"></i></div>
-        <span class="file-type-badge">${child.isFolder ? 'مجلد' : typeInfo.label}</span>
-      </div>
-      <div class="file-body">
-        <div class="file-name" title="${escapeHtml(child.name)}">${escapeHtml(child.name)}</div>
-        <div class="file-sub-meta">
-          <span>${child.isFolder ? `${child.childCount} عنصر` : formatBytes(child.size)}</span>
-        </div>
-        ${!child.isFolder && allowDownload && child.downloadUrl ? `
-          <div style="margin-top:0.6rem;">
-            <a href="${child.downloadUrl}" download class="btn-secondary" style="width:100%;justify-content:center;padding:0.4rem;font-size:0.8rem;">
-              <i class="fa-solid fa-download"></i> تنزيل
-            </a>
-          </div>
-        ` : ""}
-      </div>
-    `;
-    UI.sharedFolderGrid.appendChild(card);
+  // عرض العناصر بالوضع المختار
+  renderSharedItems(currentLevel.children, currentShareInfo?.share?.allowDownload);
+}
+
+function renderBreadcrumbs() {
+  if (!UI.shareBreadcrumbs) return;
+  UI.shareBreadcrumbs.innerHTML = "";
+
+  folderNavStack.forEach((entry, idx) => {
+    const isLast = idx === folderNavStack.length - 1;
+
+    if (idx > 0) {
+      const sep = document.createElement("i");
+      sep.className = "fa-solid fa-chevron-left share-bc-sep";
+      UI.shareBreadcrumbs.appendChild(sep);
+    }
+
+    const item = document.createElement("span");
+    item.className = `share-bc-item ${isLast ? "current" : ""}`;
+    item.setAttribute("title", entry.name);
+    item.innerHTML = `<i class="fa-solid ${idx === 0 ? 'fa-folder-open' : 'fa-folder'}"></i> <span>${escapeHtml(entry.name)}</span>`;
+
+    if (!isLast) {
+      item.setAttribute("role", "button");
+      item.setAttribute("tabindex", "0");
+      item.addEventListener("click", () => {
+        navigateToStackIndex(idx);
+      });
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          navigateToStackIndex(idx);
+        }
+      });
+    }
+
+    UI.shareBreadcrumbs.appendChild(item);
   });
 }
 
-function setupSharedFolderUpload(folderId) {
-  const zone = UI.sharedFolderUploadZone;
-  const input = UI.sharedFolderFileInput;
+function navigateToStackIndex(targetIdx) {
+  if (targetIdx >= 0 && targetIdx < folderNavStack.length - 1) {
+    folderNavStack = folderNavStack.slice(0, targetIdx + 1);
+    renderFolderCurrentView();
+  }
+}
 
-  zone.addEventListener("click", () => input.click());
+function navigateBackOneLevel() {
+  if (folderNavStack.length > 1) {
+    folderNavStack.pop();
+    renderFolderCurrentView();
+  }
+}
 
-  input.addEventListener("change", async (e) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
+UI.shareGoBackBtn?.addEventListener("click", navigateBackOneLevel);
 
-    showToast(`جاري رفع ${files.length} ملف إلى المجلد المشترك...`, "info");
-    for (const file of files) {
-      try {
-        await uploadFileToSharePoint(file, folderId);
-        showToast(`تم رفع "${file.name}" بنجاح`, "success");
-      } catch (err) {
-        showToast(`تعذر رفع "${file.name}"`, "error");
+async function openSubFolder(folderItem) {
+  if (!folderItem || !folderItem.id) return;
+  if (UI.shareFolderLoading) UI.shareFolderLoading.style.display = "flex";
+  if (UI.sharedItemsContainer) UI.sharedItemsContainer.style.display = "none";
+
+  try {
+    const details = await fetchSharedItemDetails(folderItem.id);
+    folderNavStack.push({
+      id: folderItem.id,
+      name: folderItem.name,
+      item: details.item || folderItem,
+      children: details.children || []
+    });
+    renderFolderCurrentView();
+  } catch (err) {
+    console.error("[Open Subfolder Error]:", err);
+    showToast(err.message || "تعذر فتح المجلد المشترك", "error");
+  } finally {
+    if (UI.shareFolderLoading) UI.shareFolderLoading.style.display = "none";
+    if (UI.sharedItemsContainer) UI.sharedItemsContainer.style.display = "";
+  }
+}
+
+/* ═══════════════ عرض الملفات والمجلدات ═══════════════ */
+
+function renderSharedItems(items, allowDownload) {
+  if (!UI.sharedItemsContainer) return;
+  UI.sharedItemsContainer.innerHTML = "";
+
+  if (!items || items.length === 0) {
+    UI.sharedItemsContainer.innerHTML = `
+      <div class="share-empty-folder">
+        <i class="fa-solid fa-folder-open"></i>
+        <p>هذا المجلد لا يحتوي على ملفات أو مجلدات حالياً.</p>
+      </div>
+    `;
+    return;
+  }
+
+  // فرز المجلدات أولاً ثم الملفات أبجدياً
+  const sorted = [...items].sort((a, b) => {
+    if (a.isFolder && !b.isFolder) return -1;
+    if (!a.isFolder && b.isFolder) return 1;
+    return (a.name || "").localeCompare(b.name || "", "ar");
+  });
+
+  if (currentViewMode === "grid") {
+    renderGridItems(sorted, allowDownload);
+  } else {
+    renderListItems(sorted, allowDownload);
+  }
+}
+
+/* ── وضع القائمة المرتبة (List View - الافتراضي) ── */
+function renderListItems(items, allowDownload) {
+  const fragment = document.createDocumentFragment();
+
+  items.forEach(child => {
+    const isFolder = Boolean(child.isFolder);
+    const typeInfo = getFileTypeDetails(child.name, child.mimeType);
+    const canPrev = !isFolder && isPreviewable(child.name, child.mimeType);
+    const canDl = !isFolder && Boolean(allowDownload && child.downloadUrl);
+
+    const row = document.createElement("div");
+    row.className = `shared-list-item ${isFolder ? "is-folder" : "is-file"}`;
+
+    if (isFolder) {
+      row.setAttribute("role", "button");
+      row.setAttribute("tabindex", "0");
+      row.setAttribute("title", `اضغط لفتح مجلد "${child.name}"`);
+
+      row.innerHTML = `
+        <div class="item-primary-col">
+          <div class="item-icon-wrap folder-icon-wrap">
+            <i class="fa-solid fa-folder"></i>
+          </div>
+          <div class="item-details">
+            <span class="item-name" title="${escapeHtml(child.name)}">${escapeHtml(child.name)}</span>
+          </div>
+        </div>
+        <div class="item-meta-bar">
+          <div class="item-meta-info">
+            <span class="type-pill folder-pill">مجلد</span>
+            <span class="item-size-text">${child.childCount || 0} عنصر</span>
+          </div>
+          <div class="item-actions-col">
+            <button type="button" class="btn-row-open" title="فتح المجلد">
+              <span>فتح</span>
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+      row.addEventListener("click", () => openSubFolder(child));
+      row.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openSubFolder(child);
+        }
+      });
+    } else {
+      row.innerHTML = `
+        <div class="item-primary-col">
+          <div class="item-icon-wrap ${typeInfo.class}">
+            <i class="${typeInfo.icon}"></i>
+          </div>
+          <div class="item-details">
+            <span class="item-name" title="${escapeHtml(child.name)}">${escapeHtml(child.name)}</span>
+          </div>
+        </div>
+        <div class="item-meta-bar">
+          <div class="item-meta-info">
+            <span class="type-pill ${typeInfo.class}">${typeInfo.label}</span>
+            <span class="item-size-text">${formatBytes(child.size)}</span>
+          </div>
+          <div class="item-actions-col">
+            ${canPrev ? `
+              <button type="button" class="btn-row-action btn-row-preview direct-prev-item-btn" title="معاينة الملف">
+                <i class="fa-solid fa-eye"></i>
+                <span>معاينة</span>
+              </button>
+            ` : ""}
+            ${canDl ? `
+              <button type="button" class="btn-row-action btn-row-download direct-dl-item-btn" title="تنزيل الملف">
+                <i class="fa-solid fa-download"></i>
+                <span>تنزيل</span>
+              </button>
+            ` : ""}
+          </div>
+        </div>
+      `;
+
+      if (canPrev) {
+        row.querySelector(".direct-prev-item-btn")?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openSharePreview(child);
+        });
+      }
+
+      if (canDl) {
+        row.querySelector(".direct-dl-item-btn")?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          triggerDirectDownload(child.downloadUrl, child.name);
+        });
       }
     }
 
-    // إعادة تحميل المحتويات
-    renderUnlockedContent();
+    fragment.appendChild(row);
   });
+
+  UI.sharedItemsContainer.innerHTML = "";
+  UI.sharedItemsContainer.appendChild(fragment);
 }
+
+/* ── وضع المربعات والشبكة (Grid View) ── */
+function renderGridItems(items, allowDownload) {
+  const fragment = document.createDocumentFragment();
+
+  items.forEach(child => {
+    const isFolder = Boolean(child.isFolder);
+    const typeInfo = getFileTypeDetails(child.name, child.mimeType);
+    const canPrev = !isFolder && isPreviewable(child.name, child.mimeType);
+    const canDl = !isFolder && Boolean(allowDownload && child.downloadUrl);
+
+    const card = document.createElement("div");
+    card.className = `file-card ${isFolder ? "is-folder-card" : ""}`;
+
+    if (isFolder) {
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("title", `اضغط لفتح مجلد "${child.name}"`);
+
+      card.innerHTML = `
+        <div class="file-thumb">
+          <div class="file-thumb-icon" style="background:var(--gold-subtle);color:var(--gold);">
+            <i class="fa-solid fa-folder"></i>
+          </div>
+          <span class="file-type-badge">مجلد</span>
+        </div>
+        <div class="file-body">
+          <div class="file-name" title="${escapeHtml(child.name)}">${escapeHtml(child.name)}</div>
+          <div class="file-sub-meta">
+            <span>${child.childCount || 0} عنصر</span>
+          </div>
+          <div class="file-card-actions">
+            <button type="button" class="btn-preview direct-open-folder-btn" style="width:100%;" title="فتح المجلد">
+              <i class="fa-solid fa-folder-open"></i> فتح المجلد
+            </button>
+          </div>
+        </div>
+      `;
+
+      card.addEventListener("click", () => openSubFolder(child));
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openSubFolder(child);
+        }
+      });
+    } else {
+      card.innerHTML = `
+        <div class="file-thumb">
+          <div class="file-thumb-icon ${typeInfo.class}">
+            <i class="${typeInfo.icon}"></i>
+          </div>
+          <span class="file-type-badge">${typeInfo.label}</span>
+        </div>
+        <div class="file-body">
+          <div class="file-name" title="${escapeHtml(child.name)}">${escapeHtml(child.name)}</div>
+          <div class="file-sub-meta">
+            <span>${formatBytes(child.size)}</span>
+          </div>
+          ${(canPrev || canDl) ? `
+            <div class="file-card-actions">
+              ${canPrev ? `
+                <button type="button" class="btn-preview direct-prev-item-btn" title="معاينة الملف">
+                  <i class="fa-solid fa-eye"></i> معاينة
+                </button>
+              ` : ""}
+              ${canDl ? `
+                <button type="button" class="btn-download direct-dl-item-btn" title="تنزيل الملف">
+                  <i class="fa-solid fa-download"></i> تنزيل
+                </button>
+              ` : ""}
+            </div>
+          ` : ""}
+        </div>
+      `;
+
+      if (canPrev) {
+        card.querySelector(".direct-prev-item-btn")?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          openSharePreview(child);
+        });
+      }
+
+      if (canDl) {
+        card.querySelector(".direct-dl-item-btn")?.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          triggerDirectDownload(child.downloadUrl, child.name);
+        });
+      }
+    }
+
+    fragment.appendChild(card);
+  });
+
+  UI.sharedItemsContainer.innerHTML = "";
+  UI.sharedItemsContainer.appendChild(fragment);
+}
+
+// منع تحديد النص الافتراضي للمتصفح عند النقر والنقر المزدوج على العناصر
+document.addEventListener("mousedown", (e) => {
+  if (e.detail > 1 && !e.target.closest("input, textarea, [contenteditable='true']")) {
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("dblclick", (e) => {
+  if (!e.target.closest("input, textarea, [contenteditable='true']")) {
+    if (window.getSelection) {
+      window.getSelection().removeAllRanges();
+    }
+  }
+});
 
 // تشغيل الفحص الأولي عند تحميل الصفحة
 window.addEventListener("DOMContentLoaded", initSharePage);
