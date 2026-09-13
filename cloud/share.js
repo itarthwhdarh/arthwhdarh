@@ -652,6 +652,13 @@ function renderBreadcrumbs() {
 
     UI.shareBreadcrumbs.appendChild(item);
   });
+
+  // تمرير شريط المسار تلقائياً في اتجاه RTL ليكون المجلد الحالي ظاهراً دائماً
+  requestAnimationFrame(() => {
+    try {
+      UI.shareBreadcrumbs.scrollLeft = -UI.shareBreadcrumbs.scrollWidth;
+    } catch (e) {}
+  });
 }
 
 function navigateToStackIndex(targetIdx) {
@@ -898,7 +905,11 @@ function renderGridItems(items, allowDownload) {
                 </button>
               ` : ""}
             </div>
-          ` : ""}
+          ` : `
+            <div class="file-card-actions file-card-actions-empty">
+              <span class="read-only-badge"><i class="fa-solid fa-shield-halved"></i> للقراءة فقط</span>
+            </div>
+          `}
         </div>
       `;
 

@@ -22,10 +22,19 @@
   <link rel="stylesheet" href="cloud.css?v=2.1"/>
 
   <style>
-    /* منع تحديد النص الأزرق الافتراضي للمتصفح في صفحة المشاركة عند النقر أو النقر المزدوج */
-    html, body, .share-page-wrapper, .shared-list-item, .file-card, .item-name, .file-name, .share-bc-item, .shared-folder-header, .item-details, .item-meta-bar, .shared-items-container {
-      overflow-x: hidden;
-      max-width: 100vw;
+    :root {
+      --radius-xl: 1.5rem;
+      --radius-lg: 1.125rem;
+      --radius-md: 0.85rem;
+      --radius-sm: 0.55rem;
+      --radius-xs: 0.35rem;
+      --radius-pill: 9999px;
+      --radius-outer: 1.5rem;
+      --radius-inner: calc(1.5rem - 0.45rem);
+    }
+
+    /* منع تحديد النص بالخطأ عند النقر السريع والتنقل */
+    .share-page-wrapper, .shared-list-item, .file-card, .item-name, .file-name, .share-bc-item, .shared-folder-header, .item-details, .item-meta-bar, .shared-items-container {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
@@ -44,22 +53,30 @@
       display: flex;
       flex-direction: column;
       background-color: var(--canvas);
-      overflow-x: hidden;
+      overflow-x: clip;
       width: 100%;
-      max-width: 100vw;
     }
 
+    /* ── رأس الصفحة الرسمي المعتمد ── */
     .share-public-header {
-      background: var(--surface);
+      background: rgba(255, 255, 255, 0.88);
       border-bottom: 1px solid var(--border-hairline);
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 0.85rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .share-header-inner {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
 
     .share-brand {
@@ -67,6 +84,11 @@
       align-items: center;
       gap: 0.85rem;
       text-decoration: none;
+      transition: opacity var(--duration-fast);
+    }
+
+    .share-brand:hover {
+      opacity: 0.9;
     }
 
     .share-brand-logo {
@@ -84,19 +106,41 @@
       font-size: 1rem;
       font-weight: 800;
       color: var(--ink-900);
+      line-height: 1.3;
     }
 
     .share-brand-tag {
       font-size: 0.72rem;
       color: var(--gold);
       font-weight: 600;
+      line-height: 1.3;
     }
 
+    .share-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.85rem;
+      background: var(--gold-subtle);
+      border: 1px solid rgba(156, 110, 56, 0.2);
+      color: var(--gold-deep);
+      border-radius: var(--radius-pill);
+      font-size: 0.775rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .share-header-badge i {
+      font-size: 0.75rem;
+      color: var(--gold);
+    }
+
+    /* ── الحاوية الرئيسية وبنية Double-Bezel (Doppelrand) ── */
     .share-container {
       flex: 1;
-      max-width: 940px;
+      max-width: 1080px;
       width: 100%;
-      margin: 2.5rem auto;
+      margin: 2rem auto 3rem;
       padding: 0 1.5rem;
       display: flex;
       flex-direction: column;
@@ -104,72 +148,67 @@
 
     .share-card-shell {
       background: var(--shell);
-      border-radius: var(--radius-outer);
-      padding: 0.5rem;
+      border-radius: var(--radius-xl);
+      padding: 0.45rem;
       border: 1px solid var(--border-hairline);
-      box-shadow: var(--shadow-ambient);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 8px 24px rgba(0, 0, 0, 0.03);
+      width: 100%;
+      transition: box-shadow var(--duration-smooth) var(--ease-spring);
     }
 
     .share-card-core {
       background: var(--surface);
       border-radius: var(--radius-inner);
-      padding: 2.25rem;
-      border: 1px solid rgba(0,0,0,0.03);
+      padding: 2rem 2.25rem;
+      border: 1px solid rgba(0, 0, 0, 0.03);
     }
 
-    /* حالة القفل لكلمات المرور */
+    /* ── شاشات القفل والخطأ ── */
     .lock-box {
       text-align: center;
-      max-width: 440px;
-      margin: 3rem auto;
+      max-width: 460px;
+      margin: 2.5rem auto;
     }
 
     .lock-icon-wrap {
-      width: 64px;
-      height: 64px;
+      width: 68px;
+      height: 68px;
       border-radius: var(--radius-pill);
       background: var(--gold-subtle);
       color: var(--gold);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       margin-bottom: 1.25rem;
+      border: 1px solid rgba(156, 110, 56, 0.15);
     }
 
     .lock-title {
       font-size: 1.35rem;
       font-weight: 800;
       color: var(--ink-900);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.65rem;
     }
 
     .lock-desc {
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       color: var(--ink-500);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
+      margin-bottom: 1.75rem;
+      line-height: 1.65;
     }
 
-    /* تفاصيل الملف المشترك المبسط */
+    /* ── تفاصيل الملف المشترك الفردي ── */
     .shared-file-hero {
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
 
-    @media (max-width: 600px) {
-      .shared-file-hero {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-      }
-    }
-
     .shared-file-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 1.25rem;
+      width: 68px;
+      height: 68px;
+      border-radius: var(--radius-lg);
       background: var(--surface-hover);
       display: flex;
       align-items: center;
@@ -197,10 +236,10 @@
     }
 
     .shared-file-size {
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       color: var(--ink-500);
-      margin-top: 0.4rem;
-      font-weight: 500;
+      margin-top: 0.35rem;
+      font-weight: 600;
     }
 
     .shared-single-actions {
@@ -210,19 +249,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-    }
-
-    @media (max-width: 600px) {
-      .shared-single-actions {
-        justify-content: stretch;
-      }
-    }
-
-    .shared-single-actions {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.75rem;
+      gap: 0.85rem;
       flex-wrap: wrap;
     }
 
@@ -231,21 +258,55 @@
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      padding: 0.85rem 1.75rem;
-      font-size: 0.95rem;
+      height: 44px;
+      padding: 0 1.75rem;
+      font-size: 0.925rem;
       font-weight: 700;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-pill);
       cursor: pointer;
-      border: 1.5px solid var(--gold);
+      border: 1.5px solid rgba(156, 110, 56, 0.3);
       background: var(--surface);
-      color: var(--gold-dark);
-      transition: all var(--duration-fast) ease;
+      color: var(--gold-deep);
+      transition: all var(--duration-fast) var(--ease-spring);
     }
 
     .share-preview-main-btn:hover {
       background: var(--gold-subtle);
       border-color: var(--gold);
       transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(156, 110, 56, 0.12);
+    }
+
+    .share-preview-main-btn:active {
+      transform: scale(0.97);
+    }
+
+    .share-download-main-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      height: 44px;
+      padding: 0 2rem;
+      font-size: 0.925rem;
+      font-weight: 700;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: var(--gold) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 14px rgba(156, 110, 56, 0.28) !important;
+      transition: all var(--duration-fast) var(--ease-spring) !important;
+    }
+
+    .share-download-main-btn:hover {
+      background: var(--gold-deep) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 6px 18px rgba(156, 110, 56, 0.38) !important;
+    }
+
+    .share-download-main-btn:active {
+      transform: scale(0.97) !important;
     }
 
     /* ── رأس وأدوات المجلد المشترك ── */
@@ -253,7 +314,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 1.25rem;
       padding-bottom: 1.25rem;
       border-bottom: 1px solid var(--border-hairline);
       flex-wrap: wrap;
@@ -262,15 +323,67 @@
     .shared-folder-hero {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1.15rem;
       min-width: 0;
       flex: 1;
+    }
+
+    .shared-folder-hero .shared-file-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--radius-md);
+      background: var(--gold-subtle);
+      border: 1px solid rgba(156, 110, 56, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.65rem;
+      color: var(--gold);
+      flex-shrink: 0;
     }
 
     .share-view-controls {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .control-btn-group {
+      background: var(--shell);
+      padding: 0.25rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .view-toggle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-500);
+      font-size: 0.85rem;
+      transition: all var(--duration-fast) var(--ease-spring);
+      cursor: pointer;
+    }
+
+    .view-toggle-btn:hover:not(.active) {
+      color: var(--ink-800);
+    }
+
+    .view-toggle-btn.active {
+      background: var(--surface);
+      color: var(--gold-deep);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .view-toggle-btn:active {
+      transform: scale(0.95);
     }
 
     /* ── شريط التنقل والمسار وزر الرجوع ── */
@@ -278,33 +391,41 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.85rem 0 1.25rem;
+      padding: 1rem 0 1.25rem;
       border-bottom: 1px solid var(--border-hairline);
       margin-bottom: 1.25rem;
-      flex-wrap: wrap;
+      min-width: 0;
     }
 
     .share-back-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
-      padding: 0.45rem 1rem;
+      gap: 0.5rem;
+      height: 34px;
+      padding: 0 1rem;
       font-size: 0.825rem;
-      font-weight: 600;
+      font-weight: 700;
       border-radius: var(--radius-pill);
       white-space: nowrap;
       background: var(--surface);
       border: 1px solid var(--border-hairline);
       color: var(--ink-700);
       cursor: pointer;
-      transition: all var(--duration-fast);
+      flex-shrink: 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      transition: all var(--duration-fast) var(--ease-spring);
     }
 
     .share-back-btn:hover {
       background: var(--surface-hover);
       border-color: var(--gold);
-      color: var(--gold-dark);
+      color: var(--gold-deep);
       transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(156, 110, 56, 0.12);
+    }
+
+    .share-back-btn:active {
+      transform: scale(0.97);
     }
 
     .share-breadcrumbs {
@@ -315,6 +436,7 @@
       font-weight: 600;
       color: var(--ink-500);
       overflow-x: auto;
+      overflow-y: hidden;
       white-space: nowrap;
       padding: 0.35rem 0.65rem;
       flex: 1;
@@ -322,58 +444,275 @@
       background: var(--shell);
       border: 1px solid var(--border-hairline);
       border-radius: var(--radius-pill);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .share-breadcrumbs::-webkit-scrollbar {
+      display: none;
     }
 
     .share-bc-item {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.45rem;
       padding: 0.35rem 0.85rem;
       border-radius: var(--radius-pill);
-      color: var(--ink-600);
-      transition: all var(--duration-fast) ease;
+      color: var(--ink-700);
+      transition: all var(--duration-fast) var(--ease-spring);
       cursor: pointer;
       text-decoration: none;
       border: 1px solid transparent;
+      max-width: 220px;
+      flex-shrink: 0;
+    }
+
+    .share-bc-item span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .share-bc-item:hover:not(.current) {
       background: var(--surface);
-      color: var(--gold-dark);
+      color: var(--gold-deep);
       border-color: rgba(156, 110, 56, 0.25);
       transform: translateY(-1px);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .share-bc-item:active:not(.current) {
+      transform: scale(0.97);
     }
 
     .share-bc-item.current {
-      color: var(--gold-dark);
+      color: var(--gold-deep);
       font-weight: 700;
       background: var(--surface);
-      border-color: var(--gold);
+      border-color: rgba(156, 110, 56, 0.35);
       box-shadow: 0 1px 4px rgba(156, 110, 56, 0.12);
       cursor: default;
     }
 
     .share-bc-sep {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--ink-300);
       margin: 0 0.15rem;
+      flex-shrink: 0;
     }
 
-    /* ── حاوية العناصر (قائمة / شبكة) ── */
+    /* ── وضع المربعات والبطاقات (Grid View) ── */
+    .shared-items-container.mode-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.15rem;
+      align-items: stretch;
+    }
+
+    .shared-items-container.mode-grid .file-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: transform var(--duration-fast) var(--ease-spring),
+                  border-color var(--duration-fast) ease,
+                  box-shadow var(--duration-fast) var(--ease-spring);
+      position: relative;
+      cursor: default;
+    }
+
+    .shared-items-container.mode-grid .file-card.is-folder-card {
+      cursor: pointer;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .shared-items-container.mode-grid .file-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(156, 110, 56, 0.35);
+        box-shadow: 0 8px 24px rgba(156, 110, 56, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    .shared-items-container.mode-grid .file-card:active {
+      transform: scale(0.985);
+    }
+
+    .file-card .file-thumb {
+      height: 112px;
+      border-radius: var(--radius-md);
+      background: var(--surface-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 1px solid var(--border-hairline);
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+      transition: background-color var(--duration-fast) ease;
+    }
+
+    .file-card.is-folder-card .file-thumb {
+      background: var(--gold-subtle);
+      border-color: rgba(156, 110, 56, 0.15);
+    }
+
+    .file-card .file-thumb-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      transition: transform var(--duration-fast) var(--ease-spring);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .file-card:hover .file-thumb-icon {
+        transform: scale(1.1);
+      }
+    }
+
+    .file-card .file-type-badge {
+      position: absolute;
+      top: 0.55rem;
+      left: 0.55rem; /* زاوية RTL */
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      z-index: 2;
+    }
+
+    .file-card .file-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-card .file-name {
+      font-size: 0.925rem;
+      font-weight: 700;
+      color: var(--ink-900);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
+      min-height: 2.6em; /* ضمان استواء ارتفاع البطاقات بصرياً */
+    }
+
+    .file-card .file-sub-meta {
+      font-size: 0.775rem;
+      color: var(--ink-500);
+      margin-top: 0.35rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .file-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .file-card-actions button {
+      flex: 1;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--duration-fast) var(--ease-spring);
+    }
+
+    .file-card-actions button:active {
+      transform: scale(0.97);
+    }
+
+    .file-card-actions .btn-preview {
+      background: var(--surface-hover);
+      color: var(--ink-800);
+      border: 1px solid var(--border-hairline);
+    }
+
+    .file-card-actions .btn-preview:hover {
+      background: var(--gold-subtle);
+      border-color: rgba(156, 110, 56, 0.3);
+      color: var(--gold-deep);
+      transform: translateY(-1px);
+    }
+
+    .file-card-actions .btn-download {
+      background: var(--gold) !important;
+      color: #ffffff !important;
+      border: 1px solid transparent !important;
+      box-shadow: 0 2px 8px rgba(156, 110, 56, 0.22) !important;
+    }
+
+    .file-card-actions .btn-download:hover {
+      background: var(--gold-deep) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(156, 110, 56, 0.32) !important;
+    }
+
+    .file-card-actions .direct-open-folder-btn {
+      background: var(--gold-subtle);
+      color: var(--gold-deep);
+      border: 1px solid rgba(156, 110, 56, 0.25);
+      width: 100%;
+    }
+
+    .file-card-actions .direct-open-folder-btn:hover {
+      background: var(--gold);
+      color: #ffffff;
+      border-color: transparent;
+      transform: translateY(-1px);
+    }
+
+    .file-card-actions-empty {
+      justify-content: center;
+    }
+
+    .read-only-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink-400);
+      padding: 0.25rem 0.65rem;
+      background: var(--surface-hover);
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+    }
+
+    /* ── وضع القائمة (List View) ── */
     .shared-items-container.mode-list {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
 
-    .shared-items-container.mode-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 1rem;
-    }
-
-    /* ── صف العنصر في وضع القائمة (List Item Row) ── */
     .shared-list-item {
       display: flex;
       align-items: center;
@@ -381,16 +720,20 @@
       padding: 0.85rem 1.15rem;
       background: var(--surface);
       border: 1px solid var(--border-hairline);
-      border-radius: var(--radius-inner);
-      transition: all var(--duration-fast) ease;
+      border-radius: var(--radius-md);
+      transition: all var(--duration-fast) var(--ease-spring);
       gap: 1rem;
     }
 
     .shared-list-item:hover {
       border-color: rgba(156, 110, 56, 0.35);
       background: var(--surface-hover);
-      box-shadow: var(--shadow-ambient);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       transform: translateY(-1px);
+    }
+
+    .shared-list-item:active {
+      transform: scale(0.99);
     }
 
     .shared-list-item.is-folder {
@@ -412,7 +755,7 @@
     .item-icon-wrap {
       width: 42px;
       height: 42px;
-      border-radius: 0.75rem;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -498,13 +841,18 @@
       align-items: center;
       justify-content: center;
       gap: 0.45rem;
-      padding: 0.45rem 0.95rem;
+      height: 34px;
+      padding: 0 0.95rem;
       font-size: 0.825rem;
-      font-weight: 600;
+      font-weight: 700;
       border-radius: var(--radius-pill);
       cursor: pointer;
-      transition: all var(--duration-fast);
+      transition: all var(--duration-fast) var(--ease-spring);
       white-space: nowrap;
+    }
+
+    .btn-row-action:active {
+      transform: scale(0.97);
     }
 
     .btn-row-preview {
@@ -515,133 +863,52 @@
 
     .btn-row-preview:hover {
       background: var(--gold-subtle);
-      border-color: var(--gold);
-      color: var(--gold-dark);
+      border-color: rgba(156, 110, 56, 0.3);
+      color: var(--gold-deep);
       transform: translateY(-1px);
     }
 
-    .btn-row-download,
-    .file-card-actions .btn-download,
-    .share-download-main-btn,
-    #sharedDownloadBtn,
-    #previewDownloadBtn {
+    .btn-row-download {
       background: var(--gold) !important;
       color: #ffffff !important;
       border: 1px solid transparent !important;
-      transition: all var(--duration-fast) ease !important;
-      box-shadow: 0 4px 12px rgba(156, 110, 56, 0.25) !important;
+      box-shadow: 0 2px 8px rgba(156, 110, 56, 0.22) !important;
     }
 
-    .btn-row-download i, .btn-row-download span,
-    .file-card-actions .btn-download i, .file-card-actions .btn-download span,
-    .share-download-main-btn i, .share-download-main-btn span,
-    #sharedDownloadBtn i, #sharedDownloadBtn span,
-    #previewDownloadBtn i, #previewDownloadBtn span {
-      color: #ffffff !important;
-    }
-
-    .btn-row-download:hover,
-    .file-card-actions .btn-download:hover,
-    .share-download-main-btn:hover,
-    #sharedDownloadBtn:hover,
-    #previewDownloadBtn:hover {
-      background: var(--gold-dark) !important;
-      color: #ffffff !important;
-      border-color: transparent !important;
+    .btn-row-download:hover {
+      background: var(--gold-deep) !important;
       transform: translateY(-1px) !important;
-      box-shadow: 0 6px 16px rgba(156, 110, 56, 0.35) !important;
-    }
-
-    .btn-row-download:active, .btn-row-download:focus,
-    .file-card-actions .btn-download:active, .file-card-actions .btn-download:focus,
-    .share-download-main-btn:active, .share-download-main-btn:focus,
-    #sharedDownloadBtn:active, #sharedDownloadBtn:focus,
-    #previewDownloadBtn:active, #previewDownloadBtn:focus {
-      background: var(--gold-deep, #785226) !important;
-      color: #ffffff !important;
-      border-color: transparent !important;
-      transform: scale(0.98) !important;
-      outline: none !important;
+      box-shadow: 0 4px 12px rgba(156, 110, 56, 0.32) !important;
     }
 
     .btn-row-open {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.45rem 0.95rem;
+      height: 34px;
+      padding: 0 0.95rem;
       font-size: 0.825rem;
-      font-weight: 600;
+      font-weight: 700;
       border-radius: var(--radius-pill);
       background: var(--gold-subtle);
-      color: var(--gold-dark);
+      color: var(--gold-deep);
       border: 1px solid rgba(156, 110, 56, 0.25);
       cursor: pointer;
-      transition: all var(--duration-fast);
+      transition: all var(--duration-fast) var(--ease-spring);
     }
 
     .btn-row-open:hover {
       background: var(--gold);
       color: #ffffff;
+      border-color: transparent;
       transform: translateY(-1px);
     }
 
-    /* ── بطاقات وضع الشبكة ── */
-    .file-card-actions {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.85rem;
-      padding-top: 0.65rem;
-      border-top: 1px solid var(--border-hairline);
+    .btn-row-open:active {
+      transform: scale(0.97);
     }
 
-    .file-card-actions button {
-      flex: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.45rem 0.5rem;
-      font-size: 0.825rem;
-      font-weight: 600;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all var(--duration-fast);
-    }
-
-    .file-card-actions .btn-preview {
-      background: var(--surface-hover);
-      color: var(--ink-800);
-      border: 1px solid var(--border-hairline);
-    }
-
-    .file-card-actions .btn-preview:hover {
-      background: var(--gold-subtle);
-      border-color: var(--gold);
-      color: var(--gold-dark);
-    }
-
-    .file-card-actions .btn-download {
-      background: var(--gold);
-      color: #fff;
-      border: 1px solid transparent;
-    }
-
-    .file-card-actions .btn-download:hover {
-      background: var(--gold-dark);
-    }
-
-    .file-card.is-folder-card {
-      cursor: pointer;
-    }
-
-    .file-card.is-folder-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-ambient);
-    }
-
-    /* ── مؤشر التحميل الداخلي وحالة المجلد الفارغ ── */
+    /* ── مؤشرات التحميل وحالة المجلد الفارغ ── */
     .share-folder-loading {
       display: flex;
       flex-direction: column;
@@ -674,12 +941,30 @@
       color: var(--ink-500);
     }
 
-    @media (max-width: 680px) {
-      /* ── شريط الرأس على الجوال ── */
+    /* ── التجاوب مع الشاشات اللوحية والمتوسطة (Tablet 769px - 992px) ── */
+    @media (max-width: 992px) {
+      .share-container {
+        max-width: 100%;
+        margin: 1.5rem auto 2.5rem;
+        padding: 0 1.25rem;
+      }
+      
+      .share-card-core {
+        padding: 1.75rem 1.5rem;
+      }
+      
+      .shared-items-container.mode-grid {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 0.85rem;
+      }
+    }
+
+    /* ── التجاوب مع الجوال (Mobile <= 768px) ── */
+    @media (max-width: 768px) {
       .share-public-header {
         padding: 0.75rem 1rem;
       }
-
+      
       .share-brand-logo {
         height: 36px;
       }
@@ -692,28 +977,26 @@
         font-size: 0.68rem;
       }
 
-      /* ── الحاوية الرئيسية والبطاقة على الجوال: مساحة كاملة وهوامش مريحة ── */
+      .share-header-badge {
+        padding: 0.25rem 0.65rem;
+        font-size: 0.725rem;
+      }
+
       .share-container {
-        margin: 0.75rem auto 1.5rem;
-        padding: 0 0.65rem;
+        margin: 0.85rem auto 2rem;
+        padding: 0 0.85rem;
       }
 
       .share-card-shell {
-        padding: 0;
-        background: transparent;
-        border: none;
-        box-shadow: none;
+        padding: 0.3rem;
+        border-radius: 1.15rem;
       }
 
       .share-card-core {
-        padding: 1.15rem 0.85rem;
-        border-radius: var(--radius-md);
-        background: var(--surface);
-        border: 1px solid var(--border-hairline);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        padding: 1.15rem 0.95rem;
+        border-radius: calc(1.15rem - 0.3rem);
       }
 
-      /* ── رأس المجلد المشترك وأدوات العرض على الجوال ── */
       .shared-folder-header {
         padding-bottom: 0.85rem;
         gap: 0.75rem;
@@ -726,26 +1009,14 @@
       .shared-folder-hero .shared-file-icon {
         width: 46px;
         height: 46px;
-        font-size: 1.4rem;
-        border-radius: 0.85rem;
+        font-size: 1.35rem;
+        border-radius: var(--radius-sm);
       }
 
-      .shared-folder-hero .shared-file-title {
-        font-size: 1.1rem;
-        line-height: 1.35;
+      .shared-file-title {
+        font-size: 1.15rem;
       }
 
-      .shared-folder-hero .shared-file-size {
-        font-size: 0.8rem;
-        margin-top: 0.2rem;
-      }
-
-      .view-toggle-btn {
-        padding: 0.35rem 0.6rem;
-        font-size: 0.8rem;
-      }
-
-      /* ── شريط التنقل والمسار وزر الرجوع: التفاف مرن وبدون تمرير أفقي ── */
       .shared-nav-bar {
         padding: 0.65rem 0 0.85rem;
         margin-bottom: 0.85rem;
@@ -753,30 +1024,18 @@
       }
 
       .share-back-btn {
-        padding: 0.35rem 0.75rem;
+        padding: 0 0.85rem;
         font-size: 0.775rem;
-      }
-
-      .share-breadcrumbs {
-        flex-wrap: wrap !important;
-        white-space: normal !important;
-        overflow-x: visible !important;
-        gap: 0.35rem;
-        padding: 0;
+        height: 32px;
       }
 
       .share-bc-item {
-        padding: 0.25rem 0.5rem;
+        padding: 0.3rem 0.7rem;
         font-size: 0.775rem;
-        white-space: normal;
-        word-break: break-word;
+        max-width: 140px;
       }
 
-      .share-bc-sep {
-        font-size: 0.65rem;
-      }
-
-      /* ── صفوف العناصر في القائمة على الجوال (اسم الملف كامل ومتعدد الأسطر بدون ellipsis) ── */
+      /* وضع القائمة على الجوال */
       .shared-list-item {
         flex-direction: column;
         align-items: stretch;
@@ -795,29 +1054,27 @@
         width: 38px;
         height: 38px;
         font-size: 1.15rem;
-        border-radius: 0.65rem;
+        border-radius: var(--radius-sm);
         margin-top: 2px;
       }
 
       .item-name {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow-wrap: anywhere !important;
-        text-overflow: unset !important;
-        overflow: visible !important;
-        display: block !important;
-        font-size: 0.925rem !important;
-        line-height: 1.45 !important;
-        color: var(--ink-900) !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-word;
+        white-space: normal;
+        font-size: 0.925rem;
+        line-height: 1.4;
       }
 
-      /* شريط البيانات السفلية والإجراءات في الصف */
       .item-meta-bar {
         width: 100%;
         justify-content: space-between;
         gap: 0.5rem;
         padding-top: 0.55rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        border-top: 1px solid var(--border-hairline);
       }
 
       .item-meta-info {
@@ -840,39 +1097,72 @@
         gap: 0.4rem;
       }
 
-      /* أزرار المعاينة والتنزيل والفتح على الجوال: صغيرة وواضحة ومتناسقة */
       .btn-row-action {
-        padding: 0.35rem 0.65rem;
-        font-size: 0.775rem;
-        font-weight: 700;
-        border-radius: var(--radius-pill);
-        gap: 0.35rem;
-        min-height: 32px;
-      }
-
-      .btn-row-action i {
-        font-size: 0.8rem;
-      }
-
-      .btn-row-action span {
-        display: inline !important;
+        height: 34px;
+        padding: 0 0.75rem;
         font-size: 0.775rem;
       }
 
       .btn-row-open {
-        padding: 0.35rem 0.75rem;
+        height: 34px;
+        padding: 0 0.85rem;
         font-size: 0.775rem;
-        font-weight: 700;
-        border-radius: var(--radius-pill);
+      }
+
+      /* وضع المربعات على الجوال */
+      .shared-items-container.mode-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.65rem;
+      }
+
+      .shared-items-container.mode-grid .file-card {
+        padding: 0.75rem;
+        border-radius: var(--radius-md);
+      }
+
+      .file-card .file-thumb {
+        height: 74px;
+        margin-bottom: 0.5rem;
+        border-radius: var(--radius-sm);
+      }
+
+      .file-card .file-thumb-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.35rem;
+      }
+
+      .file-card .file-type-badge {
+        top: 0.35rem;
+        left: 0.35rem;
+        font-size: 0.65rem;
+        padding: 0.15rem 0.45rem;
+      }
+
+      .file-card .file-name {
+        font-size: 0.825rem;
+        line-height: 1.35;
+        min-height: 2.5em;
+      }
+
+      .file-card .file-sub-meta {
+        font-size: 0.725rem;
+        margin-top: 0.25rem;
+      }
+
+      .file-card-actions {
+        margin-top: 0.65rem;
+        padding-top: 0.5rem;
         gap: 0.35rem;
-        min-height: 32px;
       }
 
-      .btn-row-open span {
-        display: inline !important;
+      .file-card-actions button {
+        height: 32px;
+        padding: 0 0.45rem;
+        font-size: 0.75rem;
       }
 
-      /* ── استعراض الملف الفردي على الجوال ── */
+      /* استعراض الملف الفردي على الجوال */
       .shared-single-file-view .shared-file-hero {
         flex-direction: row;
         align-items: center;
@@ -880,17 +1170,15 @@
       }
 
       .shared-single-file-view .shared-file-icon {
-        width: 52px;
-        height: 52px;
-        font-size: 1.75rem;
-        border-radius: 0.85rem;
+        width: 54px;
+        height: 54px;
+        font-size: 1.85rem;
+        border-radius: var(--radius-md);
       }
 
       .shared-single-file-view .shared-file-title {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
         line-height: 1.4;
-        word-break: break-word;
-        overflow-wrap: anywhere;
       }
 
       .shared-single-actions {
@@ -905,109 +1193,47 @@
       .share-download-main-btn {
         width: 100%;
         justify-content: center;
-        padding: 0.75rem 1rem;
-        font-size: 0.95rem;
       }
+    }
 
-      /* ── وضع المربعات والشبكة على الجوال ── */
+    /* ── شاشات الجوال فائقة الصغر (Mobile <= 400px) ── */
+    @media (max-width: 400px) {
       .shared-items-container.mode-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.65rem;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
       }
 
-      .file-card {
-        padding: 0.75rem;
-      }
-
-      .file-card .file-thumb {
-        height: 64px;
-        margin-bottom: 0.5rem;
-      }
-
-      .file-card .file-thumb-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 1.35rem;
-      }
-
-      .file-card .file-name {
-        font-size: 0.825rem;
-        line-height: 1.4;
-        max-height: 2.8em;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        white-space: normal;
-        word-break: break-word;
-        text-overflow: unset;
-      }
-
-      .file-card .file-sub-meta {
-        font-size: 0.725rem;
-        margin-top: 0.25rem;
+      .shared-items-container.mode-grid .file-thumb {
+        height: 90px;
       }
 
       .file-card-actions {
-        flex-direction: column;
-        gap: 0.35rem;
-        margin-top: 0.65rem;
-        padding-top: 0.5rem;
-      }
-
-      .file-card-actions button {
-        width: 100%;
-        padding: 0.35rem 0.5rem;
-        font-size: 0.75rem;
-      }
-
-      /* ── نافذة المعاينة المنبثقة على الجوال ── */
-      .modal-preview-dialog {
-        width: 96%;
-        height: 90vh;
-        border-radius: var(--radius-md);
+        flex-direction: row;
       }
     }
 
-    @media (max-width: 380px) {
-      .share-container {
-        padding: 0 0.4rem;
-      }
-
-      .share-card-core {
-        padding: 0.95rem 0.65rem;
-      }
-
-      .item-meta-bar {
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
-
-      .item-actions-col {
-        width: 100%;
-        justify-content: flex-end;
-      }
-
-      .btn-row-action {
-        padding: 0.3rem 0.5rem;
-        font-size: 0.725rem;
-      }
-    }
-
-    /* نافذة المعاينة المباشرة للملفات المشتركة */
+    /* ── نافذة المعاينة المنبثقة ── */
     .modal-preview-dialog {
-      max-width: 920px;
+      max-width: 960px;
       width: 95%;
-      height: min(85vh, 780px);
+      height: min(85vh, 800px);
       max-height: calc(100dvh - 2rem);
       display: flex;
       flex-direction: column;
       background: var(--surface);
-      border-radius: var(--radius-outer);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border-hairline);
       box-shadow: var(--shadow-modal);
       overflow: hidden;
       animation: modalScale 0.25s var(--ease-spring);
+    }
+
+    @media (max-width: 768px) {
+      .modal-preview-dialog {
+        width: 96%;
+        height: 92vh;
+        border-radius: var(--radius-lg);
+      }
     }
 
     .preview-modal-body {
@@ -1091,10 +1317,18 @@
     .share-public-footer {
       text-align: center;
       padding: 2rem 1rem;
-      font-size: 0.8rem;
+      font-size: 0.825rem;
       color: var(--ink-400);
       border-top: 1px solid var(--border-hairline);
       background: var(--surface);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
@@ -1102,15 +1336,21 @@
 
   <div class="share-page-wrapper">
     
-    <!-- الرأس الرسمي المعتمد بدون شارات وصول أو تعقيد -->
+    <!-- الرأس الرسمي المعتمد لمحاذاة متطابقة مع الحاوية -->
     <header class="share-public-header">
-      <a href="/" class="share-brand">
-        <img src="logo.png" alt="شعار جمعية إرث وحضارة" class="share-brand-logo"/>
-        <div class="share-brand-text">
-          <span class="share-brand-title">سحابة إرث وحضارة</span>
-          <span class="share-brand-tag">جمعية إرث وحضارة بالقريات</span>
+      <div class="share-header-inner">
+        <a href="/" class="share-brand">
+          <img src="logo.png" alt="شعار جمعية إرث وحضارة" class="share-brand-logo"/>
+          <div class="share-brand-text">
+            <span class="share-brand-title">سحابة إرث وحضارة</span>
+            <span class="share-brand-tag">جمعية إرث وحضارة بالقريات</span>
+          </div>
+        </a>
+        <div class="share-header-badge">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>بوابة المشاركة</span>
         </div>
-      </a>
+      </div>
     </header>
 
     <!-- مساحة المحتوى -->
