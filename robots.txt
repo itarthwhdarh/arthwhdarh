@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /portal/
+Disallow: /cloud/
 
 # Sitemap location
 Sitemap: https://arthwhdarh.org.sa/sitemap.xml

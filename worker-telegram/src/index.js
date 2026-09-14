@@ -1,58 +1,42 @@
 /* ══════════════════════════════════════════════════════════
    Cloudflare Worker — إشعارات Telegram
-   جمعية إرث وحضارة بالقريات
+   جمعية إرث وحضارة بالقريات · النسخة المحصنة أمنياً
    ──────────────────────────────────────────────────────────
    يستقبل طلبات من صفحة التطوع (بيدي حرفة / أصدقاء الجمعية)
-   ويُرسل إشعاراً فورياً إلى قناة Telegram.
-
-   Bot Token مُخزّن كـ Worker Secret (wrangler secret put).
-   لا يُكشف أبداً في الواجهة الأمامية.
-
-   النشر:
-     cd portal/worker-telegram && npm install
-     wrangler secret put TELEGRAM_BOT_TOKEN
-     wrangler deploy
+   ويُرسل إشعاراً فورياً إلى قناة Telegram المعتمدة.
 ═══════════════════════════════════════════════════════════ */
 
-export default {
-  async fetch(request, env) {
-    const cors = corsHeaders(env);
+const ALLOWED_ORIGINS = [
+  "https://arthwhdarh.com",
+  "https://www.arthwhdarh.com",
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "http://localhost:5000",
+  "http://127.0.0.1:5000"
+];
 
-    if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: cors });
-    }
+function corsHeaders(request, env) {
+  const origin = request.headers.get("Origin") || "";
+  const isAllowed = ALLOWED_ORIGINS.includes(origin) ||
+                    origin.startsWith("http://localhost:") ||
+                    origin.startsWith("http://127.0.0.1:");
 
-    if (request.method !== "POST") {
-      return json({ error: "method-not-allowed" }, 405, cors);
-    }
+  const allowOrigin = isAllowed ? origin : "https://arthwhdarh.com";
 
-    let body;
-    try {
-      body = await request.json();
-    } catch {
-      return json({ error: "bad-json" }, 400, cors);
-    }
+  return {
+    "Access-Control-Allow-Origin": allowOrigin,
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Vary": "Origin"
+  };
+}
 
-    const type = String(body.type || "").trim();
-    if (!type || !["crafts", "volunteers"].includes(type)) {
-      return json({ error: "invalid-type" }, 400, cors);
-    }
-
-    try {
-      const text = type === "crafts"
-        ? buildCraftsMessage(body)
-        : buildVolunteersMessage(body);
-
-      const result = await sendTelegram(env, text);
-      return json({ ok: true, ...result }, 200, cors);
-    } catch (e) {
-      console.error("telegram error:", e?.message || e);
-      return json({ ok: false, error: String(e?.message || e) }, 500, cors);
-    }
-  }
-};
-
-/* ═══════════ تنسيق الرسائل ═══════════ */
+function json(obj, status, headers) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { "Content-Type": "application/json; charset=utf-8", ...headers },
+  });
+}
 
 function escHtml(text) {
   return String(text || "")
@@ -139,8 +123,6 @@ function formatTime(ts) {
   }
 }
 
-/* ═══════════ إرسال Telegram ═══════════ */
-
 async function sendTelegram(env, text) {
   const token = (env.TELEGRAM_BOT_TOKEN || "").trim();
   if (!token) throw new Error("TELEGRAM_BOT_TOKEN secret not configured");
@@ -170,19 +152,45 @@ async function sendTelegram(env, text) {
   return { messageId: result.result?.message_id };
 }
 
-/* ═══════════ مساعدات HTTP ═══════════ */
+export default {
+  async fetch(request, env) {
+    const cors = corsHeaders(request, env);
 
-function corsHeaders(env) {
-  return {
-    "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN || "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  };
-}
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: cors });
+    }
 
-function json(obj, status, headers) {
-  return new Response(JSON.stringify(obj), {
-    status,
-    headers: { "Content-Type": "application/json", ...headers },
-  });
-}
+    if (request.method !== "POST") {
+      return json({ error: "method-not-allowed" }, 405, cors);
+    }
+
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "bad-json" }, 400, cors);
+    }
+
+    const type = String(body.type || "").trim();
+    if (!type || !["crafts", "volunteers"].includes(type)) {
+      return json({ error: "invalid-type" }, 400, cors);
+    }
+
+    // التحقق من الحقول الأساسية
+    if (!body.name || !body.phone) {
+      return json({ error: "missing-required-fields" }, 400, cors);
+    }
+
+    try {
+      const text = type === "crafts"
+        ? buildCraftsMessage(body)
+        : buildVolunteersMessage(body);
+
+      const result = await sendTelegram(env, text);
+      return json({ ok: true, ...result }, 200, cors);
+    } catch (e) {
+      console.error("telegram error:", e?.message || e);
+      return json({ ok: false, error: String(e?.message || e) }, 500, cors);
+    }
+  }
+};

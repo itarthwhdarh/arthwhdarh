@@ -170,18 +170,11 @@ export async function verifyAndFetchUserProfile(firebaseUser) {
                           email.endsWith("@arthwhdarh.com");
 
   let data = null;
-  const docRef = doc(db, "portal_users", uid);
+  const docRef = doc(db, "users", uid);
   const snap = await getDoc(docRef);
 
   if (snap.exists()) {
     data = snap.data();
-  } else {
-    try {
-      const userSnap = await getDoc(doc(db, "users", uid));
-      if (userSnap.exists()) {
-        data = userSnap.data();
-      }
-    } catch (e) {}
   }
 
   if (!data && !isExplicitMaster) {
@@ -231,10 +224,22 @@ async function callSharePointApi(action, payload = {}) {
   const url = `${SHAREPOINT_ENDPOINT}/${action}`;
   let response;
 
+  const headers = { "Content-Type": "application/json" };
+  try {
+    if (auth.currentUser) {
+      const idToken = await auth.currentUser.getIdToken();
+      if (idToken) {
+        headers["Authorization"] = `Bearer ${idToken}`;
+      }
+    }
+  } catch (authErr) {
+    console.warn("[Cloud API Auth Token Warning]:", authErr);
+  }
+
   try {
     response = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify(payload)
     });
   } catch (netErr) {
@@ -384,32 +389,39 @@ export async function fetchRecycleBin() {
   return data.items || [];
 }
 
-export async function fetchSharedItemDetails(itemId, useCache = true) {
+export async function fetchSharedItemDetails(itemId, shareId = null, password = "", useCache = true) {
   if (!itemId) return { item: null, children: [] };
 
-  if (useCache && sharedItemCache.has(itemId)) {
-    return sharedItemCache.get(itemId);
+  const cacheKey = `${shareId || ""}_${itemId}`;
+  if (useCache && sharedItemCache.has(cacheKey)) {
+    return sharedItemCache.get(cacheKey);
   }
 
-  if (pendingSharedItemRequests.has(itemId)) {
-    return await pendingSharedItemRequests.get(itemId);
+  if (pendingSharedItemRequests.has(cacheKey)) {
+    return await pendingSharedItemRequests.get(cacheKey);
   }
 
   const fetchPromise = (async () => {
     try {
-      const data = await callSharePointApi("shared_item", { itemId });
+      const payload = { itemId };
+      if (shareId) payload.shareId = shareId;
+      if (password) payload.password = password;
+
+      const data = await callSharePointApi("shared_item", payload);
       const result = {
         item: data.item,
-        children: data.children || []
+        children: data.children || [],
+        allowDownload: data.allowDownload !== false,
+        allowUpload: Boolean(data.allowUpload)
       };
-      sharedItemCache.set(itemId, result);
+      sharedItemCache.set(cacheKey, result);
       return result;
     } finally {
-      pendingSharedItemRequests.delete(itemId);
+      pendingSharedItemRequests.delete(cacheKey);
     }
   })();
 
-  pendingSharedItemRequests.set(itemId, fetchPromise);
+  pendingSharedItemRequests.set(cacheKey, fetchPromise);
   return await fetchPromise;
 }
 
@@ -575,8 +587,7 @@ export async function fetchShareByToken(shareId) {
       createdAt: data.createdAt,
       status: data.status
     },
-    // إخفاء الـ hash للأمان ونتركه فقط للمقارنة البرمجية
-    _passwordHash: data.passwordHash,
+    // ملاحظة أمنية: تم حجب الـ passwordHash كلياً لمنع كشفه أو تجاوزه بالمتصفح
     _realItemName: data.itemName,
     _realSize: data.size,
     _realMimeType: data.mimeType
@@ -584,19 +595,29 @@ export async function fetchShareByToken(shareId) {
 }
 
 /**
- * التحقق من صحة كلمة مرور الرابط المشترك
+ * التحقق من صحة كلمة مرور الرابط المشترك عبر السيرفر (Server-Side Verification)
  */
 export async function verifySharePassword(shareInfo, enteredPassword) {
   if (!shareInfo || !shareInfo.share?.hasPassword) return true;
   if (!enteredPassword) return false;
-  const hash = await hashPasswordWithSalt(enteredPassword.trim(), shareInfo.share.passwordSalt);
-  const isValid = hash === shareInfo._passwordHash;
-  if (isValid) {
-    if (shareInfo._realItemName) shareInfo.share.itemName = shareInfo._realItemName;
-    if (shareInfo._realSize !== undefined) shareInfo.share.size = shareInfo._realSize;
-    if (shareInfo._realMimeType) shareInfo.share.mimeType = shareInfo._realMimeType;
+
+  try {
+    const res = await callSharePointApi("shared_item", {
+      shareId: shareInfo.share.shareId,
+      itemId: shareInfo.share.itemId,
+      password: enteredPassword.trim()
+    });
+
+    if (res && res.ok) {
+      if (shareInfo._realItemName) shareInfo.share.itemName = shareInfo._realItemName;
+      if (shareInfo._realSize !== undefined) shareInfo.share.size = shareInfo._realSize;
+      if (shareInfo._realMimeType) shareInfo.share.mimeType = shareInfo._realMimeType;
+      return true;
+    }
+    return false;
+  } catch (err) {
+    return false;
   }
-  return isValid;
 }
 
 /**

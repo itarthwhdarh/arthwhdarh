@@ -1,13 +1,11 @@
 {
   "name": "erth-telegram-notifier",
-  "description": "Cloudflare Worker — إشعارات Telegram لطلبات التطوع",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
-    "wrangler": "^4.97.0"
+    "wrangler": "^3.0.0"
   }
 }

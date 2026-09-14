@@ -1,0 +1,11 @@
+name = "erth-telegram-notifier"
+main = "src/index.js"
+compatibility_date = "2024-09-01"
+
+[vars]
+TELEGRAM_CHAT_ID = "5407123323"
+ALLOWED_ORIGIN = "https://arthwhdarh.com"
+
+# ── الأسرار (Worker Secrets) ──
+# تُضبط بأمر:
+#   wrangler secret put TELEGRAM_BOT_TOKEN

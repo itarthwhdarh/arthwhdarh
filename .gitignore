@@ -1,8 +1,9 @@
-portal/worker/service-account.json
+# Environment & Secrets
 .env
 .env.*
 *.env
-portal/functions/.env
+service-account.json
+worker-*/service-account.json
 
 # Temporary & Log files
 firebase-debug.log

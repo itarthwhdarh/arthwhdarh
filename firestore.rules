@@ -1,0 +1,138 @@
+rules_version = '2';
+// ══════════════════════════════════════════════════════════
+// قواعد أمان Firestore المحصنة — جمعية إرث وحضارة بالقريات
+// (الموقع العام + لوحة الإدارة + سحابة إرث وحضارة)
+// ══════════════════════════════════════════════════════════
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── دوال التحقق المساعدة ──
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isSiteAdmin() {
+      return signedIn() && (
+        request.auth.uid == 'dDcYQljmYFR1gq6cD0lG3wBaHys2' ||
+        (request.auth.token.email != null && (
+          request.auth.token.email.lower() == '2falilh2@gmail.com' ||
+          request.auth.token.email.lower() == 'it@arthwhdarh.com' ||
+          request.auth.token.email.lower() == 'info@arthwhdarh.com' ||
+          request.auth.token.email.lower().matches('.*@arthwhdarh[.]com$')
+        )) ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('isTechAdmin', false) == true ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('isAdmin', false) == true ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', '') in [
+            'admin', 'tech_admin', 'executive', 'hr', 'general_manager', 'board_chairman', 'exec', 'manager'
+          ]
+        ))
+      );
+    }
+
+    // ════════════════ الموقع العام ولوحة الإدارة (/admin) ════════════════
+
+    // ── المتطوعون (أصدقاء الجمعية) ──
+    match /volunteers/{id} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'phone']);
+      allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ── الحرف والأعمال اليدوية (بيدي حرفة) ──
+    match /crafts/{id} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'phone', 'craft']);
+      allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ── الفرص التطوعية ──
+    match /volunteerOpportunities/{id} {
+      allow read: if true;
+      allow write: if isSiteAdmin();
+    }
+
+    // ── طلبات التطوع ──
+    match /volunteer_applications/{id} {
+      allow create: if request.resource.data.keys().hasAll(['name', 'phone']);
+      allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ── الورش التدريبية ──
+    match /workshops/{id} {
+      allow read: if true;
+      allow create, delete: if isSiteAdmin();
+      allow update: if isSiteAdmin() ||
+                    (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['registeredCount']));
+    }
+
+    // ── تسجيلات الورش التدريبية (محمية ضد سحب الهويات الوطنية PII) ──
+    match /workshop_registrations/{id} {
+      allow create: if request.resource.data.keys().hasAll(['workshopId', 'phone']);
+      // القراءة والاستعلام محصوران بإدارة الجمعية فقط لمنع سحب الهويات الوطنية للمشاركين
+      allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ── الأخبار والمقالات ──
+    match /news/{id} {
+      allow read: if true;
+      allow write: if isSiteAdmin();
+    }
+
+    // ── إعدادات الموقع العام ──
+    match /settings/{id} {
+      allow read: if true;
+      allow write: if isSiteAdmin();
+    }
+
+    // ── إشعارات الأدمن ──
+    match /admin_notifications/{id} {
+      allow create: if true;
+      allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ── الاستبيانات الخاصة بورش العمل (surveys) ──
+    match /surveys/{id} {
+      allow read: if true;
+      allow write: if isSiteAdmin();
+    }
+
+    // ── إجابات الاستبيانات (survey_responses) ──
+    match /survey_responses/{id} {
+      allow create: if !exists(/databases/$(database)/documents/survey_responses/$(id))
+        && request.resource.data.keys().hasAll(['surveyId', 'workshopId', 'registrationId', 'answers', 'submittedAt'])
+        && id == request.resource.data.surveyId + '_' + request.resource.data.registrationId;
+      allow get: if true;
+      allow list, update, delete: if isSiteAdmin();
+    }
+
+    // ── حسابات مديري النظام ومستخدمي لوحة الإدارة ──
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSiteAdmin());
+      // الكتابة محصورة بمديري النظام فقط لمنع الارتقاء بالصلاحيات
+      allow write: if isSiteAdmin();
+    }
+
+    // ════════════════ سحابة إرث وحضارة (Cloud Platform) ════════════════
+
+    // ── روابط المشاركة (cloud_shares) — محصنة ضد الفهرسة الجماعية ──
+    match /cloud_shares/{shareId} {
+      // قراءة رابط محدد فقط برابطه المباشر دون السماح بسحب واستعراض المجموعة كاملة (Anti-Enumeration)
+      allow get: if true;
+      // استعراض قائمة الروابط محصور بمالك الرابط أو بمدير النظام فقط
+      allow list: if signedIn() && (resource.data.createdBy == request.auth.uid || isSiteAdmin());
+      // إنشاء الرابط مسموح للمستخدمين المصادقين في الجمعية
+      allow create: if signedIn();
+      // التعديل محصور بالمالك أو المدير، أو زيادة العدادات الإحصائية فقط
+      allow update: if (signedIn() && (resource.data.createdBy == request.auth.uid || isSiteAdmin()))
+                    || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['viewCount', 'downloadCount', 'openCount', 'lastVisitedAt']));
+      // الحذف محصور بالمالك أو مدير النظام
+      allow delete: if signedIn() && (resource.data.createdBy == request.auth.uid || isSiteAdmin());
+    }
+
+    // ── العناصر المفضلة (cloud_favorites) ──
+    match /cloud_favorites/{favId} {
+      allow read, write: if signedIn() && (
+        resource == null || resource.data.uid == request.auth.uid
+      );
+    }
+  }
+}

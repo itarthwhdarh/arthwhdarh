@@ -279,7 +279,9 @@ async function openSharePreview(fileItem) {
     let targetPreviewUrl = fileItem.previewUrl;
     if (!targetPreviewUrl && fileItem.id) {
       try {
-        const details = await fetchSharedItemDetails(fileItem.id);
+        const shareId = currentShareInfo?.share?.shareId || "";
+        const sessionPass = shareId ? (sessionStorage.getItem(`unlocked_pass_${shareId}`) || "") : "";
+        const details = await fetchSharedItemDetails(fileItem.id, shareId, sessionPass);
         targetPreviewUrl = details.item?.previewUrl;
       } catch (e) {
         console.warn("[Fetch Item Preview Error]:", e);
@@ -482,6 +484,7 @@ UI.unlockForm.addEventListener("submit", async (e) => {
 
     // حفظ حالة الفك للجلسة الحالية
     sessionStorage.setItem(`unlocked_${currentShareInfo.share.shareId}`, "true");
+    sessionStorage.setItem(`unlocked_pass_${currentShareInfo.share.shareId}`, inputPass);
     UI.lockBox.style.display = "none";
     await renderUnlockedContent();
 
@@ -508,7 +511,8 @@ async function renderUnlockedContent() {
   }
 
   try {
-    const details = await fetchSharedItemDetails(share.itemId);
+    const sessionPass = sessionStorage.getItem(`unlocked_pass_${share.shareId}`) || "";
+    const details = await fetchSharedItemDetails(share.itemId, share.shareId, sessionPass);
     const item = details.item;
     currentShareItem = item;
 
@@ -683,7 +687,9 @@ async function openSubFolder(folderItem) {
   if (UI.sharedItemsContainer) UI.sharedItemsContainer.style.display = "none";
 
   try {
-    const details = await fetchSharedItemDetails(folderItem.id);
+    const shareId = currentShareInfo?.share?.shareId || "";
+    const sessionPass = shareId ? (sessionStorage.getItem(`unlocked_pass_${shareId}`) || "") : "";
+    const details = await fetchSharedItemDetails(folderItem.id, shareId, sessionPass);
     folderNavStack.push({
       id: folderItem.id,
       name: folderItem.name,

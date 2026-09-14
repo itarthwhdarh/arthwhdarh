@@ -1,4 +1,4 @@
-const QRCode = require('../portal/qrcode.min.js');
+const QRCode = require('../cloud/qrcode.min.js');
 
 const text = "https://arthwhdarh.com/share?id=test123456";
 const options = {

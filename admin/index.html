@@ -2171,20 +2171,11 @@ async function isAuthorizedAdmin(user) {
   // 2. Explicit master UID
   if (user.uid === "dDcYQljmYFR1gq6cD0lG3wBaHys2") return true;
 
-  // 3. Firestore role check in portal_users and users collections
+  // 3. Firestore role check in users collection
   try {
     const adminRoles = ["admin", "tech_admin", "executive", "hr", "general_manager", "board_chairman", "exec", "manager"];
     
-    // Check portal_users collection
-    const portalSnap = await getDoc(doc(db, "portal_users", user.uid));
-    if (portalSnap.exists()) {
-      const pData = portalSnap.data();
-      if (pData.isTechAdmin === true || pData.isAdmin === true || adminRoles.includes(pData.role)) {
-        return true;
-      }
-    }
-
-    // Check users collection fallback
+    // Check users collection
     const userSnap = await getDoc(doc(db, "users", user.uid));
     if (userSnap.exists()) {
       const uData = userSnap.data();

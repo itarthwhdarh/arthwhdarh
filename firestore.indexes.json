@@ -1,0 +1,13 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "cloud_shares",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "createdBy", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

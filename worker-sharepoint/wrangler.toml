@@ -4,12 +4,12 @@ compatibility_date = "2024-09-01"
 
 [vars]
 PROJECT_ID = "arthwhdarh-782ec"
-ALLOWED_ORIGIN = "*"
+FIREBASE_API_KEY = "AIzaSyDnWUCjJKkMqORT8SeLYHszAIP0bv8PCSg"
+ALLOWED_ORIGIN = "https://arthwhdarh.com"
 MICROSOFT_TENANT_ID = "5380057d-dc58-45d5-8ae2-230b3ef6a2ef"
 MICROSOFT_CLIENT_ID = "e92632b0-43b5-40a0-a2e7-b3130aca7c35"
 MICROSOFT_DRIVE_ID = "b!vag-u0AS6keay7P1gHkP54gtpOO87ZdFmdHyFfCVxqyBUJAhWFk3TrtY3uYtcmis"
 
-# ── الأسرار (لا تُكتب هنا) ──
-# تُضبط بأمر منفصل:
+# ── الأسرار (Worker Secrets) ──
+# تُضبط عبر لوحة Cloudflare أو أمر:
 #   wrangler secret put MICROSOFT_CLIENT_SECRET
-

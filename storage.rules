@@ -1,0 +1,26 @@
+rules_version = '2';
+// ══════════════════════════════════════════════════════════
+// قواعد أمان Firebase Storage المحصنة — جمعية إرث وحضارة بالقريات
+// ══════════════════════════════════════════════════════════
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // مرفقات وملفات المستخدمين المعتمدة — معزولة لكل مستخدم بالـ UID الخاص به
+    match /uploads/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if signedIn() && request.auth.uid == userId
+                   && request.resource.size < 15 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+      allow delete: if signedIn() && request.auth.uid == userId;
+    }
+
+    // منع الوصول والكتابة العشوائية لأي مسار آخر بشكل افتراضي (Default Deny)
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
