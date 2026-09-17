@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>تسجيل حضور الموظفين · جمعية إرث وحضارة بالقريات</title>
+  <meta name="description" content="البوابة الذكية لتسجيل حضور وانصراف موظفي جمعية إرث وحضارة بالقريات عبر Face ID وPasskeys.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="attendance.css">
+</head>
+<body>
+
+  <!-- تأثير الإضاءة المحيطية الخلفية -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+  <div class="ambient-glow-bottom" aria-hidden="true"></div>
+
+  <main class="attendance-container">
+
+    <!-- تنبيه المتصفح الداخلي لتطبيقات مثل Instagram و WhatsApp -->
+    <div id="webviewNotice" class="webview-notice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <div>
+        <strong>ملاحظة للمستخدم:</strong> يبدو أنك تفتح الصفحة من داخل تطبيق. لأفضل أداء وتفعيل Face ID، يرجى الضغط على زر المشاركة أو الخيارات وفتح الرابط في متصفح Safari.
+      </div>
+    </div>
+
+    <!-- رأس الصفحة والعلامة التجارية للجمعية -->
+    <header class="brand-header">
+      <div class="brand-logo-wrap">
+        <img src="/assets/الشعار/الشعار.png" alt="شعار جمعية إرث وحضارة" class="brand-logo" width="68" height="68">
+      </div>
+      <div class="brand-badge">
+        <span class="brand-badge-dot"></span>
+        <span>بوابة الحضور الذكية · Face ID</span>
+      </div>
+      <h1 class="brand-title">جمعية إرث وحضارة بالقريات</h1>
+      <p class="brand-subtitle">نظام إثبات الحضور البيومتري الموثوق للموظفين</p>
+    </header>
+
+    <!-- ساعة الحضور الرقمية الحية -->
+    <section class="live-clock-card" aria-label="الوقت والتاريخ المباشر">
+      <div class="clock-time-wrap">
+        <span id="clockDigits" class="clock-digits">00:00:00</span>
+        <span id="clockPeriod" class="clock-period">ص</span>
+      </div>
+      <div class="clock-date-wrap">
+        <span id="clockDay" class="clock-day">—</span>
+        <span id="clockDate" class="clock-date">—</span>
+      </div>
+    </section>
+
+    <!-- شريط التنبيهات والأخطاء باللغة العربية -->
+    <div id="statusBanner" class="status-banner" role="alert">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span id="statusText"></span>
+    </div>
+
+    <!-- الحاوية المزدوجة للشاشات التفاعلية (Double-Bezel Architecture) -->
+    <div class="double-bezel-outer">
+      <div class="double-bezel-inner">
+
+        <!-- ══════════════ 1. شاشة التسجيل لأول مرة (New Employee View) ══════════════ -->
+        <div id="viewRegister" class="view-pane">
+          <div class="biometric-hero">
+            <div class="faceid-frame-outer">
+              <div class="faceid-glow-ring"></div>
+              <div id="faceidBox" class="faceid-box">
+                <span class="scan-line"></span>
+                <span class="bracket bracket-tl"></span>
+                <span class="bracket bracket-tr"></span>
+                <span class="bracket bracket-bl"></span>
+                <span class="bracket bracket-br"></span>
+                <svg class="faceid-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                  <circle cx="9" cy="9" r="1"></circle>
+                  <circle cx="15" cy="9" r="1"></circle>
+                  <path d="M10 15c.8 1 2.2 1 3 0"></path>
+                  <line x1="12" y1="11" x2="12" y2="12.5"></line>
+                </svg>
+              </div>
+            </div>
+            <h2 class="section-headline">تسجيل الحضور</h2>
+            <p class="section-desc">أدخل اسمك لأول مرة لربط هذا الجهاز بهويتك الوظيفية وتفعيل الحضور المباشر عبر Face ID</p>
+          </div>
+
+          <div class="form-group">
+            <label for="inputFullName" class="form-label">الاسم الكامل للموظف</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input
+                type="text"
+                id="inputFullName"
+                class="text-input"
+                placeholder="مثال: أحمد عبد الله الرويلي"
+                autocomplete="name"
+                dir="rtl"
+                required
+              >
+            </div>
+          </div>
+
+          <button id="btnRegisterFaceId" type="button" class="btn-primary">
+            <span class="btn-icon-island">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                <circle cx="9" cy="9" r="1"></circle>
+                <circle cx="15" cy="9" r="1"></circle>
+                <path d="M10 15c.8 1 2.2 1 3 0"></path>
+              </svg>
+            </span>
+            <span>تسجيل الحضور عبر Face ID</span>
+          </button>
+
+          <!-- زر التحقق المباشر في حال مسح بيانات المتصفح لاسترجاع المفتاح المسجل -->
+          <button id="btnDirectVerify" type="button" class="btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16" stroke-width="2">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+            </svg>
+            <span>مسجل مسبقاً على هذا الهاتف؟ تحقق مباشرة بـ Face ID</span>
+          </button>
+
+          <div class="privacy-callout">
+            <svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <div class="privacy-text">
+              <strong>خصوصية بيومترية مشفرة:</strong> تُعالج بصمة الوجه محلياً داخل شريحة المعالج الآمن بجهازك (Secure Enclave). لا يتم تخزين أو رفع أي صور لوجهك إلى السحابة.
+            </div>
+          </div>
+        </div>
+
+        <!-- ══════════════ 2. شاشة الموظف المسجل مسبقاً (Returning Employee View) ══════════════ -->
+        <div id="viewReturning" class="view-pane" style="display: none;">
+          <div class="biometric-hero">
+            <div class="faceid-frame-outer">
+              <div class="faceid-glow-ring"></div>
+              <div class="faceid-box">
+                <span class="scan-line"></span>
+                <span class="bracket bracket-tl"></span>
+                <span class="bracket bracket-tr"></span>
+                <span class="bracket bracket-bl"></span>
+                <span class="bracket bracket-br"></span>
+                <svg class="faceid-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                  <circle cx="9" cy="9" r="1"></circle>
+                  <circle cx="15" cy="9" r="1"></circle>
+                  <path d="M10 15c.8 1 2.2 1 3 0"></path>
+                  <line x1="12" y1="11" x2="12" y2="12.5"></line>
+                </svg>
+              </div>
+            </div>
+            <h2 class="section-headline">تسجيل الحضور اليومي</h2>
+            <p class="section-desc">
+              مرحباً بك مجدداً، <strong id="returningEmployeeName" style="color: var(--c-gold-deep);">—</strong> 👋
+              <br>المس الزر أدناه لتأكيد حضورك عبر بصمة الوجه Face ID
+            </p>
+          </div>
+
+          <button id="btnCheckInFaceId" type="button" class="btn-primary">
+            <span class="btn-icon-island">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                <circle cx="9" cy="9" r="1"></circle>
+                <circle cx="15" cy="9" r="1"></circle>
+                <path d="M10 15c.8 1 2.2 1 3 0"></path>
+              </svg>
+            </span>
+            <span>تسجيل الحضور عبر Face ID</span>
+          </button>
+
+          <button id="btnSwitchAccount" type="button" class="btn-ghost">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+            <span>لست أنت؟ تسجيل موظف آخر أو جهاز جديد</span>
+          </button>
+        </div>
+
+        <!-- ══════════════ 3. شاشة النجاح وتأكيد الحضور (Success View) ══════════════ -->
+        <div id="viewSuccess" class="success-view">
+          <div class="success-badge-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+
+          <h2 id="successGreeting" class="greeting-text">صباح الخير، أحمد 👋</h2>
+          <div class="success-subtitle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="18" height="18" stroke-width="2.5">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>تم تسجيل حضورك بنجاح</span>
+          </div>
+
+          <div class="device-linked-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+            <span>تم ربط وتوثيق الحضور بهذا الجهاز عبر Face ID بنجاح</span>
+          </div>
+
+          <div class="receipt-card">
+            <div class="receipt-row">
+              <span class="receipt-label">اسم الموظف</span>
+              <span id="successEmpName" class="receipt-value">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">وقت الحضور</span>
+              <span id="successTime" class="receipt-value highlight">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">تاريخ الحضور</span>
+              <span id="successDate" class="receipt-value">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">حالة التوقيت</span>
+              <span id="successStatusBadge" class="receipt-badge">حاضر في الموعد</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">معرف الموظف (UID)</span>
+              <span id="successUid" class="receipt-value" style="font-family: var(--font-en); font-size: 0.78rem;">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">رقم حركة الحضور</span>
+              <span id="successRecordId" class="receipt-value" style="font-family: var(--font-en); font-size: 0.78rem;">—</span>
+            </div>
+          </div>
+
+          <button id="btnReturnFromSuccess" type="button" class="btn-secondary">
+            <span>العودة لشاشة الحضور</span>
+          </button>
+        </div>
+
+        <!-- ══════════════ 4. شاشة منع التكرار (Already Checked-In View) ══════════════ -->
+        <div id="viewDuplicate" class="success-view">
+          <div class="success-badge-circle" style="background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-deep) 100%); box-shadow: var(--shadow-btn);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+
+          <h2 id="dupGreeting" class="greeting-text">أهلاً بك 👋</h2>
+          <div class="success-subtitle" style="color: var(--c-gold-deep);">
+            <span>تم تسجيل حضورك مسبقًا اليوم</span>
+          </div>
+
+          <div class="receipt-card">
+            <div class="receipt-row">
+              <span class="receipt-label">الموظف</span>
+              <span id="dupEmpName" class="receipt-value">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">وقت الحضور المسجل</span>
+              <span id="dupTime" class="receipt-value highlight">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">تاريخ اليوم</span>
+              <span id="dupDate" class="receipt-value">—</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">الحالة</span>
+              <span class="receipt-badge" style="background: rgba(184, 136, 62, 0.12); color: var(--c-gold-deep);">حضورك مسجل بالفعل ✅</span>
+            </div>
+            <div class="receipt-row">
+              <span class="receipt-label">رقم الحركة</span>
+              <span id="dupRecordId" class="receipt-value" style="font-family: var(--font-en); font-size: 0.78rem;">—</span>
+            </div>
+          </div>
+
+          <p style="font-size: 0.82rem; color: var(--c-text-muted); margin-bottom: 1rem;">
+            لا يمكن تكرار تسجيل الحضور في نفس اليوم. نتمنى لك يوماً موفقاً ومثمراً!
+          </p>
+
+          <button id="btnReturnFromDuplicate" type="button" class="btn-secondary">
+            <span>العودة للرئيسية</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <footer class="attendance-footer">
+      <a href="/attendance-admin" class="footer-admin-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        <span>بوابة إدارة الحضور (Admin)</span>
+      </a>
+      <span class="footer-copy">© جمعية إرث وحضارة بالقريات · جميع الحقوق محفوظة</span>
+    </footer>
+
+  </main>
+
+  <!-- المحرك البرمجي لنظام الحضور -->
+  <script type="module" src="attendance.js"></script>
+</body>
+</html>

@@ -1,0 +1,885 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ATTENDANCE.CSS — جمعية إرث وحضارة بالقريات
+   نظام حضور الموظفين الذكي (Face ID / WebAuthn & Passkeys)
+   Mobile-First · High-End Visual Architecture · Double-Bezel Design
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* ── الألوان الرئيسية للهوية ── */
+  --c-bg: #fdfbf7;
+  --c-bg-subtle: #f7f4ee;
+  --c-bg-gradient: radial-gradient(120% 80% at 50% 0%, #fffdfa 0%, #fbf8f2 50%, #f4eee3 100%);
+  --c-surface: #ffffff;
+  --c-surface-bezel: rgba(255, 255, 255, 0.82);
+  --c-shell-border: rgba(184, 136, 62, 0.16);
+  --c-shell-bg: rgba(255, 255, 255, 0.65);
+
+  /* ── درجات اللون الذهبي الملكي ── */
+  --c-gold: #b8883e;
+  --c-gold-deep: #9c6e38;
+  --c-gold-soft: #d4a855;
+  --c-gold-pale: rgba(184, 136, 62, 0.10);
+  --c-gold-glow: rgba(184, 136, 62, 0.25);
+  --c-gold-border: rgba(184, 136, 62, 0.32);
+
+  /* ── النصوص ── */
+  --c-text-primary: #181613;
+  --c-text-secondary: #524d45;
+  --c-text-muted: #8c8577;
+  --c-text-faint: #b3aba0;
+
+  /* ── حالات التنبيه ── */
+  --c-success: #15803d;
+  --c-success-bg: rgba(22, 163, 74, 0.10);
+  --c-success-border: rgba(22, 163, 74, 0.24);
+  --c-warning: #b45309;
+  --c-warning-bg: rgba(217, 119, 6, 0.10);
+  --c-warning-border: rgba(217, 119, 6, 0.24);
+  --c-error: #b91c1c;
+  --c-error-bg: rgba(220, 38, 38, 0.08);
+  --c-error-border: rgba(220, 38, 38, 0.22);
+
+  /* ── الظلال والعمق ── */
+  --shadow-bezel: 0 1px 2px rgba(24, 22, 19, 0.03), 0 16px 40px -12px rgba(184, 136, 62, 0.12);
+  --shadow-card: 0 20px 50px -15px rgba(24, 22, 19, 0.08), 0 0 0 1px rgba(24, 22, 19, 0.04);
+  --shadow-btn: 0 10px 24px -6px rgba(184, 136, 62, 0.35);
+  --shadow-btn-active: 0 4px 12px -2px rgba(184, 136, 62, 0.25);
+
+  /* ── الخطوط ── */
+  --font-ar: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-en: 'Montserrat', sans-serif;
+
+  /* ── الحركة والانسيابية (Apple Spring) ── */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 480ms;
+}
+
+/* ════════════════ إعدادات الأساس والريست ════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-ar);
+  background: var(--c-bg-gradient);
+  background-attachment: fixed;
+  color: var(--c-text-primary);
+  line-height: 1.6;
+  direction: rtl;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ════════════════ الغشاء الضبابي الخلفي والمحيط ════════════════ */
+.ambient-glow {
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 136, 62, 0.14) 0%, rgba(212, 168, 85, 0.03) 70%, transparent 100%);
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+.ambient-glow-bottom {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 136, 62, 0.08) 0%, transparent 70%);
+  bottom: -60px;
+  right: -60px;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(50px);
+}
+
+/* ════════════════ الحاوية الرئيسية (Mobile First) ════════════════ */
+.attendance-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════ رأس الصفحة والعلامة التجارية ════════════════ */
+.brand-header {
+  text-align: center;
+  padding: 1rem 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-logo {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(184, 136, 62, 0.20));
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+
+.brand-logo:hover {
+  transform: scale(1.04);
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--c-gold-pale);
+  border: 1px solid var(--c-gold-border);
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--c-gold-deep);
+  letter-spacing: -0.01em;
+  backdrop-filter: blur(10px);
+}
+
+.brand-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-gold);
+  box-shadow: 0 0 0 2.5px rgba(184, 136, 62, 0.25);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+.brand-title {
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+  margin-top: 0.15rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+  font-size: 0.84rem;
+  color: var(--c-text-muted);
+  font-weight: 400;
+}
+
+/* ════════════════ ساعة الحضور المباشرة (Live Digital Clock) ════════════════ */
+.live-clock-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-bezel);
+}
+
+.clock-time-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+.clock-digits {
+  font-family: var(--font-en);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+  letter-spacing: 0.04em;
+}
+
+.clock-period {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--c-gold-deep);
+}
+
+.clock-date-wrap {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.clock-day {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+}
+
+.clock-date {
+  font-size: 0.75rem;
+  color: var(--c-text-muted);
+}
+
+/* ════════════════ هيكل الإطار المزدوج للبطاقات (Double Bezel) ════════════════ */
+.double-bezel-outer {
+  background: var(--c-shell-bg);
+  border: 1px solid var(--c-shell-border);
+  padding: 6px;
+  border-radius: 32px;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  margin-bottom: 1.25rem;
+  transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base) var(--ease-spring);
+}
+
+.double-bezel-inner {
+  background: var(--c-surface);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 26px;
+  padding: 1.75rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ════════════════ مساحة مسح الوجه (Face ID Biometric Visual) ════════════════ */
+.biometric-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.6rem;
+  position: relative;
+}
+
+.faceid-frame-outer {
+  width: 104px;
+  height: 104px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.15rem;
+}
+
+.faceid-glow-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 28px;
+  background: radial-gradient(circle, var(--c-gold-glow) 0%, transparent 70%);
+  opacity: 0.7;
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: scale(0.96); opacity: 0.5; }
+  50% { transform: scale(1.06); opacity: 0.9; }
+}
+
+.faceid-box {
+  width: 92px;
+  height: 92px;
+  background: linear-gradient(145deg, #ffffff 0%, #faf7f0 100%);
+  border: 1.5px solid var(--c-gold-border);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 8px 24px -6px rgba(184, 136, 62, 0.20), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+/* خط المسح البيومتري المتحرك */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--c-gold) 50%, transparent 100%);
+  box-shadow: 0 0 10px 2px rgba(184, 136, 62, 0.6);
+  opacity: 0;
+  top: 10%;
+  pointer-events: none;
+}
+
+.scanning .scan-line {
+  opacity: 1;
+  animation: scanMotion 2s infinite ease-in-out;
+}
+
+@keyframes scanMotion {
+  0% { top: 15%; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { top: 85%; opacity: 0; }
+}
+
+.faceid-svg {
+  width: 52px;
+  height: 52px;
+  color: var(--c-gold);
+  stroke-width: 1.7;
+  transition: transform var(--dur-base) var(--ease-spring), color var(--dur-base);
+}
+
+.scanning .faceid-svg {
+  animation: breatheFace 2s infinite ease-in-out;
+}
+
+@keyframes breatheFace {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* زوايا مسح Face ID الدقيقة */
+.bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--c-gold);
+  border-style: solid;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.bracket-tl { top: 10px; left: 10px; border-width: 2.5px 0 0 2.5px; border-top-left-radius: 7px; }
+.bracket-tr { top: 10px; right: 10px; border-width: 2.5px 2.5px 0 0; border-top-right-radius: 7px; }
+.bracket-bl { bottom: 10px; left: 10px; border-width: 0 0 2.5px 2.5px; border-bottom-left-radius: 7px; }
+.bracket-br { bottom: 10px; right: 10px; border-width: 0 2.5px 2.5px 0; border-bottom-right-radius: 7px; }
+
+/* ════════════════ العناوين داخل البطاقات ════════════════ */
+.section-headline {
+  font-size: 1.32rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.section-desc {
+  font-size: 0.88rem;
+  color: var(--c-text-secondary);
+  line-height: 1.55;
+  max-width: 340px;
+}
+
+/* ════════════════ حقول الإدخال الراقية ════════════════ */
+.form-group {
+  margin-top: 1.4rem;
+  text-align: right;
+  width: 100%;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+  margin-bottom: 0.55rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  right: 14px;
+  width: 20px;
+  height: 20px;
+  color: var(--c-text-muted);
+  pointer-events: none;
+  transition: color var(--dur-fast);
+}
+
+.text-input {
+  width: 100%;
+  font-family: var(--font-ar);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--c-text-primary);
+  background: var(--c-bg-subtle);
+  border: 1.5px solid rgba(24, 22, 19, 0.10);
+  border-radius: 16px;
+  padding: 0.85rem 2.85rem 0.85rem 1rem;
+  transition: all var(--dur-base) var(--ease-spring);
+  outline: none;
+}
+
+.text-input::placeholder {
+  color: var(--c-text-faint);
+  font-weight: 400;
+}
+
+.text-input:focus {
+  background: #ffffff;
+  border-color: var(--c-gold);
+  box-shadow: 0 0 0 4px var(--c-gold-pale);
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--c-gold-deep);
+}
+
+/* ════════════════ الأزرار وتجربة اللمس (Tactile CTA) ════════════════ */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-deep) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  padding: 0.95rem 1.4rem;
+  font-family: var(--font-ar);
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-spring), box-shadow var(--dur-fast);
+  margin-top: 1.25rem;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -6px rgba(184, 136, 62, 0.42);
+}
+
+.btn-primary:active {
+  transform: scale(0.975);
+  box-shadow: var(--shadow-btn-active);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* أيقونة الزر المحتواة (Button-in-Button Island) */
+.btn-icon-island {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.20);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--dur-fast);
+}
+
+.btn-primary:hover .btn-icon-island {
+  transform: scale(1.08);
+}
+
+.btn-primary svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+}
+
+/* زر ثانوي شفاف */
+.btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: var(--c-text-secondary);
+  border: 1px solid rgba(24, 22, 19, 0.12);
+  border-radius: 16px;
+  padding: 0.78rem 1.2rem;
+  font-family: var(--font-ar);
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-spring);
+  margin-top: 0.75rem;
+}
+
+.btn-secondary:hover {
+  background: rgba(24, 22, 19, 0.03);
+  color: var(--c-text-primary);
+  border-color: rgba(24, 22, 19, 0.20);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* زر نصي خفيف */
+.btn-ghost {
+  background: none;
+  border: none;
+  color: var(--c-text-muted);
+  font-family: var(--font-ar);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: color var(--dur-fast);
+}
+
+.btn-ghost:hover {
+  color: var(--c-gold-deep);
+}
+
+/* ════════════════ صندوق الخصوصية والأمان البيومتري ════════════════ */
+.privacy-callout {
+  background: rgba(184, 136, 62, 0.06);
+  border: 1px solid rgba(184, 136, 62, 0.16);
+  border-radius: 16px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+  text-align: right;
+}
+
+.privacy-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--c-gold-deep);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.privacy-text {
+  font-size: 0.78rem;
+  color: var(--c-text-secondary);
+  line-height: 1.5;
+}
+
+.privacy-text strong {
+  color: var(--c-gold-deep);
+  font-weight: 700;
+}
+
+/* ════════════════ شاشة ورسائل التنبيه والخطأ الذكية ════════════════ */
+.status-banner {
+  display: none;
+  padding: 0.85rem 1.1rem;
+  border-radius: 16px;
+  margin-top: 1.1rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  align-items: flex-start;
+  gap: 0.65rem;
+  line-height: 1.5;
+  animation: bannerFadeIn var(--dur-base) var(--ease-spring);
+}
+
+@keyframes bannerFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.status-banner.error {
+  display: flex;
+  background: var(--c-error-bg);
+  border: 1px solid var(--c-error-border);
+  color: var(--c-error);
+}
+
+.status-banner.warning {
+  display: flex;
+  background: var(--c-warning-bg);
+  border: 1px solid var(--c-warning-border);
+  color: var(--c-warning);
+}
+
+.status-banner.success {
+  display: flex;
+  background: var(--c-success-bg);
+  border: 1px solid var(--c-success-border);
+  color: var(--c-success);
+}
+
+.status-banner svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ════════════════ بطاقة شاشة النجاح الراقية (Success View) ════════════════ */
+.success-view {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: successPop 0.5s var(--ease-spring) forwards;
+}
+
+@keyframes successPop {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.success-badge-circle {
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 12px 30px -6px rgba(22, 163, 74, 0.40);
+  margin-bottom: 1.25rem;
+  position: relative;
+  animation: bounceIn 0.6s var(--ease-bounce);
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.success-badge-circle svg {
+  width: 42px;
+  height: 42px;
+  stroke-width: 2.8;
+}
+
+.greeting-text {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.success-subtitle {
+  font-size: 0.95rem;
+  color: var(--c-success);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* تفاصيل بطاقة الحضور */
+.receipt-card {
+  width: 100%;
+  background: var(--c-bg-subtle);
+  border: 1px solid rgba(24, 22, 19, 0.08);
+  border-radius: 20px;
+  padding: 1.25rem;
+  text-align: right;
+  margin-bottom: 1.4rem;
+}
+
+.receipt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed rgba(24, 22, 19, 0.08);
+}
+
+.receipt-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0.2rem;
+}
+
+.receipt-label {
+  font-size: 0.82rem;
+  color: var(--c-text-muted);
+  font-weight: 600;
+}
+
+.receipt-value {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.receipt-value.highlight {
+  font-family: var(--font-en);
+  color: var(--c-gold-deep);
+  font-size: 1rem;
+}
+
+.receipt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--c-success);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.device-linked-pill {
+  width: 100%;
+  background: rgba(184, 136, 62, 0.08);
+  border: 1px solid var(--c-gold-border);
+  border-radius: 14px;
+  padding: 0.65rem 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--c-gold-deep);
+  margin-bottom: 1.2rem;
+}
+
+.device-linked-pill svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ════════════════ تذييل الصفحة وروابط الوصول ════════════════ */
+.attendance-footer {
+  text-align: center;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.footer-admin-link {
+  color: var(--c-text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  transition: all var(--dur-fast);
+}
+
+.footer-admin-link:hover {
+  color: var(--c-gold-deep);
+  background: var(--c-gold-pale);
+}
+
+.footer-copy {
+  font-size: 0.74rem;
+  color: var(--c-text-faint);
+  font-family: var(--font-en);
+  letter-spacing: 0.02em;
+}
+
+/* ════════════════ شاشة التحميل المعلقة (Loading Spinner) ════════════════ */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ════════════════ شريط التنبيه للمتصفح الداخلي (In-app WebView banner) ════════════════ */
+.webview-notice {
+  display: none;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 16px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.15rem;
+  font-size: 0.82rem;
+  color: #92400e;
+  line-height: 1.5;
+  text-align: right;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.webview-notice svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* ════════════════ التجاوب مع مختلف الشاشات ════════════════ */
+@media (min-width: 640px) {
+  .attendance-container {
+    max-width: 520px;
+    padding-top: 2rem;
+  }
+  .double-bezel-inner {
+    padding: 2.2rem 2rem;
+  }
+  .section-headline {
+    font-size: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

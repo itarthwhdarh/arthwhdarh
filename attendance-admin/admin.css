@@ -1,0 +1,976 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ADMIN.CSS — جمعية إرث وحضارة بالقريات
+   لوحة إدارة حضور الموظفين المستقلة (Attendance Admin Dashboard)
+   High-End Architecture · Responsive · Desktop & Mobile Optimized
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* ── الألوان الرئيسية للهوية ── */
+  --c-bg: #f8f6f0;
+  --c-bg-subtle: #f2ede2;
+  --c-surface: #ffffff;
+  --c-surface-card: #ffffff;
+  --c-border: rgba(24, 22, 19, 0.08);
+  --c-border-strong: rgba(24, 22, 19, 0.14);
+
+  /* ── درجات الذهبي الفاخر ── */
+  --c-gold: #b8883e;
+  --c-gold-deep: #9c6e38;
+  --c-gold-soft: #d4a855;
+  --c-gold-pale: rgba(184, 136, 62, 0.10);
+  --c-gold-border: rgba(184, 136, 62, 0.28);
+
+  /* ── النصوص ── */
+  --c-text-primary: #181613;
+  --c-text-secondary: #524d45;
+  --c-text-muted: #857e72;
+  --c-text-faint: #b0a79a;
+
+  /* ── حالات التنبيه ── */
+  --c-success: #15803d;
+  --c-success-bg: rgba(22, 163, 74, 0.10);
+  --c-warning: #b45309;
+  --c-warning-bg: rgba(217, 119, 6, 0.10);
+  --c-error: #b91c1c;
+  --c-error-bg: rgba(220, 38, 38, 0.08);
+  --c-info: #0284c7;
+  --c-info-bg: rgba(2, 132, 199, 0.10);
+
+  /* ── الخطوط ── */
+  --font-ar: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-en: 'Montserrat', sans-serif;
+
+  /* ── الظلال والعمق ── */
+  --shadow-sm: 0 2px 6px rgba(24, 22, 19, 0.04);
+  --shadow-md: 0 10px 28px -6px rgba(24, 22, 19, 0.07);
+  --shadow-lg: 0 20px 48px -12px rgba(24, 22, 19, 0.10);
+  --shadow-gold: 0 10px 24px -6px rgba(184, 136, 62, 0.30);
+
+  /* ── التوقيت والانسيابية ── */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  font-family: var(--font-ar);
+  background: var(--c-bg);
+  color: var(--c-text-primary);
+  direction: rtl;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ════════════════ واجهة تسجيل الدخول (Admin Login View) ════════════════ */
+.login-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: radial-gradient(100% 70% at 50% 10%, #fffdfa 0%, #f7f4ed 60%, #eee8dc 100%);
+  position: relative;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 28px;
+  padding: 2.2rem 2rem;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--c-gold-deep), var(--c-gold), var(--c-gold-soft));
+}
+
+.login-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 0.85rem;
+  filter: drop-shadow(0 4px 12px rgba(184, 136, 62, 0.18));
+}
+
+.login-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.login-desc {
+  font-size: 0.85rem;
+  color: var(--c-text-muted);
+  margin-bottom: 1.75rem;
+}
+
+.login-form {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--c-text-primary);
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap svg {
+  position: absolute;
+  right: 14px;
+  width: 18px;
+  height: 18px;
+  color: var(--c-text-muted);
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  font-family: var(--font-ar);
+  font-size: 0.95rem;
+  color: var(--c-text-primary);
+  background: var(--c-bg-subtle);
+  border: 1.5px solid var(--c-border);
+  border-radius: 14px;
+  padding: 0.85rem 2.75rem 0.85rem 1rem;
+  outline: none;
+  transition: all var(--dur-base) var(--ease-spring);
+}
+
+.form-input:focus {
+  background: #ffffff;
+  border-color: var(--c-gold);
+  box-shadow: 0 0 0 3.5px var(--c-gold-pale);
+}
+
+.login-btn {
+  background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-deep) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 0.95rem;
+  font-family: var(--font-ar);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-gold);
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(184, 136, 62, 0.45);
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+
+.login-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-error {
+  display: none;
+  background: var(--c-error-bg);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: var(--c-error);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ════════════════ الهيكل الرئيسي للوحة الإدارة (Admin App Shell) ════════════════ */
+.admin-app {
+  display: none;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* ── شريط التنقل العلوي الفاخر ── */
+.admin-navbar {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--c-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.nav-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.nav-brand-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+  line-height: 1.2;
+}
+
+.nav-brand-subtitle {
+  font-size: 0.75rem;
+  color: var(--c-text-muted);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-email-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--c-bg-subtle);
+  border: 1px solid var(--c-border);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--c-text-secondary);
+  font-family: var(--font-en);
+}
+
+.admin-email-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-success);
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
+  border-radius: 12px;
+  padding: 0.45rem 0.95rem;
+  font-family: var(--font-ar);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--dur-fast);
+}
+
+.btn-logout:hover {
+  background: var(--c-error-bg);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: var(--c-error);
+}
+
+/* ════════════════ مساحة المحتوى والبطاقات الإحصائية ════════════════ */
+.admin-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.8rem 1.5rem 3rem;
+  width: 100%;
+  flex: 1;
+}
+
+/* ── بطاقات المؤشرات الرقمية (KPI Stat Cards) ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  padding: 1.35rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-text-muted);
+}
+
+.stat-value {
+  font-family: var(--font-en);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+  line-height: 1.1;
+}
+
+.stat-sub {
+  font-size: 0.74rem;
+  color: var(--c-text-faint);
+  font-weight: 600;
+}
+
+.stat-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon-wrap svg {
+  width: 26px;
+  height: 26px;
+}
+
+.stat-card.gold .stat-icon-wrap { background: var(--c-gold-pale); color: var(--c-gold-deep); }
+.stat-card.green .stat-icon-wrap { background: var(--c-success-bg); color: var(--c-success); }
+.stat-card.orange .stat-icon-wrap { background: var(--c-warning-bg); color: var(--c-warning); }
+.stat-card.gray .stat-icon-wrap { background: rgba(140, 133, 119, 0.12); color: var(--c-text-secondary); }
+
+/* ════════════════ التبويبات العلوية (Tabs) ════════════════ */
+.admin-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--c-border);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.4rem;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-ar);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--c-text-muted);
+  padding: 0.65rem 1.15rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all var(--dur-fast);
+}
+
+.tab-btn:hover {
+  color: var(--c-text-primary);
+  background: rgba(24, 22, 19, 0.03);
+}
+
+.tab-btn.active {
+  background: var(--c-surface);
+  color: var(--c-gold-deep);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--c-border);
+}
+
+.tab-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.tab-badge {
+  background: var(--c-bg-subtle);
+  color: var(--c-text-secondary);
+  font-family: var(--font-en);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.tab-btn.active .tab-badge {
+  background: var(--c-gold-pale);
+  color: var(--c-gold-deep);
+}
+
+/* ════════════════ شريط الفلاتر والبحث (Filters & Actions Toolbar) ════════════════ */
+.toolbar-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* أزرار التصفية الزمنية السريعة */
+.quick-date-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.date-pill {
+  background: var(--c-bg-subtle);
+  border: 1px solid var(--c-border);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-family: var(--font-ar);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+
+.date-pill:hover {
+  background: #ffffff;
+  color: var(--c-text-primary);
+}
+
+.date-pill.active {
+  background: var(--c-gold-deep);
+  border-color: var(--c-gold-deep);
+  color: #ffffff;
+}
+
+/* مدخلات التاريخ المخصصة */
+.custom-date-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.date-input {
+  font-family: var(--font-en);
+  font-size: 0.82rem;
+  color: var(--c-text-primary);
+  background: var(--c-bg-subtle);
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 0.4rem 0.7rem;
+  outline: none;
+}
+
+.date-input:focus {
+  border-color: var(--c-gold);
+  background: #ffffff;
+}
+
+/* حقل البحث بالاسم أو UID */
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 220px;
+  max-width: 380px;
+}
+
+.search-input-wrap svg {
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--c-text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  font-family: var(--font-ar);
+  font-size: 0.88rem;
+  color: var(--c-text-primary);
+  background: var(--c-bg-subtle);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 0.5rem 2.4rem 0.5rem 0.85rem;
+  outline: none;
+  transition: all var(--dur-fast);
+}
+
+.search-input:focus {
+  background: #ffffff;
+  border-color: var(--c-gold);
+  box-shadow: 0 0 0 3px var(--c-gold-pale);
+}
+
+/* القوائم المنسدلة للفرز والترتيب */
+.select-input {
+  font-family: var(--font-ar);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--c-text-primary);
+  background: var(--c-bg-subtle);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 0.5rem 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.select-input:focus {
+  border-color: var(--c-gold);
+  background: #ffffff;
+}
+
+/* أزرار الإجراءات والتصدير */
+.btn-export {
+  background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-deep) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.55rem 1.15rem;
+  font-family: var(--font-ar);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.btn-export:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-export:active {
+  transform: scale(0.98);
+}
+
+.btn-export svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ════════════════ جدول البيانات الراقي (Data Table) ════════════════ */
+.table-container {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: right;
+  font-size: 0.88rem;
+}
+
+.data-table th {
+  background: #faf8f4;
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--c-text-muted);
+  border-bottom: 1px solid var(--c-border);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text-primary);
+  vertical-align: middle;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover td {
+  background: #fdfbf7;
+}
+
+/* بطاقات الحالة داخل الجدول */
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge-status.on-time {
+  background: var(--c-success-bg);
+  color: var(--c-success);
+}
+
+.badge-status.late {
+  background: var(--c-warning-bg);
+  color: var(--c-warning);
+}
+
+.badge-status.active {
+  background: var(--c-info-bg);
+  color: var(--c-info);
+}
+
+/* معرف الـ UID ومفتاح الـ Passkey */
+.mono-code {
+  font-family: var(--font-en);
+  font-size: 0.78rem;
+  color: var(--c-text-secondary);
+  background: var(--c-bg-subtle);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-copy {
+  background: none;
+  border: none;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 2px;
+}
+
+.btn-copy:hover {
+  color: var(--c-gold-deep);
+}
+
+/* ════════════════ دليل الموظفين (Employees Grid) ════════════════ */
+.employees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.employee-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 20px;
+  padding: 1.4rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform var(--dur-base) var(--ease-spring), box-shadow var(--dur-base);
+}
+
+.employee-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.emp-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.emp-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--c-gold-pale) 0%, rgba(184, 136, 62, 0.20) 100%);
+  color: var(--c-gold-deep);
+  font-size: 1.2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emp-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.emp-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+}
+
+.emp-uid-pill {
+  font-family: var(--font-en);
+  font-size: 0.74rem;
+  color: var(--c-text-muted);
+}
+
+.emp-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  background: var(--c-bg-subtle);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+}
+
+.emp-stat-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+}
+
+.emp-stat-label {
+  color: var(--c-text-muted);
+}
+
+.emp-stat-val {
+  font-weight: 700;
+  color: var(--c-text-primary);
+}
+
+.btn-view-emp {
+  background: transparent;
+  border: 1px solid var(--c-gold-border);
+  color: var(--c-gold-deep);
+  border-radius: 12px;
+  padding: 0.55rem;
+  font-family: var(--font-ar);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all var(--dur-fast);
+}
+
+.btn-view-emp:hover {
+  background: var(--c-gold-pale);
+}
+
+/* ════════════════ نافذة تفاصيل الموظف المنبثقة (Modal) ════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 22, 19, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-content {
+  background: var(--c-surface);
+  border-radius: 28px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--c-text-primary);
+}
+
+.modal-close {
+  background: var(--c-bg-subtle);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-text-muted);
+  transition: all var(--dur-fast);
+}
+
+.modal-close:hover {
+  background: rgba(24, 22, 19, 0.08);
+  color: var(--c-text-primary);
+}
+
+/* ════════════════ الحالة الفارغة (Empty State) ════════════════ */
+.empty-state {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  color: var(--c-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  color: var(--c-text-faint);
+  margin-bottom: 0.5rem;
+}
+
+/* ════════════════ شاشة التحميل (Loader) ════════════════ */
+.loading-row {
+  text-align: center;
+  padding: 2.5rem;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(184, 136, 62, 0.20);
+  border-top-color: var(--c-gold);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ════════════════ التجاوب (Media Queries) ════════════════ */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0.75rem 1rem;
+  }
+  .admin-main {
+    padding: 1.2rem 1rem 2rem;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .stat-card {
+    padding: 1rem;
+  }
+  .stat-value {
+    font-size: 1.45rem;
+  }
+  .stat-icon-wrap {
+    width: 40px;
+    height: 40px;
+  }
+  .stat-icon-wrap svg {
+    width: 20px;
+    height: 20px;
+  }
+  .toolbar-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-input-wrap {
+    max-width: 100%;
+  }
+  .modal-content {
+    padding: 1.25rem;
+  }
+}

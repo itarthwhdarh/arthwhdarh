@@ -26,6 +26,10 @@
     ],
     "cleanUrls": true,
     "rewrites": [
+      { "source": "/attendance", "destination": "/attendance/index.html" },
+      { "source": "/attendance/**", "destination": "/attendance/index.html" },
+      { "source": "/attendance-admin", "destination": "/attendance-admin/index.html" },
+      { "source": "/attendance-admin/**", "destination": "/attendance-admin/index.html" },
       { "source": "/workspace/**", "destination": "/workspace/index.html" },
       { "source": "/workspace", "destination": "/workspace/index.html" }
     ],

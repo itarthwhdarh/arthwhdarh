@@ -14,6 +14,8 @@
 ══════════════════════════════════════════════════════════ */
 
 const ALLOWED_ORIGINS = [
+  "https://arthwhdarh.org.sa",
+  "https://www.arthwhdarh.org.sa",
   "https://arthwhdarh.com",
   "https://www.arthwhdarh.com",
   "http://localhost:3000",
@@ -26,11 +28,16 @@ const ALLOWED_ORIGINS = [
 
 function getCorsHeaders(request, env) {
   const origin = request.headers.get("Origin") || "";
-  const isAllowed = ALLOWED_ORIGINS.includes(origin) ||
+  const allowedList = [...ALLOWED_ORIGINS];
+  if (env && env.ALLOWED_ORIGIN && !allowedList.includes(env.ALLOWED_ORIGIN)) {
+    allowedList.push(env.ALLOWED_ORIGIN);
+  }
+
+  const isAllowed = allowedList.includes(origin) ||
                     origin.startsWith("http://localhost:") ||
                     origin.startsWith("http://127.0.0.1:");
 
-  const allowOrigin = isAllowed ? origin : "https://arthwhdarh.com";
+  const allowOrigin = isAllowed ? origin : "https://arthwhdarh.org.sa";
 
   return {
     "Access-Control-Allow-Origin": allowOrigin,
@@ -228,7 +235,7 @@ export default {
     const cors = getCorsHeaders(request, env);
 
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: cors });
+      return new Response(null, { status: 204, headers: cors });
     }
 
     const url = new URL(request.url);
