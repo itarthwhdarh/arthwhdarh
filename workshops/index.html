@@ -177,6 +177,10 @@
         <div class="ws-modal-body">
             <!-- STEP 1: FORM -->
             <div id="wsStepForm">
+                <div id="wsFormDupAlert" style="display:none; padding:12px 16px; background:#fffbeb; border:1px solid #fef3c7; border-radius:8px; color:#92400e; font-size:0.92rem; font-weight:700; margin-bottom:16px; text-align:center;">
+                    <i class="fas fa-exclamation-circle" style="margin-left:6px;"></i>
+                    <span>أنت مسجل مسبقًا في هذه الورشة.</span>
+                </div>
                 <form id="wsForm" novalidate>
                     <div class="bdy-field">
                         <label class="bdy-label" for="ws_name">الاسم الكامل <span style="color:#8c2518">*</span></label>
@@ -225,6 +229,10 @@
 
             <!-- STEP 2: ACKNOWLEDGMENT -->
             <div id="wsStepAck" style="display:none;">
+                <div id="wsAckDupAlert" style="display:none; padding:12px 16px; background:#fffbeb; border:1px solid #fef3c7; border-radius:8px; color:#92400e; font-size:0.92rem; font-weight:700; margin-bottom:16px; text-align:center;">
+                    <i class="fas fa-exclamation-circle" style="margin-left:6px;"></i>
+                    <span>أنت مسجل مسبقًا في هذه الورشة.</span>
+                </div>
                 <div style="padding:16px; background:var(--c-bg-soft); border-radius:8px; border:1px solid var(--c-border-soft); margin-bottom:20px;">
                     <h4 style="font-size:1rem; font-weight:800; color:var(--c-text-primary); margin-bottom:10px;">إقرار وتعهد الالتزام بالحضور</h4>
                     <p style="font-size:0.9rem; color:var(--c-text-secondary); line-height:1.8;">
@@ -268,6 +276,20 @@
                     إغلاق
                 </button>
             </div>
+
+            <!-- STEP 4: DUPLICATE REGISTRATION -->
+            <div id="wsStepDuplicate" style="display:none; text-align:center; padding:30px 10px;">
+                <div style="width:60px; height:60px; border-radius:50%; background:rgba(217, 119, 6, 0.12); color:#b45309; display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin:0 auto 18px;">
+                    <i class="fas fa-user-check" aria-hidden="true"></i>
+                </div>
+                <h3 style="font-size:1.35rem; font-weight:800; color:var(--c-text-primary); margin-bottom:10px;">أنت مسجل مسبقًا في هذه الورشة.</h3>
+                <p style="font-size:0.95rem; color:var(--c-text-secondary); line-height:1.8; margin-bottom:24px;">
+                    بياناتك (رقم الهوية أو رقم الجوال أو الاسم الكامل) مسجلة مسبقًا في هذه الورشة. لا يمكن تكرار التسجيل في نفس الورشة.
+                </p>
+                <button type="button" class="bdy-btn-primary" id="wsDupDoneBtn" style="max-width:200px; margin:0 auto;">
+                    إغلاق
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -275,7 +297,7 @@
 <!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, increment, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, increment, query, where, limit, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD-sample",
@@ -408,10 +430,53 @@ async function loadWorkshops() {
   }
 }
 
+// Normalization Helpers
+function normalizeDigits(str) {
+  if (!str) return '';
+  return str.toString()
+    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+}
+
+function normalizePhone(phone) {
+  if (!phone) return '';
+  let p = normalizeDigits(phone).replace(/\D/g, '');
+  if (p.startsWith('9665')) {
+    p = '0' + p.substring(3);
+  } else if (p.startsWith('009665')) {
+    p = '0' + p.substring(5);
+  } else if (p.startsWith('5') && p.length === 9) {
+    p = '0' + p;
+  }
+  return p;
+}
+
+function normalizeNationalId(idStr) {
+  if (!idStr) return '';
+  return normalizeDigits(idStr).replace(/[\s\-\/\_]/g, '');
+}
+
+function normalizeName(str) {
+  if (!str) return '';
+  return str.toString().trim().replace(/\s+/g, ' ');
+}
+
 // Modal Handlers
 const overlay = $('wsOverlay');
 const closeBtn = $('wsClose');
 const doneBtn = $('wsDoneBtn');
+const dupDoneBtn = $('wsDupDoneBtn');
+
+function showDuplicateState() {
+  if ($('wsFormDupAlert')) $('wsFormDupAlert').style.display = 'block';
+  if ($('wsAckDupAlert')) $('wsAckDupAlert').style.display = 'block';
+  showStep('wsStepDuplicate');
+}
+
+function hideDuplicateAlert() {
+  if ($('wsFormDupAlert')) $('wsFormDupAlert').style.display = 'none';
+  if ($('wsAckDupAlert')) $('wsAckDupAlert').style.display = 'none';
+}
 
 function openModal(workshop) {
   activeWorkshop = workshop;
@@ -421,6 +486,8 @@ function openModal(workshop) {
   overlay.hidden = false;
   requestAnimationFrame(() => overlay.classList.add('open'));
   document.body.style.overflow = 'hidden';
+  clearErrs();
+  hideDuplicateAlert();
   showStep('wsStepForm');
   setTimeout(() => $('ws_name')?.focus(), 350);
 }
@@ -432,16 +499,25 @@ function closeModal() {
     document.body.style.overflow = '';
     activeWorkshop = null;
     pendingData = null;
+    hideDuplicateAlert();
+    clearErrs();
   }, 320);
 }
 
-closeBtn.addEventListener('click', closeModal);
-doneBtn.addEventListener('click', closeModal);
+closeBtn?.addEventListener('click', closeModal);
+doneBtn?.addEventListener('click', closeModal);
+dupDoneBtn?.addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
 
+['ws_name', 'ws_phone', 'ws_national_id'].forEach(id => {
+  $(id)?.addEventListener('input', () => {
+    hideDuplicateAlert();
+  });
+});
+
 function showStep(stepId) {
-  ['wsStepForm', 'wsStepAck', 'wsStepSuccess'].forEach(s => {
+  ['wsStepForm', 'wsStepAck', 'wsStepSuccess', 'wsStepDuplicate'].forEach(s => {
     const el = $(s);
     if (el) el.style.display = (s === stepId) ? 'block' : 'none';
   });
@@ -455,40 +531,160 @@ function clearErrs() {
 }
 
 function getFormData() {
-  const name = $('ws_name').value.trim();
-  const phone = $('ws_phone').value.trim();
+  const name = normalizeName($('ws_name').value);
+  const rawPhone = $('ws_phone').value.trim();
+  const phone = normalizePhone(rawPhone);
   const email = $('ws_email').value.trim();
-  const nationalId = $('ws_national_id').value.trim();
+  const rawNationalId = $('ws_national_id').value.trim();
+  const nationalId = normalizeNationalId(rawNationalId);
   const gender = document.querySelector('input[name="wsgender"]:checked')?.value || '';
   const notes = $('ws_notes').value.trim();
-  return { name, phone, email, nationalId, gender, notes };
+  return { name, rawPhone, phone, rawNationalId, nationalId, email, gender, notes };
 }
 
 function validateForm(d) {
   let valid = true;
   if (!d.name) { setErr('wserr_name', 'الرجاء إدخال الاسم الكامل'); $('ws_name').classList.add('invalid'); valid = false; }
   if (!d.phone || !/^05\d{8}$/.test(d.phone)) { setErr('wserr_phone', 'رقم الجوال غير صحيح (05XXXXXXXX)'); $('ws_phone').classList.add('invalid'); valid = false; }
+  if (d.nationalId && !/^\d{10}$/.test(d.nationalId)) { setErr('wserr_national_id', 'رقم الهوية الوطنية / الإقامة يجب أن يتكون من ١٠ أرقام'); $('ws_national_id').classList.add('invalid'); valid = false; }
   if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { setErr('wserr_email', 'البريد الإلكتروني غير صحيح'); $('ws_email').classList.add('invalid'); valid = false; }
   if (!d.gender) { setErr('wserr_gender', 'الرجاء اختيار الجنس'); valid = false; }
   return valid;
 }
 
-// Step 1 -> Step 2
-$('wsForm').addEventListener('submit', e => {
+// التحقق الآمن من قاعدة البيانات لمنع التسجيل المكرر في نفس الورشة
+async function checkDuplicateRegistration(wsId, d) {
+  if (!wsId || !d) return false;
+
+  const queries = [];
+
+  // 1. التحقق برقم الجوال
+  if (d.phone) {
+    queries.push(query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('phone', '==', d.phone),
+      limit(1)
+    ));
+    queries.push(query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('mobile', '==', d.phone),
+      limit(1)
+    ));
+    if (d.rawPhone && d.rawPhone !== d.phone) {
+      queries.push(query(
+        collection(db, 'workshop_registrations'),
+        where('workshopId', '==', wsId),
+        where('phone', '==', d.rawPhone),
+        limit(1)
+      ));
+    }
+  }
+
+  // 2. التحقق بالاسم الكامل
+  if (d.name) {
+    queries.push(query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('name', '==', d.name),
+      limit(1)
+    ));
+    queries.push(query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('fullName', '==', d.name),
+      limit(1)
+    ));
+  }
+
+  // 3. التحقق برقم الهوية الوطنية / الإقامة (إذا تم إدخاله)
+  if (d.nationalId) {
+    queries.push(query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('nationalId', '==', d.nationalId),
+      limit(1)
+    ));
+    queries.push(query(
+      collection(db, 'workshop_registrations'),
+      where('workshopId', '==', wsId),
+      where('idNumber', '==', d.nationalId),
+      limit(1)
+    ));
+    if (d.rawNationalId && d.rawNationalId !== d.nationalId) {
+      queries.push(query(
+        collection(db, 'workshop_registrations'),
+        where('workshopId', '==', wsId),
+        where('nationalId', '==', d.rawNationalId),
+        limit(1)
+      ));
+    }
+  }
+
+  if (queries.length === 0) return false;
+
+  const snaps = await Promise.all(queries.map(q => getDocs(q)));
+
+  for (const snap of snaps) {
+    if (!snap.empty) {
+      const activeMatch = snap.docs.some(docSnap => {
+        const item = docSnap.data() || {};
+        return item.status !== 'مرفوض' && item.status !== 'ملغي';
+      });
+      if (activeMatch) return true;
+    }
+  }
+
+  return false;
+}
+
+// الخطوة 1 -> التحقق والخطوة 2
+$('wsForm').addEventListener('submit', async e => {
   e.preventDefault();
   clearErrs();
+  hideDuplicateAlert();
+
   const d = getFormData();
   if (!validateForm(d)) return;
-  pendingData = d;
-  $('wsAckName').textContent = d.name;
-  $('wsAgree').checked = false;
-  setErr('wserr_agree', '');
-  showStep('wsStepAck');
+
+  const submitBtn = $('wsForm').querySelector('button[type="submit"]');
+  const originalHtml = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>جارٍ التحقق…</span> <i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
+  }
+
+  try {
+    const isDup = await checkDuplicateRegistration(activeWorkshop?.id, d);
+    if (isDup) {
+      showDuplicateState();
+      return;
+    }
+
+    pendingData = d;
+    $('wsAckName').textContent = d.name;
+    $('wsAgree').checked = false;
+    setErr('wserr_agree', '');
+    showStep('wsStepAck');
+  } catch(err) {
+    console.warn('Duplicate check warning on step 1:', err);
+    pendingData = d;
+    $('wsAckName').textContent = d.name;
+    $('wsAgree').checked = false;
+    setErr('wserr_agree', '');
+    showStep('wsStepAck');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalHtml;
+    }
+  }
 });
 
 $('wsBackBtn').addEventListener('click', () => showStep('wsStepForm'));
 
-// Step 2 -> Firebase -> Step 3
+// الخطوة 2 -> فحص قاعدة البيانات وحفظ التسجيل -> الخطوة 3
 $('wsConfirmBtn').addEventListener('click', async () => {
   if (!pendingData || !activeWorkshop) return;
   if (!$('wsAgree').checked) {
@@ -503,21 +699,41 @@ $('wsConfirmBtn').addEventListener('click', async () => {
   const spin = $('wsConfirmSpinner');
 
   btn.disabled = true;
-  lbl.textContent = 'جارٍ الإرسال…';
+  lbl.textContent = 'جارٍ التحقق والإرسال…';
   icon.style.display = 'none';
   spin.style.display = 'inline-block';
 
   try {
+    // 1. التحقق الآمن والمباشر من قاعدة البيانات قبل الحفظ
+    const isDup = await checkDuplicateRegistration(activeWorkshop.id, pendingData);
+    if (isDup) {
+      showDuplicateState();
+      btn.disabled = false;
+      lbl.textContent = 'تأكيد وإرسال التسجيل';
+      icon.style.display = 'inline-block';
+      spin.style.display = 'none';
+      return;
+    }
+
+    // 2. الحفظ في قاعدة البيانات إذا لم يوجد تسجيل مسبق
     await addDoc(collection(db, 'workshop_registrations'), {
       workshopId: activeWorkshop.id,
       workshopTitle: activeWorkshop.title || '',
-      ...pendingData,
+      name: pendingData.name,
+      fullName: pendingData.name,
+      phone: pendingData.phone,
+      mobile: pendingData.phone,
+      email: pendingData.email || '',
+      nationalId: pendingData.nationalId || '',
+      idNumber: pendingData.nationalId || '',
+      gender: pendingData.gender,
+      notes: pendingData.notes || '',
       status: 'جديد',
       reviewed: false,
       createdAt: serverTimestamp()
     });
 
-    // Increment workshop registered count
+    // زيادة عدد المسجلين في الورشة
     try {
       const wRef = doc(db, 'workshops', activeWorkshop.id);
       await updateDoc(wRef, {
@@ -529,9 +745,10 @@ $('wsConfirmBtn').addEventListener('click', async () => {
 
     showStep('wsStepSuccess');
     $('wsForm').reset();
+    hideDuplicateAlert();
     pendingData = null;
 
-    // Refresh workshop cards
+    // تحديث بطاقات ورش العمل
     loadWorkshops();
 
   } catch (err) {

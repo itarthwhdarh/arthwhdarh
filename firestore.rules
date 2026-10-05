@@ -266,12 +266,10 @@ service cloud.firestore {
       allow update, delete: if isSiteAdmin();
       // قراءة المستند الفردي مباشرة محصورة بالمدير فقط
       allow get: if isSiteAdmin();
-      // الاستعلام محصور بالمدير أو للمشارك للاستبيان بحد أقصى مستند واحد للتحقق بالهوية وورشة العمل
+      // الاستعلام محصور بالمدير أو للمشارك للتحقق من التسجيل المسبق أو الاستبيان بحد أقصى مستندين لورشة العمل
       allow list: if isSiteAdmin() || (
         request.query.limit <= 2 &&
-        resource.data.workshopId != null &&
-        (resource.data.nationalId != null || resource.data.idNumber != null) &&
-        resource.data.get('status', 'جديد') != 'مرفوض'
+        resource.data.workshopId != null
       );
     }
 
