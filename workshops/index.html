@@ -200,11 +200,22 @@
                         <div class="bdy-err" id="wserr_email"></div>
                     </div>
 
-                    <div class="bdy-field">
-                        <label class="bdy-label" for="ws_national_id">رقم الهوية الوطنية / الإقامة</label>
-                        <input type="text" id="ws_national_id" class="bdy-input" placeholder="١٠ أرقام" dir="ltr" style="text-align:right;" maxlength="10">
-                        <div class="bdy-err" id="wserr_national_id"></div>
-                    </div>
+<div class="bdy-field">
+    <label class="bdy-label" for="ws_national_id">
+        رقم الهوية الوطنية / الإقامة <span style="color:red;">*</span>
+    </label>
+    <input
+        type="text"
+        id="ws_national_id"
+        class="bdy-input"
+        placeholder="١٠ أرقام"
+        dir="ltr"
+        style="text-align:right;"
+        maxlength="10"
+        required
+    >
+    <div class="bdy-err" id="wserr_national_id"></div>
+</div>
 
                     <div class="bdy-field">
                         <label class="bdy-label">الجنس <span style="color:#8c2518">*</span></label>
