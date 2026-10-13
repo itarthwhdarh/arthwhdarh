@@ -4031,6 +4031,8 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
             </div>
           `}
         </div>
+
+        ${answeredCount === 0 ? '' : renderSurveyDetailedResultsHTML(wsSurvey.questions || [], surveyResponses, wRegs)}
       `}
     </div>
 
@@ -4667,6 +4669,74 @@ function renderAdminQuestionItemHTML(q, idx, totalCount) {
       <button class="btn btn-sm btn-ghost del" data-action-q-del="${idx}">حذف</button>
     </div>
   </div>
+  `;
+}
+
+/* النتائج التفصيلية: بطاقة لكل مشارك تعرض اسمه، تاريخ الإجابة، وإجابته على كل سؤال */
+function renderSurveyDetailedResultsHTML(questions, responses, wRegs) {
+  const qList = questions || [];
+  // ترتيب المشاركين حسب تاريخ الإجابة (الأحدث أولاً)
+  const sorted = [...responses].sort((a, b) => {
+    const ta = toTs(a.submittedAt || a.createdAt);
+    const tb = toTs(b.submittedAt || b.createdAt);
+    return (tb ? tb.getTime() : 0) - (ta ? ta.getTime() : 0);
+  });
+
+  const cards = sorted.map((resp, idx) => {
+    const reg = (wRegs || []).find(r => r.id === resp.registrationId);
+    const name = reg ? (reg.name || reg.fullName || 'بدون اسم') : (resp.name || resp.fullName || 'مشارك غير معروف');
+    const phone = reg ? (reg.phone || reg.mobile || '') : '';
+    const dateTs = toTs(resp.submittedAt || resp.createdAt);
+    const dateStr = dateTs ? fmtEn(dateTs) : '—';
+    const ans = resp.answers || {};
+
+    const rowsHTML = qList.map((q, qi) => {
+      let val = ans[q.id];
+      if (val === undefined || val === null || val === '') val = '— لم يُجب —';
+      else if (q.type === 'rating') val = `${esc(String(val))} / 5`;
+      else val = esc(String(val));
+      return `
+        <div style="padding:10px 0;border-bottom:1px solid var(--line-soft);">
+          <div style="font-size:12.5px;font-weight:700;color:var(--ink-mid);margin-bottom:4px;">
+            <span style="color:var(--gold-deep);">${qi + 1}.</span> ${esc(q.text || '')}
+          </div>
+          <div style="font-size:13.5px;color:var(--ink);line-height:1.6;">${val}</div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <details style="background:#ffffff;border:1px solid var(--line);border-radius:12px;overflow:hidden;">
+        <summary style="list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+            <span style="width:28px;height:28px;flex-shrink:0;border-radius:50%;background:var(--gold-pale);color:var(--gold-deep);display:grid;place-items:center;font-size:12px;font-weight:800;">${idx + 1}</span>
+            <div style="min-width:0;">
+              <div style="font-size:14px;font-weight:800;color:var(--ink);">${esc(name)}</div>
+              ${phone ? `<div style="font-size:11.5px;color:var(--ink-muted);direction:ltr;text-align:right;">${esc(phone)}</div>` : ''}
+            </div>
+          </div>
+          <span style="font-size:12px;color:var(--ink-muted);font-weight:600;">${dateStr}</span>
+        </summary>
+        <div style="padding:4px 16px 14px 16px;border-top:1px solid var(--line-soft);">
+          ${rowsHTML}
+        </div>
+      </details>
+    `;
+  }).join('');
+
+  return `
+    <div class="ws-detail-card" style="margin-top:20px;">
+      <div class="ws-detail-card-head">
+        <div>
+          <h3 class="ws-detail-card-title">نتائج تفصيلية (إجابات كل مشارك)</h3>
+          <p style="font-size:12.5px;color:var(--ink-muted);margin:3px 0 0 0;">اضغط على اسم المشارك لعرض إجاباته الكاملة على جميع الأسئلة وتاريخ إجابته.</p>
+        </div>
+        <span class="chip-count" style="background:#ffffff;color:var(--ink-muted);">${sorted.length} مشارك</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${cards || '<div style="text-align:center;padding:30px;color:var(--ink-muted);">لا توجد إجابات تفصيلية.</div>'}
+      </div>
+    </div>
   `;
 }
 
