@@ -2017,7 +2017,7 @@ import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/fireb
 import {
   getFirestore, collection, doc,
   getDocs, getDoc, addDoc, setDoc, updateDoc, deleteDoc,
-  query, where, orderBy, limit, onSnapshot, serverTimestamp, increment
+  query, where, orderBy, limit, onSnapshot, serverTimestamp, increment, writeBatch
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword
@@ -3843,6 +3843,10 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               <span>تحميل Word (.docx)</span>
             </button>
+            <button class="btn btn-sm btn-primary" id="btnPrintWsReport" style="gap:6px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:14px;height:14px;"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>تحميل تقرير الورشة (طباعة)</span>
+            </button>
           </div>
         </div>
 
@@ -4471,6 +4475,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
 
   // Exports
   el.querySelector('#btnExportWsWord')?.addEventListener('click', () => exportWorkshopRegistrantsToWord(w, filteredRegs));
+  el.querySelector('#btnPrintWsReport')?.addEventListener('click', () => openWorkshopReportPrint(w, wRegs, wsSurvey, surveyResponses));
 
   // WhatsApp contact button
   el.querySelectorAll('[data-action-reg-wa]').forEach(btn => {
@@ -4526,19 +4531,43 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
         return;
       }
 
-      // Max 800 KB limit to safely fit within Firestore 1MB document limit as Base64 Data URL
-      if (file.size > 800 * 1024) {
-        toast('حجم ملف الشهادة كبير جدًا. الحد الأقصى المسموح به هو 800 كيلوبايت', 'err');
+      // الحد الأقصى 10 ميجابايت — يُخزَّن الملف مقسّماً على عدة مستندات في Firestore
+      if (file.size > 10 * 1024 * 1024) {
+        toast('حجم ملف الشهادة كبير جدًا. الحد الأقصى المسموح به هو 10 ميجابايت', 'err');
         return;
       }
 
-      toast('جاري قراءة وحفظ ملف الشهادة...');
+      const regId = currentTargetCertRegId;
+      toast('جاري قراءة وحفظ ملف الشهادة…');
       const reader = new FileReader();
       reader.onload = async () => {
         try {
-          const base64Data = reader.result;
-          await updateDoc(doc(db, 'workshop_registrations', currentTargetCertRegId), {
-            certificateFile: base64Data,
+          const dataUrl = reader.result; // data:application/pdf;base64,....
+          // حذف أي قطع سابقة لنفس المشارك قبل الحفظ الجديد
+          await deleteCertificateChunks(regId);
+
+          // تقسيم النص إلى قطع آمنة أقل من حد مستند Firestore (1MiB)
+          const CHUNK = 600000; // ~600 ألف حرف لكل قطعة
+          const parts = [];
+          for (let i = 0; i < dataUrl.length; i += CHUNK) {
+            parts.push(dataUrl.slice(i, i + CHUNK));
+          }
+
+          // كتابة القطع على دفعات (حد الدفعة 500 عملية)
+          let batch = writeBatch(db);
+          let ops = 0;
+          for (let idx = 0; idx < parts.length; idx++) {
+            batch.set(doc(db, 'certificate_chunks', `${regId}_${idx}`), {
+              regId, idx, data: parts[idx]
+            });
+            if (++ops >= 450) { await batch.commit(); batch = writeBatch(db); ops = 0; }
+          }
+          if (ops > 0) await batch.commit();
+
+          // تحديث مستند المشارك بالبيانات الوصفية فقط (بدون الملف نفسه)
+          await updateDoc(doc(db, 'workshop_registrations', regId), {
+            certificateFile: null,
+            certificateChunks: parts.length,
             certificateName: file.name,
             certificateSize: file.size,
             certificateAvailable: true,
@@ -4553,28 +4582,42 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
           toast('حدث خطأ أثناء حفظ ملف الشهادة', 'err');
         }
       };
-      reader.onerror = () => {
-        toast('تعذر قراءة ملف الشهادة من جهازك', 'err');
-      };
+      reader.onerror = () => { toast('تعذر قراءة ملف الشهادة من جهازك', 'err'); };
       reader.readAsDataURL(file);
     });
   }
 
   // View / Download Certificate
   el.querySelectorAll('[data-action-cert-view]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const regId = btn.dataset.actionCertView;
       const regObj = wRegs.find(r => r.id === regId);
-      if (regObj && regObj.certificateFile) {
+      if (!regObj || !regObj.certificateAvailable) { toast('ملف الشهادة غير متوفر', 'err'); return; }
+
+      try {
+        let dataUrl = regObj.certificateFile; // الشهادات القديمة مخزّنة مباشرة
+        if (!dataUrl && regObj.certificateChunks) {
+          // الشهادات الجديدة: تجميع القطع من certificate_chunks
+          toast('جاري تحضير ملف الشهادة…');
+          dataUrl = await loadCertificateDataUrl(regId, regObj.certificateChunks);
+        }
+        if (!dataUrl) { toast('ملف الشهادة غير متوفر', 'err'); return; }
+
+        // تحويل data URL إلى Blob لفتح/تنزيل موثوق للملفات الكبيرة
+        const blobUrl = (dataUrl.startsWith('data:'))
+          ? URL.createObjectURL(dataUrlToBlob(dataUrl))
+          : dataUrl;
         const link = document.createElement('a');
-        link.href = regObj.certificateFile;
+        link.href = blobUrl;
         link.download = regObj.certificateName || `شهادة_${regObj.name || regObj.fullName || 'مشارك'}.pdf`;
         link.target = '_blank';
         document.body.appendChild(link);
         link.click();
         link.remove();
-      } else {
-        toast('ملف الشهادة غير متوفر', 'err');
+        if (blobUrl.startsWith('blob:')) setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+      } catch (err) {
+        console.error('Cert view error:', err);
+        toast('تعذر فتح ملف الشهادة', 'err');
       }
     });
   });
@@ -4590,8 +4633,11 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
       if (!confirm(`هل أنت متأكد من حذف شهادة المشارك "${pName}"؟`)) return;
 
       try {
+        // حذف قطع الملف من certificate_chunks (الشهادات القديمة بصيغة Base64 لا قطع لها)
+        await deleteCertificateChunks(regId);
         await updateDoc(doc(db, 'workshop_registrations', regId), {
           certificateFile: null,
+          certificateChunks: null,
           certificateName: null,
           certificateSize: null,
           certificateAvailable: false,
@@ -7490,6 +7536,224 @@ function exportRegistrantsToCSV(filename, rows) {
   link.click();
   document.body.removeChild(link);
   toast('تم تصدير ملف Excel/CSV بنجاح');
+}
+
+/* ── أدوات شهادات PDF المقسّمة في Firestore ── */
+// حذف جميع قطع شهادة مشارك
+async function deleteCertificateChunks(regId) {
+  try {
+    const snap = await getDocs(query(collection(db, 'certificate_chunks'), where('regId', '==', regId)));
+    if (snap.empty) return;
+    let batch = writeBatch(db);
+    let ops = 0;
+    for (const d of snap.docs) {
+      batch.delete(d.ref);
+      if (++ops >= 450) { await batch.commit(); batch = writeBatch(db); ops = 0; }
+    }
+    if (ops > 0) await batch.commit();
+  } catch (e) { console.warn('deleteCertificateChunks:', e); }
+}
+
+// تجميع قطع الشهادة بالترتيب وإرجاع data URL كاملاً
+async function loadCertificateDataUrl(regId, count) {
+  const parts = new Array(count).fill('');
+  // جلب كل قطعة بمعرفها المرتب regId_idx
+  const gets = [];
+  for (let i = 0; i < count; i++) {
+    gets.push(getDoc(doc(db, 'certificate_chunks', `${regId}_${i}`)).then(s => {
+      if (s.exists()) parts[s.data().idx] = s.data().data || '';
+    }));
+  }
+  await Promise.all(gets);
+  return parts.join('');
+}
+
+// تحويل data URL إلى Blob
+function dataUrlToBlob(dataUrl) {
+  const [head, b64] = dataUrl.split(',');
+  const mime = (head.match(/data:([^;]+)/) || [])[1] || 'application/pdf';
+  const bin = atob(b64);
+  const len = bin.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) bytes[i] = bin.charCodeAt(i);
+  return new Blob([bytes], { type: mime });
+}
+
+/* تقرير الورشة للطباعة (A4) — يفتح صفحة مستقلة جاهزة للطباعة على قالب الجمعية */
+function openWorkshopReportPrint(workshop, registrants, survey, responses) {
+  const esc2 = s => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  const regs = registrants || [];
+  const questions = (survey && survey.questions) || [];
+  const resps = responses || [];
+
+  // موعد تنفيذ الورشة وتاريخ إصدار التقرير
+  const wsDate = (workshop.date || '').trim();
+  const wsTime = (workshop.time || '').trim();
+  const execWhen = [wsDate, wsTime].filter(Boolean).join(' — ') || 'غير محدد';
+  const issueDate = new Date().toLocaleDateString('en-GB');
+
+  // ── الصفحة 1: جدول المسجلين ──
+  const regRowsHTML = regs.length === 0
+    ? `<tr><td colspan="4" style="text-align:center;padding:16px;color:#777;">لا يوجد مسجلون</td></tr>`
+    : regs.map((r, i) => `
+      <tr>
+        <td style="text-align:center;">${i + 1}</td>
+        <td>${esc2(r.name || r.fullName || 'بدون اسم')}</td>
+        <td dir="ltr" style="text-align:center;">${esc2(r.phone || r.mobile || '—')}</td>
+        <td dir="ltr" style="text-align:center;">${esc2(r.nationalId || r.idNumber || '—')}</td>
+      </tr>
+    `).join('');
+
+  // ── الصفحة 2: الأسئلة مع آراء المشاركين (تجميعي، بدون أسماء) ──
+  function buildQuestionResultHTML(q, idx) {
+    const answers = resps
+      .map(r => (r.answers || {})[q.id])
+      .filter(a => a !== undefined && a !== null && a !== '');
+    const total = answers.length;
+    let body = '';
+
+    if (q.type === 'rating') {
+      const nums = answers.map(a => parseInt(a, 10)).filter(n => !isNaN(n));
+      const avg = nums.length ? (nums.reduce((s, v) => s + v, 0) / nums.length).toFixed(1) : '0.0';
+      const counts = {1:0,2:0,3:0,4:0,5:0};
+      nums.forEach(n => { if (counts[n] !== undefined) counts[n]++; });
+      body = `
+        <div style="font-size:13px;margin-bottom:6px;"><strong>متوسط التقييم:</strong> ${avg} / 5 <span style="color:#777;">(${total} إجابة)</span></div>
+        ${[5,4,3,2,1].map(v => {
+          const c = counts[v] || 0; const p = total ? Math.round((c/total)*100) : 0;
+          return `<div style="font-size:12.5px;margin:2px 0;">${v} نجوم: ${c} (${p}%)</div>`;
+        }).join('')}
+      `;
+    } else if (q.type === 'mc' || q.type === 'boolean') {
+      const opts = q.type === 'boolean' ? ['نعم','لا'] : (q.options || []);
+      const counts = {};
+      opts.forEach(o => counts[o] = 0);
+      answers.forEach(a => { counts[a] = (counts[a] || 0) + 1; });
+      body = Object.keys(counts).map(o => {
+        const c = counts[o] || 0; const p = total ? Math.round((c/total)*100) : 0;
+        return `<div style="font-size:12.5px;margin:3px 0;display:flex;justify-content:space-between;"><span>${esc2(o)}</span><span style="color:#5a4420;font-weight:700;">${c} (${p}%)</span></div>`;
+      }).join('');
+    } else {
+      // نصي: نعرض الإجابات بدون أسماء
+      body = total === 0
+        ? `<div style="font-size:12.5px;color:#777;">لا توجد إجابات.</div>`
+        : answers.map(a => `<div style="font-size:12.5px;padding:7px 10px;border:1px solid #e3dccb;border-radius:6px;margin:4px 0;background:#fcfaf5;line-height:1.6;">${esc2(a)}</div>`).join('');
+    }
+
+    return `
+      <div style="margin-bottom:16px;padding:12px 14px;border:1px solid #e3dccb;border-radius:8px;background:#fff;">
+        <div style="font-size:13.5px;font-weight:800;color:#1c1a17;margin-bottom:8px;"><span style="color:#9C6E38;">${idx + 1}.</span> ${esc2(q.text || '')}</div>
+        ${body}
+      </div>
+    `;
+  }
+
+  const surveyPageHTML = questions.length === 0
+    ? `<p style="color:#777;font-size:13px;">لا يوجد استبيان مرتبط بهذه الورشة.</p>`
+    : (resps.length === 0
+        ? `<p style="color:#777;font-size:13px;">لم يُجب أي مشارك على الاستبيان بعد. (الأسئلة فقط معروضة أدناه)</p>
+           ${questions.map((q, i) => `<div style="margin-bottom:12px;padding:12px 14px;border:1px solid #e3dccb;border-radius:8px;background:#fff;font-size:13.5px;font-weight:700;"><span style="color:#9C6E38;">${i+1}.</span> ${esc2(q.text || '')}</div>`).join('')}`
+        : questions.map((q, i) => buildQuestionResultHTML(q, i)).join(''));
+
+  const html = `<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تقرير ورشة — ${esc2(workshop.title || '')}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap');
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Almarai',sans-serif; color:#1c1a17; background:#eceae6; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .toolbar { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid #ddd; padding:12px 20px; display:flex; gap:10px; justify-content:center; }
+  .toolbar button { font-family:inherit; font-weight:700; font-size:14px; padding:10px 24px; border-radius:8px; cursor:pointer; border:1px solid #9C6E38; }
+  .btn-print { background:#9C6E38; color:#fff; }
+  .btn-close { background:#fff; color:#9C6E38; }
+
+  /* صفحة A4 على خلفية قالب الجمعية */
+  .page {
+    width:210mm; height:297mm; margin:18px auto; position:relative;
+    background:#fff url('../assets/قالب/letterhead.png') no-repeat center center;
+    background-size:100% 100%;
+    box-shadow:0 2px 14px rgba(0,0,0,.14); overflow:hidden; page-break-after:always;
+  }
+  .page:last-child { page-break-after:auto; }
+  /* المحتوى يبدأ أسفل ترويسة القالب المطبوعة */
+  .content { position:absolute; top:52mm; right:22mm; left:22mm; bottom:20mm; z-index:2; }
+
+  h1.report-title { text-align:center; color:#9C6E38; font-size:21px; font-weight:800; margin:0 0 4px; }
+  .sub { text-align:center; color:#555; font-size:13px; margin-bottom:16px; }
+
+  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-bottom:18px; }
+  .info-item { border:1px solid #e3dccb; border-radius:8px; padding:8px 12px; background:rgba(252,250,245,.85); }
+  .info-item .lbl { font-size:10.5px; color:#9C6E38; font-weight:700; margin-bottom:2px; }
+  .info-item .val { font-size:13px; font-weight:700; }
+
+  h2.sec { font-size:15px; font-weight:800; color:#1c1a17; margin:14px 0 9px; padding-bottom:5px; border-bottom:2px solid #b79a66; }
+
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  th, td { border:1px solid #d9d2c2; padding:6px 9px; }
+  th { background:rgba(243,238,226,.95); color:#5a4420; font-weight:700; }
+  tbody tr:nth-child(even) td { background:rgba(252,250,245,.75); }
+
+  @media print {
+    .toolbar { display:none; }
+    body { background:#fff; }
+    .page { margin:0; box-shadow:none; }
+    @page { size:A4; margin:0; }
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <button class="btn-print" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+    <button class="btn-close" onclick="window.close()">إغلاق</button>
+  </div>
+
+  <!-- الصفحة 1: بيانات الورشة والمسجلين -->
+  <div class="page">
+    <div class="content">
+      <h1 class="report-title">تقرير ورشة عمل</h1>
+      <div class="sub">${esc2(workshop.title || 'ورشة عمل')}</div>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="lbl">اسم الورشة</div><div class="val">${esc2(workshop.title || '—')}</div></div>
+        <div class="info-item"><div class="lbl">التصنيف</div><div class="val">${esc2(workshop.category || 'ورشة عمل')}</div></div>
+        <div class="info-item"><div class="lbl">موعد تنفيذ الورشة</div><div class="val">${esc2(execWhen)}</div></div>
+        <div class="info-item"><div class="lbl">المكان</div><div class="val">${esc2(workshop.location || 'مقر الجمعية')}</div></div>
+        <div class="info-item"><div class="lbl">عدد المسجلين</div><div class="val">${regs.length}</div></div>
+        <div class="info-item"><div class="lbl">تاريخ إصدار التقرير</div><div class="val" dir="ltr" style="text-align:right;">${esc2(issueDate)}</div></div>
+      </div>
+
+      <h2 class="sec">بيانات المسجلين</h2>
+      <table>
+        <thead>
+          <tr><th style="width:36px;">#</th><th>الاسم</th><th style="width:120px;">رقم الجوال</th><th style="width:120px;">رقم الهوية</th></tr>
+        </thead>
+        <tbody>${regRowsHTML}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- الصفحة 2: أسئلة الاستبيان وآراء المشاركين -->
+  <div class="page">
+    <div class="content">
+      <h1 class="report-title">نتائج استبيان الورشة</h1>
+      <div class="sub">آراء المشاركين (بدون ذكر الأسماء)</div>
+      <h2 class="sec">الأسئلة والإجابات</h2>
+      ${surveyPageHTML}
+    </div>
+  </div>
+</body>
+</html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) { toast('يرجى السماح بالنوافذ المنبثقة لعرض التقرير', 'err'); return; }
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
 }
 
 /* Word (.docx) Professional Exporter */

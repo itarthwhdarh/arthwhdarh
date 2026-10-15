@@ -273,6 +273,14 @@ service cloud.firestore {
       );
     }
 
+    // ── قطع ملفات الشهادات (certificate_chunks) — تخزين PDF مقسّم لتجاوز حد مستند Firestore ──
+    match /certificate_chunks/{id} {
+      // جلب قطعة واحدة بمعرفها المحدد متاح للمشارك لتحميل شهادته (المعرفات عشوائية غير قابلة للتخمين)
+      allow get: if true;
+      // سرد جميع القطع والكتابة محصوران بالإدارة فقط
+      allow list, write: if isSiteAdmin();
+    }
+
     // ── الأخبار والمقالات ──
     match /news/{id} {
       allow read: if true;

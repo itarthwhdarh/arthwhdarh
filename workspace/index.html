@@ -939,7 +939,7 @@ function renderCertificateBox(reg) {
   const container = document.getElementById('certDownloadArea');
   if (!container) return;
 
-  const hasCert = !!(reg && reg.certificateAvailable !== false && reg.certificateFile);
+  const hasCert = !!(reg && reg.certificateAvailable === true && (reg.certificateFile || reg.certificateChunks));
 
   if (hasCert) {
     container.innerHTML = `
@@ -962,14 +962,48 @@ function renderCertificateBox(reg) {
       </div>
     `;
 
-    document.getElementById('btnDownloadCertPdf')?.addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.href = reg.certificateFile;
-      link.download = reg.certificateName || `شهادة_${reg.name || 'حضور'}.pdf`;
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+    document.getElementById('btnDownloadCertPdf')?.addEventListener('click', async () => {
+      const btn = document.getElementById('btnDownloadCertPdf');
+      try {
+        let dataUrl = reg.certificateFile; // الشهادات القديمة
+        if (!dataUrl && reg.certificateChunks) {
+          // الشهادات الجديدة: تجميع القطع من certificate_chunks
+          if (btn) { btn.disabled = true; btn.querySelector('span').textContent = 'جارٍ التحضير…'; }
+          const parts = new Array(reg.certificateChunks).fill('');
+          const gets = [];
+          for (let i = 0; i < reg.certificateChunks; i++) {
+            gets.push(getDoc(doc(db, 'certificate_chunks', `${reg.id}_${i}`)).then(s => {
+              if (s.exists()) parts[s.data().idx] = s.data().data || '';
+            }));
+          }
+          await Promise.all(gets);
+          dataUrl = parts.join('');
+        }
+        if (!dataUrl) { alert('تعذر تحميل ملف الشهادة'); return; }
+
+        let href = dataUrl;
+        if (dataUrl.startsWith('data:')) {
+          const [head, b64] = dataUrl.split(',');
+          const mime = (head.match(/data:([^;]+)/) || [])[1] || 'application/pdf';
+          const bin = atob(b64);
+          const bytes = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+          href = URL.createObjectURL(new Blob([bytes], { type: mime }));
+        }
+        const link = document.createElement('a');
+        link.href = href;
+        link.download = reg.certificateName || `شهادة_${reg.name || 'حضور'}.pdf`;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        if (href.startsWith('blob:')) setTimeout(() => URL.revokeObjectURL(href), 60000);
+      } catch (err) {
+        console.error('Cert download error:', err);
+        alert('حدث خطأ أثناء تحميل الشهادة');
+      } finally {
+        if (btn) { btn.disabled = false; btn.querySelector('span').textContent = 'تحميل الشهادة PDF'; }
+      }
     });
   } else {
     container.innerHTML = `
