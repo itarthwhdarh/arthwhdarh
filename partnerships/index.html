@@ -405,6 +405,18 @@
     <p>القريات · منطقة الجوف · المملكة العربية السعودية</p>
   </div>
 </footer>
+<script>
+/* إخفاء رابط التوظيف من الفوتر إذا عطّلته الإدارة (قراءة إعداد عامة عبر REST) */
+(function(){
+  fetch('https://firestore.googleapis.com/v1/projects/arthwhdarh-782ec/databases/(default)/documents/settings/site')
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      var en = true;
+      try { if(d && d.fields && d.fields.careersEnabled && d.fields.careersEnabled.booleanValue === false) en = false; } catch(e){}
+      if(!en){ document.querySelectorAll('a[href="/careers/"], a[href="/careers"]').forEach(function(a){ var li=a.closest('li'); (li||a).style.display='none'; }); }
+    }).catch(function(){});
+})();
+</script>
 
 </div><!-- /.site-wrapper -->
 

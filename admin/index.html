@@ -7719,8 +7719,9 @@ async function loadJobApplications(){
 }
 
 async function vCareers(el){
-  loaded.jobs = false; loaded.jobApplications = false;
-  const [jobs, apps] = await Promise.all([ loadCol('jobs'), loadCol('jobApplications') ]);
+  loaded.jobs = false; loaded.jobApplications = false; loaded.settings = false;
+  const [jobs, apps, siteSettings] = await Promise.all([ loadCol('jobs'), loadCol('jobApplications'), loadSettings() ]);
+  const careersEnabled = siteSettings.careersEnabled !== false;
 
   if (selectedJobId){
     const job = jobs.find(j=>j.id===selectedJobId);
@@ -7748,6 +7749,26 @@ async function vCareers(el){
       </button>
     </div>
 
+    <!-- تفعيل/إخفاء قسم التوظيف من الموقع العام -->
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px;padding:16px 18px;">
+      <div>
+        <strong style="font-size:15px;color:var(--ink);display:flex;align-items:center;gap:8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:18px;height:18px;"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round"/></svg>
+          إظهار صفحة التوظيف في الموقع العام
+        </strong>
+        <p style="font-size:12.5px;color:var(--ink-muted);margin:4px 0 0 0;">التحكم بظهور رابط «التوظيف» في الفوتر وإمكانية زيارة الصفحة للجمهور.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;${careersEnabled ? 'background:rgba(58,94,46,.12);color:#2e6022;' : 'background:rgba(122,37,24,.1);color:#8c2518;'}">
+          ${careersEnabled ? 'مفعّل ويظهر للزوار' : 'مخفي عن الزوار'}
+        </span>
+        <button type="button" role="switch" aria-checked="${careersEnabled}" id="btnToggleCareers" title="${careersEnabled ? 'إخفاء' : 'إظهار'}"
+          style="position:relative;width:48px;height:27px;border-radius:999px;border:none;cursor:pointer;transition:background .2s;background:${careersEnabled ? 'var(--gold-deep,#9c6e38)' : 'var(--line,#ccc)'};">
+          <span style="position:absolute;top:3px;${careersEnabled ? 'left:3px' : 'right:3px'};width:21px;height:21px;border-radius:50%;background:#fff;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.25);"></span>
+        </button>
+      </div>
+    </div>
+
     <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px;">
       ${sCard('JobsTotal','إجمالي الوظائف',jobs.length,'وظيفة')}
       ${sCard('JobsPub','منشورة',jobs.filter(j=>j.status==='published').length,'ظاهرة للزوار')}
@@ -7763,6 +7784,16 @@ async function vCareers(el){
       ? `<div class="card">${emptyState(q?'لا توجد نتائج':'لم يتم إنشاء وظائف بعد','JOBS · EMPTY')}</div>`
       : `<div class="jobs-grid">${rows.map(j=>renderJobCardHTML(j, countByJob[j.id]||0)).join('')}</div>`}
   `;
+
+  el.querySelector('#btnToggleCareers')?.addEventListener('click', async () => {
+    const newVal = !careersEnabled;
+    try {
+      await setDoc(doc(db, 'settings', 'site'), { careersEnabled: newVal }, { merge: true });
+      loaded.settings = false;
+      toast(newVal ? 'تم إظهار قسم التوظيف في الموقع' : 'تم إخفاء قسم التوظيف عن الزوار');
+      vCareers(el);
+    } catch (err) { console.error(err); toast('تعذّر تغيير الحالة', 'err'); }
+  });
 
   el.querySelector('#btnNewJob')?.addEventListener('click', ()=>openJobFormModal(null, el));
   const si = el.querySelector('#jobSearch');

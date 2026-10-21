@@ -656,7 +656,26 @@ document.addEventListener('keydown', e => { if(e.key==='Escape' && $('crOverlay'
     if(nav){ const s=()=>nav.classList.toggle('scrolled',window.scrollY>20); window.addEventListener('scroll',s,{passive:true}); s(); }
 })();
 
-loadJobs();
+// بوابة التفعيل: إن كان القسم مخفياً من الإدارة لا نعرض الوظائف
+async function initCareers(){
+    try {
+        const s = await getDoc(doc(db,'settings','site'));
+        const enabled = !s.exists() || s.data().careersEnabled !== false;
+        if(!enabled){
+            const area = $('crJobsArea');
+            if(area) area.innerHTML = `
+              <div class="ws-empty-state">
+                <div class="ws-empty-icon"><i class="fas fa-lock"></i></div>
+                <h3 class="ws-empty-title">قسم التوظيف غير متاح حالياً</h3>
+                <p class="ws-empty-text">نعتذر، باب التوظيف مغلق في الوقت الحالي. تابعنا للاطلاع على الفرص القادمة.</p>
+              </div>`;
+            document.querySelectorAll('a[href="/careers/"], a[href="/careers"]').forEach(a => { const li = a.closest('li'); (li||a).style.display = 'none'; });
+            return;
+        }
+    } catch(e){ console.warn('careers gate', e); }
+    loadJobs();
+}
+initCareers();
 </script>
 <script type="module" src="../maintenance.js"></script>
 
