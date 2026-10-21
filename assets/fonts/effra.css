@@ -1,0 +1,10 @@
+/* Effra (trial) — all weights. Path relative to this file at /assets/fonts/ */
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-hairline.ttf') format('truetype');font-weight:100;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-thin.ttf') format('truetype');font-weight:200;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-light.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-regular.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-medium.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-semibold.ttf') format('truetype');font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-bold.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-xbold.ttf') format('truetype');font-weight:800;font-style:normal;font-display:swap;}
+@font-face{font-family:'Effra';src:url('/assets/fonts/effra-trial-black.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap;}

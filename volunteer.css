@@ -17,7 +17,7 @@ html {
 
 body {
     background: var(--c-bg, #ffffff);
-    font-family: var(--font-arabic, 'Almarai', sans-serif);
+    font-family: 'Effra', var(--font-arabic, 'Almarai', sans-serif);
     color: var(--c-text-primary, #1c1a17);
     line-height: 1.6;
     overflow-x: hidden;
@@ -51,7 +51,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     background: linear-gradient(90deg, transparent, var(--c-gold-line, rgba(184, 136, 62, 0.30)));
 }
 .vl-intro-eyebrow {
-    font-family: var(--font-latin, 'Montserrat', sans-serif);
+    font-family: 'Effra', var(--font-latin, 'Montserrat', sans-serif);
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -99,7 +99,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: var(--font-latin, 'Montserrat', sans-serif);
+    font-family: 'Effra', var(--font-latin, 'Montserrat', sans-serif);
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -777,7 +777,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     z-index: 10;
 }
 .vl-modal-eyebrow {
-    font-family: var(--font-latin, 'Montserrat', sans-serif);
+    font-family: 'Effra', var(--font-latin, 'Montserrat', sans-serif);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;

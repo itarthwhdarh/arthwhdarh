@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -49,6 +49,7 @@
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+    <link href="/assets/fonts/effra.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../design-system.css">
     <link rel="stylesheet" href="../contact.css">
@@ -78,6 +79,7 @@
             <a href="/partnerships/">الشراكات</a>
             <a href="/reports/">الحوكمة</a>
             <a href="/board/">مجلس الإدارة</a>
+            <a href="/careers/">التوظيف</a>
             <a href="/contact/" class="active">اتصل بنا</a>
         </div>
         <button class="mobile-toggle" id="mobileToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileMenu">
@@ -110,6 +112,7 @@
                 <a href="/partnerships/">الشراكات</a>
                 <a href="/reports/">الحوكمة</a>
                 <a href="/board/">مجلس الإدارة</a>
+                <a href="/careers/">التوظيف</a>
                 <a href="/contact/" class="active">اتصل بنا</a>
             </nav>
         </div>
@@ -302,15 +305,107 @@
     <!-- ════════════════════════════════════════
          FOOTER
     ════════════════════════════════════════ -->
-    <footer class="footer-premium">
-        <div class="footer-ornament">
-            <div class="footer-ornament-line"></div>
-            <div class="footer-ornament-center"></div>
-            <div class="footer-ornament-line r"></div>
-        </div>
-        <p>© 2026 جمعية إرث وحضارة بالقريات — حفظ التراث وبناء الهوية الثقافية</p>
-        <p>صفحة التواصل — القريات · منطقة الجوف · المملكة العربية السعودية</p>
-    </footer>
+    <!-- ════════ FOOTER (black) — جمعية إرث وحضارة ════════ -->
+<style>
+  .ehf { position:relative; background:#111111; color:#d8d4cc; margin-top:5rem; direction:rtl;
+         font-family:inherit; padding-top:34px;
+         box-shadow:0 0 0 100vw #111111; clip-path:inset(0 -100vw 0 -100vw); }
+  /* شريط نقوش سدو تراثية بسيطة أعلى الفوتر بدل الخط البني */
+  .ehf::before { content:""; position:absolute; top:0; left:0; right:0; height:14px; opacity:.5;
+    background-image:
+      linear-gradient(135deg, rgba(255,255,255,.14) 25%, transparent 25%),
+      linear-gradient(225deg, rgba(255,255,255,.14) 25%, transparent 25%),
+      linear-gradient(315deg, rgba(255,255,255,.14) 25%, transparent 25%),
+      linear-gradient(45deg,  rgba(255,255,255,.14) 25%, transparent 25%);
+    background-size:14px 14px; background-position:0 0, 7px 0, 7px -7px, 0 7px;
+    box-shadow:0 0 0 100vw transparent; clip-path:inset(0 -100vw auto -100vw); }
+  .ehf::after { content:""; position:absolute; top:14px; left:0; right:0; height:1px;
+    background:rgba(255,255,255,.12); clip-path:inset(0 -100vw 0 -100vw); }
+  .ehf__inner { max-width:1180px; margin:0 auto; padding:40px 24px 0;
+                display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:36px; }
+  .ehf__brand-logo { display:flex; flex-direction:column; align-items:flex-start; gap:12px; margin-bottom:16px; }
+  .ehf__brand-logo img { width:150px; height:auto; object-fit:contain; }
+  .ehf__about { font-size:13.5px; line-height:1.9; color:#9d988f; max-width:360px; }
+  .ehf__col h4 { font-size:14px; font-weight:800; color:#fff; margin:0 0 16px;
+                 position:relative; padding-bottom:10px; }
+  .ehf__col h4::after { content:""; position:absolute; bottom:0; right:0;
+                        width:34px; height:2px; background:rgba(255,255,255,.45); border-radius:2px; }
+  .ehf__links { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .ehf__links a { color:#b8b4aa; text-decoration:none; font-size:13.5px;
+                  transition:color .2s, padding .2s; display:inline-block; }
+  .ehf__links a:hover { color:#fff; padding-right:6px; }
+  .ehf__contact { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .ehf__contact li { display:flex; align-items:center; gap:10px; font-size:13.5px; color:#b8b4aa; }
+  .ehf__contact svg { width:17px; height:17px; stroke:rgba(255,255,255,.65); flex-shrink:0; }
+  .ehf__contact a { color:#b8b4aa; text-decoration:none; }
+  .ehf__contact a:hover { color:#fff; }
+  .ehf__social { display:flex; gap:10px; margin-top:16px; }
+  .ehf__social a { width:38px; height:38px; border-radius:50%; background:#1e1e1e;
+                   border:1px solid #333; display:grid; place-items:center;
+                   color:#c3bfb6; transition:all .2s; }
+  .ehf__social a:hover { background:#fff; color:#111; border-color:#fff; }
+  .ehf__social svg { width:17px; height:17px; }
+  .ehf__bar { position:relative; border-top:1px solid #262626; margin-top:40px;
+              padding:18px 24px; text-align:center; font-size:12.5px; color:#8a8579;
+              max-width:1180px; margin-left:auto; margin-right:auto; }
+  .ehf__bar p { margin:3px 0; }
+  @media (max-width:760px){
+    .ehf__inner { grid-template-columns:1fr; gap:30px; padding:34px 20px 0; text-align:center; }
+    .ehf__brand-logo { align-items:center; }
+    .ehf__about { margin:0 auto; }
+    .ehf__col h4::after { right:50%; transform:translateX(50%); }
+    .ehf__contact li { justify-content:center; }
+    .ehf__social { justify-content:center; }
+  }
+</style>
+<footer class="ehf">
+  <div class="ehf__inner">
+    <div class="ehf__col">
+      <div class="ehf__brand-logo">
+        <img src="/assets/الشعار/شعار-ابيض.png" alt="شعار جمعية إرث وحضارة" onerror="this.style.display='none'">
+      </div>
+      <p class="ehf__about">جمعية أهلية تعنى بحفظ التراث وبناء الهوية الثقافية في محافظة القريات بمنطقة الجوف، عبر الفعاليات والورش والمبادرات المجتمعية.</p>
+    </div>
+
+    <div class="ehf__col">
+      <h4>روابط سريعة</h4>
+      <ul class="ehf__links">
+        <li><a href="/activities/">الفعاليات</a></li>
+        <li><a href="/workshops/">ورش العمل</a></li>
+        <li><a href="/volunteer/">التطوع</a></li>
+        <li><a href="/news/">الأخبار</a></li>
+        <li><a href="/crafts/">بيدي حرفة</a></li>
+        <li><a href="/careers/">التوظيف</a></li>
+        <li><a href="/board/">مجلس الإدارة</a></li>
+      </ul>
+    </div>
+
+    <div class="ehf__col">
+      <h4>تواصل معنا</h4>
+      <ul class="ehf__contact">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>القريات · منطقة الجوف</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="/careers/">التوظيف</a>
+          <a href="/contact/">صفحة التواصل</a>
+        </li>
+      </ul>
+      <div class="ehf__social">
+        <a href="/careers/">التوظيف</a>
+        <a href="/contact/" aria-label="تواصل معنا" title="تواصل معنا">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="ehf__bar">
+    <p>© 2026 جمعية إرث وحضارة بالقريات — حفظ التراث وبناء الهوية الثقافية</p>
+    <p>القريات · منطقة الجوف · المملكة العربية السعودية</p>
+  </div>
+</footer>
 
 </div><!-- /.site-wrapper -->
 

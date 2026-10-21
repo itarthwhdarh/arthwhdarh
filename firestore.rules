@@ -273,12 +273,60 @@ service cloud.firestore {
       );
     }
 
+    // ── صور الورش (workshop_images) — صور مضغوطة لتقارير الورش ──
+    match /workshop_images/{id} {
+      // القراءة عامة (تظهر في تقرير الورشة)؛ الكتابة للإدارة فقط
+      allow read: if true;
+      allow write: if isSiteAdmin();
+    }
+
     // ── قطع ملفات الشهادات (certificate_chunks) — تخزين PDF مقسّم لتجاوز حد مستند Firestore ──
     match /certificate_chunks/{id} {
       // جلب قطعة واحدة بمعرفها المحدد متاح للمشارك لتحميل شهادته (المعرفات عشوائية غير قابلة للتخمين)
       allow get: if true;
       // سرد جميع القطع والكتابة محصوران بالإدارة فقط
       allow list, write: if isSiteAdmin();
+    }
+
+    // ════════════════ نظام التوظيف (Careers) ════════════════
+
+    // ── الوظائف (jobs) ──
+    match /jobs/{id} {
+      // الزوار يقرؤون الوظائف المنشورة والمغلقة (المغلقة تظهر "مغلق التسجيل")؛ المسودة للإدارة فقط.
+      // التقديم على المغلقة ممنوع عبر قواعد applications/cvChunks أدناه (status == 'published').
+      allow read: if resource.data.status == 'published' || resource.data.status == 'closed' || isSiteAdmin();
+      // الإنشاء والتعديل والحذف محصور بالإدارة فقط
+      allow create, update, delete: if isSiteAdmin();
+    }
+
+    // ── طلبات التوظيف (jobApplications) ──
+    match /jobApplications/{id} {
+      // الزائر ينشئ طلبه فقط إن لم يكن موجوداً مسبقاً (منع التكرار على مستوى قاعدة البيانات)
+      // ويُجبر على حالة 'جديد' وربط الطلب بوظيفة منشورة، ومعرّف ثابت = jobId_phone
+      allow create: if !exists(/databases/$(database)/documents/jobApplications/$(id))
+        && request.resource.data.keys().hasAll(['jobId','name','phone','email','status','submittedAt','consent'])
+        && request.resource.data.status == 'جديد'
+        && request.resource.data.consent == true
+        && request.resource.data.phone is string
+        && request.resource.data.name is string && request.resource.data.name.size() <= 120
+        && request.resource.data.email is string && request.resource.data.email.size() <= 160
+        && id == request.resource.data.jobId + '_' + request.resource.data.phone
+        && exists(/databases/$(database)/documents/jobs/$(request.resource.data.jobId))
+        && get(/databases/$(database)/documents/jobs/$(request.resource.data.jobId)).data.status == 'published';
+      // لا يقرأ الزائر أي طلب (بما فيها طلبه) ولا يسرده ولا يعدّله — للإدارة فقط (خصوصية المتقدمين)
+      // منع التكرار يتم عبر شرط !exists في create أعلاه (على مستوى الخادم)
+      allow get, list, update, delete: if isSiteAdmin();
+    }
+
+    // ── قطع ملفات السير الذاتية (jobApplication_chunks) — PDF مقسّم ──
+    match /jobApplication_chunks/{id} {
+      // الزائر ينشئ قطع سيرته الذاتية عند التقديم فقط، لوظيفة منشورة قائمة
+      allow create: if request.resource.data.keys().hasAll(['appId','jobId','idx','data'])
+        && request.resource.data.data is string
+        && exists(/databases/$(database)/documents/jobs/$(request.resource.data.jobId))
+        && get(/databases/$(database)/documents/jobs/$(request.resource.data.jobId)).data.status == 'published';
+      // قراءة وسرد وحذف السير الذاتية محصور بالإدارة فقط (لا روابط عامة)
+      allow get, list, update, delete: if isSiteAdmin();
     }
 
     // ── الأخبار والمقالات ──

@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+    <link href="/assets/fonts/effra.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
 <style>
@@ -27,7 +28,7 @@
   --ease:cubic-bezier(0.22,1,0.36,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{background:var(--parchment);color:var(--ink);font-family:"Almarai",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+html,body{background:var(--parchment);color:var(--ink);font-family:'Effra', "Almarai",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
 button{font-family:inherit;cursor:pointer;}
 input,textarea,select{font-family:inherit;color:inherit;}
 a{color:inherit;text-decoration:none;}
@@ -39,7 +40,7 @@ img{display:block;max-width:100%;}
 .login-box{width:100%;max-width:440px;text-align:center;margin:auto;}
 .login-logo{width:64px;height:64px;object-fit:contain;margin:0 auto 20px;}
 .login-brand{font-weight:800;font-size:22px;color:var(--ink);letter-spacing:-.02em;margin-bottom:6px;}
-.login-sub{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:32px;}
+.login-sub{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:32px;}
 .login-ornament{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:30px;}
 .lo-line{height:1px;width:48px;background:linear-gradient(90deg,transparent,rgba(192,154,98,.4));}
 .lo-line.r{background:linear-gradient(90deg,rgba(192,154,98,.4),transparent);}
@@ -59,7 +60,7 @@ img{display:block;max-width:100%;}
 .toggle-pwd-btn{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-muted);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;transition:color .2s;}
 .toggle-pwd-btn:hover{color:var(--gold-deep);}
 .toggle-pwd-btn svg{width:17px;height:17px;}
-.login-btn{width:100%;padding:12px 18px;border:none;border-radius:8px;font-size:14px;font-weight:700;font-family:"Almarai",sans-serif;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:10px;}
+.login-btn{width:100%;padding:12px 18px;border:none;border-radius:8px;font-size:14px;font-weight:700;font-family:'Effra', "Almarai",sans-serif;cursor:pointer;transition:all .2s ease;display:flex;align-items:center;justify-content:center;gap:10px;}
 .primary-login-btn{background:var(--ink);color:#ffffff;box-shadow:0 2px 6px rgba(15,17,23,.18);}
 .primary-login-btn:hover{background:var(--ink-soft);transform:translateY(-1px);box-shadow:0 4px 12px rgba(15,17,23,.22);}
 .primary-login-btn:active{transform:translateY(0);}
@@ -72,7 +73,7 @@ img{display:block;max-width:100%;}
 .google-login-btn:hover{background:#f8f9fa;border-color:#c6c6c6;color:#202124;}
 .google-login-btn:disabled{opacity:.6;cursor:not-allowed;}
 .login-err{display:none;margin-bottom:18px;padding:12px 14px;background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#b91c1c;font-size:13px;font-weight:700;text-align:center;line-height:1.5;}
-.login-footer{margin-top:24px;font-family:"Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;}
+.login-footer{margin-top:24px;font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;}
 
 /* ── APP SHELL ── */
 .app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh;}
@@ -82,9 +83,9 @@ img{display:block;max-width:100%;}
 .brand{display:flex;align-items:center;gap:12px;padding:22px 22px 20px;border-bottom:1px solid var(--line-soft);}
 .brand-logo{width:42px;height:42px;flex-shrink:0;object-fit:contain;}
 .brand-text .ar{font-weight:800;font-size:14.5px;color:var(--ink);letter-spacing:-.01em;display:block;}
-.brand-text .la{font-family:"Montserrat",sans-serif;font-style:italic;font-weight:300;font-size:10px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;margin-top:5px;display:block;}
+.brand-text .la{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-weight:300;font-size:10px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;margin-top:5px;display:block;}
 .nav-wrap{padding:16px 14px;flex:1;}
-.nav-lbl-sec{font-family:"Montserrat",sans-serif;font-size:9.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);padding:0 8px 10px;display:flex;align-items:center;gap:10px;}
+.nav-lbl-sec{font-family:'Effra', "Montserrat",sans-serif;font-size:9.5px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-faint);padding:0 8px 10px;display:flex;align-items:center;gap:10px;}
 .nav-lbl-sec::after{content:"";flex:1;height:1px;background:var(--line-soft);}
 .nav-list{list-style:none;display:flex;flex-direction:column;gap:2px;}
 .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:6px;color:var(--ink-mid);font-size:14px;font-weight:400;cursor:pointer;border:1px solid transparent;transition:background .25s var(--ease),color .2s,border-color .2s;width:100%;text-align:right;background:transparent;}
@@ -94,13 +95,13 @@ img{display:block;max-width:100%;}
 .ni{width:17px;height:17px;color:var(--ink-muted);flex-shrink:0;}
 .nav-item:hover .ni{color:var(--ink-soft);}
 .nlbl{flex:1;}
-.nbadge{background:var(--gold);color:var(--parchment);font-family:"Montserrat",sans-serif;font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px;min-width:20px;text-align:center;line-height:1.4;}
+.nbadge{background:var(--gold);color:var(--parchment);font-family:'Effra', "Montserrat",sans-serif;font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px;min-width:20px;text-align:center;line-height:1.4;}
 .nav-item.active .nbadge{background:var(--gold-pale);color:var(--ink);}
 .sidebar-foot{margin-top:auto;padding:16px 22px 20px;border-top:1px solid var(--line-soft);display:flex;align-items:center;gap:12px;}
 .avatar{width:36px;height:36px;border-radius:50%;background:var(--parchment-3);display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--ink-soft);border:1px solid var(--line);flex-shrink:0;}
 .who{line-height:1.35;flex:1;}
 .who .wname{font-size:13px;font-weight:700;color:var(--ink);}
-.who .wrole{font-family:"Montserrat",sans-serif;font-style:italic;font-size:10px;color:var(--ink-muted);letter-spacing:.1em;}
+.who .wrole{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10px;color:var(--ink-muted);letter-spacing:.1em;}
 .icon-btn{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:transparent;display:grid;place-items:center;color:var(--ink-muted);transition:all .2s;}
 .icon-btn:hover{border-color:var(--danger);color:var(--danger);}
 .icon-btn svg{width:13px;height:13px;}
@@ -111,9 +112,9 @@ img{display:block;max-width:100%;}
 .menu-toggle{display:none;width:34px;height:34px;border-radius:4px;border:1px solid var(--line);background:transparent;align-items:center;justify-content:center;color:var(--ink);}
 .menu-toggle svg{width:17px;height:17px;}
 .crumbs{display:flex;align-items:center;gap:10px;flex:1;}
-.crumb{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.14em;text-transform:uppercase;}
+.crumb{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.14em;text-transform:uppercase;}
 .sep{color:var(--ink-faint);font-size:11px;}
-.crumb-cur{font-family:"Almarai",sans-serif;font-style:normal;font-size:13.5px;color:var(--ink);font-weight:700;}
+.crumb-cur{font-family:'Effra', "Almarai",sans-serif;font-style:normal;font-size:13.5px;color:var(--ink);font-weight:700;}
 .topbar-actions{display:flex;align-items:center;gap:8px;}
 .bell-btn{position:relative;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;display:grid;place-items:center;color:var(--ink-mid);transition:all .2s;}
 .bell-btn:hover{border-color:var(--ink-soft);color:var(--ink);}
@@ -130,14 +131,14 @@ img{display:block;max-width:100%;}
 .page-head{margin-bottom:32px;}
 .page-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
 .e-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(192,154,98,.14);flex-shrink:0;}
-.e-latin{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;}
-.e-label{font-family:"Montserrat",sans-serif;font-size:11px;letter-spacing:.2em;color:var(--ink-muted);text-transform:uppercase;font-weight:500;border-right:1px solid var(--line);padding-right:12px;}
+.e-latin{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;}
+.e-label{font-family:'Effra', "Montserrat",sans-serif;font-size:11px;letter-spacing:.2em;color:var(--ink-muted);text-transform:uppercase;font-weight:500;border-right:1px solid var(--line);padding-right:12px;}
 .page-title{font-weight:800;font-size:clamp(26px,3.5vw,42px);line-height:1.15;color:var(--ink);margin-bottom:10px;}
 .page-title .accent{color:var(--gold-deep);}
 .page-sub{font-size:14px;color:var(--ink-mid);line-height:1.85;max-width:680px;font-weight:300;}
 
 /* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:6px;font-size:13.5px;font-weight:700;letter-spacing:.01em;border:1px solid transparent;cursor:pointer;transition:all .3s var(--ease);font-family:"Almarai",sans-serif;}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:10px 20px;border-radius:6px;font-size:13.5px;font-weight:700;letter-spacing:.01em;border:1px solid transparent;cursor:pointer;transition:all .3s var(--ease);font-family:'Effra', "Almarai",sans-serif;}
 .btn svg{width:13px;height:13px;flex-shrink:0;}
 .btn-primary{background:var(--ink);color:var(--parchment);border-color:var(--ink);}
 .btn-primary:hover{background:var(--ink-soft);}
@@ -152,18 +153,18 @@ img{display:block;max-width:100%;}
 .card::before{content:"";position:absolute;top:0;right:0;width:2px;height:36px;background:var(--gold);border-radius:0 8px 0 0;}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px;}
 .card-head h3{font-weight:800;font-size:18px;color:var(--ink);}
-.card-la{font-family:"Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-muted);letter-spacing:.16em;text-transform:uppercase;margin-top:3px;}
+.card-la{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-muted);letter-spacing:.16em;text-transform:uppercase;margin-top:3px;}
 
 /* ── STATS ── */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px;}
 .stat{background:var(--paper);border:1px solid var(--line-soft);border-radius:8px;padding:22px 20px 18px;position:relative;overflow:hidden;transition:box-shadow .3s var(--ease),transform .3s var(--ease);}
 .stat:hover{transform:translateY(-2px);box-shadow:0 10px 30px -10px rgba(30,22,10,.12);}
 .stat::before{content:"";position:absolute;top:0;right:0;width:2px;height:32px;background:var(--gold);border-radius:0 8px 0 0;}
-.stat-eyebrow{font-family:"Montserrat",sans-serif;font-style:italic;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.stat-eyebrow{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .stat-eyebrow svg{width:12px;height:12px;color:var(--gold);}
 .stat-label{font-size:13px;color:var(--ink-mid);margin-bottom:10px;font-weight:300;}
 .stat-value{font-weight:800;font-size:46px;line-height:1;color:var(--ink);letter-spacing:-.02em;}
-.stat-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--ink-muted);font-family:"Montserrat",sans-serif;}
+.stat-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--ink-muted);font-family:'Effra', "Montserrat",sans-serif;}
 .stat-foot .delta{color:var(--success);font-style:italic;}
 
 /* ── GRID ── */
@@ -177,7 +178,7 @@ img{display:block;max-width:100%;}
 .activity-marker svg{width:13px;height:13px;}
 .activity-body{flex:1;}
 .activity-title{font-size:13.5px;color:var(--ink);margin-bottom:3px;}
-.activity-meta{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.06em;}
+.activity-meta{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.06em;}
 
 /* ── TOOLBAR ── */
 .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
@@ -187,14 +188,37 @@ img{display:block;max-width:100%;}
 .search-box svg{width:13px;height:13px;color:var(--ink-muted);flex-shrink:0;}
 .search-box input{flex:1;border:0;background:transparent;outline:none;font-size:13.5px;}
 .filters{display:flex;gap:6px;}
-.chip{padding:6px 13px;font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink-mid);transition:all .2s;font-family:"Almarai",sans-serif;}
+.chip{padding:6px 13px;font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink-mid);transition:all .2s;font-family:'Effra', "Almarai",sans-serif;}
 .chip:hover{border-color:var(--ink-muted);}
 .chip.active{background:var(--ink);color:var(--parchment);border-color:var(--ink);}
-.chip-count{opacity:.55;font-size:11px;margin-inline-start:4px;font-family:"Montserrat",sans-serif;}
+.chip-count{opacity:.55;font-size:11px;margin-inline-start:4px;font-family:'Effra', "Montserrat",sans-serif;}
+/* ── كروت الوظائف (إدارة التوظيف) ── */
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+.jobc{display:flex;flex-direction:column;gap:14px;background:var(--paper,#fff);border:1px solid var(--line,#e7e1d4);border-radius:16px;padding:18px 18px 16px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .2s,border-color .2s;}
+.jobc::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--line,#e7e1d4);}
+.jobc.is-pub::before{background:#2e8b57;}
+.jobc.is-closed::before{background:#c5221f;}
+.jobc:hover{box-shadow:0 14px 34px -18px rgba(0,0,0,.35);transform:translateY(-2px);border-color:var(--gold,#c9a44c);}
+.jobc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+.jobc-headline{min-width:0;}
+.jobc-dept{display:inline-block;font-size:11px;font-weight:700;color:var(--gold-deep,#9a7a2e);letter-spacing:.02em;margin-bottom:5px;}
+.jobc-title{font-size:16.5px;font-weight:800;color:var(--ink,#2a241a);line-height:1.35;margin:0;}
+.jobc .chip-count{opacity:1;flex-shrink:0;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;margin:0;}
+.jobc-meta{display:flex;flex-wrap:wrap;gap:7px;}
+.jobc-chip{display:inline-flex;align-items:center;gap:5px;background:var(--parchment-2,#f6f1e6);border:1px solid var(--line-soft,#ece6d8);border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:600;color:var(--ink-mid,#5a5243);}
+.jobc-chip svg{width:13px;height:13px;flex-shrink:0;opacity:.75;}
+.jobc-chip-empty{color:var(--ink-muted,#9a917e);font-style:italic;}
+.jobc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:12px;border-top:1px solid var(--line-soft,#ece6d8);}
+.jobc-apps{display:inline-flex;align-items:baseline;gap:5px;background:var(--gold-pale,#f4ecd6);border:1px solid var(--gold,#c9a44c);color:var(--gold-deep,#8a6d28);border-radius:10px;padding:6px 12px;cursor:pointer;font-family:inherit;transition:background .15s;}
+.jobc-apps:hover{background:var(--gold-soft,#ecdfba);}
+.jobc-apps-num{font-size:17px;font-weight:800;line-height:1;}
+.jobc-apps-lbl{font-size:11.5px;font-weight:600;}
+.jobc-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.jobc-actions .btn{font-size:12px;padding:5px 11px;}
 .chip-badge{
   display:inline-flex;align-items:center;justify-content:center;
   background:var(--gold);color:var(--parchment);
-  font-size:10px;font-weight:700;font-family:"Montserrat",sans-serif;
+  font-size:10px;font-weight:700;font-family:'Effra', "Montserrat",sans-serif;
   padding:1px 6px;border-radius:999px;margin-inline-start:5px;line-height:1.4;
   transition:background .2s;
 }
@@ -207,7 +231,7 @@ img{display:block;max-width:100%;}
 
 /* ── VIEW TOGGLE (list / cards) ── */
 .view-toggle{display:inline-flex;align-items:center;gap:2px;padding:3px;background:var(--paper);border:1px solid var(--line);border-radius:8px;}
-.view-toggle button{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:none;background:transparent;border-radius:6px;font-family:"Almarai",sans-serif;font-size:12.5px;font-weight:700;color:var(--ink-mid);cursor:pointer;transition:all .25s var(--ease);}
+.view-toggle button{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border:none;background:transparent;border-radius:6px;font-family:'Effra', "Almarai",sans-serif;font-size:12.5px;font-weight:700;color:var(--ink-mid);cursor:pointer;transition:all .25s var(--ease);}
 .view-toggle button svg{width:14px;height:14px;}
 .view-toggle button.active{background:var(--ink);color:var(--parchment);box-shadow:0 3px 10px -3px rgba(30,22,10,.3);}
 .view-toggle button.active svg{color:var(--gold);}
@@ -215,27 +239,27 @@ img{display:block;max-width:100%;}
 
 /* table action button inside list view */
 table.data .row-status{vertical-align:middle;}
-table.data .tbl-view-btn{border:1px solid var(--line);background:transparent;color:var(--ink-mid);padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;font-family:"Almarai",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s;}
+table.data .tbl-view-btn{border:1px solid var(--line);background:transparent;color:var(--ink-mid);padding:6px 12px;border-radius:6px;font-size:12px;font-weight:700;font-family:'Effra', "Almarai",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s;}
 table.data .tbl-view-btn svg{width:12px;height:12px;}
 table.data .tbl-view-btn:hover{background:var(--ink);color:var(--parchment);border-color:var(--ink);}
 
 /* ── TABLE ── */
 .table-wrap{background:var(--paper);border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;}
 table.data{width:100%;border-collapse:collapse;}
-table.data thead th{text-align:right;font-family:"Montserrat",sans-serif;font-style:italic;font-weight:500;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);padding:14px 18px;border-bottom:1px solid var(--line);background:var(--parchment-2);}
+table.data thead th{text-align:right;font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-weight:500;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);padding:14px 18px;border-bottom:1px solid var(--line);background:var(--parchment-2);}
 table.data tbody td{padding:15px 18px;border-bottom:1px solid var(--line-soft);font-size:13.5px;color:var(--ink-mid);vertical-align:middle;}
 table.data tbody tr:last-child td{border-bottom:0;}
 table.data tbody tr{transition:background .15s;}
 table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .name-cell{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;}
-.row-status{display:inline-flex;align-items:center;gap:6px;font-family:"Montserrat",sans-serif;font-style:italic;font-size:11.5px;letter-spacing:.1em;padding:3px 10px;border-radius:999px;border:1px solid var(--line);}
+.row-status{display:inline-flex;align-items:center;gap:6px;font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11.5px;letter-spacing:.1em;padding:3px 10px;border-radius:999px;border:1px solid var(--line);}
 .row-status::before{content:"";width:5px;height:5px;border-radius:50%;}
 .row-status.new{color:var(--gold-deep);border-color:rgba(192,154,98,.4);}
 .row-status.new::before{background:var(--gold);}
 .row-status.reviewed{color:var(--success);border-color:rgba(58,94,46,.3);}
 .row-status.reviewed::before{background:var(--success);}
 .row-actions{display:flex;gap:6px;}
-.row-actions button{border:1px solid var(--line);background:transparent;color:var(--ink-mid);padding:5px 10px;border-radius:4px;font-size:11.5px;font-weight:700;font-family:"Almarai",sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:5px;}
+.row-actions button{border:1px solid var(--line);background:transparent;color:var(--ink-mid);padding:5px 10px;border-radius:4px;font-size:11.5px;font-weight:700;font-family:'Effra', "Almarai",sans-serif;transition:all .2s;display:inline-flex;align-items:center;gap:5px;}
 .row-actions button svg{width:11px;height:11px;}
 .row-actions button:hover{border-color:var(--ink-mid);color:var(--ink);}
 .row-actions .del:hover{border-color:var(--danger);color:var(--danger);}
@@ -249,7 +273,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .es-diamond{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);}
 .es-glyph{font-size:32px;color:rgba(192,154,98,.3);margin-bottom:16px;line-height:1;}
 .es-msg{font-size:15px;color:var(--ink-mid);font-weight:300;margin-bottom:8px;}
-.es-sub{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;}
+.es-sub{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-faint);letter-spacing:.16em;text-transform:uppercase;}
 
 /* ── NEWS GRID ── */
 .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
@@ -259,13 +283,13 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .nc-cover img{width:100%;height:100%;object-fit:cover;display:block;}
 .nc-empty{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#1e293b,#334155 55%,#1e293b);}
 .nc-empty i{font-size:2rem;color:rgba(192,154,98,.35);}
-.nc-empty span{font-family:"Montserrat",sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(192,154,98,.3);}
+.nc-empty span{font-family:'Effra', "Montserrat",sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(192,154,98,.3);}
 .nc-body{padding:18px 20px 16px;flex:1;display:flex;flex-direction:column;}
-.nc-meta{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.12em;margin-bottom:7px;}
+.nc-meta{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.12em;margin-bottom:7px;}
 .nc-body h4{font-weight:800;font-size:16px;color:var(--ink);line-height:1.35;margin-bottom:8px;}
 .nc-exc{font-size:12.5px;color:var(--ink-mid);line-height:1.75;flex:1;font-weight:300;display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .nc-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);display:flex;align-items:center;gap:8px;}
-.img-ct{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.06em;display:flex;align-items:center;gap:5px;}
+.img-ct{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.06em;display:flex;align-items:center;gap:5px;}
 .img-ct svg{width:11px;height:11px;color:var(--gold);}
 
 /* ── PROGRESS ── */
@@ -273,7 +297,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .prog-wrap.show{display:block;}
 .prog-bar{height:3px;background:var(--parchment-3);border-radius:2px;overflow:hidden;}
 .prog-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s;width:0%;}
-.prog-lbl{font-family:"Montserrat",sans-serif;font-size:10px;color:var(--ink-muted);margin-top:4px;letter-spacing:.06em;}
+.prog-lbl{font-family:'Effra', "Montserrat",sans-serif;font-size:10px;color:var(--ink-muted);margin-top:4px;letter-spacing:.06em;}
 
 /* ── MODAL ── */
 .modal-shroud{position:fixed;inset:0;z-index:300;background:rgba(30,22,10,.5);display:none;align-items:flex-start;justify-content:center;padding:50px 20px;overflow-y:auto;backdrop-filter:blur(4px);}
@@ -286,7 +310,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 .modal::before{content:"";position:absolute;top:0;right:0;width:3px;height:52px;background:var(--gold);border-radius:0 10px 0 0;}
 .modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:26px;}
-.modal-head .la{font-family:"Montserrat",sans-serif;font-style:italic;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;}
+.modal-head .la{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:8px;}
 .modal-head h2{font-weight:800;font-size:26px;color:var(--ink);}
 .close-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink-mid);display:grid;place-items:center;transition:all .2s;flex-shrink:0;}
 .close-btn:hover{border-color:var(--ink);color:var(--ink);}
@@ -295,18 +319,18 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .form-grid.two{grid-template-columns:1fr 1fr;}
 .field{display:flex;flex-direction:column;gap:7px;}
 .field label{font-size:12.5px;color:var(--ink-mid);font-weight:700;display:flex;align-items:center;gap:7px;}
-.field label .la{font-family:"Montserrat",sans-serif;font-style:italic;font-size:10px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;}
+.field label .la{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;}
 .field input,.field textarea,.field select{padding:10px 13px;background:var(--paper);border:1px solid var(--line);border-radius:6px;font-size:14px;color:var(--ink);outline:none;resize:vertical;transition:border-color .2s,background .2s,box-shadow .2s;}
 .field input:hover,.field textarea:hover,.field select:hover{border-color:var(--gold-soft);}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold-deep);box-shadow:0 0 0 3px rgba(192,154,98,.20);background:var(--parchment);}
 .field textarea{min-height:130px;line-height:1.75;}
-.field-help{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.05em;}
+.field-help{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.05em;}
 .dropzone{border:1px dashed rgba(192,154,98,.5);background:var(--paper);border-radius:8px;padding:24px 18px;text-align:center;display:flex;flex-direction:column;gap:7px;align-items:center;cursor:pointer;transition:all .25s;}
 .dropzone:hover{border-color:var(--gold);background:var(--parchment-2);}
 .dz-icon{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--ink-mid);}
 .dz-icon svg{width:15px;height:15px;}
 .dz-main{font-size:13.5px;color:var(--ink);font-weight:700;}
-.dz-sub{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.1em;}
+.dz-sub{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.1em;}
 .dropzone input{display:none;}
 .image-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:8px;}
 .image-tile{
@@ -326,13 +350,13 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .image-tile .pin{
   position:absolute;bottom:5px;right:5px;
   background:rgba(255,255,255,.9);padding:2px 7px;border-radius:4px;
-  font-family:"Montserrat",sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  font-family:'Effra', "Montserrat",sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
   backdrop-filter:blur(2px);
 }
 .image-tile .img-size-badge{
   position:absolute;bottom:5px;left:5px;
   background:rgba(30,22,10,.65);padding:2px 6px;border-radius:4px;
-  font-family:"Montserrat",sans-serif;font-size:9px;color:rgba(255,255,255,.85);
+  font-family:'Effra', "Montserrat",sans-serif;font-size:9px;color:rgba(255,255,255,.85);
   backdrop-filter:blur(2px);letter-spacing:.04em;
 }
 .modal-foot{margin-top:26px;padding-top:20px;border-top:1px solid var(--line-soft);display:flex;justify-content:flex-start;gap:10px;}
@@ -351,7 +375,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .switch .slider::before{content:"";position:absolute;height:20px;width:20px;right:3px;top:3px;background:#fff;border-radius:50%;box-shadow:0 1px 4px rgba(30,22,10,.25);transition:transform .3s var(--ease);}
 .switch input:checked + .slider{background:var(--gold);border-color:var(--gold-deep);}
 .switch input:checked + .slider::before{transform:translateX(-22px);}
-.mnt-status-pill{display:inline-flex;align-items:center;gap:7px;font-family:"Montserrat",sans-serif;font-style:italic;font-size:11.5px;letter-spacing:.1em;padding:4px 12px;border-radius:999px;border:1px solid var(--line);margin-bottom:16px;}
+.mnt-status-pill{display:inline-flex;align-items:center;gap:7px;font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11.5px;letter-spacing:.1em;padding:4px 12px;border-radius:999px;border:1px solid var(--line);margin-bottom:16px;}
 .mnt-status-pill::before{content:"";width:6px;height:6px;border-radius:50%;}
 .mnt-status-pill.on{color:var(--danger);border-color:rgba(122,37,24,.3);background:rgba(122,37,24,.04);}
 .mnt-status-pill.on::before{background:var(--danger);animation:reqPulse 2s ease-in-out infinite;}
@@ -359,7 +383,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .mnt-status-pill.off::before{background:var(--success);}
 .setting-card{padding:26px 28px;}
 .setting-card h3{font-weight:800;font-size:18px;color:var(--ink);margin-bottom:3px;}
-.setting-card .la{font-family:"Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;display:block;}
+.setting-card .la{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10.5px;color:var(--ink-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;display:block;}
 .acct-section{display:flex;flex-direction:column;gap:14px;}
 .acct-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line-soft);}
 .acct-row:last-child{border-bottom:0;}
@@ -393,19 +417,19 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .notif-banner-icon svg{width:16px;height:16px;}
 .notif-banner-body{flex:1;}
 .notif-banner-title{font-size:13.5px;font-weight:800;color:var(--ink);margin-bottom:2px;}
-.notif-banner-sub{font-family:"Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.06em;}
+.notif-banner-sub{font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:11px;color:var(--ink-muted);letter-spacing:.06em;}
 .notif-banner-actions{display:flex;gap:8px;flex-shrink:0;}
 .notif-banner-allow{
   padding:8px 18px;border-radius:6px;
   background:var(--gold-deep);color:var(--parchment);border:none;
-  font-family:"Almarai",sans-serif;font-size:13px;font-weight:700;
+  font-family:'Effra', "Almarai",sans-serif;font-size:13px;font-weight:700;
   cursor:pointer;transition:background .2s;
 }
 .notif-banner-allow:hover{background:var(--gold-soft);}
 .notif-banner-dismiss{
   padding:8px 14px;border-radius:6px;
   background:transparent;color:var(--ink-muted);border:1px solid var(--line);
-  font-family:"Almarai",sans-serif;font-size:12.5px;font-weight:700;
+  font-family:'Effra', "Almarai",sans-serif;font-size:12.5px;font-weight:700;
   cursor:pointer;transition:all .2s;
 }
 .notif-banner-dismiss:hover{border-color:var(--ink-muted);color:var(--ink);}
@@ -526,14 +550,14 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   line-height:1.25;margin-bottom:3px;
 }
 .req-card-craft{
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:11px;color:var(--ink-muted);letter-spacing:.1em;
 }
 
 /* Status pill */
 .req-status{
   display:inline-flex;align-items:center;gap:5px;
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:10.5px;letter-spacing:.1em;
   padding:3px 10px;border-radius:999px;
   border:1px solid;
@@ -585,7 +609,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 }
 
 .req-date{
-  font-family:"Montserrat",sans-serif;
+  font-family:'Effra', "Montserrat",sans-serif;
   font-size:10.5px;color:var(--ink-faint);letter-spacing:.08em;
   display:flex;align-items:center;gap:5px;
 }
@@ -597,7 +621,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   padding:6px 14px;border-radius:6px;
   border:1px solid var(--line);
   background:transparent;color:var(--ink-mid);
-  font-family:"Almarai",sans-serif;font-size:12px;font-weight:700;
+  font-family:'Effra', "Almarai",sans-serif;font-size:12px;font-weight:700;
   cursor:pointer;
   transition:all .25s cubic-bezier(0.22,1,0.36,1);
 }
@@ -679,7 +703,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .panel-close svg{width:13px;height:13px;}
 .panel-topbar-info{flex:1;}
 .panel-topbar-label{
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);
   margin-bottom:3px;
 }
@@ -729,7 +753,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   margin-bottom:5px;line-height:1.2;
 }
 .panel-hero-craft{
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:11.5px;color:var(--ink-muted);letter-spacing:.1em;
   margin-bottom:8px;
 }
@@ -745,7 +769,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   background:linear-gradient(90deg,rgba(192,154,98,.3),transparent);
 }
 .panel-section-label{
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--ink-faint);white-space:nowrap;
 }
@@ -770,7 +794,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .panel-detail-row:last-child{border-bottom:0;}
 .panel-detail-row:hover{background:rgba(192,154,98,.04);}
 .panel-detail-key{
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-faint);
   padding-top:2px;line-height:1.5;
@@ -784,7 +808,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 /* Timestamp footer */
 .panel-timestamp{
   display:flex;align-items:center;gap:6px;
-  font-family:"Montserrat",sans-serif;font-style:italic;
+  font-family:'Effra', "Montserrat",sans-serif;font-style:italic;
   font-size:10.5px;color:var(--ink-faint);letter-spacing:.08em;
   margin-top:20px;padding-top:16px;
   border-top:1px solid var(--line-soft);
@@ -803,7 +827,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .panel-action{
   flex:1;padding:11px 16px;
   border-radius:8px;border:1px solid;
-  font-family:"Almarai",sans-serif;font-size:13px;font-weight:700;
+  font-family:'Effra', "Almarai",sans-serif;font-size:13px;font-weight:700;
   cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:8px;
   transition:all .3s cubic-bezier(0.22,1,0.36,1);
@@ -864,7 +888,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   table.data thead{display:none;}
   table.data tbody tr{display:grid;gap:5px;padding:12px 14px;border-bottom:1px solid var(--line-soft);}
   table.data tbody td{padding:3px 0;border:0;display:grid;grid-template-columns:100px 1fr;gap:10px;font-size:13px;}
-  table.data tbody td::before{content:attr(data-label);font-family:"Montserrat",sans-serif;font-style:italic;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);}
+  table.data tbody td::before{content:attr(data-label);font-family:'Effra', "Montserrat",sans-serif;font-style:italic;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);}
   .row-actions{justify-content:flex-end;}
 }
 
@@ -1052,7 +1076,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   font-weight: 800;
   color: var(--ink);
   line-height: 1.1;
-  font-family: "Montserrat", "Almarai", sans-serif;
+  font-family: 'Effra', "Montserrat", "Almarai", sans-serif;
 }
 .ws-stat-sub {
   font-size: 11.5px;
@@ -1963,6 +1987,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
     <div class="view" id="view-notifications"></div>
     <div class="view" id="view-news"></div>
     <div class="view" id="view-workshops"></div>
+    <div class="view" id="view-careers"></div>
     <div class="view" id="view-volunteer_program"></div>
     <div class="view" id="view-volunteer_opportunities"></div>
     <div class="view" id="view-volunteers"></div>
@@ -2499,8 +2524,8 @@ if (logoutBtnEl && !logoutBtnEl.dataset.bound) {
 }
 
 /* ── Cache ── */
-const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],volunteerOpportunities:[],workshop_registrations:[],surveys:[],survey_responses:[],admin_notifications:[],notifications:[],settings:{}};
-const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:false,workshops:false,volunteerOpportunities:false,workshop_registrations:false,surveys:false,survey_responses:false,admin_notifications:false,notifications:false,settings:false};
+const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],volunteerOpportunities:[],workshop_registrations:[],surveys:[],survey_responses:[],jobs:[],jobApplications:[],admin_notifications:[],notifications:[],settings:{}};
+const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:false,workshops:false,volunteerOpportunities:false,workshop_registrations:false,surveys:false,survey_responses:false,jobs:false,jobApplications:false,admin_notifications:false,notifications:false,settings:false};
 
 async function loadCol(col){
   if(loaded[col]) return C[col];
@@ -2541,6 +2566,7 @@ const ROUTES=[
   {id:'notifications', label:'الإشعارات',      icon:iBell,     badge:'nNew'},
   {id:'news',          label:'إدارة الأخبار',  icon:iNews},
   {id:'workshops',     label:'ورش العمل',     icon:iTools,    badge:'wNew'},
+  {id:'careers',       label:'إدارة التوظيف', icon:iBriefcase, badge:'jNew'},
   {id:'volunteer_program', label:'برنامج التطوع', icon:iHeart, badge:'vpNew'},
   {id:'volunteers',    label:'أصدقاء الجمعية', icon:iUsers,    badge:'vNew'},
   {id:'crafts',        label:'بيدي حرفة',      icon:iCraft,    badge:'cNew'},
@@ -2555,9 +2581,10 @@ async function renderNav(){
   const cNew=(C.crafts||[]).filter(c=>!c.reviewed).length;
   const wNew=(C.workshop_registrations||[]).filter(w=>!w.reviewed).length;
   const vaNew=(C.volunteer_applications||[]).filter(a=>!a.reviewed).length;
+  const jNew=(C.jobApplications||[]).filter(a=>!a.reviewed).length;
   const nNotifs = (C.admin_notifications || C.notifications || []);
-  const nNew = nNotifs.filter(n => !n.read && n.status !== 'read').length + vpNew + vNew + cNew + wNew + vaNew;
-  const bags={vpNew,vNew,cNew,wNew,nNew};
+  const nNew = nNotifs.filter(n => !n.read && n.status !== 'read').length + vpNew + vNew + cNew + wNew + vaNew + jNew;
+  const bags={vpNew,vNew,cNew,wNew,jNew,nNew};
   document.getElementById('navList').innerHTML=ROUTES.map(r=>{
     const active=r.id===route?'active':'';
     const cnt=r.badge?bags[r.badge]:0;
@@ -2609,6 +2636,7 @@ async function renderView(r){
   else if(r==='notifications') await vNotifications(el);
   else if(r==='news')         await vNews(el);
   else if(r==='workshops')    await vWorkshops(el);
+  else if(r==='careers')      await vCareers(el);
   else if(r==='volunteer_program'||r==='volunteer_opportunities') await vVolunteerProgram(el);
   else if(r==='volunteers')   await vVols(el);
   else if(r==='crafts')       await vCrafts(el);
@@ -3520,7 +3548,8 @@ function renderWorkshopMinimalCardHTML(w, allRegistrants) {
   const isVis = w.isVisible !== false;
 
   let badge = `<span class="ws-status-badge open">مفتوحة</span>`;
-  if (w.status === 'closed') badge = `<span class="ws-status-badge closed">مغلقة</span>`;
+  if (w.status === 'completed') badge = `<span class="ws-status-badge" style="background:rgba(28,26,23,.08);color:var(--ink-soft);border:1px solid var(--line);">تم الانتهاء</span>`;
+  else if (w.status === 'closed') badge = `<span class="ws-status-badge closed">مغلقة</span>`;
   else if (remaining <= 0 || w.status === 'full') badge = `<span class="ws-status-badge full">مكتملة</span>`;
 
   const descText = w.description || w.subTitle || 'لا يوجد وصف متاح لهذه الورشة.';
@@ -3639,7 +3668,8 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   }
 
   let badge = `<span class="ws-status-badge open">مفتوحة للتسجيل</span>`;
-  if (w.status === 'closed') badge = `<span class="ws-status-badge closed">مغلقة</span>`;
+  if (w.status === 'completed') badge = `<span class="ws-status-badge" style="background:rgba(28,26,23,.08);color:var(--ink-soft);border:1px solid var(--line);">تم الانتهاء</span>`;
+  else if (w.status === 'closed') badge = `<span class="ws-status-badge closed">مغلقة</span>`;
   else if (remaining <= 0 || w.status === 'full') badge = `<span class="ws-status-badge full">مكتملة العدد</span>`;
 
   let filteredRegs = [...wRegs];
@@ -3698,6 +3728,23 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
           <h1 class="ws-detail-title">${esc(w.title || '')}</h1>
         </div>
         <div class="ws-action-group">
+          <div style="position:relative;" id="wsReportMenuWrap">
+            <button class="ws-action-btn" id="btnPrintWsReport" style="background:var(--ink);color:#fff;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:15px;height:15px;"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>تحميل تقرير الورشة</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div id="wsReportMenu" style="display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:250px;background:var(--surface,#fff);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 30px -8px rgba(0,0,0,.18);z-index:50;overflow:hidden;">
+              <button class="btn btn-ghost" id="btnReportWithSurvey" style="width:100%;justify-content:flex-start;border-radius:0;padding:11px 14px;font-size:13px;gap:8px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                <span>تحميل مع الاستبيان والإجابات</span>
+              </button>
+              <button class="btn btn-ghost" id="btnReportNoSurvey" style="width:100%;justify-content:flex-start;border-radius:0;padding:11px 14px;font-size:13px;gap:8px;border-top:1px solid var(--line-soft);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:15px;height:15px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>تحميل بدون الاستبيان</span>
+              </button>
+            </div>
+          </div>
           <button class="ws-action-btn secondary" id="btnToggleCurrentWsVis">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:15px;height:15px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             <span>${isVis ? 'إخفاء عن العملاء' : 'إظهار للعملاء'}</span>
@@ -3843,10 +3890,6 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               <span>تحميل Word (.docx)</span>
             </button>
-            <button class="btn btn-sm btn-primary" id="btnPrintWsReport" style="gap:6px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:14px;height:14px;"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-              <span>تحميل تقرير الورشة (طباعة)</span>
-            </button>
           </div>
         </div>
 
@@ -3869,9 +3912,10 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                     <th>الاسم</th>
                     <th>رقم الجوال</th>
                     <th>رقم الهوية</th>
+                    <th>العمر</th>
                     <th>الجنس</th>
+                    <th style="text-align:center;">الحضور</th>
                     <th>حالة الاستبيان</th>
-                    <th>البريد الإلكتروني</th>
                     <th>الملاحظات</th>
                     <th>تاريخ التسجيل</th>
                     <th style="text-align:center;">الإجراءات</th>
@@ -3886,9 +3930,15 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                       <td><strong>${esc(r.name || r.fullName || 'بدون اسم')}</strong></td>
                       <td dir="ltr" style="text-align:right;">${esc(r.phone || r.mobile || '—')}</td>
                       <td><code style="font-family:monospace;font-size:13px;padding:3px 8px;background:var(--parchment-2);border-radius:4px;border:1px solid var(--line-soft);">${esc(r.nationalId || r.idNumber || '—')}</code></td>
+                      <td style="text-align:center;">${esc(r.age || '—')}</td>
                       <td>${esc(r.gender || '—')}</td>
+                      <td style="text-align:center;">
+                        <button type="button" class="ws-attend-toggle ${r.attended ? 'on' : ''}" data-attend="${r.id}" title="${r.attended ? 'حضر — اضغط للإلغاء' : 'لم يحضر — اضغط للتأكيد'}"
+                          style="cursor:pointer;border:1px solid ${r.attended ? '#2e6022' : 'var(--line)'};background:${r.attended ? 'rgba(58,94,46,.12)' : 'transparent'};color:${r.attended ? '#2e6022' : 'var(--ink-muted)'};font-weight:700;font-size:11px;padding:4px 10px;border-radius:999px;white-space:nowrap;">
+                          ${r.attended ? '✓ حضر' : 'لم يحضر'}
+                        </button>
+                      </td>
                       <td>${hasAnswered ? '<span class="ws-status-badge open" style="font-size:11px;padding:2px 8px;">✓ أجاب</span>' : '<span class="chip-count" style="background:var(--parchment-3);color:var(--ink-muted);font-weight:600;font-size:11px;padding:2px 8px;border-radius:999px;">لم يجب</span>'}</td>
-                      <td>${esc(r.email || '—')}</td>
                       <td>${esc(r.notes || '—')}</td>
                       <td>${r.createdAt ? fmtEn(toTs(r.createdAt)) : '—'}</td>
                       <td style="text-align:center;">
@@ -4208,15 +4258,53 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
 
   el.querySelector('#btnEditCurrentWs')?.addEventListener('click', () => openWorkshopFormModal(w, el));
   el.querySelector('#btnEditWsInfo')?.addEventListener('click', () => openWorkshopFormModal(w, el));
-  el.querySelector('#btnDeleteCurrentWs')?.addEventListener('click', async () => {
-    if (!confirm(`هل أنت تأكد من حذف الورشة "${w.title}"؟`)) return;
-    try {
-      await deleteDoc(doc(db, 'workshops', w.id));
-      loaded.workshops = false;
-      selectedWorkshopId = null;
-      toast('تم حذف الورشة بنجاح');
-      vWorkshops(el);
-    } catch (err) { console.error(err); toast('حدث خطأ أثناء الحذف', 'err'); }
+  el.querySelector('#btnDeleteCurrentWs')?.addEventListener('click', () => {
+    const wsTitle = w.title || '';
+    const html = `
+      <div class="modal-head">
+        <div><div class="la" style="color:var(--danger);">DANGER · حذف نهائي</div><h2>حذف الورشة</h2></div>
+        <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+      </div>
+      <div style="padding:4px 2px;">
+        <div style="background:rgba(122,37,24,.06);border:1px solid rgba(122,37,24,.2);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.8;color:#8c2518;">
+          <strong>تحذير:</strong> هذا الإجراء لا يمكن التراجع عنه. سيُحذف نهائياً كل ما يخص الورشة (بياناتها وصورها).
+        </div>
+        <p style="font-size:13.5px;color:var(--ink-mid);line-height:1.8;margin-bottom:10px;">للتأكيد، اكتب اسم الورشة التالي بالضبط:</p>
+        <div style="background:var(--parchment-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:12px;font-weight:800;color:var(--ink);font-size:14px;user-select:all;">${esc(wsTitle)}</div>
+        <input type="text" id="wsDelConfirmInput" class="bdy-input" placeholder="اكتب اسم الورشة هنا…" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:14px;" autocomplete="off">
+        <div id="wsDelErr" style="font-size:12px;color:#8c2518;min-height:16px;margin-top:6px;"></div>
+        <div style="margin-top:14px;display:flex;justify-content:flex-end;gap:10px;">
+          <button type="button" class="btn btn-ghost" data-close>إلغاء</button>
+          <button type="button" class="btn btn-danger" id="wsDelConfirmBtn" disabled style="opacity:.5;">حذف الورشة نهائياً</button>
+        </div>
+      </div>`;
+    showModal(html);
+
+    const input = document.getElementById('wsDelConfirmInput');
+    const btn = document.getElementById('wsDelConfirmBtn');
+    const errEl = document.getElementById('wsDelErr');
+    const matches = () => input.value.trim() === wsTitle.trim();
+    input.addEventListener('input', () => {
+      const ok = matches();
+      btn.disabled = !ok;
+      btn.style.opacity = ok ? '1' : '.5';
+      errEl.textContent = '';
+    });
+    input.focus();
+
+    btn.addEventListener('click', async () => {
+      if (!matches()) { errEl.textContent = 'الاسم غير مطابق. لن تُحذف الورشة.'; return; }
+      btn.disabled = true; btn.textContent = 'جارٍ الحذف…';
+      try {
+        await deleteWorkshopImages(w.id);
+        await deleteDoc(doc(db, 'workshops', w.id));
+        loaded.workshops = false;
+        selectedWorkshopId = null;
+        closeModal();
+        toast('تم حذف الورشة بنجاح');
+        vWorkshops(el);
+      } catch (err) { console.error(err); errEl.textContent = 'حدث خطأ أثناء الحذف.'; btn.disabled = false; btn.textContent = 'حذف الورشة نهائياً'; }
+    });
   });
 
   // Tab switching
@@ -4475,7 +4563,16 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
 
   // Exports
   el.querySelector('#btnExportWsWord')?.addEventListener('click', () => exportWorkshopRegistrantsToWord(w, filteredRegs));
-  el.querySelector('#btnPrintWsReport')?.addEventListener('click', () => openWorkshopReportPrint(w, wRegs, wsSurvey, surveyResponses));
+  // قائمة خيارات تحميل التقرير (مع/بدون الاستبيان)
+  const rptBtn = el.querySelector('#btnPrintWsReport');
+  const rptMenu = el.querySelector('#wsReportMenu');
+  if (rptBtn && rptMenu) {
+    rptBtn.addEventListener('click', (ev) => { ev.stopPropagation(); rptMenu.style.display = rptMenu.style.display === 'none' ? 'block' : 'none'; });
+    document.addEventListener('click', () => { rptMenu.style.display = 'none'; }, { once: false });
+    rptMenu.addEventListener('click', e => e.stopPropagation());
+  }
+  el.querySelector('#btnReportWithSurvey')?.addEventListener('click', () => { if(rptMenu) rptMenu.style.display='none'; openWorkshopReportPrint(w, wRegs, wsSurvey, surveyResponses, true); });
+  el.querySelector('#btnReportNoSurvey')?.addEventListener('click', () => { if(rptMenu) rptMenu.style.display='none'; openWorkshopReportPrint(w, wRegs, wsSurvey, surveyResponses, false); });
 
   // WhatsApp contact button
   el.querySelectorAll('[data-action-reg-wa]').forEach(btn => {
@@ -4504,6 +4601,29 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
         const fresh = await loadCol('workshop_registrations');
         vWorkshopDetail(el, w, fresh, allSurveys, allResponses);
       } catch (err) { console.error(err); toast('حدث خطأ أثناء الحذف', 'err'); }
+    });
+  });
+
+  // تبديل حالة الحضور (حضر / لم يحضر) — تحديث فوري بدون إعادة رسم الجدول
+  el.querySelectorAll('[data-attend]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const regId = btn.dataset.attend;
+      const regObj = (wRegs || []).find(r => r.id === regId);
+      const newVal = !(regObj && regObj.attended);
+      btn.disabled = true;
+      try {
+        await updateDoc(doc(db, 'workshop_registrations', regId), { attended: newVal, attendedAt: newVal ? serverTimestamp() : null });
+        if (regObj) regObj.attended = newVal;
+        const cObj = (C.workshop_registrations || []).find(r => r.id === regId);
+        if (cObj) cObj.attended = newVal;
+        btn.classList.toggle('on', newVal);
+        btn.textContent = newVal ? '✓ حضر' : 'لم يحضر';
+        btn.title = newVal ? 'حضر — اضغط للإلغاء' : 'لم يحضر — اضغط للتأكيد';
+        btn.style.border = `1px solid ${newVal ? '#2e6022' : 'var(--line)'}`;
+        btn.style.background = newVal ? 'rgba(58,94,46,.12)' : 'transparent';
+        btn.style.color = newVal ? '#2e6022' : 'var(--ink-muted)';
+      } catch (err) { console.error(err); toast('تعذّر تحديث الحضور', 'err'); }
+      finally { btn.disabled = false; }
     });
   });
 
@@ -4900,7 +5020,7 @@ function openQuestionFormModal(survey, qToEdit = null, onSave) {
     <div class="modal-card" style="max-width:540px;text-align:right;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;">
         <div>
-          <div style="font-family:'Montserrat',sans-serif;font-style:italic;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Survey · Question</div>
+          <div style="font-family:'Effra', 'Montserrat',sans-serif;font-style:italic;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Survey · Question</div>
           <h3 style="font-size:19px;font-weight:800;color:var(--ink);margin:0;">
             ${isEdit ? 'تعديل السؤال' : 'إضافة سؤال جديد'}
           </h3>
@@ -5046,7 +5166,7 @@ function openSurveyMetaModal(survey, onSave) {
     <div class="modal-card" style="max-width:540px;text-align:right;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:20px;">
         <div>
-          <div style="font-family:'Montserrat',sans-serif;font-style:italic;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Survey · Settings</div>
+          <div style="font-family:'Effra', 'Montserrat',sans-serif;font-style:italic;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Survey · Settings</div>
           <h3 style="font-size:19px;font-weight:800;color:var(--ink);margin:0;">تعديل بيانات الاستبيان</h3>
         </div>
         <button type="button" class="close-btn" id="btnCloseSMModalTop" aria-label="إغلاق">
@@ -6691,6 +6811,7 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
             <option value="open" ${isEdit && wsToEdit.status === 'open' ? 'selected' : (!isEdit ? 'selected' : '')}>مفتوح للتسجيل</option>
             <option value="closed" ${isEdit && wsToEdit.status === 'closed' ? 'selected' : ''}>مغلق</option>
             <option value="full" ${isEdit && wsToEdit.status === 'full' ? 'selected' : ''}>مكتمل العدد</option>
+            <option value="completed" ${isEdit && wsToEdit.status === 'completed' ? 'selected' : ''}>تم الانتهاء (انتهت الورشة)</option>
           </select>
         </div>
       </div>
@@ -6713,6 +6834,12 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
         <input type="text" id="wsF_imageUrl" value="${isEdit ? escA(wsToEdit.imageUrl || '') : ''}" placeholder="https://example.com/image.jpg">
       </div>
       <div class="field">
+        <label>صور الورشة للتقرير (تُرفع وتظهر في تقرير الورشة)</label>
+        <input type="file" id="wsF_images" accept="image/*" multiple style="font-size:13px;">
+        <div style="font-size:11.5px;color:var(--ink-muted);margin-top:4px;">اختر حتى <strong>3 صور دفعة واحدة</strong> (بالضغط Ctrl واختيارها معاً). تُضغط تلقائياً وتظهر كلها في صفحة واحدة بالتقرير. ${isEdit && (wsToEdit.imageCount||0) > 0 ? `<strong>الصور المرفوعة حالياً: ${wsToEdit.imageCount}</strong> — رفع صور جديدة يستبدلها.` : ''}</div>
+        <div id="wsF_imgPreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;"></div>
+      </div>
+      <div class="field">
         <label>الملاحظات الخاصة بالإدارة</label>
         <textarea id="wsF_adminNotes" rows="2" placeholder="أدخل أي ملاحظات إدارية خاصة بالورشة…">${isEdit ? esc(wsToEdit.adminNotes || '') : ''}</textarea>
       </div>
@@ -6727,11 +6854,28 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
 
   showModal(html);
 
+  // معاينة الصور المختارة
+  const imgInput = document.getElementById('wsF_images');
+  if (imgInput) imgInput.addEventListener('change', () => {
+    const prev = document.getElementById('wsF_imgPreview');
+    prev.innerHTML = '';
+    const files = Array.from(imgInput.files || []).slice(0, 3);
+    if ((imgInput.files || []).length > 3) toast('سيتم رفع أول 3 صور فقط', 'err');
+    files.forEach(f => {
+      const url = URL.createObjectURL(f);
+      const im = document.createElement('img');
+      im.src = url; im.style.cssText = 'width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line);';
+      im.onload = () => URL.revokeObjectURL(url);
+      prev.appendChild(im);
+    });
+  });
+
   document.getElementById('wsAdminForm').addEventListener('submit', async e => {
     e.preventDefault();
     const submitBtn = document.getElementById('btnSaveWs');
     submitBtn.disabled = true;
     submitBtn.textContent = 'جارٍ الحفظ…';
+    const newImageFiles = Array.from((document.getElementById('wsF_images') || {}).files || []).slice(0, 3);
 
     const data = {
       title: document.getElementById('wsF_title').value.trim(),
@@ -6749,13 +6893,31 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
     };
 
     try {
+      let wsId;
       if (isEdit) {
-        await updateDoc(doc(db, 'workshops', wsToEdit.id), { ...data, updatedAt: serverTimestamp() });
-        toast('تم تحديث بيانات الورشة بنجاح');
+        wsId = wsToEdit.id;
+        await updateDoc(doc(db, 'workshops', wsId), { ...data, updatedAt: serverTimestamp() });
       } else {
-        await addDoc(collection(db, 'workshops'), { ...data, registeredCount: 0, createdAt: serverTimestamp() });
-        toast('تم إنشاء الورشة بنجاح');
+        const ref = await addDoc(collection(db, 'workshops'), { ...data, registeredCount: 0, createdAt: serverTimestamp() });
+        wsId = ref.id;
       }
+
+      // رفع صور الورشة (تضغط وتخزن في workshop_images) — رفع جديد يستبدل القديم
+      if (newImageFiles.length > 0) {
+        submitBtn.textContent = 'جارٍ رفع الصور…';
+        await deleteWorkshopImages(wsId);
+        let idx = 0;
+        for (const f of newImageFiles) {
+          try {
+            const dataUrl = await smartImageToBase64(f);
+            await setDoc(doc(db, 'workshop_images', `${wsId}_${idx}`), { workshopId: wsId, idx, data: dataUrl, createdAt: serverTimestamp() });
+            idx++;
+          } catch (e) { console.warn('workshop image skipped', e); }
+        }
+        await updateDoc(doc(db, 'workshops', wsId), { imageCount: idx });
+      }
+
+      toast(isEdit ? 'تم تحديث بيانات الورشة بنجاح' : 'تم إنشاء الورشة بنجاح');
       loaded.workshops = false;
       closeModal();
       vWorkshops(mainEl);
@@ -7538,6 +7700,452 @@ function exportRegistrantsToCSV(filename, rows) {
   toast('تم تصدير ملف Excel/CSV بنجاح');
 }
 
+/* ════════════════════════════════════════════════
+   CAREERS — إدارة التوظيف (jobs + jobApplications)
+════════════════════════════════════════════════ */
+const JOB_TYPES = { full:'دوام كامل', part:'دوام جزئي', temp:'مؤقت', intern:'تدريب', volunteer:'تطوع' };
+const JOB_STATUS = { draft:'مسودة', published:'منشورة', closed:'مغلقة' };
+const APP_STATUSES = ['جديد','قيد المراجعة','مرشح للمقابلة','مقبول','مرفوض'];
+let careersTab = 'jobs';          // jobs | applicants
+let selectedJobId = null;         // عند فتح متقدمي وظيفة
+let jobSearchQ = '', appSearchQ = '', appStatusFilter = 'all';
+
+function jobDateVal(ts){ if(!ts) return ''; const d=toTs(ts); if(!d) return ''; return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function jobIsExpired(j){ const d=toTs(j.deadline); if(!d) return false; const e=new Date(d); e.setHours(23,59,59,999); return Date.now()>e.getTime(); }
+
+async function loadJobApplications(){
+  loaded.jobApplications = false;
+  return await loadCol('jobApplications');
+}
+
+async function vCareers(el){
+  loaded.jobs = false; loaded.jobApplications = false;
+  const [jobs, apps] = await Promise.all([ loadCol('jobs'), loadCol('jobApplications') ]);
+
+  if (selectedJobId){
+    const job = jobs.find(j=>j.id===selectedJobId);
+    if (job){ await vJobApplicants(el, job, apps); return; }
+    selectedJobId = null;
+  }
+
+  // عدّ المتقدمين لكل وظيفة
+  const countByJob = {};
+  apps.forEach(a=>{ countByJob[a.jobId]=(countByJob[a.jobId]||0)+1; });
+
+  let rows = [...jobs].sort((a,b)=>(toTs(b.createdAt)||0)-(toTs(a.createdAt)||0));
+  const q = jobSearchQ.trim();
+  if (q){ rows = rows.filter(j=>(j.title||'').includes(q)||(j.department||'').includes(q)); }
+
+  el.innerHTML = `
+    <div class="page-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px;">
+      <div>
+        <h1 class="page-title" style="font-size:28px;">إدارة التوظيف</h1>
+        <p class="page-sub">إنشاء الوظائف ونشرها ومتابعة المتقدمين.</p>
+      </div>
+      <button class="btn btn-primary" id="btnNewJob" style="gap:6px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+        <span>إنشاء وظيفة جديدة</span>
+      </button>
+    </div>
+
+    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px;">
+      ${sCard('JobsTotal','إجمالي الوظائف',jobs.length,'وظيفة')}
+      ${sCard('JobsPub','منشورة',jobs.filter(j=>j.status==='published').length,'ظاهرة للزوار')}
+      ${sCard('JobsDraft','مسودات',jobs.filter(j=>j.status==='draft').length,'غير منشورة')}
+      ${sCard('AppsTotal','إجمالي المتقدمين',apps.length,'طلب توظيف')}
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <input type="text" id="jobSearch" dir="auto" placeholder="بحث باسم الوظيفة أو القسم…" value="${escA(q)}" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+    </div>
+
+    ${rows.length===0
+      ? `<div class="card">${emptyState(q?'لا توجد نتائج':'لم يتم إنشاء وظائف بعد','JOBS · EMPTY')}</div>`
+      : `<div class="jobs-grid">${rows.map(j=>renderJobCardHTML(j, countByJob[j.id]||0)).join('')}</div>`}
+  `;
+
+  el.querySelector('#btnNewJob')?.addEventListener('click', ()=>openJobFormModal(null, el));
+  const si = el.querySelector('#jobSearch');
+  if (si) si.addEventListener('input', e=>{ jobSearchQ=e.target.value; vCareers(el); const f=el.querySelector('#jobSearch'); if(f){f.focus(); const n=f.value.length; f.setSelectionRange(n,n);} });
+
+  el.querySelectorAll('[data-job-apps]').forEach(b=>b.addEventListener('click',()=>{ selectedJobId=b.dataset.jobApps; appSearchQ=''; appStatusFilter='all'; vCareers(el); }));
+  el.querySelectorAll('[data-job-edit]').forEach(b=>b.addEventListener('click',()=>{ const j=jobs.find(x=>x.id===b.dataset.jobEdit); if(j) openJobFormModal(j, el); }));
+  el.querySelectorAll('[data-job-pub]').forEach(b=>b.addEventListener('click',()=>toggleJobPublish(b.dataset.jobPub, el)));
+  el.querySelectorAll('[data-job-close]').forEach(b=>b.addEventListener('click',()=>setJobStatus(b.dataset.jobClose,'closed',el)));
+  el.querySelectorAll('[data-job-del]').forEach(b=>b.addEventListener('click',()=>deleteJob(b.dataset.jobDel, countByJob[b.dataset.jobDel]||0, el)));
+}
+
+function jobStatusBadge(j){
+  if (j.status==='published' && jobIsExpired(j)) return '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">منتهية</span>';
+  if (j.status==='published') return '<span class="chip-count" style="background:#e6f4ea;color:#137333;">منشورة</span>';
+  if (j.status==='closed') return '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">مغلقة</span>';
+  return '<span class="chip-count" style="background:#fef7e0;color:#b06000;">مسودة</span>';
+}
+
+function jobMetaChip(icon, text){
+  return `<span class="jobc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${icon}</svg>${esc(text)}</span>`;
+}
+function renderJobCardHTML(j, appCount){
+  const pub = j.status==='published';
+  const icClock='<path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9"/>';
+  const icPin='<path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>';
+  const icBag='<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>';
+  const icCal='<rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke-linecap="round"/>';
+  const icId='<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="11" r="2"/><path d="M13 10h5M13 14h5M5 16c.6-1.6 2-2.4 3.5-2.4S11.4 14.4 12 16" stroke-linecap="round"/>';
+  const meta = [
+    j.type ? jobMetaChip(icBag, JOB_TYPES[j.type]||j.type) : '',
+    j.position ? jobMetaChip(icId, j.position) : '',
+    j.location ? jobMetaChip(icPin, j.location) : '',
+    j.deadline ? jobMetaChip(icCal, 'آخر موعد: '+fmtEn(toTs(j.deadline))) : '',
+  ].filter(Boolean).join('');
+  return `
+  <div class="jobc ${pub?'is-pub':''} ${j.status==='closed'?'is-closed':''}">
+    <div class="jobc-top">
+      <div class="jobc-headline">
+        ${j.department?`<span class="jobc-dept">${esc(j.department)}</span>`:''}
+        <h3 class="jobc-title">${esc(j.title||'وظيفة')}</h3>
+      </div>
+      ${jobStatusBadge(j)}
+    </div>
+    <div class="jobc-meta">${meta || '<span class="jobc-chip jobc-chip-empty">لا توجد تفاصيل إضافية</span>'}</div>
+    <div class="jobc-foot">
+      <button class="jobc-apps" data-job-apps="${j.id}">
+        <span class="jobc-apps-num">${appCount}</span>
+        <span class="jobc-apps-lbl">متقدم</span>
+      </button>
+      <div class="jobc-actions">
+        <button class="btn btn-sm btn-outline" data-job-edit="${j.id}">تعديل</button>
+        <button class="btn btn-sm ${pub?'btn-ghost':'btn-primary'}" data-job-pub="${j.id}">${pub?'إلغاء النشر':'نشر'}</button>
+        ${j.status!=='closed'?`<button class="btn btn-sm btn-ghost" data-job-close="${j.id}">إغلاق</button>`:''}
+        <button class="btn btn-sm btn-danger" data-job-del="${j.id}">حذف</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openJobFormModal(job, el){
+  const isEdit = !!job;
+  const opt = (v,cur,txt)=>`<option value="${v}" ${cur===v?'selected':''}>${txt}</option>`;
+  const html = `
+    <div class="modal-head">
+      <div><div class="la">CAREERS · Form</div><h2>${isEdit?'تعديل وظيفة':'إنشاء وظيفة جديدة'}</h2></div>
+      <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+    </div>
+    <form id="jobForm" class="form-grid" style="gap:14px;">
+      <div class="field"><label>المسمى الوظيفي <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="jf_title" required value="${isEdit?escA(job.title||''):''}" placeholder="مثال: منسق فعاليات"></div>
+      <div class="form-grid two">
+        <div class="field"><label>القسم / المجال</label>
+          <input type="text" id="jf_dept" value="${isEdit?escA(job.department||''):''}" placeholder="مثال: الفعاليات"></div>
+        <div class="field"><label>نوع الوظيفة</label>
+          <select id="jf_type">
+            ${['full','part','temp','intern','volunteer'].map(t=>opt(t, isEdit?job.type:'full', JOB_TYPES[t])).join('')}
+          </select></div>
+      </div>
+      <div class="form-grid two">
+        <div class="field"><label>موقع العمل</label>
+          <input type="text" id="jf_loc" value="${isEdit?escA(job.location||'مقر الجمعية - القريات'):'مقر الجمعية - القريات'}" placeholder="مقر الجمعية بالقريات"></div>
+        <div class="field"><label>المسمى الوظيفي (يظهر في التفاصيل)</label>
+          <input type="text" id="jf_position" value="${isEdit?escA(job.position||''):''}" placeholder="مثال: أخصائي تراث"></div>
+      </div>
+      <div class="field"><label>وصف الوظيفة</label>
+        <textarea id="jf_desc" rows="3" placeholder="نبذة عن الوظيفة…">${isEdit?esc(job.description||''):''}</textarea></div>
+      <div class="field"><label>المؤهلات والشروط</label>
+        <textarea id="jf_qual" rows="3">${isEdit?esc(job.qualifications||''):''}</textarea></div>
+      <div class="form-grid two">
+        <div class="field"><label>آخر موعد للتقديم</label>
+          <input type="date" id="jf_deadline" value="${isEdit?jobDateVal(job.deadline):''}"></div>
+        <div class="field"><label>حالة الوظيفة</label>
+          <select id="jf_status">
+            ${['draft','published','closed'].map(s=>opt(s, isEdit?job.status:'draft', JOB_STATUS[s])).join('')}
+          </select></div>
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn btn-ghost" data-close>إلغاء</button>
+        <button type="submit" class="btn btn-primary" id="btnSaveJob">${isEdit?'حفظ التعديلات':'حفظ الوظيفة'}</button>
+      </div>
+    </form>`;
+  showModal(html);
+
+  document.getElementById('jobForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const btn = document.getElementById('btnSaveJob');
+    btn.disabled = true; btn.textContent='جارٍ الحفظ…';
+    const status = document.getElementById('jf_status').value;
+    const deadlineStr = document.getElementById('jf_deadline').value;
+    const data = {
+      title: document.getElementById('jf_title').value.trim(),
+      department: document.getElementById('jf_dept').value.trim(),
+      type: document.getElementById('jf_type').value,
+      location: document.getElementById('jf_loc').value.trim(),
+      position: document.getElementById('jf_position').value.trim(),
+      description: document.getElementById('jf_desc').value.trim(),
+      qualifications: document.getElementById('jf_qual').value.trim(),
+      deadline: deadlineStr ? new Date(deadlineStr+'T00:00:00') : null,
+      status
+    };
+    try {
+      if (isEdit){
+        const patch = { ...data, updatedAt: serverTimestamp() };
+        if (status==='published' && !job.publishedAt) patch.publishedAt = serverTimestamp();
+        await updateDoc(doc(db,'jobs',job.id), patch);
+        toast('تم تحديث الوظيفة');
+      } else {
+        const patch = { ...data, createdAt: serverTimestamp() };
+        if (status==='published') patch.publishedAt = serverTimestamp();
+        await addDoc(collection(db,'jobs'), patch);
+        toast('تم حفظ الوظيفة');
+      }
+      loaded.jobs=false; closeModal(); vCareers(el);
+    } catch(err){ console.error(err); toast('حدث خطأ أثناء الحفظ','err'); btn.disabled=false; btn.textContent=isEdit?'حفظ التعديلات':'حفظ الوظيفة'; }
+  });
+}
+
+async function toggleJobPublish(id, el){
+  const j = (C.jobs||[]).find(x=>x.id===id); if(!j) return;
+  const newStatus = j.status==='published' ? 'draft' : 'published';
+  try {
+    const patch = { status:newStatus, updatedAt:serverTimestamp() };
+    if (newStatus==='published' && !j.publishedAt) patch.publishedAt = serverTimestamp();
+    await updateDoc(doc(db,'jobs',id), patch);
+    loaded.jobs=false; toast(newStatus==='published'?'تم نشر الوظيفة':'تم إلغاء النشر'); vCareers(el);
+  } catch(err){ console.error(err); toast('تعذّر تغيير الحالة','err'); }
+}
+
+async function setJobStatus(id, status, el){
+  try { await updateDoc(doc(db,'jobs',id), { status, updatedAt:serverTimestamp() }); loaded.jobs=false; toast('تم تحديث حالة الوظيفة'); vCareers(el); }
+  catch(err){ console.error(err); toast('تعذّر التحديث','err'); }
+}
+
+async function deleteJob(id, appCount, el){
+  const msg = appCount>0
+    ? `لهذه الوظيفة ${appCount} متقدم. حذف الوظيفة لا يحذف سجلات المتقدمين. متابعة الحذف؟`
+    : 'هل تريد حذف هذه الوظيفة؟';
+  if(!confirm(msg)) return;
+  try { await deleteDoc(doc(db,'jobs',id)); loaded.jobs=false; toast('تم حذف الوظيفة'); vCareers(el); }
+  catch(err){ console.error(err); toast('تعذّر الحذف','err'); }
+}
+
+/* ── متقدمو وظيفة محددة ── */
+async function vJobApplicants(el, job, allApps){
+  let apps = (allApps||[]).filter(a=>a.jobId===job.id)
+    .sort((a,b)=>(toTs(b.submittedAt||b.createdAt)||0)-(toTs(a.submittedAt||a.createdAt)||0));
+
+  if (appStatusFilter!=='all') apps = apps.filter(a=>(a.status||'جديد')===appStatusFilter);
+  const q = appSearchQ.trim().toLowerCase();
+  if (q) apps = apps.filter(a=>(a.name||'').toLowerCase().includes(q)||(a.phone||'').includes(q));
+
+  el.innerHTML = `
+    <div style="margin-bottom:14px;">
+      <button class="btn btn-ghost btn-sm" id="btnBackJobs" style="gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:14px;height:14px;"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>رجوع لقائمة الوظائف</span></button>
+    </div>
+    <div class="page-head" style="margin-bottom:16px;">
+      <h1 class="page-title" style="font-size:24px;">متقدمو: ${esc(job.title||'')}</h1>
+      <p class="page-sub">${(allApps||[]).filter(a=>a.jobId===job.id).length} متقدم إجمالاً</p>
+    </div>
+
+    <div class="card" style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <input type="text" id="appSearch" dir="auto" placeholder="بحث بالاسم أو الجوال…" value="${escA(appSearchQ)}" style="flex:1;min-width:220px;padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+      <select id="appFilter" style="padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">
+        <option value="all" ${appStatusFilter==='all'?'selected':''}>كل الحالات</option>
+        ${APP_STATUSES.map(s=>`<option value="${s}" ${appStatusFilter===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <button class="btn btn-sm btn-outline" id="btnExportApps" style="gap:6px;">تصدير CSV</button>
+      ${(allApps||[]).filter(a=>a.jobId===job.id).length ? `<button class="btn btn-sm btn-danger" id="btnDelAllApps" style="gap:6px;">حذف كل المتقدمين</button>` : ''}
+    </div>
+
+    ${apps.length===0
+      ? `<div class="card">${emptyState('لا يوجد متقدمون مطابقون','APPLICANTS · EMPTY')}</div>`
+      : `<div class="table-wrap"><div style="overflow-x:auto;"><table class="tbl" style="width:100%;">
+          <thead><tr><th>#</th><th>الاسم</th><th>الجوال</th><th>السيرة</th><th>الحالة</th><th>التاريخ</th><th style="text-align:center;">إجراءات</th></tr></thead>
+          <tbody>${apps.map((a,i)=>`
+            <tr>
+              <td>${i+1}</td>
+              <td><strong>${esc(a.name||'—')}</strong></td>
+              <td dir="ltr" style="text-align:right;">${esc(a.phone||'—')}</td>
+              <td>${a.cvChunks?'<span class="chip-count" style="background:#e6f4ea;color:#137333;">PDF</span>':'<span style="color:var(--ink-muted);">—</span>'}</td>
+              <td><span class="chip-count">${esc(a.status||'جديد')}</span></td>
+              <td>${a.submittedAt?fmtEn(toTs(a.submittedAt)):'—'}</td>
+              <td style="text-align:center;"><button class="btn btn-sm btn-outline" data-app-view="${a.id}" style="padding:4px 10px;font-size:12px;">عرض</button></td>
+            </tr>`).join('')}</tbody>
+        </table></div></div>`}
+  `;
+
+  el.querySelector('#btnBackJobs').addEventListener('click', ()=>{ selectedJobId=null; vCareers(el); });
+  const si=el.querySelector('#appSearch');
+  if(si) si.addEventListener('input', e=>{ appSearchQ=e.target.value; vJobApplicants(el, job, C.jobApplications); const f=el.querySelector('#appSearch'); if(f){f.focus(); const n=f.value.length; f.setSelectionRange(n,n);} });
+  el.querySelector('#appFilter').addEventListener('change', e=>{ appStatusFilter=e.target.value; vJobApplicants(el, job, C.jobApplications); });
+  el.querySelector('#btnExportApps').addEventListener('click', ()=>exportApplicantsCSV(job, apps));
+  el.querySelector('#btnDelAllApps')?.addEventListener('click', ()=>openDeleteAllApplicantsModal(job, el));
+  el.querySelectorAll('[data-app-view]').forEach(b=>b.addEventListener('click',()=>{ const a=(C.jobApplications||[]).find(x=>x.id===b.dataset.appView); if(a) openApplicantModal(a, job, el); }));
+}
+
+/* ── حذف كل المتقدمين على وظيفة (بتأكيد نصي) ── */
+function openDeleteAllApplicantsModal(job, el){
+  const total = (C.jobApplications||[]).filter(a=>a.jobId===job.id).length;
+  const CONFIRM_WORD = 'حذف';
+  const html = `
+    <div class="modal-head">
+      <div><div class="la">DANGER</div><h2>حذف كل المتقدمين</h2></div>
+      <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+    </div>
+    <div style="padding:4px 2px;">
+      <p style="font-size:14px;color:var(--ink);line-height:1.8;margin:0 0 6px 0;">
+        سيتم حذف <strong>${total}</strong> طلب متقدم على وظيفة «${esc(job.title||'')}» نهائيًا، مع سِيَرهم الذاتية. لا يمكن التراجع.
+      </p>
+      <p style="font-size:13px;color:var(--ink-muted);margin:0 0 10px 0;">للتأكيد اكتب <strong style="color:var(--ink);">${CONFIRM_WORD}</strong> في الحقل التالي:</p>
+      <input type="text" id="delAllConfirm" dir="auto" autocomplete="off" placeholder="${CONFIRM_WORD}" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn btn-ghost" data-close>إلغاء</button>
+        <button class="btn btn-danger" id="btnDelAllConfirm" disabled>حذف نهائيًا</button>
+      </div>
+    </div>`;
+  showModal(html);
+
+  const input = document.getElementById('delAllConfirm');
+  const btn = document.getElementById('btnDelAllConfirm');
+  input.addEventListener('input', ()=>{ btn.disabled = input.value.trim() !== CONFIRM_WORD; });
+  input.focus();
+
+  btn.addEventListener('click', async ()=>{
+    if(input.value.trim() !== CONFIRM_WORD) return;
+    btn.disabled = true; btn.textContent = 'جارٍ الحذف…';
+    try {
+      const apps = (C.jobApplications||[]).filter(a=>a.jobId===job.id);
+      for(const a of apps){
+        await deleteJobApplicationChunks(a.id);
+        await deleteDoc(doc(db,'jobApplications',a.id));
+      }
+      loaded.jobApplications=false; closeModal(); toast(`تم حذف ${apps.length} متقدم`);
+      const fresh = await loadCol('jobApplications'); vJobApplicants(el, job, fresh);
+    } catch(err){ console.error(err); toast('تعذّر الحذف','err'); btn.disabled=false; btn.textContent='حذف نهائيًا'; }
+  });
+}
+
+function openApplicantModal(app, job, el){
+  const row = (lbl,val)=> val && String(val).trim() ? `<div style="padding:9px 0;border-bottom:1px solid var(--line-soft);"><div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:3px;">${lbl}</div><div style="font-size:14px;color:var(--ink);line-height:1.6;white-space:pre-wrap;">${esc(val)}</div></div>`:'';
+  const html = `
+    <div class="modal-head">
+      <div><div class="la">APPLICANT</div><h2>${esc(app.name||'متقدم')}</h2></div>
+      <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+    </div>
+    <div style="padding:4px 2px;">
+      <div style="margin-bottom:14px;">
+        <div style="background:var(--parchment-2);border-radius:9px;padding:9px 12px;"><div style="font-size:11px;color:var(--ink-muted);">الجوال</div><div dir="ltr" style="text-align:right;font-weight:700;">${esc(app.phone||'—')}</div></div>
+      </div>
+      ${row('الوظيفة', job.title)}
+      <div style="padding:12px 0;">
+        ${app.cvChunks
+          ? `<button class="btn btn-outline btn-sm" id="btnViewCv" style="gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>عرض / تنزيل السيرة الذاتية</span></button>`
+          : `<span style="font-size:13px;color:var(--ink-muted);">لم يُرفق المتقدم سيرة ذاتية.</span>`}
+      </div>
+
+      <div class="field" style="margin-top:8px;">
+        <label style="font-weight:700;font-size:13px;">حالة الطلب</label>
+        <select id="appStatusSel" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">
+          ${APP_STATUSES.map(s=>`<option value="${s}" ${(app.status||'جديد')===s?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label style="font-weight:700;font-size:13px;">ملاحظات داخلية (لا تظهر للمتقدم)</label>
+        <textarea id="appNotes" rows="3" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">${esc(app.adminNotes||'')}</textarea>
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-danger btn-sm" id="btnDelApp">حذف الطلب</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-ghost" data-close>إغلاق</button>
+          <button class="btn btn-primary" id="btnSaveApp">حفظ</button>
+        </div>
+      </div>
+    </div>`;
+  showModal(html);
+
+  document.getElementById('btnViewCv')?.addEventListener('click', ()=>viewApplicantCv(app));
+  document.getElementById('btnSaveApp').addEventListener('click', async ()=>{
+    const status = document.getElementById('appStatusSel').value;
+    const notes = document.getElementById('appNotes').value.trim();
+    try {
+      await updateDoc(doc(db,'jobApplications',app.id), { status, adminNotes:notes, reviewed:true, reviewedAt:serverTimestamp() });
+      loaded.jobApplications=false; closeModal(); toast('تم حفظ الطلب');
+      const fresh = await loadCol('jobApplications'); vJobApplicants(el, job, fresh);
+    } catch(err){ console.error(err); toast('تعذّر الحفظ','err'); }
+  });
+  document.getElementById('btnDelApp').addEventListener('click', async ()=>{
+    if(!confirm('حذف طلب هذا المتقدم نهائياً؟')) return;
+    try {
+      await deleteJobApplicationChunks(app.id);
+      await deleteDoc(doc(db,'jobApplications',app.id));
+      loaded.jobApplications=false; closeModal(); toast('تم حذف الطلب');
+      const fresh = await loadCol('jobApplications'); vJobApplicants(el, job, fresh);
+    } catch(err){ console.error(err); toast('تعذّر الحذف','err'); }
+  });
+}
+
+async function viewApplicantCv(app){
+  try {
+    toast('جاري تحضير السيرة الذاتية…');
+    const parts = new Array(app.cvChunks).fill('');
+    const gets=[];
+    for(let i=0;i<app.cvChunks;i++){
+      gets.push(getDoc(doc(db,'jobApplication_chunks',`${app.id}_${i}`)).then(s=>{ if(s.exists()) parts[s.data().idx]=s.data().data||''; }));
+    }
+    await Promise.all(gets);
+    const dataUrl = parts.join('');
+    if(!dataUrl){ toast('تعذّر تحميل الملف','err'); return; }
+    const blobUrl = dataUrl.startsWith('data:') ? URL.createObjectURL(dataUrlToBlob(dataUrl)) : dataUrl;
+    const a=document.createElement('a'); a.href=blobUrl; a.download=app.cvName||`سيرة_${app.name||'متقدم'}.pdf`; a.target='_blank';
+    document.body.appendChild(a); a.click(); a.remove();
+    if(blobUrl.startsWith('blob:')) setTimeout(()=>URL.revokeObjectURL(blobUrl),60000);
+  } catch(err){ console.error(err); toast('تعذّر فتح السيرة الذاتية','err'); }
+}
+
+async function deleteJobApplicationChunks(appId){
+  try {
+    const snap = await getDocs(query(collection(db,'jobApplication_chunks'), where('appId','==',appId)));
+    if(snap.empty) return;
+    let batch=writeBatch(db); let ops=0;
+    for(const d of snap.docs){ batch.delete(d.ref); if(++ops>=450){ await batch.commit(); batch=writeBatch(db); ops=0; } }
+    if(ops>0) await batch.commit();
+  } catch(e){ console.warn('deleteJobApplicationChunks', e); }
+}
+
+function exportApplicantsCSV(job, apps){
+  if(!apps || !apps.length){ toast('لا توجد بيانات للتصدير','err'); return; }
+  const headers = ['الاسم','الجوال','الحالة','تاريخ التقديم','ملاحظات الإدارة'];
+  const esc3 = v => `"${String(v==null?'':v).replace(/"/g,'""')}"`;
+  const lines = [headers.join(',')];
+  apps.forEach(a=>{
+    lines.push([a.name,a.phone,a.status||'جديد',
+      a.submittedAt?fmtEn(toTs(a.submittedAt)):'', (a.adminNotes||'').replace(/\n/g,' ')
+    ].map(esc3).join(','));
+  });
+  const blob = new Blob(['﻿'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=`متقدمو_${(job.title||'وظيفة').replace(/[^\w؀-ۿ]+/g,'_')}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),10000);
+  toast('تم تصدير ملف CSV');
+}
+
+/* ── أدوات صور الورش ── */
+async function deleteWorkshopImages(wsId){
+  try {
+    const snap = await getDocs(query(collection(db,'workshop_images'), where('workshopId','==',wsId)));
+    if (snap.empty) return;
+    let batch = writeBatch(db); let ops = 0;
+    for (const d of snap.docs){ batch.delete(d.ref); if(++ops>=450){ await batch.commit(); batch=writeBatch(db); ops=0; } }
+    if (ops>0) await batch.commit();
+  } catch(e){ console.warn('deleteWorkshopImages', e); }
+}
+async function loadWorkshopImages(wsId, count){
+  const arr = new Array(count).fill('');
+  const gets = [];
+  for (let i=0;i<count;i++){
+    gets.push(getDoc(doc(db,'workshop_images',`${wsId}_${i}`)).then(s=>{ if(s.exists()) arr[s.data().idx]=s.data().data||''; }));
+  }
+  await Promise.all(gets);
+  return arr.filter(Boolean);
+}
+
 /* ── أدوات شهادات PDF المقسّمة في Firestore ── */
 // حذف جميع قطع شهادة مشارك
 async function deleteCertificateChunks(regId) {
@@ -7579,32 +8187,51 @@ function dataUrlToBlob(dataUrl) {
   return new Blob([bytes], { type: mime });
 }
 
-/* تقرير الورشة للطباعة (A4) — يفتح صفحة مستقلة جاهزة للطباعة على قالب الجمعية */
-function openWorkshopReportPrint(workshop, registrants, survey, responses) {
+/* تقرير الورشة للطباعة (A4) — يفتح صفحة مستقلة جاهزة للطباعة على قالب الجمعية
+   includeSurvey: تضمين صفحات الاستبيان من عدمه. التقرير يقتصر على الحاضرين فقط. */
+async function openWorkshopReportPrint(workshop, registrants, survey, responses, includeSurvey) {
   const esc2 = s => String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-  const regs = registrants || [];
+  // نفتح النافذة فوراً (قبل أي await) لتفادي حجب النوافذ المنبثقة
+  const win = window.open('', '_blank');
+  if (!win) { toast('يرجى السماح بالنوافذ المنبثقة لعرض التقرير', 'err'); return; }
+  win.document.open();
+  win.document.write('<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>جارٍ تجهيز التقرير…</title><style>body{font-family:sans-serif;direction:rtl;display:grid;place-items:center;height:100vh;margin:0;color:#5a4420;}</style></head><body><div>جارٍ تجهيز التقرير…</div></body></html>');
+  win.document.close();
+
+  // الحاضرون فقط
+  const regs = (registrants || []).filter(r => r.attended === true);
+  const totalRegistered = (registrants || []).length;
   const questions = (survey && survey.questions) || [];
   const resps = responses || [];
 
-  // موعد تنفيذ الورشة وتاريخ إصدار التقرير
+  // موعد تنفيذ الورشة
   const wsDate = (workshop.date || '').trim();
   const wsTime = (workshop.time || '').trim();
   const execWhen = [wsDate, wsTime].filter(Boolean).join(' — ') || 'غير محدد';
-  const issueDate = new Date().toLocaleDateString('en-GB');
 
-  // ── الصفحة 1: جدول المسجلين ──
-  const regRowsHTML = regs.length === 0
-    ? `<tr><td colspan="4" style="text-align:center;padding:16px;color:#777;">لا يوجد مسجلون</td></tr>`
-    : regs.map((r, i) => `
+  // تحميل صور الورشة (مضغوطة من Firestore)
+  let images = [];
+  try { if ((workshop.imageCount || 0) > 0) images = await loadWorkshopImages(workshop.id, workshop.imageCount); }
+  catch(e){ console.warn('report images load', e); }
+
+  // تقسيم عام إلى مجموعات لكل صفحة
+  function chunk(arr, size){ const out=[]; for(let i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size)); return out; }
+
+  // ── جدول الحاضرين — يُقسّم على عدة صفحات عند الحاجة ──
+  const REGS_PER_PAGE = 16;
+
+  function regRowHTML(r, i){
+    return `
       <tr>
         <td style="text-align:center;">${i + 1}</td>
         <td>${esc2(r.name || r.fullName || 'بدون اسم')}</td>
         <td dir="ltr" style="text-align:center;">${esc2(r.phone || r.mobile || '—')}</td>
         <td dir="ltr" style="text-align:center;">${esc2(r.nationalId || r.idNumber || '—')}</td>
-      </tr>
-    `).join('');
+      </tr>`;
+  }
+  const regTableHead = `<tr><th style="width:36px;">#</th><th>الاسم</th><th style="width:120px;">رقم الجوال</th><th style="width:120px;">رقم الهوية</th></tr>`;
 
   // ── الصفحة 2: الأسئلة مع آراء المشاركين (تجميعي، بدون أسماء) ──
   function buildQuestionResultHTML(q, idx) {
@@ -7650,12 +8277,82 @@ function openWorkshopReportPrint(workshop, registrants, survey, responses) {
     `;
   }
 
-  const surveyPageHTML = questions.length === 0
-    ? `<p style="color:#777;font-size:13px;">لا يوجد استبيان مرتبط بهذه الورشة.</p>`
-    : (resps.length === 0
-        ? `<p style="color:#777;font-size:13px;">لم يُجب أي مشارك على الاستبيان بعد. (الأسئلة فقط معروضة أدناه)</p>
-           ${questions.map((q, i) => `<div style="margin-bottom:12px;padding:12px 14px;border:1px solid #e3dccb;border-radius:8px;background:#fff;font-size:13.5px;font-weight:700;"><span style="color:#9C6E38;">${i+1}.</span> ${esc2(q.text || '')}</div>`).join('')}`
-        : questions.map((q, i) => buildQuestionResultHTML(q, i)).join(''));
+  // ── بناء صفحات التقرير (A4) ──
+  function pageWrap(inner){ return `<div class="page"><div class="content">${inner}</div></div>`; }
+
+  const descHTML = (workshop.description && workshop.description.trim())
+    ? `<h2 class="sec">وصف الورشة</h2><p style="font-size:12.5px;line-height:1.9;color:#3a352e;white-space:pre-wrap;margin-bottom:14px;">${esc2(workshop.description)}</p>`
+    : '';
+
+  const infoGridHTML = `
+    <h1 class="report-title">تقرير ورشة عمل</h1>
+    <div class="sub">${esc2(workshop.title || 'ورشة عمل')}</div>
+    <div class="info-grid">
+      <div class="info-item"><div class="lbl">اسم الورشة</div><div class="val">${esc2(workshop.title || '—')}</div></div>
+      <div class="info-item"><div class="lbl">التصنيف</div><div class="val">${esc2(workshop.category || 'ورشة عمل')}</div></div>
+      <div class="info-item"><div class="lbl">موعد تنفيذ الورشة</div><div class="val">${esc2(execWhen)}</div></div>
+      <div class="info-item"><div class="lbl">المكان</div><div class="val">${esc2(workshop.location || 'مقر الجمعية')}</div></div>
+      <div class="info-item"><div class="lbl">عدد الحاضرين</div><div class="val">${regs.length} من ${totalRegistered} مسجّل</div></div>
+      <div class="info-item"><div class="lbl">تاريخ إصدار التقرير</div><div class="val" dir="ltr" style="text-align:right;">${esc2(new Date().toLocaleDateString('en-GB'))}</div></div>
+    </div>`;
+
+  let regPagesHTML = '';
+  if (regs.length === 0){
+    regPagesHTML = pageWrap(`${infoGridHTML}${descHTML}<h2 class="sec">الحاضرون</h2><p style="color:#777;font-size:13px;">لا يوجد حاضرون. سجّل الحضور من لوحة الإدارة أولاً.</p>`);
+  } else {
+    const groups = chunk(regs, REGS_PER_PAGE);
+    let runningIdx = 0;
+    groups.forEach((g, gi) => {
+      const rowsHTML = g.map(r => regRowHTML(r, runningIdx++)).join('');
+      const tableHTML = `<h2 class="sec">الحاضرون${groups.length>1?` (${gi+1}/${groups.length})`:''}</h2>
+        <table><thead>${regTableHead}</thead><tbody>${rowsHTML}</tbody></table>`;
+      regPagesHTML += pageWrap((gi === 0 ? (infoGridHTML + descHTML) : '') + tableHTML);
+    });
+  }
+
+  // ── صفحة صور الورشة (كل الصور في صفحة واحدة، بدون قص، الطولية تصغر لتناسب) ──
+  let imagePagesHTML = '';
+  if (images.length > 0){
+    const n = images.length;
+    // تخطيط: صورة واحدة تملأ العرض؛ صورتان أو ثلاث في شبكة مرتبة
+    const grid = n === 1
+      ? 'grid-template-columns:1fr;'
+      : (n === 2 ? 'grid-template-columns:1fr 1fr;' : 'grid-template-columns:1fr 1fr;');
+    // الصورة الثالثة (إن وُجدت) تمتد على العمودين في صف ثانٍ
+    const imgsHTML = images.map((src, i) => {
+      const span = (n === 3 && i === 2) ? 'grid-column:1 / -1;' : '';
+      return `<div style="${span}display:flex;align-items:center;justify-content:center;background:#faf8f3;border:1px solid #d9d2c2;border-radius:8px;overflow:hidden;min-height:0;">
+                <img src="${src}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;">
+              </div>`;
+    }).join('');
+    const rows = n <= 2 ? '1fr' : '1fr 1fr';
+    imagePagesHTML = pageWrap(`
+      <h2 class="sec">صور من الورشة</h2>
+      <div style="display:grid;${grid}grid-template-rows:${rows};gap:10px;height:calc(100% - 34px);">${imgsHTML}</div>
+    `);
+  }
+
+  // ── صفحات الاستبيان (اختيارية) — كل صفحة عدد محدود من الأسئلة ──
+  let surveyPagesHTML = '';
+  if (includeSurvey){
+    const QS_PER_PAGE = 4;
+    if (questions.length === 0){
+      surveyPagesHTML = pageWrap(`<h1 class="report-title">نتائج استبيان الورشة</h1><div class="sub">—</div><p style="color:#777;font-size:13px;">لا يوجد استبيان مرتبط بهذه الورشة.</p>`);
+    } else {
+      const noResp = resps.length === 0;
+      const items = questions.map((q, i) => noResp
+        ? `<div style="margin-bottom:12px;padding:12px 14px;border:1px solid #e3dccb;border-radius:8px;background:#fff;font-size:13.5px;font-weight:700;"><span style="color:#9C6E38;">${i+1}.</span> ${esc2(q.text || '')}</div>`
+        : buildQuestionResultHTML(q, i));
+      const groups = chunk(items, QS_PER_PAGE);
+      groups.forEach((g, gi) => {
+        const headHTML = gi === 0
+          ? `<h1 class="report-title">نتائج استبيان الورشة</h1><div class="sub">${noResp?'لم يُجب أي مشارك بعد — الأسئلة فقط':'آراء المشاركين (بدون ذكر الأسماء)'}</div>`
+          : '';
+        const secTitle = `<h2 class="sec">الأسئلة والإجابات${groups.length>1?` (${gi+1}/${groups.length})`:''}</h2>`;
+        surveyPagesHTML += pageWrap(headHTML + secTitle + g.join(''));
+      });
+    }
+  }
 
   const html = `<!doctype html>
 <html lang="ar" dir="rtl">
@@ -7666,7 +8363,7 @@ function openWorkshopReportPrint(workshop, registrants, survey, responses) {
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap');
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Almarai',sans-serif; color:#1c1a17; background:#eceae6; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body { font-family:'Effra', 'Almarai',sans-serif; color:#1c1a17; background:#eceae6; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   .toolbar { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid #ddd; padding:12px 20px; display:flex; gap:10px; justify-content:center; }
   .toolbar button { font-family:inherit; font-weight:700; font-size:14px; padding:10px 24px; border-radius:8px; cursor:pointer; border:1px solid #9C6E38; }
   .btn-print { background:#9C6E38; color:#fff; }
@@ -7712,45 +8409,15 @@ function openWorkshopReportPrint(workshop, registrants, survey, responses) {
     <button class="btn-close" onclick="window.close()">إغلاق</button>
   </div>
 
-  <!-- الصفحة 1: بيانات الورشة والمسجلين -->
-  <div class="page">
-    <div class="content">
-      <h1 class="report-title">تقرير ورشة عمل</h1>
-      <div class="sub">${esc2(workshop.title || 'ورشة عمل')}</div>
-
-      <div class="info-grid">
-        <div class="info-item"><div class="lbl">اسم الورشة</div><div class="val">${esc2(workshop.title || '—')}</div></div>
-        <div class="info-item"><div class="lbl">التصنيف</div><div class="val">${esc2(workshop.category || 'ورشة عمل')}</div></div>
-        <div class="info-item"><div class="lbl">موعد تنفيذ الورشة</div><div class="val">${esc2(execWhen)}</div></div>
-        <div class="info-item"><div class="lbl">المكان</div><div class="val">${esc2(workshop.location || 'مقر الجمعية')}</div></div>
-        <div class="info-item"><div class="lbl">عدد المسجلين</div><div class="val">${regs.length}</div></div>
-        <div class="info-item"><div class="lbl">تاريخ إصدار التقرير</div><div class="val" dir="ltr" style="text-align:right;">${esc2(issueDate)}</div></div>
-      </div>
-
-      <h2 class="sec">بيانات المسجلين</h2>
-      <table>
-        <thead>
-          <tr><th style="width:36px;">#</th><th>الاسم</th><th style="width:120px;">رقم الجوال</th><th style="width:120px;">رقم الهوية</th></tr>
-        </thead>
-        <tbody>${regRowsHTML}</tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- الصفحة 2: أسئلة الاستبيان وآراء المشاركين -->
-  <div class="page">
-    <div class="content">
-      <h1 class="report-title">نتائج استبيان الورشة</h1>
-      <div class="sub">آراء المشاركين (بدون ذكر الأسماء)</div>
-      <h2 class="sec">الأسئلة والإجابات</h2>
-      ${surveyPageHTML}
-    </div>
-  </div>
+  <!-- صفحات الحاضرين (بيانات الورشة + الوصف) -->
+  ${regPagesHTML}
+  <!-- صفحات صور الورشة -->
+  ${imagePagesHTML}
+  <!-- صفحات الاستبيان (اختيارية) -->
+  ${surveyPagesHTML}
 </body>
 </html>`;
 
-  const win = window.open('', '_blank');
-  if (!win) { toast('يرجى السماح بالنوافذ المنبثقة لعرض التقرير', 'err'); return; }
   win.document.open();
   win.document.write(html);
   win.document.close();
@@ -7858,7 +8525,7 @@ async function exportWorkshopRegistrantsToWord(workshop, rows) {
               children: [
                 new Paragraph({ alignment: AlignmentType.RIGHT, bidirectional: true, spacing: { after: 40 }, children: [new TextRun({ text: `تاريخ استخراج التقرير: ${reportDate}`, size: 20, color: '4A5068', rightToLeft: true, font: mainFont })] }),
                 new Paragraph({ alignment: AlignmentType.RIGHT, bidirectional: true, spacing: { after: 40 }, children: [new TextRun({ text: `عدد المسجلين: ${rows.length} مشارك`, bold: true, size: 22, color: '9C6E38', rightToLeft: true, font: mainFont })] }),
-                new Paragraph({ alignment: AlignmentType.RIGHT, bidirectional: true, children: [new TextRun({ text: `حالة الورشة: ${workshop.status === 'open' ? 'مفتوحة للتسجيل' : (workshop.status === 'closed' ? 'مغلقة' : 'مكتملة')}`, size: 20, color: '4A5068', rightToLeft: true, font: mainFont })] })
+                new Paragraph({ alignment: AlignmentType.RIGHT, bidirectional: true, children: [new TextRun({ text: `حالة الورشة: ${workshop.status === 'open' ? 'مفتوحة للتسجيل' : (workshop.status === 'closed' ? 'مغلقة' : (workshop.status === 'completed' ? 'تم الانتهاء' : 'مكتملة'))}`, size: 20, color: '4A5068', rightToLeft: true, font: mainFont })] })
               ]
             })
           ]
@@ -8759,6 +9426,7 @@ function iUsers(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentC
 function iCraft(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l2 5h5l-4 4 2 6-5-3-5 3 2-6-4-4h5Z"/></svg>`; }
 function iDatabase(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
 function iCog()  { return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.5 5.5l1.5 1.5M17 17l1.5 1.5M5.5 18.5l1.5-1.5M17 7l1.5-1.5" stroke-linecap="round"/></svg>`; }
+function iBriefcase(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" stroke-linecap="round"/></svg>`; }
 
 /* ── MODAL ── */
 function showModal(html){

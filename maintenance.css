@@ -51,7 +51,7 @@ html.mnt-checking body > *:not(.mnt-overlay) {
         radial-gradient(ellipse 760px 520px at 18% -8%, rgba(184,136,62,0.07) 0%, transparent 60%),
         radial-gradient(ellipse 760px 520px at 84% 108%, rgba(184,136,62,0.06) 0%, transparent 60%),
         var(--mnt-bg);
-    font-family: 'Almarai', 'Segoe UI', sans-serif;
+    font-family: 'Effra', 'Almarai', 'Segoe UI', sans-serif;
     direction: rtl;
     overflow-y: auto;
     overflow-x: hidden;
@@ -202,7 +202,7 @@ html.mnt-checking body > *:not(.mnt-overlay) {
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Effra', 'Montserrat', sans-serif;
     font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.28em;
@@ -301,7 +301,7 @@ html.mnt-checking body > *:not(.mnt-overlay) {
     letter-spacing: -0.01em;
 }
 .mnt-foot-sub {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Effra', 'Montserrat', sans-serif;
     font-style: italic;
     font-size: 0.62rem;
     letter-spacing: 0.18em;
@@ -326,7 +326,7 @@ html.mnt-checking body > *:not(.mnt-overlay) {
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Effra', 'Montserrat', sans-serif;
     font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.24em;

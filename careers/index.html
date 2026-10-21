@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>التوظيف | جمعية إرث وحضارة بالقريات</title>
+    <meta name="description" content="انضم إلى فريق جمعية إرث وحضارة بالقريات. تصفّح الوظائف المتاحة وقدّم طلبك للمساهمة في حفظ التراث وبناء الهوية الثقافية.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://arthwhdarh.org.sa/careers/">
+
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="manifest" href="../site.webmanifest">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="جمعية إرث وحضارة بالقريات">
+    <meta property="og:url" content="https://arthwhdarh.org.sa/careers/">
+    <meta property="og:title" content="التوظيف | جمعية إرث وحضارة بالقريات">
+    <meta property="og:description" content="انضم إلى فريق جمعية إرث وحضارة بالقريات.">
+    <meta property="og:image" content="https://arthwhdarh.org.sa/assets/الشعار/الشعار.png">
+    <meta property="og:locale" content="ar_SA">
+
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+    <link href="/assets/fonts/effra.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <link rel="stylesheet" href="../workshops.css">
+    <link rel="stylesheet" href="../maintenance.css">
+    <script>document.documentElement.className+=" mnt-checking";window.__mntFailsafe=setTimeout(function(){document.documentElement.classList.remove("mnt-checking");},3500);</script>
+
+    <style>
+      /* إضافات بسيطة خاصة بالتوظيف — باقي التصميم من workshops.css */
+      /* شريط الميتا (نوع/مكان/تواريخ) على هيئة بطاقات صغيرة بأيقونات */
+      .jd-meta { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
+      .jd-meta .item { display:flex; align-items:center; gap:11px; background:var(--c-bg-soft); border:1px solid var(--c-border-soft); border-radius:var(--r-md); padding:12px 14px; }
+      .jd-meta .ic { width:34px; height:34px; flex-shrink:0; border-radius:10px; background:var(--c-gold-pale); color:var(--c-gold); display:grid; place-items:center; font-size:0.9rem; }
+      .jd-meta .lbl { font-size:0.68rem; letter-spacing:0.05em; color:var(--c-text-muted); font-weight:600; margin-bottom:2px; }
+      .jd-meta .val { font-size:0.9rem; font-weight:700; color:var(--c-text-primary); line-height:1.3; }
+      /* أقسام الوصف والمهام */
+      .jd-sec { position:relative; margin-bottom:16px; background:var(--c-surface); border:1px solid var(--c-border-soft); border-radius:var(--r-md); padding:16px 18px 16px 18px; }
+      .jd-sec::before { content:""; position:absolute; top:16px; bottom:16px; right:0; width:3px; border-radius:3px; background:var(--c-gold); }
+      .jd-sec h4 { display:flex; align-items:center; gap:8px; font-size:0.9rem; font-weight:800; color:var(--c-text-primary); margin-bottom:10px; }
+      .jd-sec h4 i { color:var(--c-gold); font-size:0.85rem; }
+      .jd-sec .body { font-size:0.92rem; line-height:1.95; color:var(--c-text-secondary); white-space:pre-wrap; }
+      /* قوائم المهام: كل سطر يصبح عنصر قائمة بنقطة ذهبية */
+      .jd-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+      .jd-list li { position:relative; padding-right:20px; font-size:0.92rem; line-height:1.8; color:var(--c-text-secondary); }
+      .jd-list li::before { content:""; position:absolute; top:0.62em; right:4px; width:6px; height:6px; border-radius:50%; background:var(--c-gold); }
+      .cr-privacy-note { background:var(--c-bg-soft); border:1px solid var(--c-border-soft); border-radius:var(--r-md); padding:14px 16px; font-size:0.82rem; line-height:1.75; color:var(--c-text-secondary); margin-bottom:22px; }
+      .cr-privacy-note strong { color:var(--c-text-primary); }
+      .bdy-file-note { font-size:11.5px; color:var(--c-text-muted); }
+      .bdy-consent { display:flex; gap:10px; align-items:flex-start; font-size:13.5px; line-height:1.7; color:var(--c-text-secondary); cursor:pointer; }
+      .bdy-consent input { width:auto; margin-top:3px; flex-shrink:0; accent-color:var(--c-gold); }
+      .cr-result { text-align:center; padding:30px 10px; }
+      .cr-result .ico { width:64px; height:64px; border-radius:50%; display:grid; place-items:center; margin:0 auto 16px; font-size:28px; }
+      .cr-result.ok .ico { background:rgba(58,94,46,0.12); color:#2e6022; }
+      .cr-result.info .ico { background:var(--c-gold-pale); color:var(--c-gold); }
+      .cr-result h3 { font-size:1.3rem; font-weight:800; color:var(--c-text-primary); margin-bottom:8px; }
+      .cr-result p { font-size:0.95rem; color:var(--c-text-secondary); line-height:1.8; margin-bottom:22px; }
+      @media (max-width:560px){ .ws-detail-grid { grid-template-columns:1fr; } }
+
+      /* التمرير يكون داخل النافذة نفسها لا في الخلفية */
+      #crOverlay { align-items:center; overflow:hidden; }
+      #crOverlay .ws-modal-shell { max-height:90vh; display:flex; flex-direction:column; overflow:hidden; }
+      #crOverlay .ws-modal-head { flex-shrink:0; }
+      #crOverlay .ws-modal-body { flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+
+      /* ═══ حركة الإرسال: النموذج يتحول إلى ورقة تُكتب وتلتف، ثم يأخذها طير ويطير بها خارج الصفحة ═══ */
+      .cr-send-stage { position:relative; }
+      .cr-send-body { transition:opacity .5s ease .1s, transform .6s cubic-bezier(.2,.7,.2,1) .05s; }
+      .cr-send-stage.sending .cr-send-body { opacity:0; transform:scale(.97); transition:opacity .3s ease .05s, transform .35s cubic-bezier(.4,0,.2,1) .03s; }
+
+      /* ===== الورقة ===== */
+      .cr-paper {
+        --paper: var(--c-surface, #ffffff);
+        --paper-line: var(--c-border, rgba(28,26,23,.14));
+        --paper-accent: var(--c-gold, #b8883e);
+        --paper-ink: var(--c-text-primary, #1c1a17);
+        --paper-muted: var(--c-text-secondary, #5a5650);
+        --roll-light: #fff7e9;
+        --roll-mid: #f0e0c2;
+        --roll-dark: #d4a855;
+        --ribbon: var(--c-gold-deep, #9c6e38);
+        position:fixed; z-index:1001; pointer-events:none;
+      }
+      .cr-paper__sheet { position:absolute; inset:0; overflow:hidden; background:var(--paper); border-radius:18px; box-shadow:0 25px 60px rgba(74,44,20,.3); }
+      .cr-paper__lines { position:absolute; inset:30px 24px auto 24px; display:flex; flex-direction:column; gap:13px; opacity:0; transition:opacity .4s ease; }
+      .cr-paper.is-sheet .cr-paper__lines { opacity:1; }
+      .cr-paper__lines span { display:block; height:6px; border-radius:3px; background:var(--paper-line); opacity:0; transition:opacity .4s ease; }
+      .cr-paper.is-written .cr-paper__lines span { opacity:1; transition-delay:.9s; }
+      .cr-paper__lines span:nth-of-type(2) { width:88%; }
+      .cr-paper__lines span:nth-of-type(4) { width:72%; }
+      .cr-paper__lines span:nth-of-type(5) { width:45%; }
+      .cr-paper__label, .cr-paper__name, .cr-paper__phone { margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; clip-path:inset(0 0 0 100%); }
+      .cr-paper__label { font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--paper-accent); }
+      .cr-paper__name { margin-top:-6px; font-size:16px; font-weight:700; color:var(--paper-ink); }
+      .cr-paper__phone { margin-top:-8px; font-size:12px; color:var(--paper-muted); direction:ltr; text-align:right; letter-spacing:.05em; }
+      .cr-paper__rule { height:1px; background:var(--paper-line); transform:scaleX(0); transform-origin:100% 50%; }
+      .cr-paper.is-written .cr-paper__label { animation:crWrite .3s ease-out forwards; }
+      .cr-paper.is-written .cr-paper__name  { animation:crWrite .45s cubic-bezier(.4,0,.2,1) .2s forwards; }
+      .cr-paper.is-written .cr-paper__phone { animation:crWrite .4s cubic-bezier(.4,0,.2,1) .55s forwards; }
+      .cr-paper.is-written .cr-paper__rule  { animation:crRule .35s ease-out .7s forwards; }
+      @keyframes crWrite { to { clip-path:inset(0 0 0 0); } }
+      @keyframes crRule  { to { transform:scaleX(1); } }
+      .cr-paper__roll { position:absolute; left:-5px; right:-5px; bottom:-14px; height:28px; border-radius:14px; background:linear-gradient(to bottom, var(--roll-light) 0%, var(--roll-mid) 45%, var(--roll-dark) 100%); box-shadow:0 8px 16px -6px rgba(74,44,20,.35), inset 0 1px 0 rgba(255,255,255,.8); opacity:0; transform:scaleY(.4); transition:opacity .25s ease, transform .35s cubic-bezier(.3,1.4,.5,1); }
+      .cr-paper.is-rolling .cr-paper__roll { opacity:1; transform:none; }
+      .cr-paper__ribbon { position:absolute; top:-3px; bottom:-3px; left:50%; width:14px; margin-left:-7px; border-radius:3px; background:var(--ribbon); transform:scaleY(0); transition:transform .4s cubic-bezier(.3,1.6,.5,1); }
+      .cr-paper.is-tied .cr-paper__ribbon { transform:none; }
+
+      /* ===== الصقر ===== */
+      .cr-bird {
+        position:fixed; z-index:1002; width:196px; height:261px; pointer-events:none;
+        filter: drop-shadow(0 10px 14px rgba(15, 23, 42, 0.25));
+      }
+      .cr-bird svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+      .cr-bird .wing {
+        transform-box: fill-box;
+        animation-duration: 0.42s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+      .cr-bird .wing--near { transform-origin: 33% 97%; animation-name: crFlapNear; }
+      .cr-bird .wing--far  { transform-origin: 97% 95%; animation-name: crFlapFar; }
+      @keyframes crFlapNear {
+        from { transform: rotate(-4deg); }
+        to   { transform: rotate(32deg) scale(0.92, 0.82); }
+      }
+      @keyframes crFlapFar {
+        from { transform: rotate(4deg); }
+        to   { transform: rotate(-30deg) scale(0.92, 0.82); }
+      }
+      @media (prefers-reduced-motion:reduce){ .cr-send-stage.sending *{animation-duration:.01ms!important;animation-delay:0s!important;} }
+    </style>
+</head>
+<body>
+
+<div class="site-wrapper">
+
+    <nav class="nav-container" id="mainNav" aria-label="التنقل الرئيسي">
+        <div class="logo-area-nav">
+            <img src="../assets/الشعار/الشعار.png" alt="شعار جمعية إرث وحضارة بالقريات" class="nav-logo-img" loading="eager">
+            <span class="association-name-nav">جمعية إرث وحضارة بالقريات</span>
+        </div>
+        <div class="nav-links">
+            <a href="/">الرئيسية</a>
+            <a href="/activities/">الفعاليات</a>
+            <a href="/workshops/">ورش العمل</a>
+            <a href="/volunteer/">التطوع</a>
+            <a href="/news/">الأخبار</a>
+            <a href="/calendar/">الرزنامة</a>
+            <a href="/friends/">أصدقاء الجمعية</a>
+            <a href="/crafts/">بيدي حرفة</a>
+            <a href="/partnerships/">الشراكات</a>
+            <a href="/reports/">الحوكمة</a>
+            <a href="/board/">مجلس الإدارة</a>
+            <a href="/careers/" class="active">التوظيف</a>
+            <a href="/contact/">اتصل بنا</a>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileMenu">
+            <span class="mobile-toggle-bar"></span>
+            <span class="mobile-toggle-bar"></span>
+            <span class="mobile-toggle-bar"></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-panel">
+            <div class="mobile-menu-head">
+                <span class="association-name-nav">القائمة</span>
+                <button class="mobile-close" id="mobileClose" aria-label="إغلاق القائمة">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </button>
+            </div>
+            <nav class="mobile-menu-links" aria-label="التنقل في الجوال">
+                <a href="/">الرئيسية</a>
+                <a href="/activities/">الفعاليات</a>
+                <a href="/workshops/">ورش العمل</a>
+                <a href="/volunteer/">التطوع</a>
+                <a href="/news/">الأخبار</a>
+                <a href="/calendar/">الرزنامة</a>
+                <a href="/friends/">أصدقاء الجمعية</a>
+                <a href="/crafts/">بيدي حرفة</a>
+                <a href="/partnerships/">الشراكات</a>
+                <a href="/reports/">الحوكمة</a>
+                <a href="/board/">مجلس الإدارة</a>
+                <a href="/careers/" class="active">التوظيف</a>
+                <a href="/contact/">اتصل بنا</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- PAGE INTRO -->
+    <header class="ws-intro">
+        <div class="ws-intro-eyebrow-row">
+            <div class="ws-intro-rule"></div>
+            <span class="ws-intro-eyebrow">Careers · التوظيف</span>
+            <div class="ws-intro-diamond"></div>
+        </div>
+        <h1 class="ws-intro-title">اصنع مستقبلك معنا</h1>
+        <p class="ws-intro-desc">
+            نبحث عن الكفاءات والطموحات التي تسعى للتطور وصناعة الفرق. اكتشف الفرص الوظيفية المتاحة في جمعية إرث وحضارة بالقريات، وكن جزءًا من فريق يؤمن بالعمل المشترك وتحقيق الأثر.
+        </p>
+    </header>
+
+    <!-- JOBS GRID -->
+    <section class="ws-grid-section">
+        <div id="crJobsArea">
+            <div class="ws-empty-state" style="border:none;background:transparent;">
+                <div class="ws-empty-icon"><i class="fas fa-spinner fa-spin"></i></div>
+                <p class="ws-empty-text">جارٍ تحميل الوظائف المتاحة…</p>
+            </div>
+        </div>
+    </section>
+
+</div><!-- /.site-wrapper -->
+
+<!-- ══════════ MODAL ══════════ -->
+<div class="ws-modal-overlay" id="crOverlay" aria-hidden="true">
+  <div class="cr-send-stage" id="crSendStage" style="width:100%;max-width:580px;position:relative;">
+    <div class="ws-modal-shell cr-send-body" role="dialog" aria-modal="true" aria-labelledby="crModalTitle" style="max-width:none;width:100%;">
+        <div class="ws-modal-head">
+            <div>
+                <div class="ws-modal-title-eyebrow" id="crModalDept">التوظيف</div>
+                <h2 class="ws-modal-title" id="crModalTitle">—</h2>
+            </div>
+            <button class="ws-modal-close" id="crClose" aria-label="إغلاق">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+        <div class="ws-modal-body" id="crModalBody"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, query, where, limit, orderBy, serverTimestamp, writeBatch }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDnWUCjJKkMqORT8SeLYHszAIP0bv8PCSg",
+    authDomain: "arthwhdarh-782ec.firebaseapp.com",
+    projectId: "arthwhdarh-782ec",
+    storageBucket: "arthwhdarh-782ec.firebasestorage.app",
+    messagingSenderId: "597405952213",
+    appId: "1:597405952213:web:5ffeab6adc7e451a265a5c"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const TYPES = { full:'دوام كامل', part:'دوام جزئي', temp:'مؤقت', intern:'تدريب', volunteer:'تطوع' };
+
+function toDate(ts){ if(!ts) return null; if(ts.toDate) return ts.toDate(); if(ts.seconds) return new Date(ts.seconds*1000); const d=new Date(ts); return isNaN(d)?null:d; }
+function fmtDate(ts){ const d=toDate(ts); if(!d) return '—'; return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`; }
+function isExpired(job){ const d=toDate(job.deadline); if(!d) return false; const end=new Date(d); end.setHours(23,59,59,999); return Date.now()>end.getTime(); }
+
+let activeJob = null;
+let JOBS = [];
+
+async function loadJobs(){
+    const area = $('crJobsArea');
+    try {
+        let snap;
+        try { snap = await getDocs(query(collection(db,'jobs'), where('status','in',['published','closed']), orderBy('publishedAt','desc'))); }
+        catch(e){ snap = await getDocs(query(collection(db,'jobs'), where('status','in',['published','closed']))); }
+
+        JOBS = snap.docs.map(d=>({id:d.id, ...d.data()}))
+            .filter(j => (j.status==='published' || j.status==='closed') && !isExpired(j));
+
+        if (JOBS.length === 0){
+            area.innerHTML = `
+              <div class="ws-empty-state">
+                <div class="ws-empty-icon"><i class="fas fa-briefcase"></i></div>
+                <h3 class="ws-empty-title">لا توجد وظائف متاحة حاليًا</h3>
+                <p class="ws-empty-text">تابعنا للاطلاع على الفرص القادمة.</p>
+              </div>`;
+            return;
+        }
+
+        area.innerHTML = `<div class="ws-grid">${JOBS.map(renderCard).join('')}</div>`;
+        area.querySelectorAll('[data-job]').forEach(btn =>
+            btn.addEventListener('click', () => openJob(btn.dataset.job)));
+    } catch(err){
+        console.error('loadJobs', err);
+        area.innerHTML = `
+          <div class="ws-empty-state">
+            <div class="ws-empty-icon"><i class="fas fa-triangle-exclamation"></i></div>
+            <h3 class="ws-empty-title">تعذّر تحميل الوظائف</h3>
+            <p class="ws-empty-text">يرجى المحاولة لاحقًا.</p>
+          </div>`;
+    }
+}
+
+function renderCard(j){
+    const closed = j.status==='closed';
+    return `
+    <div class="ws-card${closed?' ws-card-closed':''}">
+        <div class="ws-card-head">
+            <span class="ws-card-category">${esc(j.department || 'وظيفة')}</span>
+            ${closed ? `<span class="ws-card-badge ws-badge-closed">مغلق التسجيل</span>` : (j.type ? `<span class="ws-card-badge ws-badge-open">${esc(TYPES[j.type]||j.type)}</span>` : '')}
+        </div>
+        <div class="ws-card-body">
+            <h3 class="ws-card-title">${esc(j.title||'وظيفة')}</h3>
+            ${j.description ? `<p class="ws-card-desc">${esc(j.description)}</p>` : '<p class="ws-card-desc"></p>'}
+            <div class="ws-card-meta-list">
+                ${j.location ? `<div class="ws-meta-item"><i class="fas fa-location-dot"></i><span>${esc(j.location)}</span></div>` : ''}
+                <div class="ws-meta-item"><i class="fas fa-calendar-day"></i><span>تاريخ النشر: <strong>${fmtDate(j.publishedAt||j.createdAt)}</strong></span></div>
+                ${j.deadline ? `<div class="ws-meta-item"><i class="fas fa-hourglass-half"></i><span>آخر موعد: <strong>${fmtDate(j.deadline)}</strong></span></div>` : ''}
+            </div>
+            <button class="ws-card-cta" data-job="${esc(j.id)}">
+                <span>${closed ? 'عرض التفاصيل' : 'التفاصيل والتقديم'}</span>
+                <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+    </div>`;
+}
+
+function openJob(id){
+    const j = JOBS.find(x=>x.id===id);
+    if(!j) return;
+    activeJob = j;
+    $('crModalTitle').textContent = j.title || 'وظيفة';
+    $('crModalDept').textContent = [j.department, j.type?TYPES[j.type]||j.type:''].filter(Boolean).join(' · ') || 'التوظيف';
+    renderDetail(j);
+    $('crOverlay').classList.add('open');
+    $('crOverlay').setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    document.documentElement.style.overflow='hidden';
+}
+
+function closeModal(){
+    $('crOverlay').classList.remove('open');
+    $('crOverlay').setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    document.documentElement.style.overflow='';
+    activeJob = null;
+    // إعادة تهيئة حالة حركة المظروف لئلا تبقى النافذة مصغّرة عند إعادة الفتح
+    const st = $('crSendStage'); if(st) st.classList.remove('sending');
+}
+
+// قسم نصي (فقرة واحدة)
+function secText(icon, title, val){
+    if (!val || !String(val).trim()) return '';
+    return `<div class="jd-sec"><h4><i class="fas ${icon}"></i>${title}</h4><div class="body">${esc(val)}</div></div>`;
+}
+// قسم على هيئة قائمة نقطية (كل سطر عنصر)
+function secList(icon, title, val){
+    if (!val || !String(val).trim()) return '';
+    const lines = String(val).split(/\r?\n/).map(l=>l.replace(/^\s*[-•*]\s*/,'').trim()).filter(Boolean);
+    if (lines.length <= 1) return secText(icon, title, val);
+    return `<div class="jd-sec"><h4><i class="fas ${icon}"></i>${title}</h4><ul class="jd-list">${lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`;
+}
+
+function renderDetail(j){
+    const meta = [];
+    if (j.position) meta.push(['fa-id-badge','المسمى الوظيفي', j.position]);
+    if (j.type) meta.push(['fa-briefcase','نوع الوظيفة', TYPES[j.type]||j.type]);
+    if (j.location) meta.push(['fa-location-dot','موقع العمل', j.location]);
+    meta.push(['fa-calendar-day','تاريخ النشر', fmtDate(j.publishedAt||j.createdAt)]);
+    if (j.deadline) meta.push(['fa-hourglass-half','آخر موعد للتقديم', fmtDate(j.deadline)]);
+
+    $('crModalBody').innerHTML = `
+        <div class="jd-meta">
+            ${meta.map(m=>`<div class="item"><div class="ic"><i class="fas ${m[0]}"></i></div><div><div class="lbl">${m[1]}</div><div class="val">${esc(m[2])}</div></div></div>`).join('')}
+        </div>
+        ${secText('fa-align-right','وصف الوظيفة', j.description)}
+        ${secList('fa-list-check','المهام والمسؤوليات', j.responsibilities)}
+        ${secList('fa-circle-check','المؤهلات والشروط', j.qualifications)}
+        ${secList('fa-star','المهارات المطلوبة', j.skills)}
+        ${j.status==='closed'
+            ? `<div class="cr-closed-note"><i class="fas fa-lock"></i><span>التسجيل على هذه الوظيفة مغلق حاليًا.</span></div>`
+            : `<button class="bdy-btn-primary" id="crShowApply" style="margin-top:8px;"><i class="fas fa-paper-plane"></i> التقديم على هذه الوظيفة</button>`}
+    `;
+    if(j.status!=='closed') $('crShowApply').addEventListener('click', renderApplyForm);
+}
+
+function renderApplyForm(){
+    $('crModalBody').innerHTML = `
+        <form id="crApplyForm" novalidate>
+            <div class="bdy-field">
+                <label class="bdy-label" for="apName">الاسم الكامل <span style="color:#8c2518">*</span></label>
+                <input type="text" id="apName" class="bdy-input" required placeholder="الاسم كما في الهوية">
+                <div class="bdy-err" id="err_name"></div>
+            </div>
+            <div class="bdy-field">
+                <label class="bdy-label" for="apPhone">رقم الجوال <span style="color:#8c2518">*</span></label>
+                <input type="tel" id="apPhone" class="bdy-input" dir="ltr" style="text-align:right" inputmode="numeric" placeholder="05XXXXXXXX" required>
+                <div class="bdy-err" id="err_phone"></div>
+            </div>
+            <div class="bdy-field">
+                <label class="bdy-label" for="apCv">السيرة الذاتية (PDF) <span style="color:var(--c-text-muted,#8a8478);font-weight:400;">(اختياري)</span></label>
+                <input type="file" id="apCv" class="bdy-input" accept="application/pdf" style="padding:9px 14px;">
+                <div class="bdy-file-note">ملف PDF فقط، الحد الأقصى 10 ميجابايت.</div>
+                <div class="bdy-err" id="err_cv"></div>
+            </div>
+            <div class="bdy-field">
+                <label class="bdy-consent">
+                    <input type="checkbox" id="apConsent">
+                    <span>أقرّ بأن جميع البيانات والمعلومات المقدمة صحيحة وأتحمّل مسؤوليتها.</span>
+                </label>
+                <div class="bdy-err" id="err_consent"></div>
+            </div>
+            <button type="submit" class="bdy-btn-primary" id="apSubmit"><i class="fas fa-paper-plane"></i> إرسال الطلب</button>
+        </form>
+    `;
+
+    $('apPhone').addEventListener('input', e => { e.target.value = normDigits(e.target.value).replace(/\D/g,''); });
+    $('crApplyForm').addEventListener('submit', submitApplication);
+}
+
+function normDigits(s){ return String(s||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)); }
+function setErr(id,m){ const e=$(id); if(e) e.textContent=m||''; }
+
+/* ═══ حركة الورقة والطير ═══ */
+const crWait = ms => new Promise(r => setTimeout(r, ms));
+const CR_PAPER_W = 220, CR_PAPER_H = 280, CR_ROLL_H = 28, CR_FEET = { x:73, y:215 };
+const CR_BIRD_SVG = `<svg viewBox="21 -23 157 209" aria-hidden="true"><defs><pattern id="fb1" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-258.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb2" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-248.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb3" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-238.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb4" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-228.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb5" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-218.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb6" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-208.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb7" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-198.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb8" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-194.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb9" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-184.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb10" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-174.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb11" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-164.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb12" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-154.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb13" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-144.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb14" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-134.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb15" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-124.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb16" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-114.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb17" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-104.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb18" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-72.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb19" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-60.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb20" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-48.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb21" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-36.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb22" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-24.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb23" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-12.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern></defs><g class="wing wing--far" style="filter:brightness(.8)"><path d="M77.1 75.9 L45.9 67.3 Q33.4 63.9 28.7 70.2 Q30.4 77.9 43.2 80.0 L75.2 84.8 Z" fill="url(#fb1)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M76.2 80.3 L39.5 72.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M78.3 74.8 L41.7 57.9 Q29.8 52.4 24.2 57.8 Q24.5 65.7 36.8 69.9 L74.9 83.2 Z" fill="url(#fb2)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M76.6 79.0 L34.4 62.0" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M79.6 73.9 L43.1 48.8 Q32.4 41.3 25.9 45.7 Q24.8 53.5 36.2 59.8 L74.8 81.6 Z" fill="url(#fb3)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M77.2 77.8 L35.2 51.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M81.1 73.3 L49.5 42.2 Q40.3 33.0 33.1 36.1 Q30.7 43.6 40.8 51.8 L75.0 80.0 Z" fill="url(#fb4)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M78.1 76.6 L41.3 43.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M82.7 72.9 L59.4 39.9 Q51.9 29.3 44.3 31.1 Q40.6 38.1 49.1 47.9 L75.5 78.5 Z" fill="url(#fb5)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M79.1 75.7 L51.1 39.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M84.3 72.8 L69.9 41.6 Q64.4 29.8 56.5 30.3 Q51.7 36.5 58.4 47.7 L76.2 77.1 Z" fill="url(#fb6)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M80.2 74.9 L61.7 40.1" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M85.9 73.0 L79.6 47.4 Q76.2 34.8 68.4 33.9 Q62.6 39.2 67.2 51.4 L77.2 75.8 Z" fill="url(#fb7)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M81.5 74.4 L71.8 44.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M84.0 82.0 L54.3 77.8 L55.4 72.9 L57.4 68.2 L60.1 63.9 L63.5 60.1 L67.5 57.0 L71.9 54.5 L76.7 52.9 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".6"/><circle cx="55.4" cy="72.9" r="3.6" fill="#efdfc4"/><circle cx="57.4" cy="68.2" r="3.6" fill="#efdfc4"/><circle cx="60.1" cy="63.9" r="3.6" fill="#efdfc4"/><circle cx="63.5" cy="60.1" r="3.6" fill="#efdfc4"/><circle cx="67.5" cy="57.0" r="3.6" fill="#efdfc4"/><circle cx="71.9" cy="54.5" r="3.6" fill="#efdfc4"/><ellipse cx="74.9" cy="76.4" rx="1.5" ry="2.3" transform="rotate(-59 74.9 76.4)" fill="#6b4529"/><ellipse cx="78.3" cy="75.0" rx="1.5" ry="2.3" transform="rotate(-39 78.3 75.0)" fill="#6b4529"/><ellipse cx="73.1" cy="71.4" rx="1.5" ry="2.3" transform="rotate(-46 73.1 71.4)" fill="#6b4529"/><ellipse cx="66.5" cy="77.2" rx="1.5" ry="2.3" transform="rotate(-75 66.5 77.2)" fill="#6b4529"/><ellipse cx="67.9" cy="77.9" rx="1.5" ry="2.3" transform="rotate(-76 67.9 77.9)" fill="#6b4529"/><ellipse cx="75.0" cy="79.4" rx="1.5" ry="2.3" transform="rotate(-74 75.0 79.4)" fill="#6b4529"/><ellipse cx="64.3" cy="66.9" rx="1.5" ry="2.3" transform="rotate(-53 64.3 66.9)" fill="#6b4529"/><ellipse cx="72.5" cy="77.9" rx="1.5" ry="2.3" transform="rotate(-71 72.5 77.9)" fill="#6b4529"/><ellipse cx="66.3" cy="61.1" rx="1.5" ry="2.3" transform="rotate(-40 66.3 61.1)" fill="#6b4529"/><ellipse cx="73.1" cy="70.5" rx="1.5" ry="2.3" transform="rotate(-43 73.1 70.5)" fill="#6b4529"/><ellipse cx="81.2" cy="74.0" rx="1.5" ry="2.3" transform="rotate(-19 81.2 74.0)" fill="#6b4529"/><ellipse cx="77.9" cy="69.8" rx="1.5" ry="2.3" transform="rotate(-26 77.9 69.8)" fill="#6b4529"/><ellipse cx="74.7" cy="78.5" rx="1.5" ry="2.3" transform="rotate(-69 74.7 78.5)" fill="#6b4529"/><ellipse cx="62.8" cy="69.5" rx="1.5" ry="2.3" transform="rotate(-59 62.8 69.5)" fill="#6b4529"/><ellipse cx="65.8" cy="74.3" rx="1.5" ry="2.3" transform="rotate(-67 65.8 74.3)" fill="#6b4529"/><ellipse cx="74.2" cy="70.2" rx="1.5" ry="2.3" transform="rotate(-40 74.2 70.2)" fill="#6b4529"/></g><g class="wing wing--near"><path d="M111.5 76.9 L98.4 14.6 Q95.3 -1.1 85.8 -2.9 Q78.3 3.1 82.9 18.5 L100.6 79.6 Z" fill="url(#fb8)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M106.1 78.2 L89.1 10.3" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M113.0 77.6 L110.3 4.0 Q110.0 -12.0 100.9 -15.4 Q92.4 -10.7 94.3 5.2 L101.9 78.4 Z" fill="url(#fb9)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M107.4 78.0 L101.9 -1.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M114.4 78.6 L124.9 1.7 Q127.4 -14.1 119.0 -19.0 Q109.9 -16.0 109.0 0.0 L103.3 77.5 Z" fill="url(#fb10)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M108.8 78.0 L117.6 -5.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M115.6 79.9 L138.7 7.8 Q143.9 -7.3 136.6 -13.6 Q127.0 -12.2 123.4 3.4 L104.8 76.8 Z" fill="url(#fb11)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M110.2 78.3 L132.8 -0.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M116.5 81.3 L149.2 19.8 Q156.9 5.7 150.8 -1.7 Q141.1 -2.0 134.8 12.7 L106.5 76.4 Z" fill="url(#fb12)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M111.5 78.8 L144.8 10.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.2 82.8 L155.4 34.4 Q165.4 21.9 160.7 13.5 Q151.2 11.6 142.4 25.0 L108.2 76.2 Z" fill="url(#fb13)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M112.7 79.5 L152.7 24.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.6 84.5 L156.4 50.4 Q168.5 39.8 165.3 30.7 Q156.3 27.2 145.3 38.8 L109.9 76.4 Z" fill="url(#fb14)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M113.8 80.4 L155.5 40.2" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.8 86.2 L155.3 63.8 Q169.0 55.5 167.4 46.0 Q159.1 40.9 146.3 50.5 L111.5 76.9 Z" fill="url(#fb15)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M114.6 81.5 L156.1 53.6" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.6 87.9 L151.1 75.6 Q166.0 69.8 166.1 60.1 Q158.9 53.7 144.6 61.0 L113.0 77.6 Z" fill="url(#fb16)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M115.3 82.7 L153.7 65.7" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.1 89.5 L144.5 85.1 Q160.2 82.1 161.9 72.5 Q155.9 65.0 140.6 69.6 L114.4 78.6 Z" fill="url(#fb17)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M115.8 84.1 L148.8 75.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M108.0 86.0 L91.6 40.9 L100.8 38.5 L110.2 38.1 L119.6 39.4 L128.5 42.6 L136.7 47.5 L143.7 53.9 L149.3 61.5 L153.3 70.1 L155.5 79.3 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".6"/><circle cx="100.8" cy="38.5" r="5.8" fill="#efdfc4"/><circle cx="110.2" cy="38.1" r="5.8" fill="#efdfc4"/><circle cx="119.6" cy="39.4" r="5.8" fill="#efdfc4"/><circle cx="128.5" cy="42.6" r="5.8" fill="#efdfc4"/><circle cx="136.7" cy="47.5" r="5.8" fill="#efdfc4"/><circle cx="143.7" cy="53.9" r="5.8" fill="#efdfc4"/><circle cx="149.3" cy="61.5" r="5.8" fill="#efdfc4"/><circle cx="153.3" cy="70.1" r="5.8" fill="#efdfc4"/><ellipse cx="116.2" cy="74.5" rx="1.5" ry="2.3" transform="rotate(35 116.2 74.5)" fill="#6b4529"/><ellipse cx="104.6" cy="67.4" rx="1.5" ry="2.3" transform="rotate(-10 104.6 67.4)" fill="#6b4529"/><ellipse cx="127.6" cy="68.3" rx="1.5" ry="2.3" transform="rotate(48 127.6 68.3)" fill="#6b4529"/><ellipse cx="115.4" cy="55.2" rx="1.5" ry="2.3" transform="rotate(14 115.4 55.2)" fill="#6b4529"/><ellipse cx="117.9" cy="66.3" rx="1.5" ry="2.3" transform="rotate(27 117.9 66.3)" fill="#6b4529"/><ellipse cx="138.3" cy="67.5" rx="1.5" ry="2.3" transform="rotate(59 138.3 67.5)" fill="#6b4529"/><ellipse cx="111.8" cy="54.9" rx="1.5" ry="2.3" transform="rotate(7 111.8 54.9)" fill="#6b4529"/><ellipse cx="130.8" cy="51.4" rx="1.5" ry="2.3" transform="rotate(33 130.8 51.4)" fill="#6b4529"/><ellipse cx="125.2" cy="72.8" rx="1.5" ry="2.3" transform="rotate(53 125.2 72.8)" fill="#6b4529"/><ellipse cx="123.5" cy="82.2" rx="1.5" ry="2.3" transform="rotate(76 123.5 82.2)" fill="#6b4529"/><ellipse cx="122.8" cy="51.6" rx="1.5" ry="2.3" transform="rotate(23 122.8 51.6)" fill="#6b4529"/><ellipse cx="107.1" cy="57.6" rx="1.5" ry="2.3" transform="rotate(-2 107.1 57.6)" fill="#6b4529"/><ellipse cx="100.7" cy="52.3" rx="1.5" ry="2.3" transform="rotate(-12 100.7 52.3)" fill="#6b4529"/><ellipse cx="133.9" cy="68.5" rx="1.5" ry="2.3" transform="rotate(56 133.9 68.5)" fill="#6b4529"/><ellipse cx="128.6" cy="76.9" rx="1.5" ry="2.3" transform="rotate(66 128.6 76.9)" fill="#6b4529"/><ellipse cx="132.3" cy="65.2" rx="1.5" ry="2.3" transform="rotate(49 132.3 65.2)" fill="#6b4529"/><ellipse cx="125.0" cy="64.6" rx="1.5" ry="2.3" transform="rotate(39 125.0 64.6)" fill="#6b4529"/><ellipse cx="147.0" cy="66.1" rx="1.5" ry="2.3" transform="rotate(63 147.0 66.1)" fill="#6b4529"/><ellipse cx="124.4" cy="55.9" rx="1.5" ry="2.3" transform="rotate(29 124.4 55.9)" fill="#6b4529"/><ellipse cx="101.6" cy="51.0" rx="1.5" ry="2.3" transform="rotate(-10 101.6 51.0)" fill="#6b4529"/><ellipse cx="140.0" cy="53.8" rx="1.5" ry="2.3" transform="rotate(45 140.0 53.8)" fill="#6b4529"/><ellipse cx="126.9" cy="75.6" rx="1.5" ry="2.3" transform="rotate(61 126.9 75.6)" fill="#6b4529"/><ellipse cx="119.9" cy="53.7" rx="1.5" ry="2.3" transform="rotate(20 119.9 53.7)" fill="#6b4529"/><ellipse cx="101.4" cy="59.3" rx="1.5" ry="2.3" transform="rotate(-14 101.4 59.3)" fill="#6b4529"/><ellipse cx="107.9" cy="70.1" rx="1.5" ry="2.3" transform="rotate(-0 107.9 70.1)" fill="#6b4529"/><ellipse cx="101.1" cy="48.8" rx="1.5" ry="2.3" transform="rotate(-10 101.1 48.8)" fill="#6b4529"/><ellipse cx="106.6" cy="65.7" rx="1.5" ry="2.3" transform="rotate(-4 106.6 65.7)" fill="#6b4529"/><ellipse cx="122.6" cy="47.4" rx="1.5" ry="2.3" transform="rotate(21 122.6 47.4)" fill="#6b4529"/><ellipse cx="104.0" cy="59.2" rx="1.5" ry="2.3" transform="rotate(-8 104.0 59.2)" fill="#6b4529"/><ellipse cx="132.3" cy="52.1" rx="1.5" ry="2.3" transform="rotate(36 132.3 52.1)" fill="#6b4529"/><ellipse cx="143.9" cy="66.1" rx="1.5" ry="2.3" transform="rotate(61 143.9 66.1)" fill="#6b4529"/><ellipse cx="112.6" cy="60.5" rx="1.5" ry="2.3" transform="rotate(10 112.6 60.5)" fill="#6b4529"/><ellipse cx="120.7" cy="46.3" rx="1.5" ry="2.3" transform="rotate(18 120.7 46.3)" fill="#6b4529"/><ellipse cx="124.4" cy="81.3" rx="1.5" ry="2.3" transform="rotate(74 124.4 81.3)" fill="#6b4529"/><ellipse cx="108.2" cy="66.2" rx="1.5" ry="2.3" transform="rotate(1 108.2 66.2)" fill="#6b4529"/><ellipse cx="110.9" cy="57.9" rx="1.5" ry="2.3" transform="rotate(6 110.9 57.9)" fill="#6b4529"/><ellipse cx="121.2" cy="69.9" rx="1.5" ry="2.3" transform="rotate(39 121.2 69.9)" fill="#6b4529"/><ellipse cx="101.0" cy="60.9" rx="1.5" ry="2.3" transform="rotate(-16 101.0 60.9)" fill="#6b4529"/><ellipse cx="118.0" cy="56.6" rx="1.5" ry="2.3" transform="rotate(19 118.0 56.6)" fill="#6b4529"/><ellipse cx="141.8" cy="76.1" rx="1.5" ry="2.3" transform="rotate(74 141.8 76.1)" fill="#6b4529"/><ellipse cx="125.6" cy="58.4" rx="1.5" ry="2.3" transform="rotate(32 125.6 58.4)" fill="#6b4529"/><ellipse cx="118.2" cy="76.7" rx="1.5" ry="2.3" transform="rotate(48 118.2 76.7)" fill="#6b4529"/><ellipse cx="143.6" cy="72.0" rx="1.5" ry="2.3" transform="rotate(69 143.6 72.0)" fill="#6b4529"/><ellipse cx="143.5" cy="70.3" rx="1.5" ry="2.3" transform="rotate(66 143.5 70.3)" fill="#6b4529"/><ellipse cx="117.1" cy="62.3" rx="1.5" ry="2.3" transform="rotate(21 117.1 62.3)" fill="#6b4529"/><ellipse cx="104.4" cy="52.9" rx="1.5" ry="2.3" transform="rotate(-6 104.4 52.9)" fill="#6b4529"/></g><g><path d="M124.2 134.2 L154.4 146.4 Q168.4 151.8 174.5 145.1 Q173.5 136.1 159.0 132.1 L127.4 124.2 Z" fill="url(#fb18)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.8 129.2 L162.4 141.1" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M122.8 134.5 L149.9 152.7 Q162.5 160.9 169.8 155.6 Q170.7 146.6 157.4 139.8 L128.1 125.5 Z" fill="url(#fb19)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.5 130.0 L158.8 149.2" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M121.5 134.6 L144.1 158.0 Q154.8 168.6 163.1 165.0 Q165.8 156.3 154.1 146.8 L128.5 126.8 Z" fill="url(#fb20)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.0 130.7 L153.6 156.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M120.1 134.3 L137.4 161.9 Q145.6 174.5 154.5 172.7 Q158.9 164.8 149.5 153.1 L128.6 128.2 Z" fill="url(#fb21)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M124.4 131.2 L147.0 162.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M118.8 133.8 L130.0 164.4 Q135.4 178.4 144.5 178.5 Q150.5 171.7 143.7 158.3 L128.4 129.5 Z" fill="url(#fb22)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M123.6 131.7 L139.3 166.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.7 133.0 L122.3 165.3 Q124.6 180.1 133.5 182.0 Q140.8 176.7 136.9 162.1 L128.0 130.8 Z" fill="url(#fb23)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M122.8 131.9 L130.8 169.6" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/></g>
+<path d="M58 76 C70 64 98 68 114 88 C128 106 133 126 126 136 C115 145 96 134 86 120 C76 106 57 92 58 76 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".8"/>
+<path d="M74 65 C95 64 110 76 118 92 C122 100 124 108 124 114 C116 100 104 90 92 86 C84 80 79 72 74 65 Z" fill="#8a5f3f"/>
+<path d="M82.1 90.5 C83.7 92.1 83.5 94.9 82.1 95.5 C80.7 94.9 80.5 92.1 82.1 90.5 Z" fill="#6b4529"/><path d="M89.7 84.3 C91.3 85.9 91.1 88.7 89.7 89.3 C88.3 88.7 88.1 85.9 89.7 84.3 Z" fill="#6b4529"/><path d="M75.9 101.8 C77.5 103.4 77.3 106.2 75.9 106.8 C74.5 106.2 74.3 103.4 75.9 101.8 Z" fill="#6b4529"/><path d="M84.6 100.9 C86.2 102.5 86.0 105.3 84.6 105.9 C83.2 105.3 83.0 102.5 84.6 100.9 Z" fill="#6b4529"/><path d="M91.1 88.3 C92.7 89.9 92.5 92.7 91.1 93.3 C89.7 92.7 89.5 89.9 91.1 88.3 Z" fill="#6b4529"/><path d="M119.2 137.0 C120.8 138.6 120.6 141.4 119.2 142.0 C117.8 141.4 117.6 138.6 119.2 137.0 Z" fill="#6b4529"/><path d="M97.0 108.5 C98.6 110.1 98.4 112.9 97.0 113.5 C95.6 112.9 95.4 110.1 97.0 108.5 Z" fill="#6b4529"/><path d="M89.9 96.2 C91.5 97.8 91.3 100.6 89.9 101.2 C88.5 100.6 88.3 97.8 89.9 96.2 Z" fill="#6b4529"/><path d="M120.1 120.4 C121.7 122.0 121.5 124.8 120.1 125.4 C118.7 124.8 118.5 122.0 120.1 120.4 Z" fill="#6b4529"/><path d="M85.1 101.9 C86.7 103.5 86.5 106.3 85.1 106.9 C83.7 106.3 83.5 103.5 85.1 101.9 Z" fill="#6b4529"/><path d="M100.9 125.0 C102.5 126.6 102.3 129.4 100.9 130.0 C99.5 129.4 99.3 126.6 100.9 125.0 Z" fill="#6b4529"/><path d="M89.1 93.9 C90.7 95.5 90.5 98.3 89.1 98.9 C87.7 98.3 87.5 95.5 89.1 93.9 Z" fill="#6b4529"/><path d="M117.1 136.6 C118.7 138.2 118.5 141.0 117.1 141.6 C115.7 141.0 115.5 138.2 117.1 136.6 Z" fill="#6b4529"/><path d="M119.5 126.5 C121.1 128.1 120.9 130.9 119.5 131.5 C118.1 130.9 117.9 128.1 119.5 126.5 Z" fill="#6b4529"/><path d="M117.5 122.8 C119.1 124.4 118.9 127.2 117.5 127.8 C116.1 127.2 115.9 124.4 117.5 122.8 Z" fill="#6b4529"/><path d="M83.2 110.4 C84.8 112.0 84.6 114.8 83.2 115.4 C81.8 114.8 81.6 112.0 83.2 110.4 Z" fill="#6b4529"/><path d="M90.6 83.0 C92.2 84.6 92.0 87.4 90.6 88.0 C89.2 87.4 89.0 84.6 90.6 83.0 Z" fill="#6b4529"/><path d="M71.6 97.0 C73.2 98.6 73.0 101.4 71.6 102.0 C70.2 101.4 70.0 98.6 71.6 97.0 Z" fill="#6b4529"/><path d="M124.3 136.7 C125.9 138.3 125.7 141.1 124.3 141.7 C122.9 141.1 122.7 138.3 124.3 136.7 Z" fill="#6b4529"/><path d="M82.8 94.1 C84.4 95.7 84.2 98.5 82.8 99.1 C81.4 98.5 81.2 95.7 82.8 94.1 Z" fill="#6b4529"/><path d="M81.4 92.8 C83.0 94.4 82.8 97.2 81.4 97.8 C80.0 97.2 79.8 94.4 81.4 92.8 Z" fill="#6b4529"/><path d="M107.9 126.2 C109.5 127.8 109.3 130.6 107.9 131.2 C106.5 130.6 106.3 127.8 107.9 126.2 Z" fill="#6b4529"/><path d="M122.8 125.2 C124.4 126.8 124.2 129.6 122.8 130.2 C121.4 129.6 121.2 126.8 122.8 125.2 Z" fill="#6b4529"/><path d="M113.5 108.2 C115.1 109.8 114.9 112.6 113.5 113.2 C112.1 112.6 111.9 109.8 113.5 108.2 Z" fill="#6b4529"/><path d="M77.4 89.9 C79.0 91.5 78.8 94.3 77.4 94.9 C76.0 94.3 75.8 91.5 77.4 89.9 Z" fill="#6b4529"/><path d="M122.5 126.6 C124.1 128.2 123.9 131.0 122.5 131.6 C121.1 131.0 120.9 128.2 122.5 126.6 Z" fill="#6b4529"/><path d="M90.3 112.1 C91.9 113.7 91.7 116.5 90.3 117.1 C88.9 116.5 88.7 113.7 90.3 112.1 Z" fill="#6b4529"/><path d="M84.6 97.8 C86.2 99.4 86.0 102.2 84.6 102.8 C83.2 102.2 83.0 99.4 84.6 97.8 Z" fill="#6b4529"/><path d="M85.0 104.9 C86.6 106.5 86.4 109.3 85.0 109.9 C83.6 109.3 83.4 106.5 85.0 104.9 Z" fill="#6b4529"/><path d="M90.5 107.1 C92.1 108.7 91.9 111.5 90.5 112.1 C89.1 111.5 88.9 108.7 90.5 107.1 Z" fill="#6b4529"/><path d="M99.1 111.2 C100.7 112.8 100.5 115.6 99.1 116.2 C97.7 115.6 97.5 112.8 99.1 111.2 Z" fill="#6b4529"/><path d="M95.5 91.7 C97.1 93.3 96.9 96.1 95.5 96.7 C94.1 96.1 93.9 93.3 95.5 91.7 Z" fill="#6b4529"/><path d="M80.0 107.9 C81.6 109.5 81.4 112.3 80.0 112.9 C78.6 112.3 78.4 109.5 80.0 107.9 Z" fill="#6b4529"/><path d="M112.1 112.6 C113.7 114.2 113.5 117.0 112.1 117.6 C110.7 117.0 110.5 114.2 112.1 112.6 Z" fill="#6b4529"/><path d="M88.9 110.4 C90.5 112.0 90.3 114.8 88.9 115.4 C87.5 114.8 87.3 112.0 88.9 110.4 Z" fill="#6b4529"/><path d="M102.2 125.3 C103.8 126.9 103.6 129.7 102.2 130.3 C100.8 129.7 100.6 126.9 102.2 125.3 Z" fill="#6b4529"/><path d="M84.4 96.9 C86.0 98.5 85.8 101.3 84.4 101.9 C83.0 101.3 82.8 98.5 84.4 96.9 Z" fill="#6b4529"/><path d="M114.8 109.8 C116.4 111.4 116.2 114.2 114.8 114.8 C113.4 114.2 113.2 111.4 114.8 109.8 Z" fill="#6b4529"/><path d="M102.6 124.0 C104.2 125.6 104.0 128.4 102.6 129.0 C101.2 128.4 101.0 125.6 102.6 124.0 Z" fill="#6b4529"/><path d="M105.5 109.7 C107.1 111.3 106.9 114.1 105.5 114.7 C104.1 114.1 103.9 111.3 105.5 109.7 Z" fill="#6b4529"/><path d="M99.7 120.2 C101.3 121.8 101.1 124.6 99.7 125.2 C98.3 124.6 98.1 121.8 99.7 120.2 Z" fill="#6b4529"/><path d="M96.2 111.3 C97.8 112.9 97.6 115.7 96.2 116.3 C94.8 115.7 94.6 112.9 96.2 111.3 Z" fill="#6b4529"/>
+<path d="M78 112 C84 122 94 130 100 128 C96 120 90 114 84 108 Z" fill="#f6ead3"/>
+
+<circle cx="66" cy="72" r="15.5" fill="#efdfc4" stroke="#3a281b" stroke-width=".8"/>
+<path d="M52 69 C52 57 70 51 80 60 C84 64 84 72 80 77 C74 70 63 66 52 69 Z" fill="#7a5236"/>
+<path d="M56.5 66.5 C62 66 66 72 66 82 C65.4 86 61.4 86.2 60.6 82 C60 76 58 72.5 54 71.5 Z" fill="#33231a"/>
+<circle cx="59.5" cy="69.5" r="4.4" fill="#e9c46a"/>
+<circle cx="59.5" cy="69.5" r="3.4" fill="#5a2e14"/>
+<circle cx="59.5" cy="69.5" r="1.7" fill="#120b07"/>
+<circle cx="58.5" cy="68.5" r=".8" fill="#fff"/>
+<path d="M55 68 L49.5 69.6 L49.5 75 L55 75.4 Z" fill="#f2c14e"/>
+<path d="M50.5 68.6 C43.5 68.6 38.6 72.8 38.6 79.2 C38.6 82.8 41.4 84 42.6 81.2 C42.8 78 45.4 76.4 50.8 76.4 Z" fill="#5f6b78"/>
+<path d="M49 70.6 C45.5 71 43 73.2 42.2 76.4" fill="none" stroke="#9aa5b1" stroke-width="1" stroke-linecap="round"/>
+<path d="M84 118 C80 126 77 132 74 139" stroke="#e9b949" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+<path d="M93 124 C90 131 87 136 84 142" stroke="#e9b949" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+<path d="M80 108 C76 114 78 122 86 124 C92 126 98 122 96 116 Z" fill="#f3e6cf" stroke="#3a281b" stroke-width=".6"/>
+<path d="M74.0 139.0 L69.3 140.7" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M69.3 140.7 Q65.5 142.1 64.2 139.1" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M74.0 139.0 L71.0 144.2" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M71.0 144.2 Q69.0 147.7 66.1 146.2" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M74.0 139.0 L74.4 144.0" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M74.4 144.0 Q74.8 148.0 71.5 148.4" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M84.0 142.0 L79.3 143.7" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M79.3 143.7 Q75.5 145.1 74.2 142.1" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M84.0 142.0 L81.0 147.2" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M81.0 147.2 Q79.0 150.7 76.1 149.2" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M84.0 142.0 L84.4 147.0" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M84.4 147.0 Q84.8 151.0 81.5 151.4" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/>
+</svg>`;
+
+// النافذة تصغر إلى ورقة، يُكتب عليها الاسم والجوال، ثم تلتف وتُربط
+async function crRollIntoPaper(name, phone){
+    const shell = document.querySelector('#crSendStage .ws-modal-shell');
+    const rect = shell.getBoundingClientRect();
+    const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+    const paper = document.createElement('div');
+    paper.className = 'cr-paper';
+    paper.innerHTML =
+      '<div class="cr-paper__sheet"><div class="cr-paper__lines">' +
+      '<p class="cr-paper__label">طلب توظيف</p>' +
+      '<p class="cr-paper__name"></p><p class="cr-paper__phone"></p>' +
+      '<div class="cr-paper__rule"></div>' +
+      '<span></span><span></span><span></span><span></span><span></span></div></div>' +
+      '<div class="cr-paper__roll"><div class="cr-paper__ribbon"></div></div>';
+    Object.assign(paper.style, { left:rect.left+'px', top:rect.top+'px', width:rect.width+'px', height:rect.height+'px' });
+    paper.querySelector('.cr-paper__name').textContent = (name||'').trim();
+    paper.querySelector('.cr-paper__phone').textContent = (phone||'').trim();
+    document.body.appendChild(paper);
+
+    const sheet = paper.querySelector('.cr-paper__sheet');
+    const left = cx - CR_PAPER_W/2, top = cy - CR_PAPER_H/2;
+    paper.classList.add('is-sheet');
+    await Promise.all([
+        paper.animate([
+            { left:rect.left+'px', top:rect.top+'px', width:rect.width+'px', height:rect.height+'px' },
+            { left:left+'px', top:top+'px', width:CR_PAPER_W+'px', height:CR_PAPER_H+'px' },
+        ], { duration:560, easing:'cubic-bezier(.65,0,.35,1)', fill:'forwards' }).finished,
+        sheet.animate([{ borderRadius:'18px' }, { borderRadius:'6px' }], { duration:560, easing:'cubic-bezier(.65,0,.35,1)', fill:'forwards' }).finished,
+    ]);
+
+    paper.classList.add('is-written');
+    await crWait(1150);
+
+    paper.classList.add('is-rolling');
+    await paper.animate([{ height:CR_PAPER_H+'px' }, { height:(CR_ROLL_H/2)+'px' }], { duration:680, easing:'cubic-bezier(.55,0,.25,1)', fill:'forwards' }).finished;
+    sheet.style.opacity = '0';
+
+    paper.classList.add('is-tied');
+    paper.animate([{ transform:'rotate(0)' }, { transform:'rotate(-4deg) translateY(-4px)' }], { duration:380, easing:'cubic-bezier(.3,1.4,.5,1)', fill:'forwards' });
+    await crWait(340);
+    return { paper, x:cx, y:top + CR_ROLL_H/2 };
+}
+
+// يجيء الطير، يمسك اللفّة، ويطير بها خارج الصفحة
+async function crBirdTakesIt({ paper, x, y }){
+    const bird = document.createElement('div');
+    bird.className = 'cr-bird';
+    bird.innerHTML = CR_BIRD_SVG;
+    const birdLeft = x - CR_FEET.x, birdTop = y - CR_ROLL_H/2 - CR_FEET.y + 4;
+    bird.style.left = birdLeft+'px'; bird.style.top = birdTop+'px';
+    document.body.appendChild(bird);
+
+    const vw = window.innerWidth;
+    const startX = vw - birdLeft + 80, startY = -birdTop - 120;
+    await bird.animate([
+        { transform:`translate(${startX}px, ${startY}px)` },
+        { transform:`translate(${startX*0.45}px, ${startY*0.25}px)`, offset:0.55 },
+        { transform:'translate(-6px, -18px)', offset:0.85 },
+        { transform:'translate(0, 0)' },
+    ], { duration:980, easing:'cubic-bezier(.25,.6,.3,1)', fill:'forwards' }).finished;
+
+    paper.getAnimations().forEach(a => a.commitStyles && a.commitStyles());
+    paper.getAnimations().forEach(a => a.cancel());
+    paper.style.position = 'absolute';
+    paper.style.left = (CR_FEET.x - parseFloat(paper.style.width)/2)+'px';
+    paper.style.top = (CR_FEET.y - 4)+'px';
+    paper.style.transform = 'rotate(-4deg)';
+    bird.appendChild(paper);
+
+    const endX = -(birdLeft + 260), endY = -(birdTop + 260);
+    await bird.animate([
+        { transform:'translate(0, 0)', easing:'cubic-bezier(.3,0,.3,1)' },
+        { transform:'translate(4px, 12px)', offset:0.18, easing:'cubic-bezier(.5,0,.8,.4)' },
+        { transform:`translate(${endX*0.35}px, ${endY*0.15}px) rotate(-6deg)`, offset:0.55 },
+        { transform:`translate(${endX}px, ${endY}px) rotate(-14deg) scale(.8)` },
+    ], { duration:1150, fill:'forwards' }).finished;
+    bird.remove();
+}
+
+async function submitApplication(e){
+    e.preventDefault();
+    if(!activeJob) return;
+
+    ['err_name','err_phone','err_cv','err_consent'].forEach(i=>setErr(i,''));
+    ['apName','apPhone'].forEach(i=>$(i)?.classList.remove('invalid'));
+
+    const name = $('apName').value.trim();
+    const phone = normDigits($('apPhone').value).replace(/\D/g,'');
+    const cvFile = $('apCv').files && $('apCv').files[0];
+    const consent = $('apConsent').checked;
+
+    let ok = true;
+    if(!name){ setErr('err_name','الرجاء إدخال الاسم الكامل'); $('apName').classList.add('invalid'); ok=false; }
+    if(!/^05\d{8}$/.test(phone)){ setErr('err_phone','رقم جوال غير صحيح (05XXXXXXXX)'); $('apPhone').classList.add('invalid'); ok=false; }
+    // السيرة الذاتية اختيارية مؤقتًا — تُفحص فقط إذا أُرفقت
+    if(cvFile && cvFile.type!=='application/pdf' && !cvFile.name.toLowerCase().endsWith('.pdf')){ setErr('err_cv','يُقبل ملف PDF فقط'); ok=false; }
+    else if(cvFile && cvFile.size > 10*1024*1024){ setErr('err_cv','حجم الملف كبير جدًا (الحد 10 ميجابايت)'); ok=false; }
+    if(!consent){ setErr('err_consent','يجب الإقرار قبل الإرسال'); ok=false; }
+    if(!ok) return;
+
+    const btn = $('apSubmit');
+    btn.disabled = true;
+
+    // تبدأ الحركة فوراً عند الضغط، والرفع يجري في الخلفية بالتوازي
+    const stage = $('crSendStage');
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(stage && !reduce) stage.classList.add('sending');
+    // النافذة تتحول لورقة تلتف (بالتوازي مع الرفع)؛ null في وضع تقليل الحركة
+    const rollPromise = (stage && !reduce) ? crRollIntoPaper(name, phone) : Promise.resolve(null);
+
+    const appId = `${activeJob.id}_${phone}`;
+
+    // دالة الرفع الفعلي (في الخلفية)
+    const upload = (async () => {
+        const CHUNK = 600000;
+        const parts = [];
+        if(cvFile){
+            const dataUrl = await readFileAsDataURL(cvFile);
+            for(let i=0;i<dataUrl.length;i+=CHUNK) parts.push(dataUrl.slice(i,i+CHUNK));
+        }
+        // إنشاء مستند الطلب أولاً — شرط !exists في القواعد يمنع التكرار على مستوى الخادم
+        await setDoc(doc(db,'jobApplications',appId), {
+            jobId: activeJob.id,
+            jobTitle: activeJob.title || '',
+            name, phone,
+            email: '',
+            cvChunks: parts.length,
+            cvName: cvFile ? cvFile.name : '',
+            cvSize: cvFile ? cvFile.size : 0,
+            status: 'جديد',
+            reviewed: false,
+            consent: true,
+            submittedAt: serverTimestamp(),
+            createdAt: serverTimestamp()
+        });
+        // كتابة قطع الملف بعد نجاح إنشاء الطلب
+        let batch = writeBatch(db); let ops=0;
+        for(let idx=0; idx<parts.length; idx++){
+            batch.set(doc(db,'jobApplication_chunks',`${appId}_${idx}`), { appId, jobId:activeJob.id, idx, data:parts[idx] });
+            if(++ops>=450){ await batch.commit(); batch=writeBatch(db); ops=0; }
+        }
+        if(ops>0) await batch.commit();
+        // إشعار الإدارة بطلب توظيف جديد (ثابت حتى يفتحه الأدمن)
+        try {
+            await addDoc(collection(db,'admin_notifications'), {
+                type: 'job',
+                name,
+                label: 'التوظيف',
+                activityTitle: activeJob.title || 'وظيفة',
+                title: `طلب توظيف جديد — ${activeJob.title || 'وظيفة'}`,
+                jobId: activeJob.id,
+                jobTitle: activeJob.title || '',
+                read: false,
+                createdAt: serverTimestamp()
+            });
+        } catch(e){ console.warn('notifyAdmin job', e); }
+    })();
+
+    try {
+        // ننتظر اكتمال الرفع والتفاف الورقة معاً
+        const [ , roll ] = await Promise.all([upload, rollPromise]);
+        if(roll){
+            // يأتي الطير ويطير بالورقة خارج الصفحة
+            await crBirdTakesIt(roll);
+            await crWait(180);
+        }
+        // بعد أن يطير الطير: تُغلق نافذة التوظيف
+        closeModal();
+    } catch(err){
+        console.error('submitApplication', err);
+        // إزالة الورقة وإرجاع النافذة
+        try { const r = await rollPromise; if(r && r.paper){ r.paper.remove(); } } catch(_){ }
+        if(stage) stage.classList.remove('sending');
+        btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
+        if(err && err.code === 'permission-denied'){
+            setErr('err_consent','تعذّر إرسال الطلب: إمّا أنك قدّمت مسبقًا بنفس رقم الجوال، أو أن التقديم على الوظيفة أُغلق.');
+        } else {
+            setErr('err_consent','تعذّر إرسال الطلب حاليًا. حاول مرة أخرى.');
+        }
+    }
+}
+
+function readFileAsDataURL(file){
+    return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
+}
+
+function showJobToast(msg){
+    let t = document.getElementById('crJobToast');
+    if(!t){
+        t = document.createElement('div');
+        t.id = 'crJobToast';
+        t.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1c1a17;color:#fff;padding:13px 22px;border-radius:999px;font-family:inherit;font-weight:700;font-size:14px;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);z-index:3000;display:flex;align-items:center;gap:9px;opacity:0;transition:opacity .3s,transform .3s;';
+        document.body.appendChild(t);
+    }
+    t.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7ac47a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 10"/></svg><span>${esc(msg)}</span>`;
+    requestAnimationFrame(()=>{ t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; });
+    clearTimeout(showJobToast._t);
+    showJobToast._t = setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 4500);
+}
+
+// Modal close bindings
+$('crClose').addEventListener('click', closeModal);
+$('crOverlay').addEventListener('click', e => { if(e.target===$('crOverlay')) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape' && $('crOverlay').classList.contains('open')) closeModal(); });
+
+// Mobile nav + scrolled state
+(function(){
+    const t=$('mobileToggle'), m=$('mobileMenu'), c=$('mobileClose');
+    if(t&&m){ t.addEventListener('click',()=>{m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}); }
+    if(c&&m){ c.addEventListener('click',()=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}); }
+    const nav=$('mainNav');
+    if(nav){ const s=()=>nav.classList.toggle('scrolled',window.scrollY>20); window.addEventListener('scroll',s,{passive:true}); s(); }
+})();
+
+loadJobs();
+</script>
+<script type="module" src="../maintenance.js"></script>
+
+<!-- ════════ FOOTER (black) — جمعية إرث وحضارة ════════ -->
+<style>
+  .ehf { position:relative; background:#111111; color:#d8d4cc; margin-top:5rem; direction:rtl;
+         font-family:inherit; padding-top:34px;
+         box-shadow:0 0 0 100vw #111111; clip-path:inset(0 -100vw 0 -100vw); }
+  /* شريط نقوش سدو تراثية بسيطة أعلى الفوتر بدل الخط البني */
+  .ehf::before { content:""; position:absolute; top:0; left:0; right:0; height:14px; opacity:.5;
+    background-image:
+      linear-gradient(135deg, rgba(255,255,255,.14) 25%, transparent 25%),
+      linear-gradient(225deg, rgba(255,255,255,.14) 25%, transparent 25%),
+      linear-gradient(315deg, rgba(255,255,255,.14) 25%, transparent 25%),
+      linear-gradient(45deg,  rgba(255,255,255,.14) 25%, transparent 25%);
+    background-size:14px 14px; background-position:0 0, 7px 0, 7px -7px, 0 7px;
+    box-shadow:0 0 0 100vw transparent; clip-path:inset(0 -100vw auto -100vw); }
+  .ehf::after { content:""; position:absolute; top:14px; left:0; right:0; height:1px;
+    background:rgba(255,255,255,.12); clip-path:inset(0 -100vw 0 -100vw); }
+  .ehf__inner { max-width:1180px; margin:0 auto; padding:40px 24px 0;
+                display:grid; grid-template-columns:1.6fr 1fr 1fr; gap:36px; }
+  .ehf__brand-logo { display:flex; flex-direction:column; align-items:flex-start; gap:12px; margin-bottom:16px; }
+  .ehf__brand-logo img { width:150px; height:auto; object-fit:contain; }
+  .ehf__about { font-size:13.5px; line-height:1.9; color:#9d988f; max-width:360px; }
+  .ehf__col h4 { font-size:14px; font-weight:800; color:#fff; margin:0 0 16px;
+                 position:relative; padding-bottom:10px; }
+  .ehf__col h4::after { content:""; position:absolute; bottom:0; right:0;
+                        width:34px; height:2px; background:rgba(255,255,255,.45); border-radius:2px; }
+  .ehf__links { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .ehf__links a { color:#b8b4aa; text-decoration:none; font-size:13.5px;
+                  transition:color .2s, padding .2s; display:inline-block; }
+  .ehf__links a:hover { color:#fff; padding-right:6px; }
+  .ehf__contact { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .ehf__contact li { display:flex; align-items:center; gap:10px; font-size:13.5px; color:#b8b4aa; }
+  .ehf__contact svg { width:17px; height:17px; stroke:rgba(255,255,255,.65); flex-shrink:0; }
+  .ehf__contact a { color:#b8b4aa; text-decoration:none; }
+  .ehf__contact a:hover { color:#fff; }
+  .ehf__social { display:flex; gap:10px; margin-top:16px; }
+  .ehf__social a { width:38px; height:38px; border-radius:50%; background:#1e1e1e;
+                   border:1px solid #333; display:grid; place-items:center;
+                   color:#c3bfb6; transition:all .2s; }
+  .ehf__social a:hover { background:#fff; color:#111; border-color:#fff; }
+  .ehf__social svg { width:17px; height:17px; }
+  .ehf__bar { position:relative; border-top:1px solid #262626; margin-top:40px;
+              padding:18px 24px; text-align:center; font-size:12.5px; color:#8a8579;
+              max-width:1180px; margin-left:auto; margin-right:auto; }
+  .ehf__bar p { margin:3px 0; }
+  @media (max-width:760px){
+    .ehf__inner { grid-template-columns:1fr; gap:30px; padding:34px 20px 0; text-align:center; }
+    .ehf__brand-logo { align-items:center; }
+    .ehf__about { margin:0 auto; }
+    .ehf__col h4::after { right:50%; transform:translateX(50%); }
+    .ehf__contact li { justify-content:center; }
+    .ehf__social { justify-content:center; }
+  }
+</style>
+<footer class="ehf">
+  <div class="ehf__inner">
+    <div class="ehf__col">
+      <div class="ehf__brand-logo">
+        <img src="/assets/الشعار/شعار-ابيض.png" alt="شعار جمعية إرث وحضارة" onerror="this.style.display='none'">
+      </div>
+      <p class="ehf__about">جمعية أهلية تعنى بحفظ التراث وبناء الهوية الثقافية في محافظة القريات بمنطقة الجوف، عبر الفعاليات والورش والمبادرات المجتمعية.</p>
+    </div>
+
+    <div class="ehf__col">
+      <h4>روابط سريعة</h4>
+      <ul class="ehf__links">
+        <li><a href="/activities/">الفعاليات</a></li>
+        <li><a href="/workshops/">ورش العمل</a></li>
+        <li><a href="/volunteer/">التطوع</a></li>
+        <li><a href="/news/">الأخبار</a></li>
+        <li><a href="/crafts/">بيدي حرفة</a></li>
+        <li><a href="/careers/">التوظيف</a></li>
+        <li><a href="/board/">مجلس الإدارة</a></li>
+      </ul>
+    </div>
+
+    <div class="ehf__col">
+      <h4>تواصل معنا</h4>
+      <ul class="ehf__contact">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>القريات · منطقة الجوف</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="/contact/">صفحة التواصل</a>
+        </li>
+      </ul>
+      <div class="ehf__social">
+        <a href="/contact/" aria-label="تواصل معنا" title="تواصل معنا">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="ehf__bar">
+    <p>© 2026 جمعية إرث وحضارة بالقريات — حفظ التراث وبناء الهوية الثقافية</p>
+    <p>القريات · منطقة الجوف · المملكة العربية السعودية</p>
+  </div>
+</footer>
+</body>
+</html>
