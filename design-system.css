@@ -69,8 +69,8 @@
     --sp-9:  96px;
 
     /* ── Type ── */
-    --font-arabic: 'Effra', 'Almarai', 'Segoe UI', sans-serif;
-    --font-latin:  'Effra', 'Montserrat', sans-serif;
+    --font-arabic: 'Alexandria', 'Almarai', 'Segoe UI', sans-serif;
+    --font-latin:  'Alexandria', 'Montserrat', sans-serif;
 }
 
 
@@ -107,7 +107,7 @@
 ═══════════════════════════════════════════════════════════════════ */
 .nav-container {
     position: sticky;
-    top: 0.85rem;
+    top: 0.6rem;
     z-index: 200;
     display: flex;
     justify-content: space-between;
@@ -156,21 +156,29 @@
 }
 
 .association-name-nav {
-    font-weight: 800;
-    font-size: 1.15rem;
+    font-weight: 600;
+    font-size: 0.98rem;
     color: var(--c-text-primary, #1c1a17);
-    letter-spacing: -0.3px;
+    letter-spacing: -0.2px;
     font-family: var(--font-arabic, 'Alexandria', sans-serif);
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-inline-end: 1.25rem;
+    flex-shrink: 0;
 }
 
+/* Nav links collapsed everywhere: only the first link (الرئيسية) stays in
+   the bar; all the rest live in the hamburger menu. */
 .nav-links {
     display: flex;
     gap: 0.85rem;
     flex-wrap: nowrap;
     align-items: center;
+    margin-inline-start: auto;   /* push الرئيسية + hamburger to the end (left in RTL) */
+}
+
+/* Hide every bar link except the first one */
+.nav-links a:not(:first-child) {
+    display: none;
 }
 
 .nav-links a {
@@ -218,7 +226,7 @@
    RESPONSIVE MOBILE HEADER & HAMBURGER (Unified across all pages)
 ═══════════════════════════════════════════════════════════════════ */
 .mobile-toggle {
-    display: none;
+    display: inline-flex;   /* hamburger shown on every viewport now */
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -250,14 +258,6 @@
 }
 
 @media (max-width: 991px) {
-    .nav-links {
-        display: none !important;
-    }
-
-    .mobile-toggle {
-        display: inline-flex !important;
-    }
-
     .nav-container {
         height: 64px;
         min-height: 64px;
@@ -273,8 +273,9 @@
     }
 
     .association-name-nav {
-        font-size: clamp(0.82rem, 3.2vw, 0.98rem);
-        font-weight: 800;
+        font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+        font-weight: 600;
+        margin-inline-end: 0.75rem;
     }
 }
 
@@ -297,6 +298,12 @@
     .association-name-nav {
         font-size: clamp(0.75rem, 3.3vw, 0.86rem);
         letter-spacing: -0.2px;
+    }
+
+    /* On narrow phones drop the standalone "الرئيسية" link to free space;
+       it is still reachable from the hamburger menu. */
+    .nav-links a:first-child {
+        display: none;
     }
 
     .mobile-toggle {
@@ -337,11 +344,11 @@
     inset: 0;
     z-index: 999;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    background: rgba(15, 12, 9, 0.45);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    align-items: stretch;
+    justify-content: flex-start;
+    background: rgba(15, 12, 9, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     opacity: 0;
     visibility: hidden;
     transition: opacity var(--dur-base, 280ms) var(--ease-out), visibility 0s linear var(--dur-base, 280ms);
@@ -354,17 +361,33 @@
 }
 
 .mobile-menu-panel {
-    width: min(320px, 86vw);
+    position: relative;
+    width: min(400px, 90vw);
     height: 100%;
-    background: #fbf9f5;
-    box-shadow: -10px 0 35px rgba(28, 26, 23, 0.15);
-    padding: 22px 20px;
+    /* Warm cream drawer with a soft gold glow at the top corner */
+    background:
+        radial-gradient(130% 60% at 0% 0%, rgba(184, 136, 62, 0.10) 0%, transparent 55%),
+        linear-gradient(180deg, #fdfbf7 0%, #faf7f1 100%);
+    box-shadow: 18px 0 60px -12px rgba(28, 26, 23, 0.28);
+    padding: 24px 22px calc(24px + env(safe-area-inset-bottom, 0px));
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    transform: translateX(100%);
-    transition: transform var(--dur-base, 280ms) cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-100%);
+    transition: transform var(--dur-slow, 420ms) var(--ease-spring);
+}
+
+/* Decorative gold rail down the drawer's inner (right) edge */
+.mobile-menu-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--c-gold-soft, #d4a855), var(--c-gold-deep, #9c6e38));
+    opacity: 0.85;
 }
 
 .mobile-menu.open .mobile-menu-panel {
@@ -375,66 +398,126 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 14px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(28, 26, 23, 0.08);
+    padding-bottom: 16px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--c-gold-line, rgba(184, 136, 62, 0.30));
 }
 
 .mobile-menu-head .association-name-nav {
     font-size: 1.05rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--c-text-primary, #1c1a17);
+    margin-inline-end: 0;
 }
 
 .mobile-close {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     color: var(--c-text-secondary, #5a5650);
-    border: 1px solid rgba(28, 26, 23, 0.1);
-    background: rgba(28, 26, 23, 0.03);
+    border: 1px solid var(--c-gold-line, rgba(184, 136, 62, 0.30));
+    background: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    transition: all var(--dur-fast, 180ms) var(--ease-out);
+    transition: transform var(--dur-base, 280ms) var(--ease-spring), background var(--dur-fast, 180ms), color var(--dur-fast, 180ms), border-color var(--dur-fast, 180ms);
 }
 
 .mobile-close:hover {
     background: rgba(184, 136, 62, 0.15);
     color: var(--c-gold, #b8883e);
     border-color: var(--c-gold, #b8883e);
+    transform: rotate(90deg);
 }
 
 .mobile-menu-links {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 
 .mobile-menu-links a {
+    position: relative;
     display: flex;
     align-items: center;
-    padding: 12px 14px;
-    border-radius: 10px;
+    padding: 13px 18px;
+    border-radius: 12px;
     color: var(--c-text-secondary, #5a5650);
     font-weight: 600;
-    font-size: 0.94rem;
+    font-size: 0.98rem;
     text-decoration: none;
-    transition: all var(--dur-fast, 180ms) var(--ease-out);
+    overflow: hidden;
+    transition: background var(--dur-fast, 180ms) var(--ease-out), color var(--dur-fast, 180ms) var(--ease-out), transform var(--dur-fast, 180ms) var(--ease-out);
     font-family: var(--font-arabic, 'Alexandria', sans-serif);
+    /* start state for the staggered reveal (slides in from the left) */
+    opacity: 0;
+    transform: translateX(-22px);
+}
+
+/* Growing gold bar on the leading (left) edge of each row */
+.mobile-menu-links a::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--c-gold, #b8883e);
+    border-radius: var(--r-pill, 100px);
+    transform: translateY(-50%);
+    transition: height var(--dur-base, 280ms) var(--ease-spring);
 }
 
 .mobile-menu-links a:hover {
     background: rgba(184, 136, 62, 0.08);
     color: var(--c-text-primary, #1c1a17);
-    transform: translateX(-3px);
+    transform: translateX(4px);
+}
+
+.mobile-menu-links a:hover::before {
+    height: 55%;
 }
 
 .mobile-menu-links a.active {
     background: rgba(184, 136, 62, 0.14);
     color: var(--c-gold-deep, #9c6e38);
     font-weight: 800;
+}
+
+.mobile-menu-links a.active::before {
+    height: 60%;
+}
+
+/* ── Staggered entrance: each row slides + fades in once the menu opens ── */
+.mobile-menu.open .mobile-menu-links a {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity var(--dur-base, 280ms) var(--ease-out), transform var(--dur-base, 280ms) var(--ease-spring);
+}
+
+.mobile-menu.open .mobile-menu-links a:nth-child(1)  { transition-delay: 0.06s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(2)  { transition-delay: 0.09s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(3)  { transition-delay: 0.12s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(4)  { transition-delay: 0.15s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(5)  { transition-delay: 0.18s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(6)  { transition-delay: 0.21s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(7)  { transition-delay: 0.24s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(8)  { transition-delay: 0.27s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(9)  { transition-delay: 0.30s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(10) { transition-delay: 0.33s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(11) { transition-delay: 0.36s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(12) { transition-delay: 0.39s; }
+.mobile-menu.open .mobile-menu-links a:nth-child(13) { transition-delay: 0.42s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-menu-links a,
+    .mobile-menu.open .mobile-menu-links a {
+        opacity: 1;
+        transform: none;
+        transition: background var(--dur-fast, 180ms), color var(--dur-fast, 180ms);
+        transition-delay: 0s !important;
+    }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -460,7 +543,7 @@
         position: relative;
         width: 100%;
         max-width: 100%;
-        overflow-x: hidden !important;
+        overflow-x: clip !important;
         margin: 0;
         padding: 0;
         touch-action: pan-y;
@@ -469,7 +552,9 @@
     .site-wrapper {
         width: 100% !important;
         max-width: 100% !important;
-        overflow-x: hidden !important;
+        /* clip (not hidden) stops horizontal drift WITHOUT creating a scroll
+           container, so the sticky navbar inside keeps sticking on mobile. */
+        overflow-x: clip !important;
         padding-left: 1rem !important;
         padding-right: 1rem !important;
         box-sizing: border-box;
