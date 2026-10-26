@@ -3885,9 +3885,9 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
             <p style="font-size:12.5px;color:var(--ink-muted);margin:3px 0 0 0;">جدول كامل يحتوي على المتقدمين للورشة وإمكانية التعديل والتصدير.</p>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn btn-sm btn-outline" id="btnExportWsWord" style="gap:6px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <span>تحميل Word (.docx)</span>
+            <button class="btn btn-sm btn-outline" id="btnPrintWsRegs" style="gap:6px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>تحميل المسجلين</span>
             </button>
           </div>
         </div>
@@ -4561,7 +4561,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   }
 
   // Exports
-  el.querySelector('#btnExportWsWord')?.addEventListener('click', () => exportWorkshopRegistrantsToWord(w, filteredRegs));
+  el.querySelector('#btnPrintWsRegs')?.addEventListener('click', () => openWorkshopRegistrantsPrint(w, wRegs));
   // قائمة خيارات تحميل التقرير (مع/بدون الاستبيان)
   const rptBtn = el.querySelector('#btnPrintWsReport');
   const rptMenu = el.querySelector('#wsReportMenu');
@@ -5321,6 +5321,12 @@ async function vVolunteerProgram(el) {
   } else if (vpTab === 'settings') {
     bindProgramSettingsEvents(el);
   }
+
+  // استرجاع التركيز والمؤشر لحقل البحث بعد إعادة البناء (يمنع فقدان الكتابة)
+  if (vpTab === 'volunteers' && vpQ) {
+    const f = el.querySelector('#vpSearch');
+    if (f) { f.focus(); const n = f.value.length; f.setSelectionRange(n, n); }
+  }
 }
 
 /* Helper to format skills for the volunteers table (1-2 skills + count badge for 3+) */
@@ -5353,9 +5359,6 @@ function formatSkillsForTable(skillsInput) {
 /* ── TAB 1: VOLUNTEERS DIRECTORY HTML ── */
 function renderVolunteersTabHTML(volunteers, unreviewedCount) {
   let rows = [...volunteers];
-  if (vpFilter === 'new') rows = rows.filter(v => (!v.reviewed && v.status !== 'معتمد' && !v.isApproved) || v.status === 'جديد');
-  else if (vpFilter === 'approved') rows = rows.filter(v => v.status === 'معتمد' || v.isApproved === true);
-  else if (vpFilter === 'rejected') rows = rows.filter(v => v.status === 'مرفوض');
 
   if (vpCityFilter !== 'all') {
     rows = rows.filter(v => (v.city || '').trim() === vpCityFilter);
@@ -5383,9 +5386,7 @@ function renderVolunteersTabHTML(volunteers, unreviewedCount) {
       <input type="text" id="vpSearch" placeholder="بحث بالاسم، رقم الجوال، الهوية، المدينة، أو المهارات…" value="${escA(vpQ)}"/>
     </div>
     <div class="filters">
-      <button class="chip ${vpFilter === 'all' ? 'active' : ''}" data-vpf="all">جميع المتطوعين <span class="chip-count">${volunteers.length}</span></button>
-      <button class="chip chip-new ${vpFilter === 'new' ? 'active' : ''}" data-vpf="new">جديد ${unreviewedCount > 0 ? `<span class="chip-badge">${unreviewedCount}</span>` : ''}</button>
-      <button class="chip chip-approved ${vpFilter === 'approved' ? 'active' : ''}" data-vpf="approved">معتمد</button>
+      <button class="chip active" data-vpf="all">جميع المتطوعين <span class="chip-count">${volunteers.length}</span></button>
       <select id="vpCitySelect" class="chip" style="padding:6px 12px;cursor:pointer;">
         <option value="all" ${vpCityFilter === 'all' ? 'selected' : ''}>كل المدن</option>
         ${cities.map(c => `<option value="${escA(c)}" ${vpCityFilter === c ? 'selected' : ''}>${esc(c)}</option>`).join('')}
@@ -5408,22 +5409,15 @@ function renderVolunteersTabHTML(volunteers, unreviewedCount) {
               <th style="padding:10px 12px;min-width:100px;">المدينة</th>
               <th style="padding:10px 12px;min-width:200px;">المهارات والمجالات</th>
               <th style="padding:10px 12px;min-width:110px;">تاريخ التسجيل</th>
-              <th style="padding:10px 12px;min-width:120px;">حالة الاعتماد</th>
-              <th style="padding:10px 12px;min-width:210px;max-width:230px;">الإجراءات</th>
+              <th style="padding:10px 12px;min-width:160px;text-align:center;">الإجراءات</th>
             </tr>
           </thead>
           <tbody>
             ${rows.map((v, idx) => {
-              const isApproved = v.status === 'معتمد' || v.isApproved === true;
               const formattedSkills = formatSkillsForTable(v.skills || v.interests);
 
-              const statusBadgeHtml = isApproved
-                ? `<span class="row-status reviewed" style="background:#e6f4ea;color:#137333;border:1px solid #ceead6;display:inline-flex;align-items:center;gap:4px;font-weight:700;padding:4px 10px;border-radius:20px;"><i class="fas fa-check-circle"></i> معتمد</span>`
-                : `<span class="row-status" style="background:#f1f3f4;color:#5f6368;border:1px solid #dadce0;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;"><i class="far fa-circle"></i> غير معتمد</span>`;
-
-              const approveBtnHtml = isApproved
-                ? `<button class="btn btn-sm" data-vp-unapprove="${v.id}" style="flex:1;font-size:11px;padding:5px 8px;background:#fff8e1;color:#b78103;border:1px solid #ffe082;border-radius:8px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:4px;" title="إلغاء اعتماد المتطوع"><i class="fas fa-undo"></i> إلغاء الاعتماد</button>`
-                : `<button class="btn btn-sm" data-vp-approve="${v.id}" style="flex:1;font-size:11px;padding:5px 8px;background:#e6f4ea;color:#137333;border:1px solid #ceead6;border-radius:8px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:4px;" title="اعتماد المتطوع"><i class="fas fa-check"></i> اعتماد</button>`;
+              const phoneRaw = v.phone || v.mobile || '';
+              const actBtn = 'width:34px;height:34px;padding:0;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;background:#fff;border:1px solid var(--line);color:var(--ink);';
 
               return `
               <tr style="background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.03);border-radius:8px;">
@@ -5437,18 +5431,17 @@ function renderVolunteersTabHTML(volunteers, unreviewedCount) {
                 <td style="padding:12px 10px;"><span class="chip-count" style="background:var(--parchment-3);font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;">${esc(v.city || '—')}</span></td>
                 <td style="padding:12px 10px;">${formattedSkills}</td>
                 <td style="padding:12px 10px;font-size:12px;color:var(--ink-mid);">${v.createdAt ? fmtEn(toTs(v.createdAt)) : '—'}</td>
-                <td style="padding:12px 10px;">${statusBadgeHtml}</td>
-                <td style="padding:10px 12px;width:210px;">
-                  <div style="display:flex;flex-direction:column;gap:5px;width:100%;max-width:210px;">
-                    <button class="btn btn-sm" data-vp-pdf="${v.id}" style="width:100%;font-size:11px;padding:6px 10px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:700;background:var(--gold-deep);color:#fff;border:none;box-shadow:0 1px 3px rgba(0,0,0,0.1);" title="طباعة/تحميل بطاقة المتطوع">
-                      <i class="fas fa-id-card"></i> بطاقة المتطوع
+                <td style="padding:10px 12px;">
+                  <div style="display:inline-flex;gap:6px;align-items:center;justify-content:center;">
+                    <button class="btn btn-sm" data-vp-wa="${esc(phoneRaw)}" style="${actBtn}" title="مراسلة عبر واتساب">
+                      <i class="fab fa-whatsapp" style="font-size:16px;"></i>
                     </button>
-                    <div style="display:flex;gap:5px;width:100%;">
-                      ${approveBtnHtml}
-                      <button class="btn btn-sm btn-ghost del" data-vp-del="${v.id}" style="flex:1;font-size:11px;padding:5px 8px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:4px;color:#c62828;background:#fdeded;border:1px solid #f9bdbd;" title="حذف المتطوع نهائياً">
-                        <i class="fas fa-trash-alt"></i> حذف
-                      </button>
-                    </div>
+                    <button class="btn btn-sm" data-vp-pdf="${v.id}" style="${actBtn}" title="طباعة/تحميل بطاقة المتطوع">
+                      <i class="fas fa-id-card"></i>
+                    </button>
+                    <button class="btn btn-sm del" data-vp-del="${v.id}" style="${actBtn}" title="حذف المتطوع نهائياً">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -5665,7 +5658,6 @@ function bindVolunteersTabEvents(el, volunteers, applications) {
     sInput.addEventListener('input', e => {
       vpQ = e.target.value;
       vVolunteerProgram(el);
-      el.querySelector('#vpSearch')?.focus();
     });
   }
 
@@ -5679,6 +5671,22 @@ function bindVolunteersTabEvents(el, volunteers, applications) {
   el.querySelector('#vpCitySelect')?.addEventListener('change', e => {
     vpCityFilter = e.target.value;
     vVolunteerProgram(el);
+  });
+
+  // WhatsApp — فتح محادثة مع المتطوع برقمه
+  el.querySelectorAll('[data-vp-wa]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      let p = (btn.dataset.vpWa || '').toString()
+        .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+        .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+        .replace(/\D/g, '');
+      // تحويل الرقم السعودي إلى الصيغة الدولية 9665XXXXXXXX
+      if (p.startsWith('00966')) p = p.substring(2);
+      else if (p.startsWith('0') && p.length === 10) p = '966' + p.substring(1);
+      else if (p.startsWith('5') && p.length === 9) p = '966' + p;
+      if (!p) { toast('لا يوجد رقم جوال لهذا المتطوع', 'err'); return; }
+      window.open('https://wa.me/' + p, '_blank');
+    });
   });
 
   // Volunteer Detail Modal
@@ -5714,68 +5722,6 @@ function bindVolunteersTabEvents(el, volunteers, applications) {
       const volObj = volunteers.find(v => v.id === vid);
       if (volObj) {
         downloadVolunteerProfilePdf(volObj, b);
-      }
-    });
-  });
-
-  // Volunteer Approve Toggle
-  el.querySelectorAll('[data-vp-approve]').forEach(b => {
-    b.addEventListener('click', async () => {
-      const vid = b.dataset.vpApprove;
-      const volObj = volunteers.find(v => v.id === vid);
-      if (!volObj) return;
-
-      b.disabled = true;
-      b.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جارٍ الاعتماد…`;
-
-      try {
-        await updateDoc(doc(db, 'volunteers', vid), {
-          status: 'معتمد',
-          isApproved: true,
-          reviewed: true,
-          approvedAt: serverTimestamp()
-        });
-
-        volObj.status = 'معتمد';
-        volObj.isApproved = true;
-        volObj.reviewed = true;
-
-        toast(`تم اعتماد المتطوع (${volObj.name || volObj.fullName || ''}) بنجاح ✓`);
-        vVolunteerProgram(el);
-      } catch (err) {
-        console.error('Approve error:', err);
-        toast('حدث خطأ أثناء الاعتماد: ' + (err.message || err), 'err');
-        b.disabled = false;
-      }
-    });
-  });
-
-  // Volunteer Unapprove Toggle
-  el.querySelectorAll('[data-vp-unapprove]').forEach(b => {
-    b.addEventListener('click', async () => {
-      const vid = b.dataset.vpUnapprove;
-      const volObj = volunteers.find(v => v.id === vid);
-      if (!volObj) return;
-
-      b.disabled = true;
-      b.innerHTML = `<i class="fas fa-spinner fa-spin"></i> جارٍ إلغاء الاعتماد…`;
-
-      try {
-        await updateDoc(doc(db, 'volunteers', vid), {
-          status: 'جديد',
-          isApproved: false,
-          unapprovedAt: serverTimestamp()
-        });
-
-        volObj.status = 'جديد';
-        volObj.isApproved = false;
-
-        toast(`تم إلغاء اعتماد المتطوع (${volObj.name || volObj.fullName || ''})`);
-        vVolunteerProgram(el);
-      } catch (err) {
-        console.error('Unapprove error:', err);
-        toast('حدث خطأ أثناء إلغاء الاعتماد: ' + (err.message || err), 'err');
-        b.disabled = false;
       }
     });
   });
@@ -6491,6 +6437,83 @@ function openVolunteerDetailModal(v, userApps) {
   `;
   showModal(html);
   document.getElementById('btnModalPdf')?.addEventListener('click', (e) => downloadVolunteerProfilePdf(v, e.currentTarget));
+}
+
+/* ── MODAL: GLOBAL DATABASE RECORD DETAILS (البطاقة الموحّدة للشخص) ── */
+function openGlobalRecordModal(rec) {
+  const raw = rec.raw || {};
+  const initial = (rec.name || 'م').trim().charAt(0) || 'م';
+  const regDate = rec.createdAt ? fmtEn(toTs(rec.createdAt)) : '—';
+
+  // صف معلومة (يُعرض فقط إن وُجدت قيمة)
+  const infoBox = (label, value, ltr) => (value && value !== '—')
+    ? `<div style="background:var(--paper);padding:12px;border-radius:8px;border:1px solid var(--line-soft);">
+         <span style="font-size:11px;color:var(--ink-muted);display:block;margin-bottom:2px;">${label}</span>
+         <strong ${ltr ? 'dir="ltr"' : ''} style="font-size:14px;color:var(--ink);">${esc(value)}</strong>
+       </div>`
+    : '';
+
+  const city = raw.city || '';
+  const email = (rec.email && rec.email !== '—') ? rec.email : (raw.email || '');
+  const age = raw.age || '';
+  const gender = raw.gender || '';
+
+  const html = `
+    <div class="modal-head">
+      <div>
+        <div class="la">REGISTRANT · ملف المسجّل</div>
+        <h2>بطاقة المسجّل</h2>
+      </div>
+      <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;padding:10px 0;">
+
+      <div style="display:flex;align-items:center;gap:14px;background:var(--parchment-2);padding:16px;border-radius:12px;">
+        <div style="width:52px;height:52px;border-radius:50%;background:var(--gold-deep);color:#fff;display:grid;place-items:center;font-size:22px;font-weight:800;">${esc(initial)}</div>
+        <div>
+          <h3 style="font-size:18px;font-weight:800;color:var(--ink);">${esc(rec.name || '—')}</h3>
+          <span style="font-size:12px;color:var(--ink-muted);">مسجّل في ${rec.dupCount} ${rec.dupCount > 1 ? 'برامج' : 'برنامج'}</span>
+        </div>
+      </div>
+
+      <div class="form-grid two" style="gap:12px;">
+        ${infoBox('رقم الجوال', rec.phone, true)}
+        ${infoBox('رقم الهوية / الإقامة', rec.nationalId, false)}
+      </div>
+
+      <div class="form-grid two" style="gap:12px;">
+        ${infoBox('العمر', age, false)}
+        ${infoBox('الجنس', gender, false)}
+      </div>
+
+      <div class="form-grid two" style="gap:12px;">
+        ${infoBox('المدينة', city, false)}
+        ${infoBox('البريد الإلكتروني', email, true)}
+      </div>
+
+      <!-- من وين مسجّل -->
+      <div style="margin-top:4px;">
+        <h4 style="font-size:14px;font-weight:800;color:var(--ink);margin-bottom:8px;">الأقسام المسجّل فيها</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          ${rec.mergedCategories.map(c => `<span class="chip-count" style="background:var(--gold-pale);color:var(--gold-deep);font-weight:700;font-size:12.5px;padding:5px 12px;border-radius:12px;border:1px solid var(--gold-line);">${esc(c)}</span>`).join('')}
+        </div>
+      </div>
+
+      ${rec.mergedActivities.length ? `
+      <div>
+        <h4 style="font-size:14px;font-weight:800;color:var(--ink);margin-bottom:8px;">الأنشطة والتفاصيل</h4>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${rec.mergedActivities.map(a => `<div style="background:var(--paper);padding:9px 13px;border-radius:8px;border:1px solid var(--line-soft);font-size:13px;color:var(--ink);line-height:1.6;">• ${esc(a)}</div>`).join('')}
+        </div>
+      </div>` : ''}
+
+      <div style="background:var(--parchment-3);padding:14px;border-radius:10px;font-size:12.5px;color:var(--ink-mid);">
+        <div>📅 تاريخ أول تسجيل: <strong>${esc(regDate)}</strong></div>
+      </div>
+
+    </div>
+  `;
+  showModal(html);
 }
 
 /* ── MODAL: VOLUNTEER EDIT DETAILS ── */
@@ -7243,10 +7266,46 @@ async function vGlobalDB(el) {
     }))
   ];
 
-  let rows = [...aggregated];
+  // ── دمج السجلات المكررة: نفس الشخص (بالهوية أو الجوال) يظهر مرة واحدة ──
+  // تبقى السجلات الأصلية في كولكشناتها كما هي؛ هذا الدمج للعرض فقط.
+  const normKey = s => String(s == null ? '' : s)
+    .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+    .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+    .replace(/\D/g, '');
+
+  const deduped = [];
+  const byId = new Map();     // مفتاح الهوية
+  const byPhone = new Map();  // مفتاح الجوال
+
+  for (const r of aggregated) {
+    // رسائل "اتصل بنا" لا تُدمج — كل رسالة سجل مستقل
+    const idKey = r.category !== 'اتصل بنا' ? normKey(r.nationalId) : '';
+    const phoneKey = r.category !== 'اتصل بنا' ? normKey(r.phone) : '';
+
+    let existing = null;
+    if (idKey && byId.has(idKey)) existing = byId.get(idKey);
+    else if (phoneKey && byPhone.has(phoneKey)) existing = byPhone.get(phoneKey);
+
+    if (existing) {
+      // شخص مكرر — ندمج قسمه ونشاطه في السجل الأول بدل صف جديد
+      if (r.category && !existing.mergedCategories.includes(r.category)) existing.mergedCategories.push(r.category);
+      if (r.activity && r.activity !== '—' && !existing.mergedActivities.includes(r.activity)) existing.mergedActivities.push(r.activity);
+      existing.dupCount++;
+      // نحافظ على أحدث بريد/اسم غير فارغ إن كان ناقصاً
+      if ((existing.email === '—' || !existing.email) && r.email && r.email !== '—') existing.email = r.email;
+      continue;
+    }
+
+    const rec = { ...r, mergedCategories: [r.category].filter(Boolean), mergedActivities: (r.activity && r.activity !== '—') ? [r.activity] : [], dupCount: 1 };
+    deduped.push(rec);
+    if (idKey) byId.set(idKey, rec);
+    if (phoneKey) byPhone.set(phoneKey, rec);
+  }
+
+  let rows = [...deduped];
 
   if (dbCat !== 'all') {
-    rows = rows.filter(r => r.category === dbCat);
+    rows = rows.filter(r => r.mergedCategories.includes(dbCat));
   }
 
   const q = dbQ.trim().toLowerCase();
@@ -7330,16 +7389,22 @@ async function vGlobalDB(el) {
               <tr style="background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.03);border-radius:8px;">
                 <td style="padding:12px 10px;text-align:center;font-weight:600;color:var(--ink-muted);">${idx + 1}</td>
                 <td style="padding:12px 10px;">
-                  <div style="font-weight:800;color:var(--ink);font-size:14px;line-height:1.3;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escA(r.name)}">${esc(r.name)}</div>
+                  <div data-db-view="${idx}" style="font-weight:800;color:var(--gold-deep);font-size:14px;line-height:1.3;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;text-decoration:underline;text-decoration-color:var(--gold-line);text-underline-offset:3px;" title="عرض بطاقة ${escA(r.name)}">${esc(r.name)}</div>
                   ${r.email && r.email !== '—' ? `<div style="font-size:11px;color:var(--ink-muted);margin-top:2px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escA(r.email)}">${esc(r.email)}</div>` : ''}
                 </td>
                 <td style="padding:12px 10px;" dir="ltr"><div style="text-align:right;font-weight:700;font-size:13px;color:var(--ink);">${esc(r.phone)}</div></td>
                 <td style="padding:12px 10px;font-weight:600;font-size:13px;color:var(--ink);">${esc(r.nationalId)}</td>
-                <td style="padding:12px 10px;"><span class="chip-count" style="background:var(--parchment-3);font-size:12px;font-weight:600;padding:4px 10px;border-radius:12px;">${esc(r.category)}</span></td>
-                <td style="padding:12px 10px;">${activityHtml}</td>
+                <td style="padding:12px 10px;">
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center;">
+                    ${r.mergedCategories.map(c => `<span class="chip-count" style="background:var(--parchment-3);font-size:12px;font-weight:600;padding:4px 10px;border-radius:12px;">${esc(c)}</span>`).join('')}
+                    ${r.dupCount > 1 ? `<span class="chip-count" style="background:var(--gold-deep);color:#fff;font-size:11px;font-weight:800;padding:4px 9px;border-radius:12px;" title="مسجّل في ${r.dupCount} برامج">×${r.dupCount}</span>` : ''}
+                  </div>
+                </td>
+                <td style="padding:12px 10px;font-size:12.5px;color:var(--ink);">${r.mergedActivities.length ? r.mergedActivities.map(a => esc(a)).join('<br>') : '—'}</td>
                 <td style="padding:12px 10px;font-size:12px;color:var(--ink-mid);font-weight:600;white-space:nowrap;">${formattedDate}</td>
                 <td style="padding:12px 10px;text-align:center;">
                   <div style="display:flex;gap:6px;justify-content:center;align-items:center;">
+                    <button class="btn btn-sm btn-ghost" data-db-view="${idx}" title="عرض البطاقة الكاملة" style="font-size:11px;padding:5px 10px;border-radius:8px;"><i class="fas fa-eye"></i> عرض</button>
                     <button class="btn btn-sm btn-ghost" data-db-edit-col="${r.col}" data-db-edit-id="${r.id}" title="تعديل السجل" style="font-size:11px;padding:5px 10px;border-radius:8px;"><i class="fas fa-edit"></i> تعديل</button>
                     <button class="btn btn-sm btn-ghost del" data-db-del-col="${r.col}" data-db-del-id="${r.id}" title="حذف السجل" style="font-size:11px;padding:5px 10px;border-radius:8px;color:#c62828;background:#fdeded;border:1px solid #f9bdbd;"><i class="fas fa-trash-alt"></i> حذف</button>
                   </div>
@@ -7355,10 +7420,24 @@ async function vGlobalDB(el) {
   </div>
   `;
 
+  // استرجاع التركيز والمؤشر لحقل البحث بعد إعادة البناء (يمنع فقدان الكتابة)
+  if (dbQ) {
+    const f = el.querySelector('#dbSearch');
+    if (f) { f.focus(); const n = f.value.length; f.setSelectionRange(n, n); }
+  }
+
   // Search & Filters
   const sInput = el.querySelector('#dbSearch');
-  if (sInput) sInput.addEventListener('input', e => { dbQ = e.target.value; vGlobalDB(el); el.querySelector('#dbSearch')?.focus(); });
+  if (sInput) sInput.addEventListener('input', e => { dbQ = e.target.value; vGlobalDB(el); });
   el.querySelectorAll('[data-dbc]').forEach(b => b.addEventListener('click', () => { dbCat = b.dataset.dbc; vGlobalDB(el); }));
+
+  // View full card
+  el.querySelectorAll('[data-db-view]').forEach(b => {
+    b.addEventListener('click', () => {
+      const rec = rows[parseInt(b.dataset.dbView, 10)];
+      if (rec) openGlobalRecordModal(rec);
+    });
+  });
 
   // Export Word & Excel
   el.querySelector('#btnExportDbWord')?.addEventListener('click', () => {
@@ -8445,6 +8524,133 @@ async function openWorkshopReportPrint(workshop, registrants, survey, responses,
   ${imagePagesHTML}
   <!-- صفحات الاستبيان (اختيارية) -->
   ${surveyPagesHTML}
+</body>
+</html>`;
+
+  win.document.open();
+  win.document.write(html);
+  win.document.close();
+}
+
+/* ── كشف المسجلين — صفحة تقرير قابلة للطباعة بنفس قالب الجمعية ── */
+function openWorkshopRegistrantsPrint(workshop, registrants) {
+  const esc2 = s => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  const win = window.open('', '_blank');
+  if (!win) { toast('يرجى السماح بالنوافذ المنبثقة لعرض التقرير', 'err'); return; }
+
+  const regs = registrants || [];
+
+  const wsDate = (workshop.date || '').trim();
+  const wsTime = (workshop.time || '').trim();
+  const execWhen = [wsDate, wsTime].filter(Boolean).join(' — ') || 'غير محدد';
+
+  function chunk(arr, size){ const out=[]; for(let i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size)); return out; }
+  const REGS_PER_PAGE = 16;
+
+  function regRowHTML(r, i){
+    const regDate = r.createdAt ? fmtEn(toTs(r.createdAt)) : '—';
+    return `
+      <tr>
+        <td style="text-align:center;">${i + 1}</td>
+        <td>${esc2(r.name || r.fullName || 'بدون اسم')}</td>
+        <td style="text-align:center;">${esc2(r.age || '—')}</td>
+        <td dir="ltr" style="text-align:center;">${esc2(r.phone || r.mobile || '—')}</td>
+        <td style="text-align:center;">${esc2(r.gender || '—')}</td>
+        <td dir="ltr" style="text-align:center;">${esc2(regDate)}</td>
+      </tr>`;
+  }
+  const regTableHead = `<tr>
+      <th style="width:34px;">#</th>
+      <th>الاسم</th>
+      <th style="width:60px;">العمر</th>
+      <th style="width:120px;">رقم الجوال</th>
+      <th style="width:70px;">الجنس</th>
+      <th style="width:110px;">تاريخ التسجيل</th>
+    </tr>`;
+
+  function pageWrap(inner){ return `<div class="page"><div class="content">${inner}</div></div>`; }
+
+  const infoGridHTML = `
+    <h1 class="report-title">كشف المسجلين في الورشة</h1>
+    <div class="sub">${esc2(workshop.title || 'ورشة عمل')}</div>
+    <div class="info-grid">
+      <div class="info-item"><div class="lbl">اسم الورشة</div><div class="val">${esc2(workshop.title || '—')}</div></div>
+      <div class="info-item"><div class="lbl">التصنيف</div><div class="val">${esc2(workshop.category || 'ورشة عمل')}</div></div>
+      <div class="info-item"><div class="lbl">موعد تنفيذ الورشة</div><div class="val">${esc2(execWhen)}</div></div>
+      <div class="info-item"><div class="lbl">المكان</div><div class="val">${esc2(workshop.location || 'مقر الجمعية')}</div></div>
+      <div class="info-item"><div class="lbl">إجمالي المسجلين</div><div class="val">${regs.length} مسجّل</div></div>
+      <div class="info-item"><div class="lbl">تاريخ إصدار الكشف</div><div class="val" dir="ltr" style="text-align:right;">${esc2(new Date().toLocaleDateString('en-GB'))}</div></div>
+    </div>`;
+
+  let regPagesHTML = '';
+  if (regs.length === 0){
+    regPagesHTML = pageWrap(`${infoGridHTML}<h2 class="sec">المسجلون</h2><p style="color:#777;font-size:13px;">لا يوجد مسجلون في هذه الورشة.</p>`);
+  } else {
+    const groups = chunk(regs, REGS_PER_PAGE);
+    let runningIdx = 0;
+    groups.forEach((g, gi) => {
+      const rowsHTML = g.map(r => regRowHTML(r, runningIdx++)).join('');
+      const tableHTML = `<h2 class="sec">المسجلون${groups.length>1?` (${gi+1}/${groups.length})`:''}</h2>
+        <table><thead>${regTableHead}</thead><tbody>${rowsHTML}</tbody></table>`;
+      regPagesHTML += pageWrap((gi === 0 ? infoGridHTML : '') + tableHTML);
+    });
+  }
+
+  const html = `<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كشف المسجلين — ${esc2(workshop.title || '')}</title>
+<style>
+  @import url('/assets/fonts/effra.css');
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Effra', 'Almarai',sans-serif; color:#1c1a17; background:#eceae6; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .toolbar { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid #ddd; padding:12px 20px; display:flex; gap:10px; justify-content:center; }
+  .toolbar button { font-family:inherit; font-weight:700; font-size:14px; padding:10px 24px; border-radius:8px; cursor:pointer; border:1px solid #9C6E38; }
+  .btn-print { background:#9C6E38; color:#fff; }
+  .btn-close { background:#fff; color:#9C6E38; }
+
+  .page {
+    width:210mm; height:297mm; margin:18px auto; position:relative;
+    background:#fff url('../assets/قالب/letterhead.png') no-repeat center center;
+    background-size:100% 100%;
+    box-shadow:0 2px 14px rgba(0,0,0,.14); overflow:hidden; page-break-after:always;
+  }
+  .page:last-child { page-break-after:auto; }
+  .content { position:absolute; top:52mm; right:22mm; left:22mm; bottom:20mm; z-index:2; }
+
+  h1.report-title { text-align:center; color:#9C6E38; font-size:21px; font-weight:800; margin:0 0 4px; }
+  .sub { text-align:center; color:#555; font-size:13px; margin-bottom:16px; }
+
+  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-bottom:18px; }
+  .info-item { border:1px solid #e3dccb; border-radius:8px; padding:8px 12px; background:rgba(252,250,245,.85); }
+  .info-item .lbl { font-size:10.5px; color:#9C6E38; font-weight:700; margin-bottom:2px; }
+  .info-item .val { font-size:13px; font-weight:700; }
+
+  h2.sec { font-size:15px; font-weight:800; color:#1c1a17; margin:14px 0 9px; padding-bottom:5px; border-bottom:2px solid #b79a66; }
+
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  th, td { border:1px solid #d9d2c2; padding:6px 9px; }
+  th { background:rgba(243,238,226,.95); color:#5a4420; font-weight:700; }
+  tbody tr:nth-child(even) td { background:rgba(252,250,245,.75); }
+
+  @media print {
+    .toolbar { display:none; }
+    body { background:#fff; }
+    .page { margin:0; box-shadow:none; }
+    @page { size:A4; margin:0; }
+  }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <button class="btn-print" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+    <button class="btn-close" onclick="window.close()">إغلاق</button>
+  </div>
+  ${regPagesHTML}
 </body>
 </html>`;
 
