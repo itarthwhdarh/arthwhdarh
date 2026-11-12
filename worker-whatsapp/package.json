@@ -1,0 +1,14 @@
+{
+  "name": "erth-whatsapp-service",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "خدمة إرسال رسائل وتنبيهات واتساب لجمعية إرث وحضارة عبر OpenWA",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.78.0"
+  }
+}

@@ -1434,6 +1434,66 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
   color: var(--ink);
 }
 
+/* ── WhatsApp Action Button (Heritage Visual Identity) ── */
+.ws-btn-wa {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--paper, #ffffff);
+  color: #2b1e16;
+  font-size: 13.5px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(28, 26, 23, 0.04);
+}
+.ws-btn-wa i {
+  font-size: 13.5px;
+  line-height: 1;
+}
+.ws-btn-wa:hover:not(:disabled) {
+  background: #fbf9f5;
+  border-color: var(--gold, #c09a62);
+  color: var(--gold-deep, #9c6e38);
+  box-shadow: 0 2px 6px rgba(184, 136, 62, 0.16);
+  transform: translateY(-1px);
+}
+.ws-btn-wa:active:not(:disabled) {
+  transform: translateY(0);
+}
+.ws-btn-wa:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+}
+.ws-btn-wa.is-sent {
+  background: rgba(46, 96, 34, 0.08) !important;
+  color: #2e6022 !important;
+  border-color: rgba(46, 96, 34, 0.25) !important;
+}
+.ws-btn-wa.is-sent:hover:not(:disabled) {
+  background: rgba(46, 96, 34, 0.15) !important;
+  border-color: #2e6022 !important;
+  color: #214b18 !important;
+}
+.ws-btn-wa.is-failed {
+  background: rgba(220, 38, 38, 0.08) !important;
+  color: #b91c1c !important;
+  border-color: rgba(220, 38, 38, 0.25) !important;
+}
+.ws-btn-wa.is-failed:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.15) !important;
+  border-color: #b91c1c !important;
+  color: #991b1b !important;
+}
+
 /* ── Workshop Detail View Professional Styles ── */
 .ws-detail-wrap {
   width: 100%;
@@ -1835,6 +1895,262 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
 .tbl tbody tr:last-child td {
   border-bottom: none;
 }
+
+/* ── TRAINERS SECTION (المدربون والمدربات) ── */
+.tr-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tr-new-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 13px 18px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FBF6EC, #F7EFE0);
+  border: 1px solid rgba(184, 136, 62, 0.42);
+  border-right: 4px solid var(--gold-deep);
+  color: var(--ink);
+}
+.tr-new-alert-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.tr-new-alert-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold-deep);
+  box-shadow: 0 0 0 4px rgba(184, 136, 62, 0.22);
+  flex-shrink: 0;
+}
+.tr-filter-bar {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.4fr) repeat(4, minmax(135px, 1fr)) auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 18px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.tr-filter-bar .search-box {
+  max-width: none;
+}
+.tr-select {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--parchment-2);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.tr-select:hover, .tr-select:focus {
+  border-color: var(--gold);
+  background: #fff;
+}
+.tr-spec-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #F6F2EA;
+  border: 1px solid #E8DFD1;
+  color: #4A3A2F;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tr-spec-more {
+  background: var(--gold-pale);
+  border-color: rgba(184, 136, 62, 0.35);
+  color: var(--gold-deep);
+}
+.tr-exp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.tr-exp-yes {
+  background: #EDF7F1;
+  color: #1F6A3F;
+  border: 1px solid rgba(31, 106, 63, 0.22);
+}
+.tr-exp-no {
+  background: #F4F5F7;
+  color: #5E6472;
+  border: 1px solid rgba(94, 100, 114, 0.18);
+}
+.tr-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.tr-status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tr-st-new { background: #FBF4E7; color: #8E6534; border-color: rgba(184, 136, 62, 0.38); }
+.tr-st-new::before { background: #B8883E; }
+.tr-st-reviewed { background: #EFF5FC; color: #24578C; border-color: rgba(36, 87, 140, 0.24); }
+.tr-st-reviewed::before { background: #2D6FB3; }
+.tr-st-candidate { background: #ECF7F0; color: #1E6B3C; border-color: rgba(30, 107, 60, 0.26); }
+.tr-st-candidate::before { background: #24884B; }
+.tr-st-contacted { background: #F4EFFB; color: #5B3B8C; border-color: rgba(91, 59, 140, 0.22); }
+.tr-st-contacted::before { background: #734CAE; }
+.tr-st-unsuitable { background: #FDF2F2; color: #9A3329; border-color: rgba(154, 51, 41, 0.22); }
+.tr-st-unsuitable::before { background: #B83B2E; }
+
+.tr-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  border-top: 1px solid var(--line-soft);
+  background: var(--parchment-2);
+}
+.tr-page-info {
+  font-size: 12px;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+.tr-page-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tr-page-btn {
+  min-width: 32px;
+  height: 32px;
+  padding: 0 9px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink-mid);
+  font-size: 12px;
+  font-weight: 700;
+  transition: all .18s;
+}
+.tr-page-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--ink);
+}
+.tr-page-btn.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.tr-page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.tr-panel-box {
+  background: #FAF8F4;
+  border: 1px solid #EAE2D6;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+.tr-panel-box-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold-deep);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tr-quick-contact {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.tr-admin-note-area {
+  width: 100%;
+  min-height: 92px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  line-height: 1.7;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 10px;
+}
+.tr-admin-note-area:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(192, 154, 98, 0.16);
+}
+@media (max-width: 1120px) {
+  .tr-filter-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tr-filter-bar .search-box {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 820px) {
+  table.tr-table thead { display: none; }
+  table.tr-table, table.tr-table tbody, table.tr-table tr, table.tr-table td {
+    display: block;
+    width: 100%;
+  }
+  table.tr-table tbody tr {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.tr-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: none;
+    text-align: left;
+  }
+  table.tr-table tbody td::before {
+    content: attr(data-label);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    text-align: right;
+    flex-shrink: 0;
+  }
+}
 </style>
 </head>
 <body>
@@ -1973,7 +2289,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
     </div>
     <div class="notif-banner-body">
       <div class="notif-banner-title">تفعيل إشعارات الطلبات الجديدة</div>
-      <div class="notif-banner-sub">سيصلك إشعار فور تسجيل طلب بيدي حرفة أو صديق الجمعية</div>
+      <div class="notif-banner-sub">سيصلك إشعار فور تسجيل طلب بيدي حرفة أو صديق الجمعية أو مدرب جديد</div>
     </div>
     <div class="notif-banner-actions">
       <button class="notif-banner-allow" id="notifAllowBtn">تفعيل الإشعارات</button>
@@ -1986,6 +2302,7 @@ table.data tbody tr:hover{background:rgba(192,154,98,.06);}
     <div class="view" id="view-notifications"></div>
     <div class="view" id="view-news"></div>
     <div class="view" id="view-workshops"></div>
+    <div class="view" id="view-trainers"></div>
     <div class="view" id="view-careers"></div>
     <div class="view" id="view-volunteer_program"></div>
     <div class="view" id="view-volunteer_opportunities"></div>
@@ -2290,6 +2607,7 @@ function showApp(user){
   if (sbAvatar) sbAvatar.textContent = (em.charAt(0) || 'أ').toUpperCase();
 
   if(!appBooted){ appBooted=true; bootApp(); startNotifWatch(); }
+  if(!_trainerWatchUnsub){ startTrainerWatch(); }
   if('Notification' in window && Notification.permission === 'default'){
     const banner = document.getElementById('notifBanner');
     if (banner) banner.classList.add('show');
@@ -2325,6 +2643,10 @@ if (notifDismissBtn) {
 
 /* ── مراقبة الإشعارات الجديدة لحظياً ── */
 let _notifSeenIds = new Set();
+let _seenTrainerToastIds = new Set();
+let _trainerWatchUnsub = null;
+let _trainerWatchPrimed = false;
+
 function startNotifWatch(){
   const q = query(
     collection(db,'admin_notifications'),
@@ -2340,8 +2662,12 @@ function startNotifWatch(){
       const id = ch.doc.id;
       if(_notifSeenIds.has(id)) return;
       _notifSeenIds.add(id);
+      if (d.type === 'trainer' && d.trainerId) {
+        if (_seenTrainerToastIds.has(d.trainerId)) return;
+        _seenTrainerToastIds.add(d.trainerId);
+      }
       freshCount++;
-      const progLabel = d.label || (d.type==='crafts'?'بيدي حرفة':'أصدقاء الجمعية');
+      const progLabel = d.label || (d.type==='crafts'?'بيدي حرفة':d.type==='trainer'?'المدربون والمدربات':'أصدقاء الجمعية');
       const name = d.name ? ` — ${d.name}` : '';
       toastNotif(`طلب تسجيل جديد · ${progLabel}${name}`);
     });
@@ -2349,6 +2675,43 @@ function startNotifWatch(){
     const dot = document.getElementById('bellDot');
     if(dot) unread > 0 ? dot.classList.add('show') : dot.classList.remove('show');
   }, err => console.warn('[notif watch]', err?.code || err));
+}
+
+/* ── مراقبة تسجيلات المدربين والمدربات لحظياً ── */
+function startTrainerWatch(){
+  if (_trainerWatchUnsub) {
+    try { _trainerWatchUnsub(); } catch(_) {}
+    _trainerWatchUnsub = null;
+  }
+  _trainerWatchPrimed = false;
+  const q = query(collection(db, 'trainers'), orderBy('createdAt', 'desc'));
+  _trainerWatchUnsub = onSnapshot(q, snap => {
+    const list = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    C.trainers = list;
+    loaded.trainers = true;
+
+    if (!_trainerWatchPrimed) {
+      _trainerWatchPrimed = true;
+      list.forEach(t => _seenTrainerToastIds.add(t.id));
+    } else {
+      snap.docChanges().forEach(ch => {
+        if (ch.type !== 'added') return;
+        const t = { id: ch.doc.id, ...ch.doc.data() };
+        if (_seenTrainerToastIds.has(t.id)) return;
+        _seenTrainerToastIds.add(t.id);
+        toastNotif(`تسجيل مدرب جديد · ${t.fullName || 'مدرب'}`);
+      });
+    }
+
+    renderNav();
+    if (route === 'trainers') {
+      const el = document.getElementById('view-trainers');
+      if (el) vTrainers(el, { preserveFocus: true });
+    } else if (route === 'home') {
+      const el = document.getElementById('view-home');
+      if (el) vHome(el);
+    }
+  }, err => console.warn('[trainer watch]', err?.code || err));
 }
 
 /* ── Email & Password Sign-In Handler ── */
@@ -2507,6 +2870,11 @@ if (googleBtnEl && !googleBtnEl.dataset.bound) {
 async function performLogout() {
   if(!confirm('هل تريد تسجيل الخروج؟')) return;
   try {
+    if (_trainerWatchUnsub) {
+      try { _trainerWatchUnsub(); } catch(_) {}
+      _trainerWatchUnsub = null;
+      _trainerWatchPrimed = false;
+    }
     await signOut(auth);
     currentUser = null;
     Object.keys(loaded).forEach(k => { loaded[k] = false; });
@@ -2523,8 +2891,8 @@ if (logoutBtnEl && !logoutBtnEl.dataset.bound) {
 }
 
 /* ── Cache ── */
-const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],volunteerOpportunities:[],workshop_registrations:[],surveys:[],survey_responses:[],jobs:[],jobApplications:[],admin_notifications:[],notifications:[],settings:{}};
-const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:false,workshops:false,volunteerOpportunities:false,workshop_registrations:false,surveys:false,survey_responses:false,jobs:false,jobApplications:false,admin_notifications:false,notifications:false,settings:false};
+const C={news:[],volunteers:[],volunteer_applications:[],crafts:[],workshops:[],trainers:[],volunteerOpportunities:[],workshop_registrations:[],surveys:[],survey_responses:[],jobs:[],jobApplications:[],admin_notifications:[],notifications:[],settings:{}};
+const loaded={news:false,volunteers:false,volunteer_applications:false,crafts:false,workshops:false,trainers:false,volunteerOpportunities:false,workshop_registrations:false,surveys:false,survey_responses:false,jobs:false,jobApplications:false,admin_notifications:false,notifications:false,settings:false};
 
 async function loadCol(col){
   if(loaded[col]) return C[col];
@@ -2561,16 +2929,17 @@ async function loadSettings(){
 
 /* ── Routes ── */
 const ROUTES=[
-  {id:'home',          label:'الرئيسية',       icon:iHome},
-  {id:'notifications', label:'الإشعارات',      icon:iBell,     badge:'nNew'},
-  {id:'news',          label:'إدارة الأخبار',  icon:iNews},
-  {id:'workshops',     label:'ورش العمل',     icon:iTools,    badge:'wNew'},
-  {id:'careers',       label:'إدارة التوظيف', icon:iBriefcase, badge:'jNew'},
-  {id:'volunteer_program', label:'برنامج التطوع', icon:iHeart, badge:'vpNew'},
-  {id:'volunteers',    label:'أصدقاء الجمعية', icon:iUsers,    badge:'vNew'},
-  {id:'crafts',        label:'بيدي حرفة',      icon:iCraft,    badge:'cNew'},
-  {id:'global_db',     label:'قاعدة البيانات', icon:iDatabase},
-  {id:'settings',      label:'الإعدادات',      icon:iCog},
+  {id:'home',          label:'الرئيسية',          icon:iHome},
+  {id:'notifications', label:'الإشعارات',         icon:iBell,      badge:'nNew'},
+  {id:'news',          label:'إدارة الأخبار',     icon:iNews},
+  {id:'workshops',     label:'ورش العمل',         icon:iTools,     badge:'wNew'},
+  {id:'trainers',      label:'المدربون والمدربات', icon:iTrainers, badge:'trNew'},
+  {id:'careers',       label:'إدارة الوظائف',     icon:iBriefcase, badge:'jNew'},
+  {id:'volunteer_program', label:'برنامج التطوع', icon:iHeart,     badge:'vpNew'},
+  {id:'volunteers',    label:'أصدقاء الجمعية',    icon:iUsers,     badge:'vNew'},
+  {id:'crafts',        label:'بيدي حرفة',         icon:iCraft,     badge:'cNew'},
+  {id:'global_db',     label:'قاعدة البيانات',    icon:iDatabase},
+  {id:'settings',      label:'الإعدادات',         icon:iCog},
 ];
 let route='home', appBooted=false;
 
@@ -2581,9 +2950,10 @@ async function renderNav(){
   const wNew=(C.workshop_registrations||[]).filter(w=>!w.reviewed).length;
   const vaNew=(C.volunteer_applications||[]).filter(a=>!a.reviewed).length;
   const jNew=(C.jobApplications||[]).filter(a=>!a.reviewed).length;
+  const trNew=(C.trainers||[]).filter(t=>(t.status||'new')==='new').length;
   const nNotifs = (C.admin_notifications || C.notifications || []);
-  const nNew = nNotifs.filter(n => !n.read && n.status !== 'read').length + vpNew + vNew + cNew + wNew + vaNew + jNew;
-  const bags={vpNew,vNew,cNew,wNew,jNew,nNew};
+  const nNew = nNotifs.filter(n => !n.read && n.status !== 'read').length + vpNew + vNew + cNew + wNew + vaNew + jNew + trNew;
+  const bags={vpNew,vNew,cNew,wNew,jNew,trNew,nNew};
   document.getElementById('navList').innerHTML=ROUTES.map(r=>{
     const active=r.id===route?'active':'';
     const cnt=r.badge?bags[r.badge]:0;
@@ -2635,6 +3005,7 @@ async function renderView(r){
   else if(r==='notifications') await vNotifications(el);
   else if(r==='news')         await vNews(el);
   else if(r==='workshops')    await vWorkshops(el);
+  else if(r==='trainers')     await vTrainers(el);
   else if(r==='careers')      await vCareers(el);
   else if(r==='volunteer_program'||r==='volunteer_opportunities') await vVolunteerProgram(el);
   else if(r==='volunteers')   await vVols(el);
@@ -2649,19 +3020,22 @@ function bootApp(){ renderNav(); goTo('home'); }
    HOME
 ════════════════════════════════ */
 async function vHome(el){
-  const [news,vols,crafts,workshops,apps]=await Promise.all([
+  const [news,vols,crafts,workshops,apps,trainers]=await Promise.all([
     loadCol('news'),
     loadCol('volunteers'),
     loadCol('crafts'),
     loadCol('workshops'),
-    loadCol('volunteer_applications')
+    loadCol('volunteer_applications'),
+    loadCol('trainers')
   ]);
   const vpVols = vols.filter(v => (v.type === 'برنامج التطوع' || v.program === 'برنامج التطوع' || (!v.type && v.category !== 'أصدقاء الجمعية')) && v.type !== 'صديق الجمعية' && !v.isPhoneIndex);
   const vpNew = vpVols.filter(v => !v.reviewed).length;
   const cNew = crafts.filter(c => !c.reviewed).length;
+  const trNew = (trainers || []).filter(t => (t.status || 'new') === 'new').length;
   await renderNav();
 
   const recent=[
+    ...trainers.map(t=>({kind:'trainer',title:`مدرب/ة محتمل — ${t.fullName||''}`,date:toTs(t.createdAt),isNew:(t.status||'new')==='new'})),
     ...vpVols.map(v=>({kind:'vol',title:`متطوع بالبرنامج — ${v.name||''}`,date:toTs(v.createdAt),isNew:!v.reviewed})),
     ...apps.map(a=>({kind:'vol',title:`تقديم فرصة: ${a.opportunityTitle||'فرصة'} — ${a.name||''}`,date:toTs(a.createdAt),isNew:!a.reviewed})),
     ...crafts.map(c=>({kind:'craft',title:`بيدي حرفة — ${c.name||''}`,date:toTs(c.createdAt),isNew:!c.reviewed})),
@@ -2672,11 +3046,11 @@ async function vHome(el){
   <div class="page-head">
     <div class="page-eyebrow"><span class="e-dot"></span><span class="e-latin">Overview · ${fmtEn(new Date())}</span><span class="e-label">لوحة التحكم</span></div>
     <h1 class="page-title">مرحباً</h1>
-    <p class="page-sub">نظرة عامة على نشاط الجمعية — برنامج المتطوعين، ورش العمل، المقالات المنشورة، ومبادرة "بيدي حرفة".</p>
+    <p class="page-sub">نظرة عامة على نشاط الجمعية — برنامج المتطوعين، ورش العمل، قاعدة بيانات المدربين، ومبادرة "بيدي حرفة".</p>
   </div>
   <div class="stats-grid">
     ${sCard('VolunteersProg','برنامج المتطوعين',vpVols.length,`${vpNew} تسجيل جديد`)}
-    ${sCard('Editorial','المحتوى والأخبار',news.length,'مقال منشور')}
+    ${sCard('Trainers','المدربون والمدربات',trainers.length,`${trNew} تسجيل جديد`)}
     ${sCard('Artisans','بيدي حرفة',crafts.length,`${cNew} طلب جديد`)}
     ${sCard('WorkshopsCount','ورش العمل',workshops.length,'ورشة عمل')}
   </div>
@@ -2698,7 +3072,8 @@ async function vHome(el){
     <div class="card">
       <div class="card-head"><div><h3>اختصارات</h3><div class="card-la">Quick actions</div></div></div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <button class="btn btn-primary" data-go="volunteer_program" style="justify-content:space-between;width:100%"><span>إدارة برنامج المتطوعين</span>${chevSvg()}</button>
+        <button class="btn btn-primary" data-go="trainers" style="justify-content:space-between;width:100%"><span>إدارة المدربين والمدربات</span>${chevSvg()}</button>
+        <button class="btn btn-ghost" data-go="volunteer_program" style="justify-content:space-between;width:100%"><span>إدارة برنامج المتطوعين</span>${chevSvg()}</button>
         <button class="btn btn-ghost" data-action="add-news" style="justify-content:space-between;width:100%"><span>كتابة مقال جديد</span>${chevSvg()}</button>
         <button class="btn btn-ghost" data-go="workshops" style="justify-content:space-between;width:100%"><span>إدارة ورش العمل</span>${chevSvg()}</button>
         <button class="btn btn-ghost" data-go="global_db" style="justify-content:space-between;width:100%"><span>قاعدة البيانات الموحدة</span>${chevSvg()}</button>
@@ -3344,6 +3719,817 @@ async function vCrafts(el){
 }
 
 /* ════════════════════════════════
+   TRAINERS MANAGEMENT (المدربون والمدربات)
+════════════════════════════════ */
+const TRAINER_SPECIALTIES = [
+  'الحرف اليدوية',
+  'الحرف التراثية',
+  'الفنون التشكيلية',
+  'الرسم والفنون',
+  'الخزف والفخار',
+  'النسيج والتطريز',
+  'الصناعات التقليدية',
+  'التصوير',
+  'التصميم',
+  'التقنية',
+  'أخرى'
+];
+
+const TRAINER_STATUSES = {
+  new:        { label: 'جديد',                 cls: 'tr-st-new' },
+  reviewed:   { label: 'تمت المراجعة',         cls: 'tr-st-reviewed' },
+  candidate:  { label: 'ضمن قائمة المرشحين',  cls: 'tr-st-candidate' },
+  contacted:  { label: 'تم التواصل',          cls: 'tr-st-contacted' },
+  unsuitable: { label: 'غير مناسب',           cls: 'tr-st-unsuitable' }
+};
+
+function normalizeTrainerStatus(st) {
+  return TRAINER_STATUSES[st] ? st : 'new';
+}
+
+function trainerStatusBadge(st) {
+  const key = normalizeTrainerStatus(st);
+  const meta = TRAINER_STATUSES[key];
+  return `<span class="tr-status-badge ${meta.cls}">${esc(meta.label)}</span>`;
+}
+
+function fmtTrainerDateTime(ts) {
+  const d = toTs(ts);
+  if (!d || isNaN(d.getTime())) return '—';
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const yyyy = d.getFullYear();
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  return `${dd}/${mm}/${yyyy} · ${hh}:${mi}`;
+}
+
+function formatTrainerSpecsText(t) {
+  const arr = Array.isArray(t.specialties) ? t.specialties.filter(Boolean) : [];
+  const mapped = arr.map(s => (s === 'أخرى' && t.otherSpecialty ? `أخرى (${t.otherSpecialty})` : s));
+  return mapped.length ? mapped.join('، ') : '—';
+}
+
+let trQ = '';
+let trSpecFilter = 'all';
+let trExpFilter = 'all';
+let trStatusFilter = 'all';
+let trSortOrder = 'desc';
+let trPage = 1;
+const TR_PAGE_SIZE = 10;
+
+function getFilteredTrainers(all) {
+  let rows = [...(all || [])];
+  const q = trQ.trim().toLowerCase();
+  if (q) {
+    rows = rows.filter(t => {
+      const hay = [
+        t.fullName,
+        t.phone,
+        t.email,
+        t.specificSpecialty,
+        t.otherSpecialty,
+        ...(Array.isArray(t.specialties) ? t.specialties : [])
+      ].filter(Boolean).join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  if (trSpecFilter !== 'all') {
+    rows = rows.filter(t => Array.isArray(t.specialties) && t.specialties.includes(trSpecFilter));
+  }
+  if (trExpFilter === 'yes') {
+    rows = rows.filter(t => t.hasTrainingExperience === true);
+  } else if (trExpFilter === 'no') {
+    rows = rows.filter(t => t.hasTrainingExperience === false);
+  }
+  if (trStatusFilter !== 'all') {
+    rows = rows.filter(t => normalizeTrainerStatus(t.status) === trStatusFilter);
+  }
+  rows.sort((a, b) => {
+    const ta = toTs(a.createdAt)?.getTime() || 0;
+    const tb = toTs(b.createdAt)?.getTime() || 0;
+    return trSortOrder === 'asc' ? ta - tb : tb - ta;
+  });
+  return rows;
+}
+
+async function copyTextWithToast(text, label = 'تم النسخ') {
+  if (!text) return;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    toast(label);
+  } catch (err) {
+    toast('تعذّر النسخ تلقائياً', 'err');
+  }
+}
+
+function openTrainerWhatsApp(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (!digits) return;
+  const intl = digits.startsWith('0') ? '966' + digits.slice(1) : (digits.startsWith('966') ? digits : '966' + digits);
+  window.open('https://wa.me/' + intl, '_blank', 'noopener');
+}
+
+async function vTrainers(el, opts = {}) {
+  const prevSearchEl = opts.preserveFocus ? el.querySelector('#trSearch') : null;
+  const hadSearchFocus = Boolean(prevSearchEl && document.activeElement === prevSearchEl);
+  const selStart = hadSearchFocus ? prevSearchEl.selectionStart : null;
+
+  const all = await loadCol('trainers');
+  const totalCount = all.length;
+  const newCount = all.filter(t => normalizeTrainerStatus(t.status) === 'new').length;
+  const expYesCount = all.filter(t => t.hasTrainingExperience === true).length;
+  const expNoCount = all.filter(t => t.hasTrainingExperience === false).length;
+
+  const filtered = getFilteredTrainers(all);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / TR_PAGE_SIZE));
+  if (trPage > totalPages) trPage = totalPages;
+  if (trPage < 1) trPage = 1;
+
+  const startIdx = (trPage - 1) * TR_PAGE_SIZE;
+  const pageRows = filtered.slice(startIdx, startIdx + TR_PAGE_SIZE);
+  const hasFilters = Boolean(trQ.trim() || trSpecFilter !== 'all' || trExpFilter !== 'all' || trStatusFilter !== 'all');
+
+  await renderNav();
+
+  el.innerHTML = `
+  <div class="page-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px;">
+    <div>
+      <div class="page-eyebrow"><span class="e-dot"></span><span class="e-latin">Trainers · قاعدة بيانات المدربين</span><span class="e-label">الورش التدريبية</span></div>
+      <h1 class="page-title">المدربون <span class="accent">والمدربات</span></h1>
+      <p class="page-sub">إدارة طلبات التسجيل وقاعدة بيانات المدربين المحتملين للورش والبرامج التدريبية القادمة.</p>
+    </div>
+    <div class="tr-header-actions">
+      <button type="button" class="btn btn-outline btn-sm" id="btnTrExportAllPdf" style="gap:6px;" ${all.length === 0 ? 'disabled' : ''}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5" stroke-linecap="round"/></svg>
+        <span>تصدير الكل PDF</span>
+      </button>
+      <button type="button" class="btn btn-primary btn-sm" id="btnTrExportFilteredPdf" style="gap:6px;" ${filtered.length === 0 ? 'disabled' : ''}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" style="width:14px;height:14px;"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span>تصدير النتائج الحالية PDF</span>
+      </button>
+    </div>
+  </div>
+
+  ${newCount > 0 ? `
+  <div class="tr-new-alert" role="status">
+    <div class="tr-new-alert-body">
+      <span class="tr-new-alert-dot" aria-hidden="true"></span>
+      <span>تنبيه: يوجد <strong>${newCount}</strong> ${newCount === 1 ? 'تسجيل جديد' : 'تسجيلات جديدة'} في قسم المدربين والمدربات بانتظار المراجعة.</span>
+    </div>
+    ${trStatusFilter !== 'new' ? `<button type="button" class="btn btn-sm btn-outline" id="btnTrQuickNew">عرض التسجيلات الجديدة</button>` : ''}
+  </div>` : ''}
+
+  <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:20px;">
+    ${sCard('TotalTrainers', 'إجمالي المسجلين', totalCount, 'مسجل في القاعدة')}
+    ${sCard('NewRegistrations', 'التسجيلات الجديدة', newCount, 'بانتظار المراجعة')}
+    ${sCard('Experienced', 'لديهم خبرة تدريبية', expYesCount, 'سبق لهم تقديم ورش')}
+    ${sCard('FirstTimers', 'بدون خبرة تدريبية', expNoCount, 'لديهم مهارات ومعرفة')}
+  </div>
+
+  <div class="tr-filter-bar">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+      <input type="text" id="trSearch" placeholder="بحث بالاسم أو رقم الجوال أو التخصص الدقيق…" value="${escA(trQ)}"/>
+    </div>
+
+    <select id="trFilterSpec" class="tr-select" aria-label="فلترة حسب التخصص">
+      <option value="all" ${trSpecFilter === 'all' ? 'selected' : ''}>كل التخصصات</option>
+      ${TRAINER_SPECIALTIES.map(s => `<option value="${escA(s)}" ${trSpecFilter === s ? 'selected' : ''}>${esc(s)}</option>`).join('')}
+    </select>
+
+    <select id="trFilterExp" class="tr-select" aria-label="فلترة حسب الخبرة التدريبية">
+      <option value="all" ${trExpFilter === 'all' ? 'selected' : ''}>كل الخبرات التدريبية</option>
+      <option value="yes" ${trExpFilter === 'yes' ? 'selected' : ''}>لديهم خبرة تدريبية (نعم)</option>
+      <option value="no" ${trExpFilter === 'no' ? 'selected' : ''}>بدون خبرة تدريبية (لا)</option>
+    </select>
+
+    <select id="trFilterStatus" class="tr-select" aria-label="فلترة حسب الحالة">
+      <option value="all" ${trStatusFilter === 'all' ? 'selected' : ''}>جميع الحالات</option>
+      ${Object.entries(TRAINER_STATUSES).map(([k, m]) => `<option value="${k}" ${trStatusFilter === k ? 'selected' : ''}>${esc(m.label)}</option>`).join('')}
+    </select>
+
+    <select id="trSortOrder" class="tr-select" aria-label="ترتيب حسب تاريخ التسجيل">
+      <option value="desc" ${trSortOrder === 'desc' ? 'selected' : ''}>الأحدث أولاً</option>
+      <option value="asc" ${trSortOrder === 'asc' ? 'selected' : ''}>الأقدم أولاً</option>
+    </select>
+
+    ${hasFilters ? `<button type="button" class="btn btn-sm btn-ghost" id="btnTrResetFilters">إعادة ضبط</button>` : '<span></span>'}
+  </div>
+
+  ${filtered.length === 0
+    ? `<div class="card">${emptyState(hasFilters ? 'لا توجد نتائج مطابقة للفلاتر الحالية' : 'لم ترد تسجيلات مدربين بعد', 'TRAINERS · EMPTY')}</div>`
+    : `<div class="table-wrap">
+        <table class="data tr-table">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>رقم الجوال</th>
+              <th>البريد الإلكتروني</th>
+              <th>التخصص</th>
+              <th>الخبرة التدريبية</th>
+              <th>تاريخ التسجيل</th>
+              <th>الحالة</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${pageRows.map(t => {
+              const specs = Array.isArray(t.specialties) ? t.specialties : [];
+              const shownSpecs = specs.slice(0, 2).map(s => `<span class="tr-spec-pill">${esc(s === 'أخرى' && t.otherSpecialty ? t.otherSpecialty : s)}</span>`).join(' ');
+              const moreSpecs = specs.length > 2 ? `<span class="tr-spec-pill tr-spec-more">+${specs.length - 2}</span>` : '';
+              return `
+              <tr data-tr-row="${escA(t.id)}" style="cursor:pointer;">
+                <td data-label="الاسم">
+                  <div class="name-cell">
+                    <span>${esc(t.fullName || '—')}</span>
+                  </div>
+                  ${t.specificSpecialty ? `<div style="font-size:11.5px;color:var(--ink-muted);margin-top:2px;">${esc(t.specificSpecialty)}</div>` : ''}
+                </td>
+                <td data-label="رقم الجوال"><span dir="ltr" style="font-weight:600;color:var(--ink);">${esc(t.phone || '—')}</span></td>
+                <td data-label="البريد الإلكتروني"><span dir="ltr" style="font-size:12.5px;color:var(--ink-muted);">${esc(t.email || '—')}</span></td>
+                <td data-label="التخصص">
+                  <div style="display:flex;flex-wrap:wrap;gap:4px;max-width:240px;">${shownSpecs || '—'} ${moreSpecs}</div>
+                </td>
+                <td data-label="الخبرة التدريبية">
+                  <span class="tr-exp-pill ${t.hasTrainingExperience ? 'tr-exp-yes' : 'tr-exp-no'}">${t.hasTrainingExperience ? 'نعم' : 'لا'}</span>
+                </td>
+                <td data-label="تاريخ التسجيل"><span dir="ltr" style="font-size:12px;">${fmtTrainerDateTime(t.createdAt)}</span></td>
+                <td data-label="الحالة">${trainerStatusBadge(t.status)}</td>
+                <td data-label="الإجراءات">
+                  <button type="button" class="tbl-view-btn" data-tr-view="${escA(t.id)}">عرض التفاصيل</button>
+                </td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+        <div class="tr-pagination">
+          <span class="tr-page-info">عرض ${startIdx + 1}–${Math.min(startIdx + TR_PAGE_SIZE, filtered.length)} من أصل ${filtered.length}</span>
+          <div class="tr-page-btns">
+            <button type="button" class="tr-page-btn" data-tr-page="${trPage - 1}" ${trPage <= 1 ? 'disabled' : ''}>السابق</button>
+            ${Array.from({ length: totalPages }, (_, i) => i + 1)
+              .filter(p => p === 1 || p === totalPages || Math.abs(p - trPage) <= 1)
+              .map(p => `<button type="button" class="tr-page-btn ${p === trPage ? 'active' : ''}" data-tr-page="${p}">${p}</button>`)
+              .join('')}
+            <button type="button" class="tr-page-btn" data-tr-page="${trPage + 1}" ${trPage >= totalPages ? 'disabled' : ''}>التالي</button>
+          </div>
+        </div>
+      </div>`
+  }`;
+
+  const searchInput = el.querySelector('#trSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      trQ = e.target.value;
+      trPage = 1;
+      vTrainers(el, { preserveFocus: true });
+    });
+    if (hadSearchFocus) {
+      searchInput.focus();
+      if (selStart !== null) {
+        try { searchInput.setSelectionRange(selStart, selStart); } catch (_) {}
+      }
+    }
+  }
+
+  el.querySelector('#trFilterSpec')?.addEventListener('change', (e) => { trSpecFilter = e.target.value; trPage = 1; vTrainers(el); });
+  el.querySelector('#trFilterExp')?.addEventListener('change', (e) => { trExpFilter = e.target.value; trPage = 1; vTrainers(el); });
+  el.querySelector('#trFilterStatus')?.addEventListener('change', (e) => { trStatusFilter = e.target.value; trPage = 1; vTrainers(el); });
+  el.querySelector('#trSortOrder')?.addEventListener('change', (e) => { trSortOrder = e.target.value; trPage = 1; vTrainers(el); });
+  el.querySelector('#btnTrResetFilters')?.addEventListener('click', () => {
+    trQ = ''; trSpecFilter = 'all'; trExpFilter = 'all'; trStatusFilter = 'all'; trSortOrder = 'desc'; trPage = 1;
+    vTrainers(el);
+  });
+  el.querySelector('#btnTrQuickNew')?.addEventListener('click', () => {
+    trStatusFilter = 'new'; trPage = 1; vTrainers(el);
+  });
+
+  el.querySelectorAll('[data-tr-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nextP = parseInt(btn.dataset.trPage, 10);
+      if (nextP >= 1 && nextP <= totalPages) {
+        trPage = nextP;
+        vTrainers(el);
+      }
+    });
+  });
+
+  el.querySelectorAll('[data-tr-view]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openTrainerPanel(btn.dataset.trView);
+    });
+  });
+  el.querySelectorAll('[data-tr-row]').forEach(row => {
+    row.addEventListener('click', () => openTrainerPanel(row.dataset.trRow));
+  });
+
+  el.querySelector('#btnTrExportAllPdf')?.addEventListener('click', () => {
+    const sortedAll = [...all].sort((a, b) => (toTs(b.createdAt)?.getTime() || 0) - (toTs(a.createdAt)?.getTime() || 0));
+    exportTrainersListPdf(sortedAll, {
+      title: 'سجل المدربين والمدربات — جميع التسجيلات',
+      filterNote: `إجمالي السجلات: ${sortedAll.length}`
+    });
+  });
+
+  el.querySelector('#btnTrExportFilteredPdf')?.addEventListener('click', () => {
+    const parts = [];
+    if (trQ.trim()) parts.push(`بحث: "${trQ.trim()}"`);
+    if (trSpecFilter !== 'all') parts.push(`التخصص: ${trSpecFilter}`);
+    if (trExpFilter !== 'all') parts.push(`الخبرة: ${trExpFilter === 'yes' ? 'نعم' : 'لا'}`);
+    if (trStatusFilter !== 'all') parts.push(`الحالة: ${TRAINER_STATUSES[trStatusFilter]?.label || trStatusFilter}`);
+    parts.push(`الترتيب: ${trSortOrder === 'asc' ? 'الأقدم أولاً' : 'الأحدث أولاً'}`);
+    exportTrainersListPdf(filtered, {
+      title: hasFilters ? 'سجل المدربين والمدربات — النتائج المفلترة' : 'سجل المدربين والمدربات — جميع التسجيلات',
+      filterNote: `${parts.join(' · ')} | عدد النتائج: ${filtered.length}`
+    });
+  });
+}
+
+function openTrainerPanel(id) {
+  const t = (C.trainers || []).find(x => x.id === id);
+  if (!t) return;
+
+  panelState = { col: 'trainers', id, viewEl: document.getElementById('view-trainers') };
+  const stKey = normalizeTrainerStatus(t.status);
+
+  document.getElementById('panelTopLabel').textContent = 'Trainer Profile · سجل مدرب';
+  document.getElementById('panelTopTitle').textContent = t.fullName || 'بيانات المدرب';
+  document.getElementById('panelTopStatus').innerHTML = trainerStatusBadge(stKey);
+
+  const specs = Array.isArray(t.specialties) ? t.specialties : [];
+  const specsHtml = specs.length
+    ? specs.map(s => `<span class="tr-spec-pill" style="padding:5px 11px;font-size:12px;">${esc(s)}</span>`).join('')
+    : '<span>—</span>';
+
+  document.getElementById('panelBody').innerHTML = `
+    <div class="panel-hero">
+      <div class="panel-hero-avatar">${esc((t.fullName || 'م').trim().charAt(0))}</div>
+      <div>
+        <div class="panel-hero-name">${esc(t.fullName || '—')}</div>
+        <div class="panel-hero-craft">${esc(t.specificSpecialty || formatTrainerSpecsText(t))}</div>
+        <div style="margin-top:6px;">${trainerStatusBadge(stKey)}</div>
+      </div>
+    </div>
+
+    <div class="panel-section-head">
+      <span class="panel-section-label">Personal Info · المعلومات الشخصية</span>
+      <div class="panel-section-line"></div>
+    </div>
+    <div class="panel-details">
+      ${buildDetailRow('الاسم الكامل', t.fullName)}
+      <div class="panel-detail-row">
+        <span class="panel-detail-key">رقم الجوال</span>
+        <span class="panel-detail-val" dir="ltr" style="font-weight:700;">${esc(t.phone || '—')}</span>
+      </div>
+      <div class="panel-detail-row">
+        <span class="panel-detail-key">تاريخ الميلاد (ميلادي)</span>
+        <span class="panel-detail-val" dir="ltr">${esc(t.birthDate || '—')}</span>
+      </div>
+      <div class="panel-detail-row">
+        <span class="panel-detail-key">البريد الإلكتروني</span>
+        <span class="panel-detail-val" dir="ltr">${esc(t.email || '—')}</span>
+      </div>
+      ${buildDetailRow('تاريخ التسجيل', fmtTrainerDateTime(t.createdAt))}
+    </div>
+
+    <div class="tr-quick-contact">
+      <button type="button" class="btn btn-sm btn-outline" id="trPanelCopyPhone" style="gap:6px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:13px;height:13px;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>نسخ رقم الجوال</span>
+      </button>
+      <button type="button" class="btn btn-sm" id="trPanelWhatsapp" style="gap:6px;background:#1E7E45;color:#fff;border-color:#1E7E45;">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+        <span>فتح محادثة واتساب</span>
+      </button>
+    </div>
+
+    <div class="panel-section-head">
+      <span class="panel-section-label">Training Profile · البيانات المهنية</span>
+      <div class="panel-section-line"></div>
+    </div>
+    <div class="panel-details">
+      ${buildDetailRow('المؤهل العلمي', t.qualification || '—')}
+      <div class="panel-detail-row" style="display:block;padding:13px 16px;">
+        <div class="panel-detail-key" style="margin-bottom:8px;">التخصصات المختارة</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">${specsHtml}</div>
+      </div>
+      ${t.otherSpecialty ? buildDetailRow('التخصص الآخر', t.otherSpecialty) : ''}
+      ${buildDetailRow('التخصص الدقيق', t.specificSpecialty || '—')}
+      <div class="panel-detail-row">
+        <span class="panel-detail-key">الخبرة التدريبية</span>
+        <span class="panel-detail-val">
+          <span class="tr-exp-pill ${t.hasTrainingExperience ? 'tr-exp-yes' : 'tr-exp-no'}">${t.hasTrainingExperience ? 'نعم — سبق له تقديم ورش تدريبية' : 'لا'}</span>
+        </span>
+      </div>
+      <div class="panel-detail-row" style="align-items:center;">
+        <span class="panel-detail-key">السيرة الذاتية والمرفقات (PDF)</span>
+        <span class="panel-detail-val">
+          ${t.cvChunks > 0 ? `
+            <button type="button" class="btn btn-sm btn-outline" id="trPanelDownloadCvBtn" style="gap:6px;">
+              <i class="fas fa-file-pdf" style="color:#b42318;"></i>
+              <span>عرض / تحميل (${esc(t.cvName || 'السيرة الذاتية.pdf')})</span>
+            </button>
+          ` : '<span style="color:var(--ink-muted);font-weight:500;">لم يُرفق ملف</span>'}
+        </span>
+      </div>
+    </div>
+
+    <div class="panel-section-head">
+      <span class="panel-section-label">Applicant Notes · ملاحظات المتقدم</span>
+      <div class="panel-section-line"></div>
+    </div>
+    <div class="tr-panel-box">
+      <div class="tr-panel-box-title">
+        <span>الملاحظات الواردة من المتقدم</span>
+        <span style="font-size:11px;color:var(--ink-muted);font-weight:500;">للقراءة فقط</span>
+      </div>
+      <div style="font-size:13px;line-height:1.8;color:var(--ink-mid);white-space:pre-wrap;">${t.notes ? esc(t.notes) : 'لا توجد ملاحظات إضافية من المتقدم.'}</div>
+    </div>
+
+    <div class="panel-section-head">
+      <span class="panel-section-label">Admin Review · المراجعة الإدارية الداخلية</span>
+      <div class="panel-section-line"></div>
+    </div>
+    <div class="tr-panel-box" style="background:#FFFFFF;border-color:var(--line);">
+      <label for="trPanelStatusSelect" class="tr-panel-box-title" style="display:block;">حالة التسجيل</label>
+      <select id="trPanelStatusSelect" class="tr-select" style="margin-bottom:14px;">
+        ${Object.entries(TRAINER_STATUSES).map(([k, m]) => `<option value="${k}" ${stKey === k ? 'selected' : ''}>${esc(m.label)}</option>`).join('')}
+      </select>
+
+      <label for="trPanelAdminNotes" class="tr-panel-box-title">
+        <span>ملاحظات إدارية داخلية</span>
+        <span style="font-size:11px;color:var(--ink-muted);font-weight:500;">سرية — لا تظهر للمتقدم</span>
+      </label>
+      <textarea id="trPanelAdminNotes" class="tr-admin-note-area" placeholder="أضف تقييم الإدارة أو تفاصيل التواصل والمقابلات هنا…">${esc(t.adminNotes || '')}</textarea>
+      <button type="button" class="btn btn-primary btn-sm" id="trSaveAdminNotesBtn">حفظ الملاحظات الإدارية</button>
+    </div>
+  `;
+
+  document.getElementById('panelFooter').innerHTML = `
+    <button type="button" class="panel-action panel-action-approve" id="trPanelPdfBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5" stroke-linecap="round"/></svg>
+      تصدير PDF
+    </button>
+    <button type="button" class="panel-action panel-action-del" id="trPanelDelBtn" aria-label="حذف التسجيل">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7h14M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M7 7l1 13h8l1-13" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      حذف
+    </button>
+  `;
+
+  document.getElementById('trPanelCopyPhone')?.addEventListener('click', () => copyTextWithToast(t.phone || '', 'تم نسخ رقم الجوال'));
+  document.getElementById('trPanelWhatsapp')?.addEventListener('click', () => openTrainerWhatsApp(t.phone || ''));
+  document.getElementById('trPanelDownloadCvBtn')?.addEventListener('click', () => viewTrainerCv(t));
+  document.getElementById('trPanelPdfBtn')?.addEventListener('click', () => exportSingleTrainerPdf(t));
+
+  document.getElementById('trPanelStatusSelect')?.addEventListener('change', async (e) => {
+    const newStatus = normalizeTrainerStatus(e.target.value);
+    try {
+      await updateDoc(doc(db, 'trainers', id), {
+        status: newStatus,
+        reviewed: newStatus !== 'new',
+        updatedAt: serverTimestamp()
+      });
+      t.status = newStatus;
+      t.reviewed = newStatus !== 'new';
+      document.getElementById('panelTopStatus').innerHTML = trainerStatusBadge(newStatus);
+      const badgeHost = document.querySelector('#panelBody .panel-hero .tr-status-badge');
+      if (badgeHost) badgeHost.outerHTML = trainerStatusBadge(newStatus);
+
+      // Mark matching unread admin notification as read cleanly
+      if (newStatus !== 'new') {
+        const linkedNotifs = (C.admin_notifications || []).filter(n => n.trainerId === id && !n.read);
+        linkedNotifs.forEach(n => {
+          updateDoc(doc(db, 'admin_notifications', n.id), { read: true, status: 'read' }).catch(() => {});
+          n.read = true;
+          n.status = 'read';
+        });
+      }
+
+      toast(`تم تحديث الحالة إلى: ${TRAINER_STATUSES[newStatus].label}`);
+      await renderNav();
+      if (route === 'trainers') {
+        const viewEl = document.getElementById('view-trainers');
+        if (viewEl) vTrainers(viewEl);
+      }
+    } catch (err) {
+      console.error('[Trainer Status Update]', err);
+      toast('تعذّر تحديث الحالة', 'err');
+    }
+  });
+
+  document.getElementById('trSaveAdminNotesBtn')?.addEventListener('click', async () => {
+    const notesVal = (document.getElementById('trPanelAdminNotes')?.value || '').trim();
+    const saveBtn = document.getElementById('trSaveAdminNotesBtn');
+    if (saveBtn) saveBtn.disabled = true;
+    try {
+      await updateDoc(doc(db, 'trainers', id), {
+        adminNotes: notesVal,
+        updatedAt: serverTimestamp()
+      });
+      t.adminNotes = notesVal;
+      toast('تم حفظ الملاحظات الإدارية بنجاح');
+    } catch (err) {
+      console.error('[Trainer Notes Save]', err);
+      toast('حدث خطأ أثناء حفظ الملاحظات', 'err');
+    } finally {
+      if (saveBtn) saveBtn.disabled = false;
+    }
+  });
+
+  document.getElementById('trPanelDelBtn')?.addEventListener('click', async () => {
+    if (!confirm(`هل أنت متأكد من حذف تسجيل «${t.fullName || 'المدرب'}» نهائياً؟ لا يمكن التراجع عن هذا الإجراء.`)) return;
+    try {
+      const batch = writeBatch(db);
+      batch.delete(doc(db, 'trainers', id));
+      if (t.phone && /^05\d{8}$/.test(String(t.phone))) {
+        batch.delete(doc(db, 'trainer_phones', String(t.phone)));
+      }
+      if (t.cvChunks > 0) {
+        for (let i = 0; i < t.cvChunks; i++) {
+          batch.delete(doc(db, 'trainer_cv_chunks', `${id}_${i}`));
+        }
+      }
+      await batch.commit();
+
+      C.trainers = (C.trainers || []).filter(x => x.id !== id);
+      closePanel();
+      await renderNav();
+      if (route === 'trainers') {
+        const viewEl = document.getElementById('view-trainers');
+        if (viewEl) vTrainers(viewEl);
+      }
+      toast('تم حذف التسجيل بنجاح');
+    } catch (err) {
+      console.error('[Trainer Delete]', err);
+      toast('تعذّر حذف التسجيل', 'err');
+    }
+  });
+
+  openPanel();
+}
+
+async function viewTrainerCv(t) {
+  if (!t || !t.cvChunks) return;
+  try {
+    toast('جاري تحضير السيرة الذاتية…');
+    const parts = new Array(t.cvChunks).fill('');
+    const gets = [];
+    for (let i = 0; i < t.cvChunks; i++) {
+      gets.push(getDoc(doc(db, 'trainer_cv_chunks', `${t.id}_${i}`)).then(s => {
+        if (s.exists()) parts[s.data().idx] = s.data().data || '';
+      }));
+    }
+    await Promise.all(gets);
+    const dataUrl = parts.join('');
+    if (!dataUrl) { toast('تعذّر تحميل الملف', 'err'); return; }
+    const blobUrl = dataUrl.startsWith('data:') ? URL.createObjectURL(dataUrlToBlob(dataUrl)) : dataUrl;
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = t.cvName || `سيرة_${t.fullName || 'مدرب'}.pdf`;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    if (blobUrl.startsWith('blob:')) setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+  } catch (err) {
+    console.error('[Trainer CV]', err);
+    toast('تعذّر فتح السيرة الذاتية', 'err');
+  }
+}
+
+function openArabicPrintPdf(htmlDoc, successToastMsg) {
+  const win = window.open('', '_blank');
+  if (win) {
+    win.document.open();
+    win.document.write(htmlDoc);
+    win.document.close();
+    toast(successToastMsg || 'تم فتح نافذة التصدير إلى PDF');
+    return;
+  }
+
+  // Popup blocked fallback: print seamlessly via hidden iframe
+  try {
+    const oldFrame = document.getElementById('erthPdfPrintFrame');
+    if (oldFrame) oldFrame.remove();
+    const iframe = document.createElement('iframe');
+    iframe.id = 'erthPdfPrintFrame';
+    iframe.style.position = 'fixed';
+    iframe.style.right = '-9999px';
+    iframe.style.bottom = '0';
+    iframe.style.width = '1px';
+    iframe.style.height = '1px';
+    iframe.style.border = '0';
+    document.body.appendChild(iframe);
+    const idoc = iframe.contentWindow.document;
+    idoc.open();
+    idoc.write(htmlDoc);
+    idoc.close();
+    toast(successToastMsg || 'جارٍ تجهيز ملف PDF للطباعة والحفظ…');
+  } catch (err) {
+    console.error('[PDF Export Fallback]', err);
+    toast('يرجى السماح بالنوافذ المنبثقة لتصدير ملف PDF', 'err');
+  }
+}
+
+function exportTrainersListPdf(list, { title, filterNote }) {
+  if (!list || !list.length) {
+    toast('لا توجد بيانات للتصدير', 'err');
+    return;
+  }
+  const logoUrl = `${window.location.origin}/assets/الشعار/الشعار.png`;
+  const fontUrl = `${window.location.origin}/assets/fonts/effra.css`;
+  const nowStr = fmtTrainerDateTime(new Date());
+
+  const rowsHtml = list.map((t, idx) => {
+    const st = TRAINER_STATUSES[normalizeTrainerStatus(t.status)]?.label || 'جديد';
+    return `
+      <tr>
+        <td>${idx + 1}</td>
+        <td><strong>${esc(t.fullName || '—')}</strong>${t.specificSpecialty ? `<div class="sub">${esc(t.specificSpecialty)}</div>` : ''}</td>
+        <td dir="ltr">${esc(t.phone || '—')}</td>
+        <td dir="ltr">${esc(t.email || '—')}</td>
+        <td>${esc(formatTrainerSpecsText(t))}</td>
+        <td>${t.hasTrainingExperience ? 'نعم' : 'لا'}</td>
+        <td dir="ltr">${fmtTrainerDateTime(t.createdAt)}</td>
+        <td><span class="st">${esc(st)}</span></td>
+      </tr>`;
+  }).join('');
+
+  const html = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<title>${esc(title)}</title>
+<link href="${fontUrl}" rel="stylesheet"/>
+<style>
+  @page { size: A4 landscape; margin: 12mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Effra', 'Alexandria', 'Segoe UI', sans-serif; background: #fff; color: #35271F; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sheet { padding: 12px 16px; }
+  .head { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #B8883E; padding-bottom: 12px; margin-bottom: 14px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { height: 48px; width: auto; }
+  .brand h1 { font-size: 17px; font-weight: 800; color: #35271F; }
+  .brand p { font-size: 12px; color: #8A8178; margin-top: 2px; }
+  .meta { text-align: left; font-size: 11px; color: #6E655E; line-height: 1.7; }
+  .filter-bar { background: #F8F6F2; border: 1px solid #E6DED3; border-radius: 8px; padding: 8px 12px; font-size: 11.5px; color: #4A3A2F; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  thead th { background: #35271F; color: #fff; padding: 9px 8px; text-align: right; font-weight: 700; }
+  tbody td { padding: 8px; border-bottom: 1px solid #E6DED3; vertical-align: top; }
+  tbody tr:nth-child(even) { background: #FAF8F4; }
+  .sub { font-size: 10.5px; color: #8A8178; margin-top: 2px; }
+  .st { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #F5EFE4; border: 1px solid #DFCFAF; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
+  .actions { text-align: left; margin-bottom: 10px; }
+  .actions button { padding: 7px 14px; border-radius: 8px; border: none; background: #35271F; color: #fff; font-family: inherit; font-weight: 700; cursor: pointer; }
+  @media print { .actions { display: none !important; } body { margin: 0; } }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="actions"><button onclick="window.print()">طباعة / حفظ كملف PDF</button></div>
+    <header class="head">
+      <div class="brand">
+        <img src="${logoUrl}" alt="شعار الجمعية"/>
+        <div>
+          <h1>${esc(title)}</h1>
+          <p>جمعية إرث وحضارة بالقريات — قاعدة بيانات المدربين والمدربات</p>
+        </div>
+      </div>
+      <div class="meta">
+        <div>تاريخ التصدير: <span dir="ltr">${esc(nowStr)}</span></div>
+        <div>نحفظ التراث وننقل المعرفة للأجيال</div>
+      </div>
+    </header>
+    <div class="filter-bar">${esc(filterNote || '')}</div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34px;">#</th>
+          <th>الاسم الكامل</th>
+          <th>رقم الجوال</th>
+          <th>البريد الإلكتروني</th>
+          <th>التخصصات</th>
+          <th>الخبرة</th>
+          <th>تاريخ التسجيل</th>
+          <th>الحالة</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  </div>
+  <script>
+    window.addEventListener('load', function(){ setTimeout(function(){ window.focus(); window.print(); }, 280); });
+  <\/script>
+</body>
+</html>`;
+
+  openArabicPrintPdf(html, 'تم تجهيز سجل المدربين للتصدير كملف PDF');
+}
+
+function exportSingleTrainerPdf(t) {
+  if (!t) return;
+  const logoUrl = `${window.location.origin}/assets/الشعار/الشعار.png`;
+  const fontUrl = `${window.location.origin}/assets/fonts/effra.css`;
+  const stLabel = TRAINER_STATUSES[normalizeTrainerStatus(t.status)]?.label || 'جديد';
+
+  const html = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<title>ملف مدرب — ${esc(t.fullName || '')}</title>
+<link href="${fontUrl}" rel="stylesheet"/>
+<style>
+  @page { size: A4 portrait; margin: 14mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Effra', 'Alexandria', 'Segoe UI', sans-serif; background: #fff; color: #35271F; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .doc { max-width: 720px; margin: 0 auto; border: 1px solid #E6DED3; border-radius: 14px; overflow: hidden; }
+  .top { background: #35271F; color: #fff; padding: 22px 26px; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #B8883E; }
+  .top-brand { display: flex; align-items: center; gap: 14px; }
+  .top-brand img { height: 48px; width: auto; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 8px; }
+  .top h1 { font-size: 18px; font-weight: 800; }
+  .top p { font-size: 12px; color: #E8D7BC; margin-top: 3px; }
+  .body { padding: 24px 26px; background: #fff; }
+  .sec-title { font-size: 13px; font-weight: 800; color: #9B6F2C; border-bottom: 1px solid #E6DED3; padding-bottom: 6px; margin: 18px 0 12px; }
+  .sec-title:first-child { margin-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .item { background: #F8F6F2; border: 1px solid #EAE2D6; border-radius: 8px; padding: 10px 12px; }
+  .item.full { grid-column: 1 / -1; }
+  .lbl { font-size: 11px; color: #8A8178; margin-bottom: 4px; }
+  .val { font-size: 13.5px; font-weight: 700; color: #35271F; line-height: 1.7; white-space: pre-wrap; }
+  .foot { padding: 14px 26px; background: #F8F6F2; border-top: 1px solid #E6DED3; font-size: 11px; color: #8A8178; display: flex; justify-content: space-between; }
+  .actions { max-width: 720px; margin: 0 auto 12px; text-align: left; }
+  .actions button { padding: 7px 14px; border-radius: 8px; border: none; background: #35271F; color: #fff; font-family: inherit; font-weight: 700; cursor: pointer; }
+  @media print { .actions { display: none !important; } }
+</style>
+</head>
+<body>
+  <div class="actions"><button onclick="window.print()">طباعة / حفظ كملف PDF</button></div>
+  <article class="doc">
+    <header class="top">
+      <div class="top-brand">
+        <img src="${logoUrl}" alt="شعار الجمعية"/>
+        <div>
+          <h1>بطاقة بيانات مدرب / مدربة</h1>
+          <p>جمعية إرث وحضارة بالقريات — قسم الورش والتدريب</p>
+        </div>
+      </div>
+      <div style="text-align:left;font-size:12px;">
+        <div>الحالة: <strong>${esc(stLabel)}</strong></div>
+        <div dir="ltr" style="color:#E8D7BC;margin-top:4px;">${fmtTrainerDateTime(t.createdAt)}</div>
+      </div>
+    </header>
+    <div class="body">
+      <div class="sec-title">المعلومات الشخصية والتواصل</div>
+      <div class="grid">
+        <div class="item"><div class="lbl">الاسم الكامل</div><div class="val">${esc(t.fullName || '—')}</div></div>
+        <div class="item"><div class="lbl">رقم الجوال</div><div class="val" dir="ltr" style="text-align:right;">${esc(t.phone || '—')}</div></div>
+        <div class="item"><div class="lbl">تاريخ الميلاد (ميلادي)</div><div class="val" dir="ltr" style="text-align:right;">${esc(t.birthDate || '—')}</div></div>
+        <div class="item"><div class="lbl">البريد الإلكتروني</div><div class="val" dir="ltr" style="text-align:right;">${esc(t.email || '—')}</div></div>
+      </div>
+
+      <div class="sec-title">المعلومات المهنية والتدريبية</div>
+      <div class="grid">
+        <div class="item"><div class="lbl">المؤهل العلمي</div><div class="val">${esc(t.qualification || '—')}</div></div>
+        <div class="item"><div class="lbl">هل سبق له تقديم ورش تدريبية؟</div><div class="val">${t.hasTrainingExperience ? 'نعم' : 'لا'}</div></div>
+        <div class="item full"><div class="lbl">التخصصات المختارة</div><div class="val">${esc(formatTrainerSpecsText(t))}</div></div>
+        ${t.otherSpecialty ? `<div class="item"><div class="lbl">التخصص الآخر</div><div class="val">${esc(t.otherSpecialty)}</div></div>` : ''}
+        <div class="item"><div class="lbl">التخصص الدقيق</div><div class="val">${esc(t.specificSpecialty || '—')}</div></div>
+        <div class="item full"><div class="lbl">السيرة الذاتية والمرفقات</div><div class="val">${t.cvChunks > 0 ? esc(t.cvName || 'مرفق PDF') : 'لم يُرفق ملف'}</div></div>
+      </div>
+
+      <div class="sec-title">الملاحظات</div>
+      <div class="grid">
+        <div class="item full"><div class="lbl">ملاحظات المتقدم</div><div class="val" style="font-weight:500;">${t.notes ? esc(t.notes) : 'لا توجد ملاحظات.'}</div></div>
+        ${t.adminNotes ? `<div class="item full" style="background:#FFFDF8;border-color:#E2CFA8;"><div class="lbl">ملاحظات إدارية داخلية</div><div class="val" style="font-weight:500;">${esc(t.adminNotes)}</div></div>` : ''}
+      </div>
+    </div>
+    <footer class="foot">
+      <span>صادر عن لوحة إدارة جمعية إرث وحضارة بالقريات</span>
+      <span dir="ltr">${fmtTrainerDateTime(new Date())}</span>
+    </footer>
+  </article>
+  <script>
+    window.addEventListener('load', function(){ setTimeout(function(){ window.focus(); window.print(); }, 280); });
+  <\/script>
+</body>
+</html>`;
+
+  openArabicPrintPdf(html, `تم فتح بطاقة «${t.fullName || 'المدرب'}» للتصدير PDF`);
+}
+
+/* ════════════════════════════════
    WORKSHOPS MANAGEMENT (Master-Detail System)
 ════════════════════════════════ */
 let wQ = '', wStatusFilter = 'all';
@@ -3625,6 +4811,9 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   const fillRate = total > 0 ? Math.min(100, Math.round((regCount / total) * 100)) : 0;
   const isVis = w.isVisible !== false;
 
+  // Auto-detect local active tunnel if running
+  detectActiveTunnelUrl();
+
   // Survey data for this workshop
   const wsSurvey = allSurveys.find(s => s.workshopId === w.id);
   
@@ -3885,6 +5074,14 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
             <p style="font-size:12.5px;color:var(--ink-muted);margin:3px 0 0 0;">جدول كامل يحتوي على المتقدمين للورشة وإمكانية التعديل والتصدير.</p>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" id="btnAddWsRegistrant" style="gap:6px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+              <span>+ إضافة مسجل</span>
+            </button>
+            <button class="btn btn-sm btn-outline" id="btnWsWaTemplate" style="gap:6px;border-color:var(--line);color:var(--ink);background:var(--paper);">
+              <i class="fab fa-whatsapp" style="font-size:14px;color:var(--gold-deep);"></i>
+              <span>قالب رسائل واتساب</span>
+            </button>
             <button class="btn btn-sm btn-outline" id="btnPrintWsRegs" style="gap:6px;">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
               <span>تحميل المسجلين</span>
@@ -3915,6 +5112,7 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                     <th>الجنس</th>
                     <th style="text-align:center;">الحضور</th>
                     <th>حالة الاستبيان</th>
+                    <th style="text-align:center;">حالة الواتساب</th>
                     <th>الملاحظات</th>
                     <th>تاريخ التسجيل</th>
                     <th style="text-align:center;">الإجراءات</th>
@@ -3923,6 +5121,20 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                 <tbody>
                   ${filteredRegs.map((r, idx) => {
                     const hasAnswered = answeredRegistrationIds.has(r.id);
+                    const waSt = r.whatsappStatus || 'not_sent';
+                    let waBadge = '';
+                    if (waSt === 'sent') {
+                      const sentAtStr = r.whatsappSentAt ? fmtDateTime(toTs(r.whatsappSentAt)) : '';
+                      waBadge = `<span class="ws-wa-badge sent" title="تم الإرسال: ${sentAtStr}" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(46,96,34,.08);color:#2e6022;border:1px solid rgba(46,96,34,.22);white-space:nowrap;"><i class="fab fa-whatsapp"></i> أُرسلت</span>`;
+                    } else if (waSt === 'failed') {
+                      waBadge = `<span class="ws-wa-badge failed" title="${escA(r.whatsappError || 'فشل الإرسال')}" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(220,38,38,.08);color:#b91c1c;border:1px solid rgba(220,38,38,.22);white-space:nowrap;"><i class="fas fa-exclamation-circle"></i> فشل</span>`;
+                    } else {
+                      waBadge = `<span class="ws-wa-badge not-sent" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:600;background:var(--parchment-3);color:var(--ink-muted);border:1px solid var(--line-soft);white-space:nowrap;">لم تُرسل</span>`;
+                    }
+                    const waBtnTitle = waSt === 'sent'
+                      ? 'تم إرسال الرسالة بنجاح — انقر لإعادة الإرسال'
+                      : (waSt === 'failed' ? 'فشل الإرسال — انقر للمحاولة مجدداً' : 'إرسال رسالة واتساب');
+                    const waBtnClass = waSt === 'sent' ? 'is-sent' : (waSt === 'failed' ? 'is-failed' : '');
                     return `
                     <tr>
                       <td>${idx + 1}</td>
@@ -3938,13 +5150,14 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
                         </button>
                       </td>
                       <td>${hasAnswered ? '<span class="ws-status-badge open" style="font-size:11px;padding:2px 8px;">✓ أجاب</span>' : '<span class="chip-count" style="background:var(--parchment-3);color:var(--ink-muted);font-weight:600;font-size:11px;padding:2px 8px;border-radius:999px;">لم يجب</span>'}</td>
+                      <td style="text-align:center;" id="cellWaStatus_${r.id}">${waBadge}</td>
                       <td>${esc(r.notes || '—')}</td>
                       <td>${r.createdAt ? fmtEn(toTs(r.createdAt)) : '—'}</td>
                       <td style="text-align:center;">
                         <div style="display:inline-flex;gap:6px;align-items:center;justify-content:center;">
-                          <button class="btn btn-sm btn-outline" data-action-reg-wa="${esc(r.phone || r.mobile || '')}" style="padding:4px 10px;font-size:12px;gap:5px;color:#128C7E;border-color:#128C7E;">
-                            <svg viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.95 1.34-.52.04-.99.23-3.34-.7-2.82-1.11-4.6-3.99-4.74-4.17-.14-.18-1.14-1.51-1.14-2.89s.72-2.05.98-2.33c.26-.28.56-.35.75-.35.19 0 .37.01.53.01.17 0 .4-.06.62.48.24.57.81 1.97.88 2.11.07.14.12.3.02.48-.09.18-.14.29-.28.45-.14.16-.29.36-.42.48-.14.14-.28.29-.12.57.16.28.72 1.18 1.54 1.91 1.06.94 1.95 1.24 2.23 1.38.28.14.44.12.6-.07.16-.18.69-.8.87-1.08.18-.28.36-.23.6-.14.24.09 1.56.74 1.83.87.27.14.45.2.52.31.07.11.07.64-.17 1.32z"/></svg>
-                            <span>تواصل</span>
+                          <button class="btn btn-sm btn-outline" data-action-reg-edit="${r.id}" style="padding:4px 10px;font-size:12px;">تعديل</button>
+                          <button type="button" class="ws-btn-wa ${waBtnClass}" data-action-send-openwa="${r.id}" title="${waBtnTitle}">
+                            <i class="fab fa-whatsapp"></i>
                           </button>
                           <button class="btn btn-sm btn-danger" data-action-reg-del="${r.id}" style="padding:4px 10px;font-size:12px;">حذف</button>
                         </div>
@@ -4560,7 +5773,25 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
     });
   }
 
-  // Exports
+  // Exports & Add Registrant
+  el.querySelector('#btnAddWsRegistrant')?.addEventListener('click', () => {
+    openAddWorkshopRegistrantModal(w, async () => {
+      loaded.workshop_registrations = false;
+      loaded.workshops = false;
+      const [freshRegs, freshSurveys, freshResponses, freshWsList] = await Promise.all([
+        loadCol('workshop_registrations'),
+        loadCol('surveys'),
+        loadCol('survey_responses'),
+        loadCol('workshops')
+      ]);
+      const freshWs = freshWsList.find(item => item.id === w.id) || w;
+      vWorkshopDetail(el, freshWs, freshRegs, freshSurveys, freshResponses);
+    });
+  });
+
+  // زر إعداد وتعديل قالب رسائل الواتساب
+  el.querySelector('#btnWsWaTemplate')?.addEventListener('click', () => openWhatsAppTemplateModal(w));
+
   el.querySelector('#btnPrintWsRegs')?.addEventListener('click', () => openWorkshopRegistrantsPrint(w, wRegs));
   // قائمة خيارات تحميل التقرير (مع/بدون الاستبيان)
   const rptBtn = el.querySelector('#btnPrintWsReport');
@@ -4573,19 +5804,58 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
   el.querySelector('#btnReportWithSurvey')?.addEventListener('click', () => { if(rptMenu) rptMenu.style.display='none'; openWorkshopReportPrint(w, wRegs, wsSurvey, surveyResponses, true); });
   el.querySelector('#btnReportNoSurvey')?.addEventListener('click', () => { if(rptMenu) rptMenu.style.display='none'; openWorkshopReportPrint(w, wRegs, wsSurvey, surveyResponses, false); });
 
-  // WhatsApp contact button
-  el.querySelectorAll('[data-action-reg-wa]').forEach(btn => {
+  // تعديل مسجل
+  el.querySelectorAll('[data-action-reg-edit]').forEach(btn => {
     btn.addEventListener('click', () => {
-      let p = (btn.dataset.actionRegWa || '').toString()
-        .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
-        .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-        .replace(/\D/g, '');
-      // تحويل الرقم السعودي إلى الصيغة الدولية 9665XXXXXXXX لرابط واتساب
-      if (p.startsWith('00966')) p = p.substring(2);
-      else if (p.startsWith('0') && p.length === 10) p = '966' + p.substring(1);
-      else if (p.startsWith('5') && p.length === 9) p = '966' + p;
-      if (!p) { toast('لا يوجد رقم جوال لهذا المسجل', 'err'); return; }
-      window.open('https://wa.me/' + p, '_blank');
+      const regId = btn.dataset.actionRegEdit;
+      const regObj = (wRegs || []).find(r => r.id === regId);
+      if (!regObj) return;
+      openRegistrantEditModal(regObj, 'workshop_registrations', async () => {
+        loaded.workshop_registrations = false;
+        const fresh = await loadCol('workshop_registrations');
+        vWorkshopDetail(el, w, fresh, allSurveys, allResponses);
+      });
+    });
+  });
+
+  // أزرار إرسال واتساب آلي عبر OpenWA لكل مسجل (أيقونة فقط مع الحالات وتناسق الهوية)
+  el.querySelectorAll('[data-action-send-openwa]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const regId = btn.dataset.actionSendOpenwa;
+      const regObj = (wRegs || []).find(r => r.id === regId);
+      if (!regObj) return;
+
+      const origTitle = btn.getAttribute('title') || 'إرسال رسالة واتساب';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      btn.setAttribute('title', 'جارٍ إرسال رسالة الواتساب…');
+
+      await sendWorkshopRegistrantWhatsApp(regObj, w, (success, resData) => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fab fa-whatsapp"></i>';
+
+        const cell = el.querySelector(`#cellWaStatus_${regId}`);
+        if (success) {
+          btn.classList.add('is-sent');
+          btn.classList.remove('is-failed');
+          btn.setAttribute('title', 'تم إرسال الرسالة بنجاح — انقر لإعادة الإرسال');
+          if (cell) {
+            cell.innerHTML = `<span class="ws-wa-badge sent" title="تم الإرسال الآن" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(46,96,34,.08);color:#2e6022;border:1px solid rgba(46,96,34,.22);white-space:nowrap;"><i class="fab fa-whatsapp"></i> أُرسلت</span>`;
+          }
+        } else {
+          if (resData && resData.error === 'تم الإلغاء بواسطة المستخدم') {
+            btn.setAttribute('title', origTitle);
+            return;
+          }
+          btn.classList.add('is-failed');
+          btn.classList.remove('is-sent');
+          btn.setAttribute('title', 'فشل الإرسال — انقر للمحاولة مجدداً');
+          if (cell) {
+            const errTitle = escA((resData && resData.error) || 'فشل الإرسال');
+            cell.innerHTML = `<span class="ws-wa-badge failed" title="${errTitle}" style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;background:rgba(220,38,38,.08);color:#b91c1c;border:1px solid rgba(220,38,38,.22);white-space:nowrap;"><i class="fas fa-exclamation-circle"></i> فشل</span>`;
+          }
+        }
+      });
     });
   });
 
@@ -4595,10 +5865,18 @@ async function vWorkshopDetail(el, w, allRegistrants, allSurveys = [], allRespon
       if (!confirm('هل تريد حذف هذا المسجل؟')) return;
       try {
         await deleteDoc(doc(db, 'workshop_registrations', regId));
+        try {
+          await updateDoc(doc(db, 'workshops', w.id), { registeredCount: increment(-1) });
+        } catch (errCount) {}
         loaded.workshop_registrations = false;
+        loaded.workshops = false;
         toast('تم حذف المسجل بنجاح');
-        const fresh = await loadCol('workshop_registrations');
-        vWorkshopDetail(el, w, fresh, allSurveys, allResponses);
+        const [fresh, freshWsList] = await Promise.all([
+          loadCol('workshop_registrations'),
+          loadCol('workshops')
+        ]);
+        const freshWs = freshWsList.find(item => item.id === w.id) || w;
+        vWorkshopDetail(el, freshWs, fresh, allSurveys, allResponses);
       } catch (err) { console.error(err); toast('حدث خطأ أثناء الحذف', 'err'); }
     });
   });
@@ -6852,8 +8130,57 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
         </select>
       </div>
       <div class="field">
-        <label>رابط صورة الورشة (إن وجد)</label>
-        <input type="text" id="wsF_imageUrl" value="${isEdit ? escA(wsToEdit.imageUrl || '') : ''}" placeholder="https://example.com/image.jpg">
+        <label>صورة غلاف الورشة (تظهر في كرت الورشة وصفحتها)</label>
+        <div id="wsCoverUploader" style="margin-top:6px;">
+          <!-- Hidden input that holds the final imageUrl value for submission -->
+          <input type="hidden" id="wsF_imageUrl" value="${isEdit ? escA(wsToEdit.imageUrl || '') : ''}">
+
+          <!-- Preview box when an image is selected or already exists -->
+          <div id="wsCoverPreviewBox" style="${(isEdit && wsToEdit.imageUrl) ? 'display:block;' : 'display:none;'}border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--parchment-2);margin-bottom:10px;">
+            <div style="display:flex;gap:14px;align-items:center;">
+              <div style="width:110px;height:72px;border-radius:8px;overflow:hidden;background:#000;flex-shrink:0;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;">
+                <img id="wsCoverPreviewImg" src="${isEdit && wsToEdit.imageUrl ? escA(wsToEdit.imageUrl) : ''}" alt="معاينة الغلاف" style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px;" id="wsCoverStatus">تم تعيين صورة الغلاف</div>
+                <div style="font-size:11.5px;color:var(--ink-muted);line-height:1.4;" id="wsCoverMeta">${isEdit && wsToEdit.imageUrl ? (wsToEdit.imageUrl.startsWith('data:') ? 'صورة مرفوعة ومحفوظة مسبقاً' : 'رابط خارجي محفوظ مسبقاً') : 'يمكنك استبدال الصورة من جهازك أو إزالتها'}</div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                  <button type="button" class="btn btn-ghost" id="wsCoverChangeBtn" style="padding:4px 10px;font-size:12px;height:auto;border:1px solid var(--line);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;display:inline-block;vertical-align:middle;margin-left:4px;"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    تغيير الصورة
+                  </button>
+                  <button type="button" class="btn btn-ghost" id="wsCoverRemoveBtn" style="padding:4px 10px;font-size:12px;height:auto;color:var(--danger);border:1px solid rgba(220,53,69,0.25);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;display:inline-block;vertical-align:middle;margin-left:4px;"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    إزالة
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dropzone when no image is selected -->
+          <div id="wsCoverDropzoneWrap" style="${(!isEdit || !wsToEdit.imageUrl) ? 'display:block;' : 'display:none;'}">
+            <label class="dropzone" id="wsCoverDropzone" for="wsCoverFileInput" style="padding:18px 16px;cursor:pointer;">
+              <span class="dz-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <span class="dz-main">اسحب صورة الغلاف أو اضغط للاختيار من جهازك</span>
+              <span class="dz-sub">PNG, JPG, WEBP — تُعالج وتُضغط تلقائياً لسرعة التحميل</span>
+              <input type="file" id="wsCoverFileInput" accept="image/jpeg,image/png,image/webp">
+            </label>
+          </div>
+
+          <!-- Direct URL option -->
+          <div style="margin-top:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+              <span style="font-size:11.5px;color:var(--ink-muted);">أو إدخال رابط صورة خارجي مباشر (URL):</span>
+              <button type="button" id="wsCoverToggleUrl" style="background:none;border:none;font-size:11.5px;color:var(--gold-deep);cursor:pointer;padding:0;text-decoration:underline;">
+                ${isEdit && wsToEdit.imageUrl && !wsToEdit.imageUrl.startsWith('data:') ? 'إخفاء حقل الرابط' : 'إظهار حقل الرابط'}
+              </button>
+            </div>
+            <div id="wsCoverUrlWrap" style="${(isEdit && wsToEdit.imageUrl && !wsToEdit.imageUrl.startsWith('data:')) ? 'display:block;' : 'display:none;'}">
+              <input type="text" id="wsCoverUrlInput" value="${isEdit && wsToEdit.imageUrl && !wsToEdit.imageUrl.startsWith('data:') ? escA(wsToEdit.imageUrl) : ''}" placeholder="https://example.com/cover.jpg" style="font-size:12.5px;">
+            </div>
+          </div>
+        </div>
       </div>
       <div class="field">
         <label>صور الورشة للتقرير (تُرفع وتظهر في تقرير الورشة)</label>
@@ -6875,6 +8202,131 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
   `;
 
   showModal(html);
+
+  // إدارة ورفع صورة الغلاف
+  const coverFileInput = document.getElementById('wsCoverFileInput');
+  const coverPreviewBox = document.getElementById('wsCoverPreviewBox');
+  const coverPreviewImg = document.getElementById('wsCoverPreviewImg');
+  const coverDropzoneWrap = document.getElementById('wsCoverDropzoneWrap');
+  const coverDropzone = document.getElementById('wsCoverDropzone');
+  const coverStatus = document.getElementById('wsCoverStatus');
+  const coverMeta = document.getElementById('wsCoverMeta');
+  const coverHiddenInput = document.getElementById('wsF_imageUrl');
+  const coverUrlInput = document.getElementById('wsCoverUrlInput');
+  const coverUrlWrap = document.getElementById('wsCoverUrlWrap');
+  const coverToggleUrl = document.getElementById('wsCoverToggleUrl');
+  const coverChangeBtn = document.getElementById('wsCoverChangeBtn');
+  const coverRemoveBtn = document.getElementById('wsCoverRemoveBtn');
+
+  async function handleCoverFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      toast('يرجى اختيار ملف صورة صالح (PNG, JPG, WEBP)', 'err');
+      return;
+    }
+    const tempUrl = URL.createObjectURL(file);
+    coverPreviewImg.src = tempUrl;
+    coverPreviewBox.style.display = 'block';
+    coverDropzoneWrap.style.display = 'none';
+    coverStatus.textContent = 'جارٍ ضغط وتحسين الصورة…';
+    coverMeta.textContent = 'يتم تقليل الحجم تلقائياً بجودة ممتازة للعرض السريع…';
+
+    try {
+      const b64 = await smartImageToBase64(file);
+      coverHiddenInput.value = b64;
+      coverPreviewImg.src = b64;
+      URL.revokeObjectURL(tempUrl);
+      const kb = Math.round((b64.length * 0.75) / 1024);
+      coverStatus.textContent = 'صورة الغلاف جاهزة للحفظ';
+      coverMeta.textContent = `${file.name} · الحجم بعد الضغط: ${kb} KB`;
+      if (coverUrlInput) coverUrlInput.value = '';
+    } catch (err) {
+      console.error('Workshop cover compress error:', err);
+      toast('تعذر معالجة الصورة، يرجى تجربة صورة أخرى', 'err');
+      URL.revokeObjectURL(tempUrl);
+      if (!coverHiddenInput.value) {
+        coverPreviewBox.style.display = 'none';
+        coverDropzoneWrap.style.display = 'block';
+      }
+    }
+  }
+
+  if (coverFileInput) {
+    coverFileInput.addEventListener('change', e => {
+      const file = (e.target.files || [])[0];
+      if (file) handleCoverFile(file);
+    });
+  }
+
+  if (coverChangeBtn) {
+    coverChangeBtn.addEventListener('click', () => {
+      if (coverFileInput) coverFileInput.click();
+    });
+  }
+
+  if (coverRemoveBtn) {
+    coverRemoveBtn.addEventListener('click', () => {
+      coverHiddenInput.value = '';
+      if (coverUrlInput) coverUrlInput.value = '';
+      if (coverFileInput) coverFileInput.value = '';
+      coverPreviewImg.src = '';
+      coverPreviewBox.style.display = 'none';
+      coverDropzoneWrap.style.display = 'block';
+    });
+  }
+
+  if (coverToggleUrl && coverUrlWrap) {
+    coverToggleUrl.addEventListener('click', () => {
+      const isHidden = coverUrlWrap.style.display === 'none';
+      coverUrlWrap.style.display = isHidden ? 'block' : 'none';
+      coverToggleUrl.textContent = isHidden ? 'إخفاء حقل الرابط' : 'إظهار حقل الرابط';
+      if (isHidden && coverUrlInput) coverUrlInput.focus();
+    });
+  }
+
+  if (coverUrlInput) {
+    coverUrlInput.addEventListener('input', () => {
+      const val = coverUrlInput.value.trim();
+      if (val) {
+        coverHiddenInput.value = val;
+        coverPreviewImg.src = val;
+        coverPreviewBox.style.display = 'block';
+        coverDropzoneWrap.style.display = 'none';
+        coverStatus.textContent = 'رابط صورة خارجي';
+        coverMeta.textContent = val.length > 40 ? val.slice(0, 40) + '…' : val;
+      } else {
+        if (!coverFileInput || !coverFileInput.files || !coverFileInput.files.length) {
+          coverHiddenInput.value = '';
+          coverPreviewBox.style.display = 'none';
+          coverDropzoneWrap.style.display = 'block';
+        }
+      }
+    });
+  }
+
+  if (coverDropzone) {
+    ['dragenter', 'dragover'].forEach(ev => {
+      coverDropzone.addEventListener(ev, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        coverDropzone.style.borderColor = 'var(--gold)';
+        coverDropzone.style.background = 'var(--parchment-2)';
+      });
+    });
+    ['dragleave', 'drop'].forEach(ev => {
+      coverDropzone.addEventListener(ev, e => {
+        e.preventDefault();
+        e.stopPropagation();
+        coverDropzone.style.borderColor = '';
+        coverDropzone.style.background = '';
+      });
+    });
+    coverDropzone.addEventListener('drop', e => {
+      const files = e.dataTransfer && e.dataTransfer.files;
+      if (files && files.length > 0) {
+        handleCoverFile(files[0]);
+      }
+    });
+  }
 
   // معاينة الصور المختارة
   const imgInput = document.getElementById('wsF_images');
@@ -6961,12 +8413,13 @@ function openWorkshopFormModal(wsToEdit, mainEl) {
 let notifFilter = 'all';
 
 async function vNotifications(el) {
-  const [notifs, wRegs, vRegs, cRegs, vApps] = await Promise.all([
+  const [notifs, wRegs, vRegs, cRegs, vApps, tRegs] = await Promise.all([
     loadCol('admin_notifications'),
     loadCol('workshop_registrations'),
     loadCol('volunteers'),
     loadCol('crafts'),
-    loadCol('volunteer_applications')
+    loadCol('volunteer_applications'),
+    loadCol('trainers')
   ]);
 
   await renderNav();
@@ -6974,6 +8427,7 @@ async function vNotifications(el) {
   // Aggregate explicit notifications + unreviewed registrations
   const aggregatedNotifs = [...notifs];
   const seenIds = new Set(notifs.map(n => n.id));
+  const seenTrainerIds = new Set(notifs.map(n => n.trainerId).filter(Boolean));
 
   wRegs.forEach(r => {
     if (!seenIds.has('ws_' + r.id)) {
@@ -7045,6 +8499,26 @@ async function vNotifications(el) {
     }
   });
 
+  (tRegs || []).forEach(r => {
+    if (!seenIds.has('trn_' + r.id) && !seenTrainerIds.has(r.id)) {
+      const specs = Array.isArray(r.specialties) ? r.specialties.join('، ') : '';
+      const isReviewed = !!r.reviewed || (r.status && r.status !== 'new');
+      aggregatedNotifs.push({
+        id: 'trn_' + r.id,
+        rawId: r.id,
+        col: 'trainers',
+        trainerId: r.id,
+        name: r.fullName || 'مدرب جديد',
+        label: 'المدربون والمدربات',
+        formType: 'المدربون والمدربات',
+        activityTitle: specs || r.specificSpecialty || 'تسجيل مدرب',
+        read: isReviewed,
+        status: isReviewed ? 'read' : 'unread',
+        createdAt: r.createdAt
+      });
+    }
+  });
+
   let rows = [...aggregatedNotifs];
   if (notifFilter === 'unread') rows = rows.filter(n => !n.read && n.status !== 'read');
   else if (notifFilter === 'read') rows = rows.filter(n => n.read || n.status === 'read');
@@ -7089,9 +8563,10 @@ async function vNotifications(el) {
               </div>
             </div>
 
-            <div style="display:flex;gap:8px;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${(n.col === 'trainers' || n.trainerId || n.type === 'trainer_registration') ? `<button class="btn btn-sm btn-gold" data-notif-goto="trainers">عرض القسم</button>` : ''}
               ${!isRead ? `<button class="btn btn-sm btn-outline" data-notif-read="${n.id}" data-notif-col="${n.col || 'admin_notifications'}" data-notif-rawid="${n.rawId || n.id}">تحديد كمقروء</button>` : ''}
-              <button class="btn btn-sm btn-ghost del" data-notif-del="${n.id}" data-notif-col="${n.col || 'admin_notifications'}" data-notif-rawid="${n.rawId || n.id}">حذف الإشعار</button>
+              ${n.col !== 'trainers' ? `<button class="btn btn-sm btn-ghost del" data-notif-del="${n.id}" data-notif-col="${n.col || 'admin_notifications'}" data-notif-rawid="${n.rawId || n.id}">حذف الإشعار</button>` : ''}
             </div>
           </div>
           `;
@@ -7103,6 +8578,11 @@ async function vNotifications(el) {
   // Filters
   el.querySelectorAll('[data-nf]').forEach(b => b.addEventListener('click', () => { notifFilter = b.dataset.nf; vNotifications(el); }));
 
+  // Navigate to section
+  el.querySelectorAll('[data-notif-goto]').forEach(b => {
+    b.addEventListener('click', () => goTo(b.dataset.notifGoto));
+  });
+
   // Mark as Read Action
   el.querySelectorAll('[data-notif-read]').forEach(b => {
     b.addEventListener('click', async () => {
@@ -7110,7 +8590,12 @@ async function vNotifications(el) {
       const colName = b.dataset.notifCol;
       const rawId = b.dataset.notifRawid;
       try {
-        if (colName && colName !== 'admin_notifications') {
+        if (colName === 'trainers') {
+          const cur = (C.trainers || []).find(t => t.id === rawId);
+          const nextStatus = (!cur || !cur.status || cur.status === 'new') ? 'reviewed' : cur.status;
+          await updateDoc(doc(db, 'trainers', rawId), { reviewed: true, status: nextStatus, updatedAt: serverTimestamp() });
+          loaded.trainers = false;
+        } else if (colName && colName !== 'admin_notifications') {
           await updateDoc(doc(db, colName, rawId), { reviewed: true, status: 'معتمد' });
           loaded[colName] = false;
         } else {
@@ -7131,7 +8616,12 @@ async function vNotifications(el) {
       const rawId = b.dataset.notifRawid;
       if (!confirm('هل أنت تأكد من حذف الإشعار؟')) return;
       try {
-        if (colName && colName !== 'admin_notifications') {
+        if (colName === 'trainers') {
+          const cur = (C.trainers || []).find(t => t.id === rawId);
+          const nextStatus = (!cur || !cur.status || cur.status === 'new') ? 'reviewed' : cur.status;
+          await updateDoc(doc(db, 'trainers', rawId), { reviewed: true, status: nextStatus, updatedAt: serverTimestamp() });
+          loaded.trainers = false;
+        } else if (colName && colName !== 'admin_notifications') {
           await deleteDoc(doc(db, colName, rawId));
           loaded[colName] = false;
         } else {
@@ -7561,6 +9051,483 @@ function openRegistrantEditModal(regObj, colName, callback) {
   });
 }
 
+/* ── Modal: Add Registrant to Workshop (Admin) ── */
+function openAddWorkshopRegistrantModal(workshop, callback) {
+  const html = `
+    <div class="modal-head">
+      <div>
+        <div class="la">REGISTRANT · ADD NEW</div>
+        <h2>إضافة مسجل جديد للورشة</h2>
+        <div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">الورشة: <strong>${esc(workshop.title || '')}</strong></div>
+      </div>
+      <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+    </div>
+    <form id="regAddForm" class="form-grid" style="gap:14px;">
+      <div class="field">
+        <label>الاسم الكامل للمشارك <span style="color:var(--danger)">*</span></label>
+        <input type="text" id="regA_name" placeholder="مثال: محمد عبدالله الشمري" required>
+      </div>
+      <div class="form-grid two">
+        <div class="field">
+          <label>رقم الجوال <span style="color:var(--danger)">*</span></label>
+          <input type="tel" id="regA_phone" placeholder="05xxxxxxxx" dir="ltr" required>
+        </div>
+        <div class="field">
+          <label>رقم الهوية الوطنية / الإقامة</label>
+          <input type="text" id="regA_nationalId" placeholder="10xxxxxxxx" dir="ltr">
+        </div>
+      </div>
+      <div class="form-grid three">
+        <div class="field">
+          <label>الجنس</label>
+          <select id="regA_gender">
+            <option value="ذكر">ذكر</option>
+            <option value="أنثى">أنثى</option>
+            <option value="غير محدد">غير محدد</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>العمر</label>
+          <input type="number" id="regA_age" min="5" max="100" placeholder="مثال: 25">
+        </div>
+        <div class="field">
+          <label>حالة الاعتماد</label>
+          <select id="regA_status">
+            <option value="معتمد" selected>معتمد</option>
+            <option value="جديد">جديد / قيد الانتظار</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid two">
+        <div class="field">
+          <label>البريد الإلكتروني (اختياري)</label>
+          <input type="email" id="regA_email" placeholder="user@example.com" dir="ltr">
+        </div>
+        <div class="field">
+          <label>حالة الحضور</label>
+          <select id="regA_attended">
+            <option value="false" selected>لم يحضر بعد</option>
+            <option value="true">حاضر (تأكيد الحضور)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>ملاحظات إدارية (اختياري)</label>
+        <textarea id="regA_notes" rows="2" placeholder="أي ملاحظات خاصة بالتسجيل أو الإدارة…"></textarea>
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:flex-end;gap:10px;">
+        <button type="button" class="btn btn-ghost" data-close>إلغاء</button>
+        <button type="submit" class="btn btn-primary" id="btnSaveNewReg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+          <span>إضافة المسجل</span>
+        </button>
+      </div>
+    </form>
+  `;
+
+  showModal(html);
+
+  document.getElementById('regAddForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('btnSaveNewReg');
+    btn.disabled = true;
+    btn.innerHTML = '<span>جارٍ الإضافة…</span>';
+
+    const nameVal = document.getElementById('regA_name').value.trim();
+    const phoneVal = document.getElementById('regA_phone').value.trim();
+    const nationalIdVal = document.getElementById('regA_nationalId').value.trim();
+    const genderVal = document.getElementById('regA_gender').value;
+    const ageVal = document.getElementById('regA_age').value.trim();
+    const emailVal = document.getElementById('regA_email').value.trim();
+    const statusVal = document.getElementById('regA_status').value;
+    const attendedVal = document.getElementById('regA_attended').value === 'true';
+    const notesVal = document.getElementById('regA_notes').value.trim();
+
+    if (!nameVal) {
+      toast('يرجى إدخال اسم المسجل', 'err');
+      btn.disabled = false;
+      btn.innerHTML = '<span>إضافة المسجل</span>';
+      return;
+    }
+
+    const payload = {
+      workshopId: workshop.id,
+      workshopTitle: workshop.title || '',
+      name: nameVal,
+      fullName: nameVal,
+      phone: phoneVal,
+      mobile: phoneVal,
+      nationalId: nationalIdVal,
+      idNumber: nationalIdVal,
+      gender: genderVal,
+      age: ageVal,
+      email: emailVal,
+      status: statusVal,
+      reviewed: true,
+      attended: attendedVal,
+      attendedAt: attendedVal ? serverTimestamp() : null,
+      notes: notesVal,
+      source: 'admin_manual',
+      addedByAdmin: true,
+      createdAt: serverTimestamp()
+    };
+
+    try {
+      await addDoc(collection(db, 'workshop_registrations'), payload);
+      try {
+        await updateDoc(doc(db, 'workshops', workshop.id), { registeredCount: increment(1) });
+      } catch (errCount) {
+        console.warn('Could not increment seat count:', errCount);
+      }
+
+      loaded.workshop_registrations = false;
+      loaded.workshops = false;
+      toast('تمت إضافة المسجل بنجاح');
+      closeModal();
+      if (typeof callback === 'function') {
+        await callback();
+      }
+    } catch (err) {
+      console.error('Error adding workshop registrant:', err);
+      toast('حدث خطأ أثناء إضافة المسجل', 'err');
+      btn.disabled = false;
+      btn.innerHTML = '<span>إضافة المسجل</span>';
+    }
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   نظام قوالب وإرسال رسائل WhatsApp عبر OpenWA
+══════════════════════════════════════════════════════════════ */
+const DEFAULT_WA_TEMPLATE = `مرحبًا {name}،
+
+يسر جمعية إرث وحضارة تأكيد تسجيلك في ورشة "{workshop}".
+
+📅 موعد الورشة: {date}
+⏰ الوقت: {time}
+📍 الموقع: {location}
+
+نسعد بحضورك ومشاركتك معنا.
+جمعية إرث وحضارة بالقريات`;
+
+const fmtDateTime = d => {
+  if (!d) return '—';
+  try {
+    const t = d instanceof Date ? d : (d.toDate ? d.toDate() : (d.seconds ? new Date(d.seconds * 1000) : new Date(d)));
+    const datePart = `${String(t.getDate()).padStart(2, '0')}/${String(t.getMonth() + 1).padStart(2, '0')}/${t.getFullYear()}`;
+    let hours = t.getHours();
+    const minutes = String(t.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'م' : 'ص';
+    hours = hours % 12 || 12;
+    return `${datePart} (${hours}:${minutes} ${ampm})`;
+  } catch { return '—'; }
+};
+
+function getWhatsAppTemplate(workshopId) {
+  if (workshopId) {
+    const wsTpl = localStorage.getItem('erth_wa_tpl_' + workshopId);
+    if (wsTpl && wsTpl.trim()) return wsTpl;
+  }
+  const globalTpl = localStorage.getItem('erth_wa_tpl_global');
+  if (globalTpl && globalTpl.trim()) return globalTpl;
+  return DEFAULT_WA_TEMPLATE;
+}
+
+function saveWhatsAppTemplate(workshopId, template, isGlobal = false) {
+  if (isGlobal || !workshopId) {
+    localStorage.setItem('erth_wa_tpl_global', template);
+  } else {
+    localStorage.setItem('erth_wa_tpl_' + workshopId, template);
+  }
+}
+
+function renderWhatsAppMessage(template, reg, workshop) {
+  let text = template || DEFAULT_WA_TEMPLATE;
+  const nameVal = ((reg && (reg.name || reg.fullName)) || 'المشارك الكريم').trim();
+  const wsTitle = ((workshop && workshop.title) || 'ورشة العمل').trim();
+  const dateVal = ((workshop && workshop.date) || 'سيحدد لاحقاً').trim();
+  const timeVal = ((workshop && workshop.time) || 'سيحدد لاحقاً').trim();
+  const locVal = ((workshop && workshop.location) || 'مقر الجمعية').trim();
+
+  text = text
+    .replace(/{name}|{الاسم}/gi, nameVal)
+    .replace(/{workshop}|{الورشة}/gi, wsTitle)
+    .replace(/{date}|{التاريخ}/gi, dateVal)
+    .replace(/{time}|{الوقت}/gi, timeVal)
+    .replace(/{location}|{الموقع}/gi, locVal);
+
+  return text;
+}
+
+function getWhatsAppWorkerUrl() {
+  const custom = localStorage.getItem('erth_wa_worker_url');
+  if (custom && custom.trim()) return custom.trim().replace(/\/+$/, '');
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://127.0.0.1:8787';
+  }
+  return 'https://whatsapp-api.arthwhdarh.com';
+}
+
+async function detectActiveTunnelUrl() {
+  try {
+    const res = await fetch('/tools/tunnel-url.txt?t=' + Date.now());
+    if (res.ok) {
+      const txt = (await res.text()).trim();
+      if (txt.startsWith('https://')) {
+        localStorage.setItem('erth_wa_worker_url', txt);
+        return txt;
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+function openWhatsAppTemplateModal(workshop, onSaved) {
+  const currentTpl = getWhatsAppTemplate(workshop ? workshop.id : null);
+  const workerUrl = getWhatsAppWorkerUrl();
+
+  const sampleReg = {
+    name: 'محمد عبدالله الشمري',
+    phone: '0501234567'
+  };
+
+  const previewText = renderWhatsAppMessage(currentTpl, sampleReg, workshop || {});
+
+  const html = `
+    <div class="modal-head">
+      <div>
+        <div class="la" style="color:var(--gold-deep);font-weight:700;">WHATSAPP · TEMPLATE BUILDER</div>
+        <h2>إعداد ومعاينة قالب رسائل واتساب</h2>
+        <div style="font-size:12.5px;color:var(--ink-muted);margin-top:2px;">الورشة: <strong>${esc((workshop && workshop.title) || 'جميع الورش')}</strong></div>
+      </div>
+      <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <!-- Variable Insert Pills -->
+      <div>
+        <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">انقر لإدراج المتغيرات التلقائية في موضع المؤشر:</label>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button type="button" class="btn btn-sm btn-ghost" data-insert-var="{name}" style="padding:4px 10px;font-size:12px;border-radius:6px;background:var(--parchment-2);border:1px solid var(--line);color:var(--ink);">+ {name} اسم المسجل</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-insert-var="{workshop}" style="padding:4px 10px;font-size:12px;border-radius:6px;background:var(--parchment-2);border:1px solid var(--line);color:var(--ink);">+ {workshop} اسم الورشة</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-insert-var="{date}" style="padding:4px 10px;font-size:12px;border-radius:6px;background:var(--parchment-2);border:1px solid var(--line);color:var(--ink);">+ {date} تاريخ الورشة</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-insert-var="{time}" style="padding:4px 10px;font-size:12px;border-radius:6px;background:var(--parchment-2);border:1px solid var(--line);color:var(--ink);">+ {time} وقت الورشة</button>
+          <button type="button" class="btn btn-sm btn-ghost" data-insert-var="{location}" style="padding:4px 10px;font-size:12px;border-radius:6px;background:var(--parchment-2);border:1px solid var(--line);color:var(--ink);">+ {location} موقع الورشة</button>
+        </div>
+      </div>
+
+      <!-- Editor & Live Preview Grid -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:16px;">
+        <!-- Editor -->
+        <div>
+          <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">نص قالب الرسالة:</label>
+          <textarea id="waModalTplInput" rows="10" style="width:100%;padding:12px;border-radius:8px;border:1px solid var(--line);font-family:inherit;font-size:13.5px;line-height:1.7;resize:vertical;">${esc(currentTpl)}</textarea>
+        </div>
+
+        <!-- Live Preview -->
+        <div>
+          <label style="font-size:12.5px;font-weight:700;color:var(--ink);display:block;margin-bottom:6px;">معاينة فورية كما تظهر للمستلم على WhatsApp:</label>
+          <div style="background:#fbf9f5;border-radius:10px;padding:14px;min-height:220px;border:1px solid var(--line);position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
+            <div style="background:#ffffff;border-radius:8px 8px 0 8px;padding:12px 14px;box-shadow:0 1px 3px rgba(28,26,23,.06);border:1px solid rgba(28,26,23,.06);max-width:94%;font-size:13.5px;line-height:1.7;color:#1c1a17;white-space:pre-wrap;margin-right:auto;" id="waModalLivePreview">${esc(previewText)}</div>
+            <span style="font-size:10px;color:rgba(0,0,0,.45);margin-top:4px;margin-right:auto;text-align:left;">الآن ✓✓</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Advanced Service Config Toggle -->
+      <details style="background:var(--parchment-2);border:1px solid var(--line-soft);border-radius:8px;padding:10px 14px;font-size:13px;">
+        <summary style="cursor:pointer;font-weight:700;color:var(--ink-mid);">إعدادات متقدمة: رابط خدمة الواتساب (Worker Endpoint)</summary>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;">
+          <label style="font-size:12px;color:var(--ink-muted);">عنوان رابط الـ Worker أو نفق الاختبار السحابي (اتركه فارغاً للاعتماد التلقائي):</label>
+          <input type="text" id="waWorkerUrlSetting" value="${escA(workerUrl)}" placeholder="https://whatsapp-api.arthwhdarh.com أو http://127.0.0.1:8787" dir="ltr" style="padding:8px 12px;border:1px solid var(--line);border-radius:6px;font-family:monospace;font-size:13px;">
+        </div>
+      </details>
+
+      <!-- Checkbox to apply globally -->
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--ink-mid);">
+        <input type="checkbox" id="waApplyGlobalCheckbox" style="cursor:pointer;">
+        <span>اعتماد هذا القالب كقالب عام افتراضي لجميع ورش العمل الحالية والمستقبلية أيضاً</span>
+      </label>
+
+      <!-- Actions -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;border-top:1px solid var(--line-soft);padding-top:14px;flex-wrap:wrap;gap:10px;">
+        <button type="button" class="btn btn-ghost" id="btnResetWaDefaultTpl" style="font-size:12.5px;color:var(--danger);gap:5px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:13px;height:13px;"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>استعادة القالب الافتراضي</span>
+        </button>
+        <div style="display:flex;gap:10px;">
+          <button type="button" class="btn btn-ghost" data-close>إلغاء</button>
+          <button type="button" class="btn btn-primary" id="btnSaveWaTplModal" style="background:#2b1e16;border-color:#2b1e16;color:#ffffff;gap:7px;box-shadow:0 2px 6px rgba(43,30,22,.15);">
+            <i class="fab fa-whatsapp" style="color:var(--gold-soft);"></i>
+            <span>حفظ القالب</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  showModal(html);
+
+  const tplInput = document.getElementById('waModalTplInput');
+  const previewEl = document.getElementById('waModalLivePreview');
+
+  const updatePreview = () => {
+    if (!tplInput || !previewEl) return;
+    const rendered = renderWhatsAppMessage(tplInput.value, sampleReg, workshop || {});
+    previewEl.textContent = rendered;
+  };
+
+  tplInput?.addEventListener('input', updatePreview);
+
+  // Insert variable helper buttons
+  document.querySelectorAll('[data-insert-var]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = btn.dataset.insertVar;
+      if (!tplInput) return;
+      const start = tplInput.selectionStart || tplInput.value.length;
+      const end = tplInput.selectionEnd || tplInput.value.length;
+      const cur = tplInput.value;
+      tplInput.value = cur.substring(0, start) + v + cur.substring(end);
+      tplInput.selectionStart = tplInput.selectionEnd = start + v.length;
+      tplInput.focus();
+      updatePreview();
+    });
+  });
+
+  // Reset to default
+  document.getElementById('btnResetWaDefaultTpl')?.addEventListener('click', () => {
+    if (confirm('هل تريد استعادة نص القالب الافتراضي المعتمد للجمعية؟')) {
+      if (tplInput) {
+        tplInput.value = DEFAULT_WA_TEMPLATE;
+        updatePreview();
+      }
+    }
+  });
+
+  // Save
+  document.getElementById('btnSaveWaTplModal')?.addEventListener('click', () => {
+    const val = (tplInput ? tplInput.value : '').trim();
+    if (!val) {
+      toast('لا يمكن حفظ قالب فارغ', 'err');
+      return;
+    }
+    const isGlobal = document.getElementById('waApplyGlobalCheckbox')?.checked || false;
+    saveWhatsAppTemplate(workshop ? workshop.id : null, val, isGlobal);
+
+    // Save custom worker url if changed
+    const workerUrlVal = (document.getElementById('waWorkerUrlSetting')?.value || '').trim();
+    if (workerUrlVal) {
+      localStorage.setItem('erth_wa_worker_url', workerUrlVal);
+    } else {
+      localStorage.removeItem('erth_wa_worker_url');
+    }
+
+    toast('تم حفظ قالب رسائل واتساب بنجاح');
+    closeModal();
+    if (typeof onSaved === 'function') onSaved();
+  });
+}
+
+async function sendWorkshopRegistrantWhatsApp(reg, workshop, callback) {
+  const rawPhone = reg.phone || reg.mobile || '';
+  if (!rawPhone || !rawPhone.trim()) {
+    toast('المسجل لا يملك رقم جوال صالح للإرسال', 'err');
+    if (typeof callback === 'function') callback(false, { error: 'رقم الجوال فارغ' });
+    return;
+  }
+
+  // التحقق من الإرسال المسبق (منع التكرار)
+  if (reg.whatsappStatus === 'sent') {
+    const sentTime = reg.whatsappSentAt ? fmtDateTime(toTs(reg.whatsappSentAt)) : 'وقت سابق';
+    const confirmRes = confirm(
+      `تم إرسال رسالة واتساب لهذا المشارك مسبقاً في (${sentTime}).\n\nهل أنت متأكد من رغبتك في إعادة إرسال الرسالة إليه مرة أخرى؟`
+    );
+    if (!confirmRes) {
+      if (typeof callback === 'function') callback(false, { error: 'تم الإلغاء بواسطة المستخدم' });
+      return;
+    }
+  }
+
+  const tpl = getWhatsAppTemplate(workshop ? workshop.id : null);
+  const messageText = renderWhatsAppMessage(tpl, reg, workshop || {});
+
+  let idToken = '';
+  try {
+    if (auth && auth.currentUser) {
+      idToken = await auth.currentUser.getIdToken();
+    }
+  } catch (tErr) {
+    console.warn('Could not get idToken:', tErr);
+  }
+
+  const workerUrl = getWhatsAppWorkerUrl();
+  toast('جارٍ إرسال رسالة الواتساب عبر OpenWA…');
+
+  try {
+    const resp = await fetch(`${workerUrl}/send-text`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
+      },
+      body: JSON.stringify({
+        registrationId: reg.id,
+        workshopId: workshop ? workshop.id : '',
+        workshopTitle: (workshop && workshop.title) || '',
+        name: reg.name || reg.fullName || '',
+        phone: rawPhone,
+        text: messageText
+      })
+    });
+
+    const resData = await resp.json().catch(() => ({}));
+
+    if (resp.ok && resData.success) {
+      const updatePayload = {
+        whatsappStatus: 'sent',
+        whatsappSentAt: serverTimestamp(),
+        whatsappMessageId: resData.messageId || '',
+        whatsappSentBy: (currentUser && currentUser.email) || 'admin',
+        whatsappError: null
+      };
+
+      try {
+        await updateDoc(doc(db, 'workshop_registrations', reg.id), updatePayload);
+      } catch (fErr) {
+        console.warn('Could not update firestore whatsapp status:', fErr);
+      }
+
+      reg.whatsappStatus = 'sent';
+      reg.whatsappSentAt = new Date();
+      reg.whatsappMessageId = resData.messageId;
+      reg.whatsappError = null;
+
+      toast(`✓ تم إرسال رسالة الواتساب بنجاح إلى ${reg.name || 'المشارك'}`);
+      if (typeof callback === 'function') callback(true, resData);
+    } else {
+      const errMsg = resData.error || `فشل الإرسال (رمز الاستجابة: ${resp.status})`;
+      try {
+        await updateDoc(doc(db, 'workshop_registrations', reg.id), {
+          whatsappStatus: 'failed',
+          whatsappError: errMsg,
+          whatsappFailedAt: serverTimestamp()
+        });
+      } catch (fErr) {}
+
+      reg.whatsappStatus = 'failed';
+      reg.whatsappError = errMsg;
+
+      toast(`✕ ${errMsg}`, 'err');
+      if (typeof callback === 'function') callback(false, resData);
+    }
+  } catch (networkErr) {
+    console.error('WhatsApp send network error:', networkErr);
+    const errText = 'تعذر الاتصال بخدمة الواتساب: ' + (networkErr.message || String(networkErr));
+    toast(`✕ ${errText}`, 'err');
+    if (typeof callback === 'function') callback(false, { error: errText });
+  }
+}
+
 /* ── Modal: View Registrants for a Workshop ── */
 async function openRegistrantsModal(workshop, mainEl) {
   const allRegistrants = await loadCol('workshop_registrations');
@@ -7603,6 +9570,14 @@ async function openRegistrantsModal(workshop, mainEl) {
           <button class="chip chip-approved ${statusFilter === 'approved' ? 'active' : ''}" data-rf="approved">معتمد</button>
         </div>
         <div class="spacer"></div>
+        <button class="btn btn-primary" id="modalAddWsRegBtn" style="gap:6px;font-weight:700;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
+          <span>+ إضافة مسجل</span>
+        </button>
+        <button class="btn btn-ghost" id="modalWaTemplateBtn" style="gap:6px;font-weight:700;color:var(--ink);">
+          <i class="fab fa-whatsapp" style="color:var(--gold-deep);"></i>
+          <span>قالب واتساب</span>
+        </button>
         <button class="btn btn-ghost" id="exportDocxBtn" style="gap:6px;font-weight:700;color:var(--gold-deep);">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <span>تصدير إلى Word (.docx)</span>
@@ -7626,12 +9601,27 @@ async function openRegistrantsModal(workshop, mainEl) {
                 <th>الهوية / الإقامة</th>
                 <th>الجنس</th>
                 <th>تاريخ التسجيل</th>
+                <th>حالة الواتساب</th>
                 <th>الحالة</th>
                 <th>الإجراءات</th>
               </tr>
             </thead>
             <tbody>
-              ${rows.map(r => `
+              ${rows.map(r => {
+                const waSt = r.whatsappStatus || 'not_sent';
+                let waBadge = '';
+                if (waSt === 'sent') {
+                  waBadge = `<span class="ws-wa-badge sent" style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:10.5px;font-weight:700;background:rgba(46,96,34,.08);color:#2e6022;border:1px solid rgba(46,96,34,.22);"><i class="fab fa-whatsapp"></i> أُرسلت</span>`;
+                } else if (waSt === 'failed') {
+                  waBadge = `<span class="ws-wa-badge failed" style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:10.5px;font-weight:700;background:rgba(220,38,38,.08);color:#b91c1c;border:1px solid rgba(220,38,38,.22);"><i class="fas fa-exclamation-circle"></i> فشل</span>`;
+                } else {
+                  waBadge = `<span class="ws-wa-badge not-sent" style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:999px;font-size:10.5px;font-weight:600;background:var(--parchment-3);color:var(--ink-muted);">لم تُرسل</span>`;
+                }
+                const waBtnTitle = waSt === 'sent'
+                  ? 'تم إرسال الرسالة بنجاح — انقر لإعادة الإرسال'
+                  : (waSt === 'failed' ? 'فشل الإرسال — انقر للمحاولة مجدداً' : 'إرسال رسالة واتساب');
+                const waBtnClass = waSt === 'sent' ? 'is-sent' : (waSt === 'failed' ? 'is-failed' : '');
+                return `
                 <tr>
                   <td class="name-cell">${esc(r.name || '—')}</td>
                   <td dir="ltr" style="text-align:right;">${esc(r.phone || '—')}</td>
@@ -7639,13 +9629,16 @@ async function openRegistrantsModal(workshop, mainEl) {
                   <td dir="ltr" style="text-align:right;">${esc(r.nationalId || '—')}</td>
                   <td>${esc(r.gender || '—')}</td>
                   <td>${r.createdAt ? fmtEn(toTs(r.createdAt)) : '—'}</td>
+                  <td>${waBadge}</td>
                   <td>
                     ${r.status === 'معتمد'
                       ? '<span class="row-status reviewed">معتمد</span>'
                       : '<span class="row-status new">جديد</span>'}
                   </td>
                   <td>
-                    <div class="row-actions">
+                    <div class="row-actions" style="align-items:center;">
+                      <button class="ok" data-reg-edit="${r.id}" style="background:var(--parchment-2);color:var(--ink-mid);border:1px solid var(--line);">تعديل</button>
+                      <button type="button" class="ws-btn-wa ${waBtnClass}" data-reg-wa-send="${r.id}" title="${waBtnTitle}"><i class="fab fa-whatsapp"></i></button>
                       ${r.status !== 'معتمد'
                         ? `<button class="ok" data-reg-approve="${r.id}">اعتماد</button>`
                         : ''}
@@ -7653,7 +9646,7 @@ async function openRegistrantsModal(workshop, mainEl) {
                     </div>
                   </td>
                 </tr>
-              `).join('')}
+              `; }).join('')}
             </tbody>
           </table>
         </div>
@@ -7666,6 +9659,27 @@ async function openRegistrantsModal(workshop, mainEl) {
     if (sIn) sIn.addEventListener('input', e => { searchQ = e.target.value; renderModalBody(); modalContent.querySelector('#regSearchInput')?.focus(); });
 
     modalContent.querySelectorAll('[data-rf]').forEach(b => b.addEventListener('click', () => { statusFilter = b.dataset.rf; renderModalBody(); }));
+
+    // Add Registrant (Admin)
+    const addRegBtn = modalContent.querySelector('#modalAddWsRegBtn');
+    if (addRegBtn) {
+      addRegBtn.addEventListener('click', () => {
+        openAddWorkshopRegistrantModal(workshop, async () => {
+          const fresh = await loadCol('workshop_registrations');
+          wRegs = fresh.filter(r => r.workshopId === workshop.id);
+          renderModalBody();
+          vWorkshops(mainEl);
+        });
+      });
+    }
+
+    // WhatsApp Template Modal
+    const waTplBtn = modalContent.querySelector('#modalWaTemplateBtn');
+    if (waTplBtn) {
+      waTplBtn.addEventListener('click', () => {
+        openWhatsAppTemplateModal(workshop);
+      });
+    }
 
     // Word Export
     const expDocxBtn = modalContent.querySelector('#exportDocxBtn');
@@ -7683,7 +9697,40 @@ async function openRegistrantsModal(workshop, mainEl) {
       });
     }
 
-    // Row Actions: Approve / Delete
+    // Row Actions: WhatsApp / Edit / Approve / Delete
+    modalContent.querySelectorAll('[data-reg-wa-send]').forEach(b => {
+      b.addEventListener('click', async () => {
+        const id = b.dataset.regWaSend;
+        const regObj = wRegs.find(r => r.id === id);
+        if (!regObj) return;
+
+        b.disabled = true;
+        b.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        b.setAttribute('title', 'جارٍ إرسال رسالة الواتساب…');
+
+        await sendWorkshopRegistrantWhatsApp(regObj, workshop, async () => {
+          b.disabled = false;
+          b.innerHTML = '<i class="fab fa-whatsapp"></i>';
+          renderModalBody();
+          vWorkshops(mainEl);
+        });
+      });
+    });
+
+    modalContent.querySelectorAll('[data-reg-edit]').forEach(b => {
+      b.addEventListener('click', () => {
+        const id = b.dataset.regEdit;
+        const regObj = wRegs.find(r => r.id === id);
+        if (!regObj) return;
+        openRegistrantEditModal(regObj, 'workshop_registrations', async () => {
+          const fresh = await loadCol('workshop_registrations');
+          wRegs = fresh.filter(r => r.workshopId === workshop.id);
+          renderModalBody();
+          vWorkshops(mainEl);
+        });
+      });
+    });
+
     modalContent.querySelectorAll('[data-reg-approve]').forEach(b => {
       b.addEventListener('click', async () => {
         const id = b.dataset.regApprove;
@@ -7779,14 +9826,14 @@ function exportRegistrantsToCSV(filename, rows) {
 }
 
 /* ════════════════════════════════════════════════
-   CAREERS — إدارة التوظيف (jobs + jobApplications)
+   CAREERS — إدارة الوظائف والمتقدمين (jobs + jobApplications)
 ════════════════════════════════════════════════ */
-const JOB_TYPES = { full:'دوام كامل', part:'دوام جزئي', temp:'مؤقت', intern:'تدريب', volunteer:'تطوع' };
-const JOB_STATUS = { draft:'مسودة', published:'منشورة', closed:'مغلقة' };
+const JOB_TYPES = { full:'دوام كامل', part:'دوام جزئي', temp:'مؤقت', intern:'تدريب', volunteer:'تطوع', remote:'عن بُعد', hybrid:'دوام مرن / هجين' };
+const JOB_STATUS = { draft:'مسودة', published:'منشورة', hidden:'مخفية', closed:'منتهية' };
 const APP_STATUSES = ['جديد','قيد المراجعة','مرشح للمقابلة','مقبول','مرفوض'];
 let careersTab = 'jobs';          // jobs | applicants
 let selectedJobId = null;         // عند فتح متقدمي وظيفة
-let jobSearchQ = '', appSearchQ = '', appStatusFilter = 'all';
+let jobSearchQ = '', jobStatusFilter = 'all', appSearchQ = '', appStatusFilter = 'all', allAppsJobFilter = 'all';
 
 function jobDateVal(ts){ if(!ts) return ''; const d=toTs(ts); if(!d) return ''; return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function jobIsExpired(j){ const d=toTs(j.deadline); if(!d) return false; const e=new Date(d); e.setHours(23,59,59,999); return Date.now()>e.getTime(); }
@@ -7811,30 +9858,55 @@ async function vCareers(el){
   const countByJob = {};
   apps.forEach(a=>{ countByJob[a.jobId]=(countByJob[a.jobId]||0)+1; });
 
+  const tabBar = `
+    <div style="display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:10px;flex-wrap:wrap;">
+      <button type="button" class="btn ${careersTab==='jobs'?'btn-primary':'btn-ghost'} btn-sm" id="tabCareersJobs">الوظائف (${jobs.length})</button>
+      <button type="button" class="btn ${careersTab==='applicants'?'btn-primary':'btn-ghost'} btn-sm" id="tabCareersApps">جميع المتقدمين (${apps.length})</button>
+    </div>`;
+
+  if (careersTab === 'applicants'){
+    await vAllApplicants(el, jobs, apps, tabBar);
+    return;
+  }
+
   let rows = [...jobs].sort((a,b)=>(toTs(b.createdAt)||0)-(toTs(a.createdAt)||0));
-  const q = jobSearchQ.trim();
-  if (q){ rows = rows.filter(j=>(j.title||'').includes(q)||(j.department||'').includes(q)); }
+  const q = jobSearchQ.trim().toLowerCase();
+  if (q){ rows = rows.filter(j=>(j.title||'').toLowerCase().includes(q)||(j.department||'').toLowerCase().includes(q)||(j.location||'').toLowerCase().includes(q)); }
+  if (jobStatusFilter !== 'all'){
+    rows = rows.filter(j=>{
+      const expired = j.status==='published' && jobIsExpired(j);
+      if (jobStatusFilter === 'closed') return j.status==='closed' || expired;
+      if (jobStatusFilter === 'published') return j.status==='published' && !expired;
+      return (j.status||'draft') === jobStatusFilter;
+    });
+  }
+
+  const pubCount = jobs.filter(j=>j.status==='published' && !jobIsExpired(j)).length;
+  const draftCount = jobs.filter(j=>!j.status || j.status==='draft').length;
+  const hiddenOrClosedCount = jobs.filter(j=>j.status==='hidden' || j.status==='closed' || (j.status==='published' && jobIsExpired(j))).length;
 
   el.innerHTML = `
     <div class="page-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px;">
       <div>
-        <h1 class="page-title" style="font-size:28px;">إدارة التوظيف</h1>
-        <p class="page-sub">إنشاء الوظائف ونشرها ومتابعة المتقدمين.</p>
+        <h1 class="page-title" style="font-size:28px;">إدارة الوظائف</h1>
+        <p class="page-sub">إنشاء الوظائف ونشرها وإدارتها ومتابعة المتقدمين من مكان واحد.</p>
       </div>
       <button class="btn btn-primary" id="btnNewJob" style="gap:6px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:16px;height:16px;"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>
-        <span>إنشاء وظيفة جديدة</span>
+        <span>إضافة وظيفة جديدة</span>
       </button>
     </div>
 
-    <!-- تفعيل/إخفاء قسم التوظيف من الموقع العام -->
+    ${tabBar}
+
+    <!-- تفعيل/إخفاء صفحة «اعمل معنا» من الموقع العام -->
     <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px;padding:16px 18px;">
       <div>
         <strong style="font-size:15px;color:var(--ink);display:flex;align-items:center;gap:8px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:18px;height:18px;"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round"/></svg>
-          إظهار صفحة التوظيف في الموقع العام
+          إظهار صفحة «اعمل معنا» في الموقع العام
         </strong>
-        <p style="font-size:12.5px;color:var(--ink-muted);margin:4px 0 0 0;">التحكم بظهور رابط «التوظيف» في الفوتر وإمكانية زيارة الصفحة للجمهور.</p>
+        <p style="font-size:12.5px;color:var(--ink-muted);margin:4px 0 0 0;">التحكم بظهور رابط «اعمل معنا» في القوائم وإمكانية زيارة الصفحة للجمهور.</p>
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <span style="font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;${careersEnabled ? 'background:rgba(58,94,46,.12);color:#2e6022;' : 'background:rgba(122,37,24,.1);color:#8c2518;'}">
@@ -7847,28 +9919,39 @@ async function vCareers(el){
       </div>
     </div>
 
-    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px;">
+    <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px;">
       ${sCard('JobsTotal','إجمالي الوظائف',jobs.length,'وظيفة')}
-      ${sCard('JobsPub','منشورة',jobs.filter(j=>j.status==='published').length,'ظاهرة للزوار')}
-      ${sCard('JobsDraft','مسودات',jobs.filter(j=>j.status==='draft').length,'غير منشورة')}
+      ${sCard('JobsPub','منشورة وفعالة',pubCount,'ظاهرة للزوار')}
+      ${sCard('JobsDraft','مسودات',draftCount,'غير منشورة')}
+      ${sCard('JobsHidden','مخفية / منتهية',hiddenOrClosedCount,'غير متاحة للتقديم')}
       ${sCard('AppsTotal','إجمالي المتقدمين',apps.length,'طلب توظيف')}
     </div>
 
-    <div class="card" style="margin-bottom:16px;">
-      <input type="text" id="jobSearch" dir="auto" placeholder="بحث باسم الوظيفة أو القسم…" value="${escA(q)}" style="width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+    <div class="card" style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <input type="text" id="jobSearch" dir="auto" placeholder="بحث بالمسمى الوظيفي أو القسم أو الموقع…" value="${escA(jobSearchQ)}" style="flex:1;min-width:220px;padding:11px 14px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+      <select id="jobStatusFilterSel" style="padding:11px 14px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">
+        <option value="all" ${jobStatusFilter==='all'?'selected':''}>كل الحالات</option>
+        <option value="published" ${jobStatusFilter==='published'?'selected':''}>منشورة وفعالة</option>
+        <option value="draft" ${jobStatusFilter==='draft'?'selected':''}>مسودة</option>
+        <option value="hidden" ${jobStatusFilter==='hidden'?'selected':''}>مخفية</option>
+        <option value="closed" ${jobStatusFilter==='closed'?'selected':''}>منتهية</option>
+      </select>
     </div>
 
     ${rows.length===0
-      ? `<div class="card">${emptyState(q?'لا توجد نتائج':'لم يتم إنشاء وظائف بعد','JOBS · EMPTY')}</div>`
+      ? `<div class="card">${emptyState(q||jobStatusFilter!=='all'?'لا توجد وظائف مطابقة':'لم يتم إنشاء وظائف بعد','JOBS · EMPTY')}</div>`
       : `<div class="jobs-grid">${rows.map(j=>renderJobCardHTML(j, countByJob[j.id]||0)).join('')}</div>`}
   `;
+
+  el.querySelector('#tabCareersJobs')?.addEventListener('click', ()=>{ careersTab='jobs'; vCareers(el); });
+  el.querySelector('#tabCareersApps')?.addEventListener('click', ()=>{ careersTab='applicants'; appSearchQ=''; appStatusFilter='all'; vCareers(el); });
 
   el.querySelector('#btnToggleCareers')?.addEventListener('click', async () => {
     const newVal = !careersEnabled;
     try {
       await setDoc(doc(db, 'settings', 'site'), { careersEnabled: newVal }, { merge: true });
       loaded.settings = false;
-      toast(newVal ? 'تم إظهار قسم التوظيف في الموقع' : 'تم إخفاء قسم التوظيف عن الزوار');
+      toast(newVal ? 'تم إظهار صفحة «اعمل معنا» في الموقع' : 'تم إخفاء صفحة «اعمل معنا» عن الزوار');
       vCareers(el);
     } catch (err) { console.error(err); toast('تعذّر تغيير الحالة', 'err'); }
   });
@@ -7876,10 +9959,12 @@ async function vCareers(el){
   el.querySelector('#btnNewJob')?.addEventListener('click', ()=>openJobFormModal(null, el));
   const si = el.querySelector('#jobSearch');
   if (si) si.addEventListener('input', e=>{ jobSearchQ=e.target.value; vCareers(el); const f=el.querySelector('#jobSearch'); if(f){f.focus(); const n=f.value.length; f.setSelectionRange(n,n);} });
+  el.querySelector('#jobStatusFilterSel')?.addEventListener('change', e=>{ jobStatusFilter=e.target.value; vCareers(el); });
 
   el.querySelectorAll('[data-job-apps]').forEach(b=>b.addEventListener('click',()=>{ selectedJobId=b.dataset.jobApps; appSearchQ=''; appStatusFilter='all'; vCareers(el); }));
   el.querySelectorAll('[data-job-edit]').forEach(b=>b.addEventListener('click',()=>{ const j=jobs.find(x=>x.id===b.dataset.jobEdit); if(j) openJobFormModal(j, el); }));
   el.querySelectorAll('[data-job-pub]').forEach(b=>b.addEventListener('click',()=>toggleJobPublish(b.dataset.jobPub, el)));
+  el.querySelectorAll('[data-job-hide]').forEach(b=>b.addEventListener('click',()=>setJobStatus(b.dataset.jobHide,'hidden',el)));
   el.querySelectorAll('[data-job-close]').forEach(b=>b.addEventListener('click',()=>setJobStatus(b.dataset.jobClose,'closed',el)));
   el.querySelectorAll('[data-job-del]').forEach(b=>b.addEventListener('click',()=>deleteJob(b.dataset.jobDel, countByJob[b.dataset.jobDel]||0, el)));
 }
@@ -7887,7 +9972,8 @@ async function vCareers(el){
 function jobStatusBadge(j){
   if (j.status==='published' && jobIsExpired(j)) return '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">منتهية</span>';
   if (j.status==='published') return '<span class="chip-count" style="background:#e6f4ea;color:#137333;">منشورة</span>';
-  if (j.status==='closed') return '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">مغلقة</span>';
+  if (j.status==='hidden') return '<span class="chip-count" style="background:#eceff1;color:#455a64;">مخفية</span>';
+  if (j.status==='closed') return '<span class="chip-count" style="background:#fce8e6;color:#c5221f;">منتهية</span>';
   return '<span class="chip-count" style="background:#fef7e0;color:#b06000;">مسودة</span>';
 }
 
@@ -7896,7 +9982,6 @@ function jobMetaChip(icon, text){
 }
 function renderJobCardHTML(j, appCount){
   const pub = j.status==='published';
-  const icClock='<path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9"/>';
   const icPin='<path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>';
   const icBag='<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>';
   const icCal='<rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke-linecap="round"/>';
@@ -7905,6 +9990,7 @@ function renderJobCardHTML(j, appCount){
     j.type ? jobMetaChip(icBag, JOB_TYPES[j.type]||j.type) : '',
     j.position ? jobMetaChip(icId, j.position) : '',
     j.location ? jobMetaChip(icPin, j.location) : '',
+    j.startDate ? jobMetaChip(icCal, 'بداية النشر: '+fmtEn(toTs(j.startDate))) : '',
     j.deadline ? jobMetaChip(icCal, 'آخر موعد: '+fmtEn(toTs(j.deadline))) : '',
   ].filter(Boolean).join('');
   return `
@@ -7924,8 +10010,9 @@ function renderJobCardHTML(j, appCount){
       </button>
       <div class="jobc-actions">
         <button class="btn btn-sm btn-outline" data-job-edit="${j.id}">تعديل</button>
-        <button class="btn btn-sm ${pub?'btn-ghost':'btn-primary'}" data-job-pub="${j.id}">${pub?'إلغاء النشر':'نشر'}</button>
-        ${j.status!=='closed'?`<button class="btn btn-sm btn-ghost" data-job-close="${j.id}">إغلاق</button>`:''}
+        <button class="btn btn-sm ${pub?'btn-ghost':'btn-primary'}" data-job-pub="${j.id}">${pub?'تحويل لمسودة':'نشر'}</button>
+        ${j.status!=='hidden'?`<button class="btn btn-sm btn-ghost" data-job-hide="${j.id}">إخفاء</button>`:''}
+        ${j.status!=='closed'?`<button class="btn btn-sm btn-ghost" data-job-close="${j.id}">إنهاء</button>`:''}
         <button class="btn btn-sm btn-danger" data-job-del="${j.id}">حذف</button>
       </div>
     </div>
@@ -7935,40 +10022,87 @@ function renderJobCardHTML(j, appCount){
 function openJobFormModal(job, el){
   const isEdit = !!job;
   const opt = (v,cur,txt)=>`<option value="${v}" ${cur===v?'selected':''}>${txt}</option>`;
+  const fc = (job && job.formConfig) ? job.formConfig : {};
+  const cfgVal = (k, def) => fc[k] || def;
+  const extraDocs = Array.isArray(fc.extraDocs) ? fc.extraDocs : [];
+
+  const fieldModeOpts = cur => `
+    <option value="required" ${cur==='required'?'selected':''}>إلزامي</option>
+    <option value="optional" ${cur==='optional'?'selected':''}>اختياري</option>
+    <option value="hidden" ${cur==='hidden'?'selected':''}>مخفي</option>`;
+
+  const renderExtraDocRow = (item = { label:'', required:false }) => `
+    <div class="fc-extra-row" style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <input type="text" class="fc-extra-label" value="${escA(item.label||'')}" placeholder="اسم المستند (مثال: شهادة التخرج)" style="flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;">
+      <select class="fc-extra-req" style="padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:13px;">
+        <option value="0" ${!item.required?'selected':''}>اختياري</option>
+        <option value="1" ${item.required?'selected':''}>إلزامي</option>
+      </select>
+      <button type="button" class="btn btn-sm btn-danger fc-extra-del" style="padding:6px 10px;">حذف</button>
+    </div>`;
+
   const html = `
     <div class="modal-head">
-      <div><div class="la">CAREERS · Form</div><h2>${isEdit?'تعديل وظيفة':'إنشاء وظيفة جديدة'}</h2></div>
+      <div><div class="la">JOBS · Form</div><h2>${isEdit?'تعديل وظيفة':'إضافة وظيفة جديدة'}</h2></div>
       <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
     </div>
     <form id="jobForm" class="form-grid" style="gap:14px;">
       <div class="field"><label>المسمى الوظيفي <span style="color:var(--danger)">*</span></label>
-        <input type="text" id="jf_title" required value="${isEdit?escA(job.title||''):''}" placeholder="مثال: منسق فعاليات"></div>
+        <input type="text" id="jf_title" required value="${isEdit?escA(job.title||''):''}" placeholder="مثال: منسق فعاليات وبرامج تراثية"></div>
       <div class="form-grid two">
         <div class="field"><label>القسم / المجال</label>
-          <input type="text" id="jf_dept" value="${isEdit?escA(job.department||''):''}" placeholder="مثال: الفعاليات"></div>
-        <div class="field"><label>نوع الوظيفة</label>
+          <input type="text" id="jf_dept" value="${isEdit?escA(job.department||''):''}" placeholder="مثال: البرامج والفعاليات"></div>
+        <div class="field"><label>نوع الدوام</label>
           <select id="jf_type">
-            ${['full','part','temp','intern','volunteer'].map(t=>opt(t, isEdit?job.type:'full', JOB_TYPES[t])).join('')}
+            ${Object.keys(JOB_TYPES).map(t=>opt(t, isEdit?job.type:'full', JOB_TYPES[t])).join('')}
           </select></div>
       </div>
       <div class="form-grid two">
         <div class="field"><label>موقع العمل</label>
-          <input type="text" id="jf_loc" value="${isEdit?escA(job.location||'مقر الجمعية - القريات'):'مقر الجمعية - القريات'}" placeholder="مقر الجمعية بالقريات"></div>
-        <div class="field"><label>المسمى الوظيفي (يظهر في التفاصيل)</label>
+          <input type="text" id="jf_loc" value="${isEdit?escA(job.location||'القريات - المملكة العربية السعودية'):'القريات - المملكة العربية السعودية'}" placeholder="القريات - المملكة العربية السعودية"></div>
+        <div class="field"><label>المسمى الفرعي (اختياري)</label>
           <input type="text" id="jf_position" value="${isEdit?escA(job.position||''):''}" placeholder="مثال: أخصائي تراث"></div>
       </div>
       <div class="field"><label>وصف الوظيفة</label>
-        <textarea id="jf_desc" rows="3" placeholder="نبذة عن الوظيفة…">${isEdit?esc(job.description||''):''}</textarea></div>
-      <div class="field"><label>المؤهلات والشروط</label>
-        <textarea id="jf_qual" rows="3">${isEdit?esc(job.qualifications||''):''}</textarea></div>
-      <div class="form-grid two">
+        <textarea id="jf_desc" rows="3" placeholder="نبذة عن الوظيفة وأهدافها…">${isEdit?esc(job.description||''):''}</textarea></div>
+      <div class="field"><label>المهام والمسؤوليات (سطر لكل مهمة)</label>
+        <textarea id="jf_resp" rows="3" placeholder="اكتب كل مهمة في سطر منفصل…">${isEdit?esc(job.responsibilities||''):''}</textarea></div>
+      <div class="field"><label>المؤهلات والمتطلبات (سطر لكل شرط)</label>
+        <textarea id="jf_qual" rows="3" placeholder="اكتب كل مؤهل أو شرط في سطر منفصل…">${isEdit?esc(job.qualifications||''):''}</textarea></div>
+      <div class="field"><label>المهارات والخبرات المفضلة (اختياري)</label>
+        <textarea id="jf_skills" rows="2" placeholder="اكتب كل مهارة في سطر منفصل…">${isEdit?esc(job.skills||''):''}</textarea></div>
+      <div class="field"><label>المزايا والتعويضات (اختياري)</label>
+        <textarea id="jf_benefits" rows="2" placeholder="نبذة عن المزايا والتعويضات…">${isEdit?esc(job.benefits||''):''}</textarea></div>
+      <div class="form-grid three" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;">
+        <div class="field"><label>تاريخ بداية التقديم</label>
+          <input type="date" id="jf_startDate" value="${isEdit?jobDateVal(job.startDate):''}"></div>
         <div class="field"><label>آخر موعد للتقديم</label>
           <input type="date" id="jf_deadline" value="${isEdit?jobDateVal(job.deadline):''}"></div>
         <div class="field"><label>حالة الوظيفة</label>
           <select id="jf_status">
-            ${['draft','published','closed'].map(s=>opt(s, isEdit?job.status:'draft', JOB_STATUS[s])).join('')}
+            ${['draft','published','hidden','closed'].map(s=>opt(s, isEdit?job.status:'draft', JOB_STATUS[s])).join('')}
           </select></div>
       </div>
+
+      <div style="border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--parchment-2,#f8f5ee);">
+        <div style="font-weight:800;font-size:13.5px;color:var(--ink);margin-bottom:10px;">إعدادات حقول نموذج التقديم (الاسم ورقم الجوال إلزاميان دائماً)</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;">
+          <div class="field" style="margin:0;"><label style="font-size:12px;">البريد الإلكتروني</label><select id="fc_email">${fieldModeOpts(cfgVal('email','required'))}</select></div>
+          <div class="field" style="margin:0;"><label style="font-size:12px;">المؤهل العلمي</label><select id="fc_qualification">${fieldModeOpts(cfgVal('qualification','required'))}</select></div>
+          <div class="field" style="margin:0;"><label style="font-size:12px;">التخصص</label><select id="fc_major">${fieldModeOpts(cfgVal('major','optional'))}</select></div>
+          <div class="field" style="margin:0;"><label style="font-size:12px;">سنوات الخبرة</label><select id="fc_experienceYears">${fieldModeOpts(cfgVal('experienceYears','optional'))}</select></div>
+          <div class="field" style="margin:0;"><label style="font-size:12px;">نبذة عن المتقدم</label><select id="fc_bio">${fieldModeOpts(cfgVal('bio','optional'))}</select></div>
+          <div class="field" style="margin:0;"><label style="font-size:12px;">السيرة الذاتية (PDF)</label><select id="fc_cv">${fieldModeOpts(cfgVal('cv','optional'))}</select></div>
+        </div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line);">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;">
+            <span style="font-size:12.5px;font-weight:700;color:var(--ink);">مستندات إضافية يرفقها المتقدم (اختياري)</span>
+            <button type="button" class="btn btn-sm btn-outline" id="btnAddExtraDoc">+ إضافة مستند</button>
+          </div>
+          <div id="fcExtraDocsList">${extraDocs.map(renderExtraDocRow).join('')}</div>
+        </div>
+      </div>
+
       <div style="margin-top:14px;display:flex;justify-content:flex-end;gap:10px;">
         <button type="button" class="btn btn-ghost" data-close>إلغاء</button>
         <button type="submit" class="btn btn-primary" id="btnSaveJob">${isEdit?'حفظ التعديلات':'حفظ الوظيفة'}</button>
@@ -7976,12 +10110,31 @@ function openJobFormModal(job, el){
     </form>`;
   showModal(html);
 
+  const extraWrap = document.getElementById('fcExtraDocsList');
+  extraWrap.addEventListener('click', e => {
+    if (e.target.classList.contains('fc-extra-del')) {
+      e.target.closest('.fc-extra-row')?.remove();
+    }
+  });
+  document.getElementById('btnAddExtraDoc').addEventListener('click', () => {
+    extraWrap.insertAdjacentHTML('beforeend', renderExtraDocRow());
+  });
+
   document.getElementById('jobForm').addEventListener('submit', async e=>{
     e.preventDefault();
     const btn = document.getElementById('btnSaveJob');
     btn.disabled = true; btn.textContent='جارٍ الحفظ…';
     const status = document.getElementById('jf_status').value;
+    const startStr = document.getElementById('jf_startDate').value;
     const deadlineStr = document.getElementById('jf_deadline').value;
+
+    const extraList = [];
+    document.querySelectorAll('#fcExtraDocsList .fc-extra-row').forEach(row => {
+      const lbl = row.querySelector('.fc-extra-label').value.trim();
+      const req = row.querySelector('.fc-extra-req').value === '1';
+      if (lbl) extraList.push({ label: lbl, required: req });
+    });
+
     const data = {
       title: document.getElementById('jf_title').value.trim(),
       department: document.getElementById('jf_dept').value.trim(),
@@ -7989,9 +10142,22 @@ function openJobFormModal(job, el){
       location: document.getElementById('jf_loc').value.trim(),
       position: document.getElementById('jf_position').value.trim(),
       description: document.getElementById('jf_desc').value.trim(),
+      responsibilities: document.getElementById('jf_resp').value.trim(),
       qualifications: document.getElementById('jf_qual').value.trim(),
+      skills: document.getElementById('jf_skills').value.trim(),
+      benefits: document.getElementById('jf_benefits').value.trim(),
+      startDate: startStr ? new Date(startStr+'T00:00:00') : null,
       deadline: deadlineStr ? new Date(deadlineStr+'T00:00:00') : null,
-      status
+      status,
+      formConfig: {
+        email: document.getElementById('fc_email').value,
+        qualification: document.getElementById('fc_qualification').value,
+        major: document.getElementById('fc_major').value,
+        experienceYears: document.getElementById('fc_experienceYears').value,
+        bio: document.getElementById('fc_bio').value,
+        cv: document.getElementById('fc_cv').value,
+        extraDocs: extraList
+      }
     };
     try {
       if (isEdit){
@@ -8017,7 +10183,7 @@ async function toggleJobPublish(id, el){
     const patch = { status:newStatus, updatedAt:serverTimestamp() };
     if (newStatus==='published' && !j.publishedAt) patch.publishedAt = serverTimestamp();
     await updateDoc(doc(db,'jobs',id), patch);
-    loaded.jobs=false; toast(newStatus==='published'?'تم نشر الوظيفة':'تم إلغاء النشر'); vCareers(el);
+    loaded.jobs=false; toast(newStatus==='published'?'تم نشر الوظيفة':'تم تحويل الوظيفة لمسودة'); vCareers(el);
   } catch(err){ console.error(err); toast('تعذّر تغيير الحالة','err'); }
 }
 
@@ -8028,11 +10194,76 @@ async function setJobStatus(id, status, el){
 
 async function deleteJob(id, appCount, el){
   const msg = appCount>0
-    ? `لهذه الوظيفة ${appCount} متقدم. حذف الوظيفة لا يحذف سجلات المتقدمين. متابعة الحذف؟`
+    ? `لهذه الوظيفة ${appCount} متقدم. حذف الوظيفة يحافظ على سجلات المتقدمين في تبويب «جميع المتقدمين». متابعة الحذف؟`
     : 'هل تريد حذف هذه الوظيفة؟';
   if(!confirm(msg)) return;
   try { await deleteDoc(doc(db,'jobs',id)); loaded.jobs=false; toast('تم حذف الوظيفة'); vCareers(el); }
   catch(err){ console.error(err); toast('تعذّر الحذف','err'); }
+}
+
+/* ── جميع المتقدمين (شامل المتقدمين للوظائف المخفية أو المحذوفة) ── */
+async function vAllApplicants(el, jobs, allApps, tabBar){
+  const jobsMap = {};
+  jobs.forEach(j=>{ jobsMap[j.id] = j; });
+
+  let apps = [...(allApps||[])].sort((a,b)=>(toTs(b.submittedAt||b.createdAt)||0)-(toTs(a.submittedAt||a.createdAt)||0));
+  if (allAppsJobFilter !== 'all') apps = apps.filter(a=>a.jobId===allAppsJobFilter);
+  if (appStatusFilter !== 'all') apps = apps.filter(a=>(a.status||'جديد')===appStatusFilter);
+  const q = appSearchQ.trim().toLowerCase();
+  if (q) apps = apps.filter(a=>(a.name||'').toLowerCase().includes(q)||(a.phone||'').includes(q)||(a.email||'').toLowerCase().includes(q));
+
+  el.innerHTML = `
+    <div class="page-head" style="margin-bottom:18px;">
+      <h1 class="page-title" style="font-size:28px;">إدارة الوظائف — جميع المتقدمين</h1>
+      <p class="page-sub">استعراض كافة طلبات التوظيف بما فيها المرتبطة بوظائف مخفية أو محذوفة.</p>
+    </div>
+    ${tabBar}
+    <div class="card" style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <input type="text" id="appSearch" dir="auto" placeholder="بحث بالاسم أو الجوال أو البريد…" value="${escA(appSearchQ)}" style="flex:1;min-width:220px;padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+      <select id="allAppsJobSel" style="padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">
+        <option value="all" ${allAppsJobFilter==='all'?'selected':''}>كل الوظائف</option>
+        ${jobs.map(j=>`<option value="${escA(j.id)}" ${allAppsJobFilter===j.id?'selected':''}>${esc(j.title)}</option>`).join('')}
+      </select>
+      <select id="appFilter" style="padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">
+        <option value="all" ${appStatusFilter==='all'?'selected':''}>كل الحالات</option>
+        ${APP_STATUSES.map(s=>`<option value="${s}" ${appStatusFilter===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <button class="btn btn-sm btn-outline" id="btnExportAllApps" style="gap:6px;">تصدير CSV</button>
+    </div>
+
+    ${apps.length===0
+      ? `<div class="card">${emptyState('لا يوجد متقدمون مطابقون','APPLICANTS · EMPTY')}</div>`
+      : `<div class="table-wrap"><div style="overflow-x:auto;"><table class="tbl" style="width:100%;">
+          <thead><tr><th>#</th><th>الاسم</th><th>الوظيفة</th><th>الجوال</th><th>المؤهل</th><th>السيرة</th><th>الحالة</th><th>التاريخ</th><th style="text-align:center;">إجراءات</th></tr></thead>
+          <tbody>${apps.map((a,i)=>{
+            const jObj = jobsMap[a.jobId];
+            const jLabel = jObj ? esc(jObj.title) : `${esc(a.jobTitle||'وظيفة')} <span style="font-size:11px;color:var(--danger);">(محذوفة)</span>`;
+            return `<tr>
+              <td>${i+1}</td>
+              <td><strong>${esc(a.name||'—')}</strong></td>
+              <td>${jLabel}</td>
+              <td dir="ltr" style="text-align:right;">${esc(a.phone||'—')}</td>
+              <td>${esc(a.qualification||'—')}</td>
+              <td>${a.cvChunks?'<span class="chip-count" style="background:#e6f4ea;color:#137333;">PDF</span>':'<span style="color:var(--ink-muted);">—</span>'}</td>
+              <td><span class="chip-count">${esc(a.status||'جديد')}</span></td>
+              <td>${a.submittedAt?fmtEn(toTs(a.submittedAt)):'—'}</td>
+              <td style="text-align:center;"><button class="btn btn-sm btn-outline" data-app-view="${a.id}" style="padding:4px 10px;font-size:12px;">عرض</button></td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table></div></div>`}
+  `;
+
+  el.querySelector('#tabCareersJobs')?.addEventListener('click', ()=>{ careersTab='jobs'; vCareers(el); });
+  el.querySelector('#tabCareersApps')?.addEventListener('click', ()=>{ careersTab='applicants'; vCareers(el); });
+  const si=el.querySelector('#appSearch');
+  if(si) si.addEventListener('input', e=>{ appSearchQ=e.target.value; vAllApplicants(el, jobs, C.jobApplications, tabBar); const f=el.querySelector('#appSearch'); if(f){f.focus(); const n=f.value.length; f.setSelectionRange(n,n);} });
+  el.querySelector('#allAppsJobSel').addEventListener('change', e=>{ allAppsJobFilter=e.target.value; vAllApplicants(el, jobs, C.jobApplications, tabBar); });
+  el.querySelector('#appFilter').addEventListener('change', e=>{ appStatusFilter=e.target.value; vAllApplicants(el, jobs, C.jobApplications, tabBar); });
+  el.querySelector('#btnExportAllApps').addEventListener('click', ()=>exportApplicantsCSV({ title:'جميع_الوظائف' }, apps));
+  el.querySelectorAll('[data-app-view]').forEach(b=>b.addEventListener('click',()=>{
+    const a=(C.jobApplications||[]).find(x=>x.id===b.dataset.appView);
+    if(a) openApplicantModal(a, jobsMap[a.jobId] || { id: a.jobId, title: a.jobTitle || 'وظيفة محذوفة' }, el);
+  }));
 }
 
 /* ── متقدمو وظيفة محددة ── */
@@ -8042,7 +10273,7 @@ async function vJobApplicants(el, job, allApps){
 
   if (appStatusFilter!=='all') apps = apps.filter(a=>(a.status||'جديد')===appStatusFilter);
   const q = appSearchQ.trim().toLowerCase();
-  if (q) apps = apps.filter(a=>(a.name||'').toLowerCase().includes(q)||(a.phone||'').includes(q));
+  if (q) apps = apps.filter(a=>(a.name||'').toLowerCase().includes(q)||(a.phone||'').includes(q)||(a.email||'').toLowerCase().includes(q));
 
   el.innerHTML = `
     <div style="margin-bottom:14px;">
@@ -8054,7 +10285,7 @@ async function vJobApplicants(el, job, allApps){
     </div>
 
     <div class="card" style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <input type="text" id="appSearch" dir="auto" placeholder="بحث بالاسم أو الجوال…" value="${escA(appSearchQ)}" style="flex:1;min-width:220px;padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
+      <input type="text" id="appSearch" dir="auto" placeholder="بحث بالاسم أو الجوال أو البريد…" value="${escA(appSearchQ)}" style="flex:1;min-width:220px;padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
       <select id="appFilter" style="padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;">
         <option value="all" ${appStatusFilter==='all'?'selected':''}>كل الحالات</option>
         ${APP_STATUSES.map(s=>`<option value="${s}" ${appStatusFilter===s?'selected':''}>${s}</option>`).join('')}
@@ -8066,12 +10297,14 @@ async function vJobApplicants(el, job, allApps){
     ${apps.length===0
       ? `<div class="card">${emptyState('لا يوجد متقدمون مطابقون','APPLICANTS · EMPTY')}</div>`
       : `<div class="table-wrap"><div style="overflow-x:auto;"><table class="tbl" style="width:100%;">
-          <thead><tr><th>#</th><th>الاسم</th><th>الجوال</th><th>السيرة</th><th>الحالة</th><th>التاريخ</th><th style="text-align:center;">إجراءات</th></tr></thead>
+          <thead><tr><th>#</th><th>الاسم</th><th>الجوال</th><th>البريد الإلكتروني</th><th>المؤهل</th><th>السيرة</th><th>الحالة</th><th>التاريخ</th><th style="text-align:center;">إجراءات</th></tr></thead>
           <tbody>${apps.map((a,i)=>`
             <tr>
               <td>${i+1}</td>
               <td><strong>${esc(a.name||'—')}</strong></td>
               <td dir="ltr" style="text-align:right;">${esc(a.phone||'—')}</td>
+              <td dir="ltr" style="text-align:right;">${esc(a.email||'—')}</td>
+              <td>${esc(a.qualification||'—')}</td>
               <td>${a.cvChunks?'<span class="chip-count" style="background:#e6f4ea;color:#137333;">PDF</span>':'<span style="color:var(--ink-muted);">—</span>'}</td>
               <td><span class="chip-count">${esc(a.status||'جديد')}</span></td>
               <td>${a.submittedAt?fmtEn(toTs(a.submittedAt)):'—'}</td>
@@ -8100,7 +10333,7 @@ function openDeleteAllApplicantsModal(job, el){
     </div>
     <div style="padding:4px 2px;">
       <p style="font-size:14px;color:var(--ink);line-height:1.8;margin:0 0 6px 0;">
-        سيتم حذف <strong>${total}</strong> طلب متقدم على وظيفة «${esc(job.title||'')}» نهائيًا، مع سِيَرهم الذاتية. لا يمكن التراجع.
+        سيتم حذف <strong>${total}</strong> طلب متقدم على وظيفة «${esc(job.title||'')}» نهائيًا، مع سِيَرهم الذاتية ومرفقاتهم. لا يمكن التراجع.
       </p>
       <p style="font-size:13px;color:var(--ink-muted);margin:0 0 10px 0;">للتأكيد اكتب <strong style="color:var(--ink);">${CONFIRM_WORD}</strong> في الحقل التالي:</p>
       <input type="text" id="delAllConfirm" dir="auto" autocomplete="off" placeholder="${CONFIRM_WORD}" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;font-family:inherit;"/>
@@ -8123,6 +10356,7 @@ function openDeleteAllApplicantsModal(job, el){
       const apps = (C.jobApplications||[]).filter(a=>a.jobId===job.id);
       for(const a of apps){
         await deleteJobApplicationChunks(a.id);
+        if (a.email) { try { await deleteDoc(doc(db,'jobApplication_emails',`${a.jobId}_${String(a.email).toLowerCase()}`)); } catch(_){} }
         await deleteDoc(doc(db,'jobApplications',a.id));
       }
       loaded.jobApplications=false; closeModal(); toast(`تم حذف ${apps.length} متقدم`);
@@ -8133,20 +10367,27 @@ function openDeleteAllApplicantsModal(job, el){
 
 function openApplicantModal(app, job, el){
   const row = (lbl,val)=> val && String(val).trim() ? `<div style="padding:9px 0;border-bottom:1px solid var(--line-soft);"><div style="font-size:11.5px;color:var(--ink-muted);margin-bottom:3px;">${lbl}</div><div style="font-size:14px;color:var(--ink);line-height:1.6;white-space:pre-wrap;">${esc(val)}</div></div>`:'';
+  const extraDocs = Array.isArray(app.extraDocs) ? app.extraDocs : [];
   const html = `
     <div class="modal-head">
       <div><div class="la">APPLICANT</div><h2>${esc(app.name||'متقدم')}</h2></div>
       <button class="close-btn" data-close><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>
     </div>
     <div style="padding:4px 2px;">
-      <div style="margin-bottom:14px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px;">
         <div style="background:var(--parchment-2);border-radius:9px;padding:9px 12px;"><div style="font-size:11px;color:var(--ink-muted);">الجوال</div><div dir="ltr" style="text-align:right;font-weight:700;">${esc(app.phone||'—')}</div></div>
+        <div style="background:var(--parchment-2);border-radius:9px;padding:9px 12px;"><div style="font-size:11px;color:var(--ink-muted);">البريد الإلكتروني</div><div dir="ltr" style="text-align:right;font-weight:700;word-break:break-all;">${esc(app.email||'—')}</div></div>
       </div>
-      ${row('الوظيفة', job.title)}
-      <div style="padding:12px 0;">
+      ${row('الوظيفة', job.title || app.jobTitle)}
+      ${row('المؤهل العلمي', app.qualification)}
+      ${row('التخصص', app.major)}
+      ${row('سنوات الخبرة', app.experienceYears)}
+      ${row('نبذة عن المتقدم', app.bio)}
+      <div style="padding:12px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
         ${app.cvChunks
-          ? `<button class="btn btn-outline btn-sm" id="btnViewCv" style="gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>عرض / تنزيل السيرة الذاتية</span></button>`
+          ? `<button class="btn btn-outline btn-sm" id="btnViewCv" style="gap:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>تنزيل السيرة الذاتية</span></button>`
           : `<span style="font-size:13px;color:var(--ink-muted);">لم يُرفق المتقدم سيرة ذاتية.</span>`}
+        ${extraDocs.map((d,i)=>`<button class="btn btn-outline btn-sm" data-extra-dl="${i}" style="gap:6px;">تنزيل: ${esc(d.label||d.fileName||'مستند')}</button>`).join('')}
       </div>
 
       <div class="field" style="margin-top:8px;">
@@ -8170,22 +10411,29 @@ function openApplicantModal(app, job, el){
   showModal(html);
 
   document.getElementById('btnViewCv')?.addEventListener('click', ()=>viewApplicantCv(app));
+  document.querySelectorAll('[data-extra-dl]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dm = extraDocs[Number(btn.dataset.extraDl)];
+      if (dm) viewApplicantExtraDoc(app, dm);
+    });
+  });
   document.getElementById('btnSaveApp').addEventListener('click', async ()=>{
     const status = document.getElementById('appStatusSel').value;
     const notes = document.getElementById('appNotes').value.trim();
     try {
       await updateDoc(doc(db,'jobApplications',app.id), { status, adminNotes:notes, reviewed:true, reviewedAt:serverTimestamp() });
       loaded.jobApplications=false; closeModal(); toast('تم حفظ الطلب');
-      const fresh = await loadCol('jobApplications'); vJobApplicants(el, job, fresh);
+      vCareers(el);
     } catch(err){ console.error(err); toast('تعذّر الحفظ','err'); }
   });
   document.getElementById('btnDelApp').addEventListener('click', async ()=>{
     if(!confirm('حذف طلب هذا المتقدم نهائياً؟')) return;
     try {
       await deleteJobApplicationChunks(app.id);
+      if (app.email) { try { await deleteDoc(doc(db,'jobApplication_emails',`${app.jobId}_${String(app.email).toLowerCase()}`)); } catch(_){} }
       await deleteDoc(doc(db,'jobApplications',app.id));
       loaded.jobApplications=false; closeModal(); toast('تم حذف الطلب');
-      const fresh = await loadCol('jobApplications'); vJobApplicants(el, job, fresh);
+      vCareers(el);
     } catch(err){ console.error(err); toast('تعذّر الحذف','err'); }
   });
 }
@@ -8208,6 +10456,25 @@ async function viewApplicantCv(app){
   } catch(err){ console.error(err); toast('تعذّر فتح السيرة الذاتية','err'); }
 }
 
+async function viewApplicantExtraDoc(app, docMeta){
+  try {
+    toast('جاري تحضير المستند…');
+    const count = docMeta.chunks || 0;
+    const parts = new Array(count).fill('');
+    const gets = [];
+    for(let i=0;i<count;i++){
+      gets.push(getDoc(doc(db,'jobApplication_chunks',`${app.id}_doc_${docMeta.idx}_${i}`)).then(s=>{ if(s.exists()) parts[s.data().idx]=s.data().data||''; }));
+    }
+    await Promise.all(gets);
+    const dataUrl = parts.join('');
+    if(!dataUrl){ toast('تعذّر تحميل المستند','err'); return; }
+    const blobUrl = dataUrl.startsWith('data:') ? URL.createObjectURL(dataUrlToBlob(dataUrl)) : dataUrl;
+    const a=document.createElement('a'); a.href=blobUrl; a.download=docMeta.fileName||`${docMeta.label||'مستند'}_${app.name||'متقدم'}`; a.target='_blank';
+    document.body.appendChild(a); a.click(); a.remove();
+    if(blobUrl.startsWith('blob:')) setTimeout(()=>URL.revokeObjectURL(blobUrl),60000);
+  } catch(err){ console.error(err); toast('تعذّر فتح المستند','err'); }
+}
+
 async function deleteJobApplicationChunks(appId){
   try {
     const snap = await getDocs(query(collection(db,'jobApplication_chunks'), where('appId','==',appId)));
@@ -8220,17 +10487,17 @@ async function deleteJobApplicationChunks(appId){
 
 function exportApplicantsCSV(job, apps){
   if(!apps || !apps.length){ toast('لا توجد بيانات للتصدير','err'); return; }
-  const headers = ['الاسم','الجوال','الحالة','تاريخ التقديم','ملاحظات الإدارة'];
+  const headers = ['الاسم','الجوال','البريد الإلكتروني','المؤهل العلمي','التخصص','سنوات الخبرة','الوظيفة','الحالة','تاريخ التقديم','ملاحظات الإدارة'];
   const esc3 = v => `"${String(v==null?'':v).replace(/"/g,'""')}"`;
   const lines = [headers.join(',')];
   apps.forEach(a=>{
-    lines.push([a.name,a.phone,a.status||'جديد',
+    lines.push([a.name,a.phone,a.email||'',a.qualification||'',a.major||'',a.experienceYears||'',a.jobTitle||job.title||'',a.status||'جديد',
       a.submittedAt?fmtEn(toTs(a.submittedAt)):'', (a.adminNotes||'').replace(/\n/g,' ')
     ].map(esc3).join(','));
   });
-  const blob = new Blob(['﻿'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
+  const blob = new Blob(['\uFEFF'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`متقدمو_${(job.title||'وظيفة').replace(/[^\w؀-ۿ]+/g,'_')}.csv`;
+  const a=document.createElement('a'); a.href=url; a.download=`متقدمو_${(job.title||'وظيفة').replace(/[^\w\u0600-\u06FF]+/g,'_')}.csv`;
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),10000);
   toast('تم تصدير ملف CSV');
 }
@@ -9643,8 +11910,9 @@ function emptyState(msg,sub='NOTHING TO SHOW'){
 }
 
 function aIcon(k){
-  if(k==='vol')   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>`;
-  if(k==='craft') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19l6-6M12 5l7 7-5 5-7-7Z"/></svg>`;
+  if(k==='vol')     return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>`;
+  if(k==='craft')   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19l6-6M12 5l7 7-5 5-7-7Z"/></svg>`;
+  if(k==='trainer') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h18v11H3z"/><path d="M8 20l4-4 4 4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="5" width="16" height="14" rx="1"/><path d="M4 10h16M8 5v5"/></svg>`;
 }
 
@@ -9663,6 +11931,7 @@ function iCraft(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentC
 function iDatabase(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" stroke-linecap="round" stroke-linejoin="round"/></svg>`; }
 function iCog()  { return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.5 5.5l1.5 1.5M17 17l1.5 1.5M5.5 18.5l1.5-1.5M17 7l1.5-1.5" stroke-linecap="round"/></svg>`; }
 function iBriefcase(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" stroke-linecap="round"/></svg>`; }
+function iTrainers(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v10H4z"/><path d="M12 15v4M8 19h8M8 9h5M8 12h8" stroke-linecap="round"/></svg>`; }
 
 /* ── MODAL ── */
 function showModal(html){

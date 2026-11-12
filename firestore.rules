@@ -292,16 +292,15 @@ service cloud.firestore {
 
     // ── الوظائف (jobs) ──
     match /jobs/{id} {
-      // الزوار يقرؤون الوظائف المنشورة والمغلقة (المغلقة تظهر "مغلق التسجيل")؛ المسودة للإدارة فقط.
-      // التقديم على المغلقة ممنوع عبر قواعد applications/cvChunks أدناه (status == 'published').
-      allow read: if resource.data.status == 'published' || resource.data.status == 'closed' || isSiteAdmin();
+      // الزوار يقرؤون الوظائف المنشورة فقط؛ المسودة والمخفية والمنتهية للإدارة فقط.
+      allow read: if resource.data.status == 'published' || isSiteAdmin();
       // الإنشاء والتعديل والحذف محصور بالإدارة فقط
       allow create, update, delete: if isSiteAdmin();
     }
 
     // ── طلبات التوظيف (jobApplications) ──
     match /jobApplications/{id} {
-      // الزائر ينشئ طلبه فقط إن لم يكن موجوداً مسبقاً (منع التكرار على مستوى قاعدة البيانات)
+      // الزائر ينشئ طلبه فقط إن لم يكن موجوداً مسبقاً (منع التكرار برقم الجوال على مستوى قاعدة البيانات)
       // ويُجبر على حالة 'جديد' وربط الطلب بوظيفة منشورة، ومعرّف ثابت = jobId_phone
       allow create: if !exists(/databases/$(database)/documents/jobApplications/$(id))
         && request.resource.data.keys().hasAll(['jobId','name','phone','email','status','submittedAt','consent'])
@@ -314,8 +313,22 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/jobs/$(request.resource.data.jobId))
         && get(/databases/$(database)/documents/jobs/$(request.resource.data.jobId)).data.status == 'published';
       // لا يقرأ الزائر أي طلب (بما فيها طلبه) ولا يسرده ولا يعدّله — للإدارة فقط (خصوصية المتقدمين)
-      // منع التكرار يتم عبر شرط !exists في create أعلاه (على مستوى الخادم)
       allow get, list, update, delete: if isSiteAdmin();
+    }
+
+    // ── فهرس منع تكرار البريد الإلكتروني لكل وظيفة (مغلق عن القراءة العامة) ──
+    match /jobApplication_emails/{id} {
+      allow create: if !exists(/databases/$(database)/documents/jobApplication_emails/$(id))
+        && request.resource.data.keys().hasAll(['jobId', 'email', 'appId', 'createdAt'])
+        && request.resource.data.jobId is string
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 0
+        && request.resource.data.email.size() <= 160
+        && id == request.resource.data.jobId + '_' + request.resource.data.email.lower()
+        && exists(/databases/$(database)/documents/jobs/$(request.resource.data.jobId))
+        && get(/databases/$(database)/documents/jobs/$(request.resource.data.jobId)).data.status == 'published';
+      allow get, list, update: if false;
+      allow delete: if isSiteAdmin();
     }
 
     // ── قطع ملفات السير الذاتية (jobApplication_chunks) — PDF مقسّم ──
@@ -345,6 +358,92 @@ service cloud.firestore {
     match /admin_notifications/{id} {
       allow create: if true;
       allow read, update, delete: if isSiteAdmin();
+    }
+
+    // ════════════════ قاعدة بيانات المدربين والمدربات (/trainers/) ════════════════
+
+    // ── سجلات المدربين والمدربات (trainers) ──
+    // تحقّق صارم في الخادم مع منع التكرار المتزامن برقم الجوال ومنع قراءة الزوار للبيانات
+    match /trainers/{id} {
+      allow create: if id.size() >= 6 && id.size() <= 64
+        && request.resource.data.keys().hasAll([
+          'fullName', 'phone', 'birthDate', 'email', 'qualification',
+          'specialties', 'otherSpecialty', 'specificSpecialty',
+          'hasTrainingExperience', 'notes', 'cvName', 'cvSize', 'cvChunks',
+          'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'fullName', 'phone', 'birthDate', 'email', 'qualification',
+          'specialties', 'otherSpecialty', 'specificSpecialty',
+          'hasTrainingExperience', 'notes', 'cvName', 'cvSize', 'cvChunks',
+          'status', 'createdAt'
+        ])
+        && request.resource.data.status == 'new'
+        && request.resource.data.fullName is string
+        && request.resource.data.fullName.size() >= 3
+        && request.resource.data.fullName.size() <= 120
+        && request.resource.data.phone is string
+        && request.resource.data.phone.matches('^05[0-9]{8}$')
+        && request.resource.data.birthDate is string
+        && request.resource.data.birthDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 160
+        && (request.resource.data.email == '' || request.resource.data.email.matches('^[^ @]+@[^ @]+\\.[^ @]+$'))
+        && request.resource.data.qualification is string
+        && request.resource.data.qualification.size() <= 60
+        && request.resource.data.specialties is list
+        && request.resource.data.specialties.size() >= 1
+        && request.resource.data.specialties.size() <= 15
+        && request.resource.data.otherSpecialty is string
+        && request.resource.data.otherSpecialty.size() <= 120
+        && request.resource.data.specificSpecialty is string
+        && request.resource.data.specificSpecialty.size() <= 160
+        && request.resource.data.hasTrainingExperience is bool
+        && request.resource.data.notes is string
+        && request.resource.data.notes.size() <= 2000
+        && request.resource.data.cvName is string
+        && request.resource.data.cvName.size() <= 200
+        && request.resource.data.cvSize is int
+        && request.resource.data.cvSize >= 0
+        && request.resource.data.cvSize <= 10485760
+        && request.resource.data.cvChunks is int
+        && request.resource.data.cvChunks >= 0
+        && request.resource.data.cvChunks <= 30
+        && request.resource.data.createdAt == request.time
+        && !exists(/databases/$(database)/documents/trainer_phones/$(request.resource.data.phone))
+        && existsAfter(/databases/$(database)/documents/trainer_phones/$(request.resource.data.phone))
+        && getAfter(/databases/$(database)/documents/trainer_phones/$(request.resource.data.phone)).data.trainerId == id;
+
+      allow get, list, update, delete: if isSiteAdmin();
+    }
+
+    // ── قطع ملفات السير الذاتية للمدربين والمدربات (trainer_cv_chunks) ──
+    match /trainer_cv_chunks/{id} {
+      allow create: if request.resource.data.keys().hasAll(['trainerId', 'idx', 'data'])
+        && request.resource.data.keys().hasOnly(['trainerId', 'idx', 'data'])
+        && request.resource.data.trainerId is string
+        && request.resource.data.idx is int
+        && request.resource.data.idx >= 0
+        && request.resource.data.idx < 30
+        && request.resource.data.data is string
+        && request.resource.data.data.size() <= 700000
+        && existsAfter(/databases/$(database)/documents/trainers/$(request.resource.data.trainerId));
+      allow get, list, update, delete: if isSiteAdmin();
+    }
+
+    // ── فهرس منع تكرار أرقام الجوال للمدربين (مغلق عن القراءة العامة بالكامل) ──
+    match /trainer_phones/{phone} {
+      allow create: if phone.matches('^05[0-9]{8}$')
+        && !exists(/databases/$(database)/documents/trainer_phones/$(phone))
+        && request.resource.data.keys().hasAll(['trainerId', 'createdAt'])
+        && request.resource.data.keys().hasOnly(['trainerId', 'createdAt'])
+        && request.resource.data.trainerId is string
+        && request.resource.data.trainerId.size() >= 6
+        && request.resource.data.createdAt == request.time
+        && existsAfter(/databases/$(database)/documents/trainers/$(request.resource.data.trainerId));
+
+      allow get, list, update: if false;
+      allow delete: if isSiteAdmin();
     }
 
     // ── الاستبيانات الخاصة بورش العمل (surveys) ──

@@ -1,0 +1,21 @@
+# استبدل wa.arthwhdarh.com بنطاقك أو بنطاقك الفرعي في Cloudflare
+# تمنحك Caddy شهادة SSL مجانية وتلقائية مع حماية متقدمة
+
+wa.arthwhdarh.com {
+    reverse_proxy openwa:2785 {
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # حماية الترويسات الأمنية
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+
+    encode gzip
+}

@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  openwa:
+    image: openwa/wa-automate:latest
+    container_name: erth-openwa
+    restart: always
+    ports:
+      - "2785:2785"
+    environment:
+      - PORT=2785
+      - API_KEY=${OPENWA_API_KEY}
+      - CHROME_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage,--disable-accelerated-2d-canvas,--no-first-run,--no-zygote,--single-process,--disable-gpu
+      - POPUP=false
+      - HEADLESS=true
+      - USE_CHROME=true
+      - MULTI_DEVICE=true
+      - QR_TIMEOUT=0
+      - AUTO_REFRESH_INTERVAL=0
+    volumes:
+      - ./openwa-data:/app/data
+      - ./openwa-sessions:/root/.openwa
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2785/api/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+  # (اختياري) خدمة Caddy لتوليد شهادة SSL تلقائية وحماية النطاق بـ HTTPS
+  caddy:
+    image: caddy:2-alpine
+    container_name: erth-openwa-caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy-data:/data
+      - ./caddy-config:/config
+    depends_on:
+      - openwa

@@ -38,7 +38,7 @@
     ───────────────────────────────────────────────────────── */
     function initNavHighlight() {
         var path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
-        var navLinks = document.querySelectorAll('.nav-links a, .mobile-menu-links a');
+        var navLinks = document.querySelectorAll('.nav-links a, .nav-drawer a');
 
         navLinks.forEach(function (link) {
             var href = (link.getAttribute('href') || '').toLowerCase().replace(/^\/+|\/+$/g, '');

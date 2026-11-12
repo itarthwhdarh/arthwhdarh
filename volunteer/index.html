@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -57,13 +57,19 @@
 </head>
 <body>
 
-<div class="site-wrapper">
-
     <!-- ════════════════════════════════════════
          NAVIGATION (Unified Site Navbar)
     ════════════════════════════════════════ -->
     <nav class="nav-container" id="mainNav" aria-label="التنقل الرئيسي">
-        <div class="logo-area-nav">
+        <button type="button" class="nav-drawer-trigger" id="navDrawerTrigger" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="navDrawer">
+            <svg class="nav-drawer-trigger-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <line class="nd-bar nd-bar-top" x1="4" y1="8.5" x2="20" y2="8.5" />
+                <line class="nd-bar nd-bar-bot" x1="20" y1="15.5" x2="4" y2="15.5" />
+                <path class="nd-gem" d="M5.2 13.7 L7 15.5 L5.2 17.3 L3.4 15.5 Z" />
+            </svg>
+            <span class="nav-drawer-trigger-label">القائمة</span>
+        </button>
+        <a href="/" class="logo-area-nav" aria-label="الانتقال إلى الصفحة الرئيسية — جمعية إرث وحضارة بالقريات">
             <img
                 src="../assets/الشعار/الشعار.png"
                 alt="شعار جمعية إرث وحضارة بالقريات"
@@ -71,58 +77,129 @@
                 loading="eager"
             >
             <span class="association-name-nav">جمعية إرث وحضارة بالقريات</span>
-        </div>
-        <div class="nav-links">
-            <a href="/">الرئيسية</a>
-            <a href="/activities/">الفعاليات</a>
-            <a href="/workshops/">ورش العمل</a>
-            <a href="/volunteer/" class="active">التطوع</a>
-            <a href="/news/">الأخبار</a>
-            <a href="/calendar/">الرزنامة</a>
-            <a href="/friends/">أصدقاء الجمعية</a>
-            <a href="/crafts/">بيدي حرفة</a>
-            <a href="/partnerships/">الشراكات</a>
-            <a href="/reports/">الحوكمة</a>
-            <a href="/board/">مجلس الإدارة</a>
-            <a href="/careers/">التوظيف</a>
-            <a href="/contact/">اتصل بنا</a>
-        </div>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileMenu">
-            <span class="mobile-toggle-bar"></span>
-            <span class="mobile-toggle-bar"></span>
-            <span class="mobile-toggle-bar"></span>
-        </button>
+        </a>
     </nav>
 
-    <!-- ══ MOBILE MENU ══ -->
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <div class="mobile-menu-panel">
-            <div class="mobile-menu-head">
-                <span class="association-name-nav">القائمة</span>
-                <button class="mobile-close" id="mobileClose" aria-label="إغلاق القائمة">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                        <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                    </svg>
-                </button>
+    <!-- ══ MAIN DRAWER NAVIGATION ══ -->
+    <div class="nav-drawer-overlay" id="navDrawerOverlay" aria-hidden="true"></div>
+    <aside class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="القائمة الرئيسية" aria-hidden="true">
+        <div class="nav-drawer-head">
+            <div class="nav-drawer-brand">
+                <img src="../assets/الشعار/الشعار.png" alt="شعار جمعية إرث وحضارة بالقريات" class="nav-drawer-brand-logo">
+                <div class="nav-drawer-brand-text">
+                    <span class="nav-drawer-brand-title">جمعية إرث وحضارة</span>
+                    <span class="nav-drawer-brand-sub">القريات · منطقة الجوف</span>
+                </div>
             </div>
-            <nav class="mobile-menu-links" aria-label="التنقل في الجوال">
-                <a href="/">الرئيسية</a>
-                <a href="/activities/">الفعاليات</a>
-                <a href="/workshops/">ورش العمل</a>
-                <a href="/volunteer/" class="active">التطوع</a>
-                <a href="/news/">الأخبار</a>
-                <a href="/calendar/">الرزنامة</a>
-                <a href="/friends/">أصدقاء الجمعية</a>
-                <a href="/crafts/">بيدي حرفة</a>
-                <a href="/partnerships/">الشراكات</a>
-                <a href="/reports/">الحوكمة</a>
-                <a href="/board/">مجلس الإدارة</a>
-                <a href="/careers/">التوظيف</a>
-                <a href="/contact/">اتصل بنا</a>
-            </nav>
+            <button type="button" class="nav-drawer-close" id="navDrawerClose" aria-label="إغلاق القائمة">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+            </button>
         </div>
-    </div>
 
+        <nav class="nav-drawer-body" aria-label="روابط الموقع">
+            <ul class="nav-drawer-list">
+                <li class="nav-drawer-item">
+                    <a href="/" class="nav-drawer-link">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>الرئيسية</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-drawer-item nav-drawer-group">
+                    <button type="button" class="nav-drawer-accordion-btn" aria-expanded="false" aria-controls="navGroupPrograms">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>البرامج والفعاليات</span>
+                        </span>
+                        <svg class="nav-drawer-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-drawer-accordion-panel" id="navGroupPrograms" aria-hidden="true">
+                        <div class="nav-drawer-accordion-inner">
+                            <ul class="nav-drawer-sublist">
+                                <li class="nav-drawer-subitem"><a href="/activities/" class="nav-drawer-sublink">الفعاليات</a></li>
+                                <li class="nav-drawer-subitem"><a href="/workshops/" class="nav-drawer-sublink">ورش العمل</a></li>
+                                <li class="nav-drawer-subitem"><a href="/crafts/" class="nav-drawer-sublink">بيدي حرفة</a></li>
+                                <li class="nav-drawer-subitem"><a href="/calendar/" class="nav-drawer-sublink">الرزنامة</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-drawer-item nav-drawer-group">
+                    <button type="button" class="nav-drawer-accordion-btn" aria-expanded="false" aria-controls="navGroupCommunity">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>المجتمع والشراكات</span>
+                        </span>
+                        <svg class="nav-drawer-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-drawer-accordion-panel" id="navGroupCommunity" aria-hidden="true">
+                        <div class="nav-drawer-accordion-inner">
+                            <ul class="nav-drawer-sublist">
+                                <li class="nav-drawer-subitem"><a href="/volunteer/" class="nav-drawer-sublink active">التطوع</a></li>
+                                <li class="nav-drawer-subitem"><a href="/friends/" class="nav-drawer-sublink">أصدقاء الجمعية</a></li>
+                                <li class="nav-drawer-subitem"><a href="/partnerships/" class="nav-drawer-sublink">الشراكات</a></li>
+                                <li class="nav-drawer-subitem"><a href="/trainers/" class="nav-drawer-sublink">تسجيل المدربين والمدربات</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-drawer-item nav-drawer-group">
+                    <button type="button" class="nav-drawer-accordion-btn" aria-expanded="false" aria-controls="navGroupAbout">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>الجمعية والحوكمة</span>
+                        </span>
+                        <svg class="nav-drawer-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-drawer-accordion-panel" id="navGroupAbout" aria-hidden="true">
+                        <div class="nav-drawer-accordion-inner">
+                            <ul class="nav-drawer-sublist">
+                                <li class="nav-drawer-subitem"><a href="/board/" class="nav-drawer-sublink">مجلس الإدارة</a></li>
+                                <li class="nav-drawer-subitem"><a href="/reports/" class="nav-drawer-sublink">الحوكمة</a></li>
+                                <li class="nav-drawer-subitem"><a href="/careers/" class="nav-drawer-sublink">اعمل معنا</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-drawer-item">
+                    <a href="/news/" class="nav-drawer-link">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>الأخبار</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-drawer-item">
+                    <a href="/contact/" class="nav-drawer-link">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>اتصل بنا</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="nav-drawer-foot">
+            <p class="nav-drawer-foot-text">حفظ التراث وبناء الهوية الثقافية</p>
+        </div>
+    </aside>
+
+<div class="site-wrapper">
     <!-- ════════════════════════════════════════════════════════
          SECTION 1 & 2: HERO & PROGRAMME DEFINITION
          1. عنوان برنامج التطوع
@@ -432,7 +509,7 @@
         <li><a href="/volunteer/">التطوع</a></li>
         <li><a href="/news/">الأخبار</a></li>
         <li><a href="/crafts/">بيدي حرفة</a></li>
-        <li><a href="/careers/">التوظيف</a></li>
+        <li><a href="/careers/">اعمل معنا</a></li>
         <li><a href="/board/">مجلس الإدارة</a></li>
       </ul>
     </div>
@@ -1157,39 +1234,7 @@ $('vlConfirmBtn')?.addEventListener('click', async () => {
 </script>
 
 <script src="../volunteer.js"></script>
+<script src="../nav-drawer.js" defer></script>
 <script type="module" src="../maintenance.js"></script>
-
-<script>
-(function(){
-    var nav = document.getElementById('mainNav');
-    if(nav){
-        var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 20); };
-        window.addEventListener('scroll', onScroll, {passive:true});
-        onScroll();
-    }
-
-    var toggle = document.getElementById('mobileToggle');
-    var menu   = document.getElementById('mobileMenu');
-    var mclose = document.getElementById('mobileClose');
-    if(toggle && menu && mclose){
-        var openMenu = function(){
-            menu.classList.add('open');
-            menu.setAttribute('aria-hidden','false');
-            toggle.setAttribute('aria-expanded','true');
-            document.body.style.overflow='hidden';
-        };
-        var shutMenu = function(){
-            menu.classList.remove('open');
-            menu.setAttribute('aria-hidden','true');
-            toggle.setAttribute('aria-expanded','false');
-            document.body.style.overflow='';
-        };
-        toggle.addEventListener('click', openMenu);
-        mclose.addEventListener('click', shutMenu);
-        menu.addEventListener('click', function(e){ if(e.target===menu) shutMenu(); });
-        document.addEventListener('keydown', function(e){ if(e.key==='Escape') shutMenu(); });
-    }
-})();
-</script>
 </body>
 </html>

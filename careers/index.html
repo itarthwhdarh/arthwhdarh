@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>التوظيف | جمعية إرث وحضارة بالقريات</title>
-    <meta name="description" content="انضم إلى فريق جمعية إرث وحضارة بالقريات. تصفّح الوظائف المتاحة وقدّم طلبك للمساهمة في حفظ التراث وبناء الهوية الثقافية.">
+    <title>اعمل معنا | جمعية إرث وحضارة بالقريات</title>
+    <meta name="description" content="كن جزءاً من فريق يسهم في المحافظة على التراث وإحياء الموروث الثقافي، وشاركنا صناعة أثر مستدام من خلال الفرص الوظيفية المتاحة في جمعية إرث وحضارة.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://arthwhdarh.org.sa/careers/">
 
@@ -17,8 +17,8 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="جمعية إرث وحضارة بالقريات">
     <meta property="og:url" content="https://arthwhdarh.org.sa/careers/">
-    <meta property="og:title" content="التوظيف | جمعية إرث وحضارة بالقريات">
-    <meta property="og:description" content="انضم إلى فريق جمعية إرث وحضارة بالقريات.">
+    <meta property="og:title" content="اعمل معنا | جمعية إرث وحضارة بالقريات">
+    <meta property="og:description" content="كن جزءاً من فريق يسهم في المحافظة على التراث وإحياء الموروث الثقافي في جمعية إرث وحضارة بالقريات.">
     <meta property="og:image" content="https://arthwhdarh.org.sa/assets/الشعار/الشعار.png">
     <meta property="og:locale" content="ar_SA">
 
@@ -30,90 +30,1388 @@
     <script>document.documentElement.className+=" mnt-checking";window.__mntFailsafe=setTimeout(function(){document.documentElement.classList.remove("mnt-checking");},3500);</script>
 
     <style>
-      /* إضافات بسيطة خاصة بالتوظيف — باقي التصميم من workshops.css */
-      /* شريط الميتا (نوع/مكان/تواريخ) على هيئة بطاقات صغيرة بأيقونات */
-      .jd-meta { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
-      .jd-meta .item { display:flex; align-items:center; gap:11px; background:var(--c-bg-soft); border:1px solid var(--c-border-soft); border-radius:var(--r-md); padding:12px 14px; }
-      .jd-meta .ic { width:34px; height:34px; flex-shrink:0; border-radius:10px; background:var(--c-gold-pale); color:var(--c-gold); display:grid; place-items:center; font-size:0.9rem; }
-      .jd-meta .lbl { font-size:0.68rem; letter-spacing:0.05em; color:var(--c-text-muted); font-weight:600; margin-bottom:2px; }
-      .jd-meta .val { font-size:0.9rem; font-weight:700; color:var(--c-text-primary); line-height:1.3; }
-      /* أقسام الوصف والمهام */
-      .jd-sec { position:relative; margin-bottom:16px; background:var(--c-surface); border:1px solid var(--c-border-soft); border-radius:var(--r-md); padding:16px 18px 16px 18px; }
-      .jd-sec::before { content:""; position:absolute; top:16px; bottom:16px; right:0; width:3px; border-radius:3px; background:var(--c-gold); }
-      .jd-sec h4 { display:flex; align-items:center; gap:8px; font-size:0.9rem; font-weight:800; color:var(--c-text-primary); margin-bottom:10px; }
-      .jd-sec h4 i { color:var(--c-gold); font-size:0.85rem; }
-      .jd-sec .body { font-size:0.92rem; line-height:1.95; color:var(--c-text-secondary); white-space:pre-wrap; }
-      /* قوائم المهام: كل سطر يصبح عنصر قائمة بنقطة ذهبية */
-      .jd-list { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
-      .jd-list li { position:relative; padding-right:20px; font-size:0.92rem; line-height:1.8; color:var(--c-text-secondary); }
-      .jd-list li::before { content:""; position:absolute; top:0.62em; right:4px; width:6px; height:6px; border-radius:50%; background:var(--c-gold); }
-      .cr-privacy-note { background:var(--c-bg-soft); border:1px solid var(--c-border-soft); border-radius:var(--r-md); padding:14px 16px; font-size:0.82rem; line-height:1.75; color:var(--c-text-secondary); margin-bottom:22px; }
-      .cr-privacy-note strong { color:var(--c-text-primary); }
-      .bdy-file-note { font-size:11.5px; color:var(--c-text-muted); }
-      .bdy-consent { display:flex; gap:10px; align-items:flex-start; font-size:13.5px; line-height:1.7; color:var(--c-text-secondary); cursor:pointer; }
-      .bdy-consent input { width:auto; margin-top:3px; flex-shrink:0; accent-color:var(--c-gold); }
-      .cr-result { text-align:center; padding:30px 10px; }
-      .cr-result .ico { width:64px; height:64px; border-radius:50%; display:grid; place-items:center; margin:0 auto 16px; font-size:28px; }
-      .cr-result.ok .ico { background:rgba(58,94,46,0.12); color:#2e6022; }
-      .cr-result.info .ico { background:var(--c-gold-pale); color:var(--c-gold); }
-      .cr-result h3 { font-size:1.3rem; font-weight:800; color:var(--c-text-primary); margin-bottom:8px; }
-      .cr-result p { font-size:0.95rem; color:var(--c-text-secondary); line-height:1.8; margin-bottom:22px; }
-      @media (max-width:560px){ .ws-detail-grid { grid-template-columns:1fr; } }
+      /* ═══════════════════════════════════════════════════════════════════
+         CAREERS / اعمل معنا — جمعية إرث وحضارة بالقريات
+      ═══════════════════════════════════════════════════════════════════ */
 
-      /* التمرير يكون داخل النافذة نفسها لا في الخلفية */
-      #crOverlay { align-items:center; overflow:hidden; }
-      #crOverlay .ws-modal-shell { max-height:90vh; display:flex; flex-direction:column; overflow:hidden; }
-      #crOverlay .ws-modal-head { flex-shrink:0; }
-      #crOverlay .ws-modal-body { flex:1 1 auto; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+      :root {
+        --c-olive: #6d7448;
+        --c-olive-hover: #585f38;
+        --c-olive-soft: rgba(109, 116, 72, 0.12);
+        --c-sand: #f5f1e9;
+        --c-sand-hover: #efe9dc;
+        --c-brown-deep: #2c2219;
+      }
 
-      /* ═══ حركة الإرسال: النموذج يتحول إلى ورقة تُكتب وتلتف، ثم يأخذها طير ويطير بها خارج الصفحة ═══ */
-      .cr-send-stage { position:relative; }
-      .cr-send-body { transition:opacity .5s ease .1s, transform .6s cubic-bezier(.2,.7,.2,1) .05s; }
-      .cr-send-stage.sending .cr-send-body { opacity:0; transform:scale(.97); transition:opacity .3s ease .05s, transform .35s cubic-bezier(.4,0,.2,1) .03s; }
+      /* ── إزالة الإزاحة العلوية الموروثة من design-system.css على body حتى يبدأ الهيدر من أعلى الشاشة تماماً ── */
+      html body {
+        padding-top: 0;
+      }
 
-      /* ===== الورقة ===== */
+      /* ── ضبط الهيدر في صفحة «اعمل معنا» ليكون في أعلى الصفحة تماماً دون فراغ فوقه أو تحته ── */
+      .nav-container,
+      .nav-container.scrolled {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        min-height: 70px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background-color: rgba(248, 246, 242, 0.96);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(184, 136, 62, 0.16);
+      }
+
+      @media (max-width: 760px) {
+        .nav-container,
+        .nav-container.scrolled {
+          min-height: 62px;
+          padding-top: 6px;
+          padding-bottom: 6px;
+        }
+      }
+
+      /* ── القسم العلوي (Hero) بعرض الصفحة بالكامل ── */
+      .cr-page-hero {
+        position: relative;
+        width: 100vw;
+        margin-inline: calc(50% - 50vw);
+        margin-top: 0;
+        min-height: clamp(270px, 38vh, 410px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #2c2219;
+      }
+
+      @media (max-width: 760px) {
+        .cr-page-hero {
+          margin-top: 0;
+          min-height: 240px;
+        }
+      }
+
+      .cr-page-hero__bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 48%;
+        transform: scale(1.02);
+      }
+
+      .cr-page-hero__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(28, 22, 16, 0.42) 0%, rgba(28, 22, 16, 0.68) 100%);
+      }
+
+      .cr-page-hero__accent {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, rgba(184, 136, 62, 0.25), var(--c-gold, #b8883e), rgba(184, 136, 62, 0.25));
+      }
+
+      .cr-page-hero__content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 40px 24px;
+        max-width: 780px;
+      }
+
+      .cr-page-hero__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #ead6b0;
+        margin-bottom: 10px;
+      }
+
+      .cr-page-hero__title {
+        font-size: clamp(2.1rem, 4.8vw, 3.3rem);
+        font-weight: 800;
+        color: #ffffff;
+        margin: 0;
+        line-height: 1.25;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      }
+
+      /* ── القسم التعريفي ── */
+      .cr-intro-band {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: clamp(34px, 5vw, 56px) 12px clamp(26px, 4vw, 40px);
+        text-align: center;
+      }
+
+      .cr-intro-lead {
+        font-size: clamp(1.02rem, 1.8vw, 1.22rem);
+        line-height: 2;
+        color: var(--c-text-secondary, #5a5650);
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .cr-intro-divider {
+        width: 56px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--c-gold, #b8883e), transparent);
+        margin: 22px auto 0;
+      }
+
+      /* ── قسم الوظائف المنشورة ── */
+      .cr-jobs-section {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 12px 0 48px;
+      }
+
+      .cr-section-head {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 18px;
+      }
+
+      .cr-section-title {
+        font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+        font-weight: 500;
+        color: #5c5247;
+        margin: 0;
+        letter-spacing: 0;
+      }
+
+      /* قائمة البطاقات الأفقية الرملية */
+      .job-rows-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .job-row-card {
+        display: grid;
+        grid-template-columns: minmax(220px, 1.35fr) minmax(320px, 1.8fr) auto;
+        align-items: center;
+        gap: 24px;
+        background: var(--c-sand, #f5f1e9);
+        border: 1px solid rgba(156, 110, 56, 0.14);
+        border-radius: 14px;
+        padding: 20px 26px;
+      }
+
+      .job-row-title-col {
+        min-width: 0;
+      }
+
+      .job-row-title {
+        font-size: 1.08rem;
+        font-weight: 800;
+        color: var(--c-brown-deep, #2c2219);
+        margin: 0;
+        line-height: 1.45;
+      }
+
+      .job-row-dept {
+        display: inline-block;
+        margin-top: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--c-gold-deep, #9c6e38);
+      }
+
+      .job-row-meta {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        align-items: start;
+      }
+
+      .job-row-meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        min-width: 0;
+      }
+
+      .job-row-meta-label {
+        font-size: 0.74rem;
+        font-weight: 600;
+        color: var(--c-text-muted, #8a8478);
+      }
+
+      .job-row-meta-val {
+        font-size: 0.86rem;
+        font-weight: 700;
+        color: var(--c-brown-deep, #2c2219);
+        line-height: 1.4;
+      }
+
+      .job-row-action {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .job-apply-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: var(--c-olive, #6d7448);
+        color: #ffffff;
+        border: none;
+        font-family: inherit;
+        font-size: 0.88rem;
+        font-weight: 700;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+      }
+
+      .job-apply-pill:hover {
+        background: var(--c-olive-hover, #585f38);
+        box-shadow: 0 6px 16px -4px rgba(88, 95, 56, 0.35);
+      }
+
+      .job-apply-pill i {
+        font-size: 0.8rem;
+        transition: transform .2s ease;
+      }
+
+      .job-apply-pill:hover i {
+        transform: translateX(-3px);
+      }
+
+      @media (max-width: 900px) {
+        .job-row-card {
+          grid-template-columns: 1fr;
+          gap: 16px;
+          padding: 20px;
+        }
+        .job-row-meta {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          padding-top: 12px;
+          border-top: 1px solid rgba(156, 110, 56, 0.12);
+        }
+        .job-row-action {
+          justify-content: stretch;
+        }
+        .job-apply-pill {
+          width: 100%;
+          padding: 12px 20px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .job-row-meta {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+      }
+
+      /* زر التقديم الرئيسي في صفحة التفاصيل */
+      .cr-hero-cta-row {
+        margin-top: 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .cr-primary-apply-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 28px;
+        border-radius: 999px;
+        background: var(--c-olive, #6d7448);
+        color: #ffffff;
+        border: none;
+        font-family: inherit;
+        font-size: 0.96rem;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 8px 22px -6px rgba(88, 95, 56, 0.4);
+        transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+      }
+
+      .cr-primary-apply-btn:hover {
+        background: var(--c-olive-hover, #585f38);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 26px -6px rgba(88, 95, 56, 0.45);
+      }
+
+      .cr-apply-prompt-box {
+        background: var(--c-sand, #f5f1e9);
+        border: 1px solid rgba(156, 110, 56, 0.22);
+        border-radius: 22px;
+        padding: 30px 24px;
+        text-align: center;
+      }
+
+      .cr-apply-prompt-box h3 {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--c-brown-deep, #2c2219);
+        margin: 0 0 8px;
+      }
+
+      .cr-apply-prompt-box p {
+        font-size: 0.9rem;
+        color: var(--c-text-secondary, #5a5650);
+        line-height: 1.75;
+        margin: 0 0 20px;
+      }
+
+      .cr-extra-doc-box {
+        background: var(--c-bg-soft, #fbf9f5);
+        border: 1px solid rgba(28, 26, 23, 0.1);
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+
+      .cr-extra-doc-input {
+        width: 100%;
+        font-family: inherit;
+        font-size: 0.84rem;
+        color: var(--c-text-secondary, #5a5650);
+      }
+
+      .job-dept-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: var(--c-bg-soft, #fbf9f5);
+        border: 1px solid rgba(28, 26, 23, 0.08);
+        color: var(--c-text-secondary, #5a5650);
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+
+      .job-type-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: var(--c-gold-pale, rgba(184, 136, 62, 0.12));
+        color: var(--c-gold-deep, #9c6e38);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .job-card-btn {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: var(--c-olive, #6d7448);
+        color: #ffffff;
+        border: 1px solid var(--c-olive, #6d7448);
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all .2s ease;
+      }
+
+      .job-card-btn:hover {
+        background: var(--c-olive-hover, #585f38);
+        border-color: var(--c-olive-hover, #585f38);
+      }
+
+      /* ═══════════════════════════════════════════════════════════════════
+         عرض تفاصيل الوظيفة والتقديم بكامل الصفحة (FULL-PAGE VIEW)
+      ═══════════════════════════════════════════════════════════════════ */
+      .cr-view-section {
+        display: block;
+        animation: crFadeIn .3s ease-out;
+      }
+
+      .cr-view-section.is-hidden {
+        display: none !important;
+      }
+
+      #crDetailView {
+        padding-top: 0;
+        padding-bottom: 40px;
+      }
+
+      @keyframes crFadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ── بانر تفاصيل الوظيفة المتدرج بعرض الشاشة (مطابق للمرجع الثاني) ── */
+      .cr-detail-banner {
+        position: relative;
+        width: 100vw;
+        margin-inline: calc(50% - 50vw);
+        margin-top: 0;
+        background: linear-gradient(108deg, #686256 0%, #7d5336 38%, #9c4e24 68%, #4d2e1c 100%);
+        padding: 26px 0 30px;
+        color: #ffffff;
+      }
+
+      @media (max-width: 760px) {
+        .cr-detail-banner {
+          margin-top: 0;
+          padding: 20px 0 24px;
+        }
+      }
+
+      .cr-detail-banner__inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .cr-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        font-size: 0.78rem;
+        color: rgba(255, 255, 255, 0.78);
+        margin-bottom: 10px;
+      }
+
+      .cr-breadcrumb a {
+        color: rgba(255, 255, 255, 0.92);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .cr-breadcrumb a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+      }
+
+      .cr-breadcrumb span[aria-hidden="true"] {
+        opacity: 0.55;
+      }
+
+      .cr-banner-title {
+        font-size: clamp(1.32rem, 2.3vw, 1.82rem);
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0;
+        line-height: 1.35;
+      }
+
+      /* ── تخطيط العمودين المدمج (مطابق للمرجع الثاني) ── */
+      .cr-main-layout {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 34px 24px 24px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.75fr) minmax(250px, 0.88fr);
+        gap: 48px;
+        align-items: start;
+      }
+
+      @media (max-width: 860px) {
+        .cr-main-layout {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          padding: 24px 16px 20px;
+        }
+      }
+
+      /* العمود الأيمن: المحتوى الرئيسي بدون بطاقات ضخمة */
+      .cr-details-col {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .cr-sec-block {
+        padding-bottom: 4px;
+      }
+
+      .cr-sec-heading {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 1.06rem;
+        font-weight: 800;
+        color: var(--c-brown-deep, #2c2219);
+        margin: 0 0 10px;
+        line-height: 1.4;
+      }
+
+      .cr-sec-icon {
+        width: 18px;
+        height: 18px;
+        color: #7c6f5e;
+        flex-shrink: 0;
+      }
+
+      .cr-sec-text {
+        font-size: 0.88rem;
+        line-height: 1.85;
+        color: var(--c-text-secondary, #5a5650);
+        margin: 0;
+        white-space: pre-wrap;
+      }
+
+      .cr-sec-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .cr-sec-list li {
+        position: relative;
+        padding-right: 16px;
+        font-size: 0.88rem;
+        line-height: 1.8;
+        color: var(--c-text-secondary, #5a5650);
+      }
+
+      .cr-sec-list li::before {
+        content: "";
+        position: absolute;
+        top: 10px;
+        right: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #9c6e38;
+      }
+
+      /* العمود الأيسر: جدول المعلومات المبسط + زر التقديم */
+      .cr-apply-col {
+        position: sticky;
+        top: 90px;
+      }
+
+      @media (max-width: 860px) {
+        .cr-apply-col {
+          position: static;
+        }
+      }
+
+      .cr-meta-table {
+        border-top: 1px solid rgba(28, 26, 23, 0.14);
+      }
+
+      .cr-meta-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(28, 26, 23, 0.14);
+        font-size: 0.84rem;
+      }
+
+      .cr-meta-row__label {
+        color: var(--c-text-muted, #8a8478);
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .cr-meta-row__val {
+        color: var(--c-brown-deep, #2c2219);
+        font-weight: 700;
+        text-align: left;
+      }
+
+      .cr-bronze-apply-btn {
+        width: 100%;
+        min-height: 44px;
+        margin-top: 18px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: #a45123;
+        color: #ffffff;
+        border: none;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: background-color 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .cr-bronze-apply-btn:hover {
+        background: #8b421a;
+      }
+
+      .cr-bronze-apply-btn:active {
+        transform: scale(0.97);
+      }
+
+      .cr-detail-actions-sub {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .cr-text-link-btn {
+        background: none;
+        border: none;
+        padding: 4px 2px;
+        font-family: inherit;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--c-text-muted, #8a8478);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        transition: color 180ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .cr-text-link-btn:hover {
+        color: var(--c-brown-deep, #2c2219);
+      }
+
+      /* ── نافذة التقديم المنبثقة (Application Modal) ── */
+      html.cr-modal-open,
+      body.cr-modal-open {
+        overflow: hidden;
+      }
+
+      .cr-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2500;
+        background: rgba(28, 23, 18, 0.48);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 220ms cubic-bezier(0.23, 1, 0.32, 1), visibility 220ms ease;
+      }
+
+      .cr-modal-overlay.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      /* Double-Bezel Outer Shell */
+      .cr-modal-dialog {
+        position: relative;
+        z-index: 2501;
+        width: min(920px, calc(100vw - 40px));
+        max-height: min(90vh, 860px);
+        padding: 6px;
+        background: rgba(245, 239, 230, 0.94);
+        border: 1px solid rgba(184, 136, 62, 0.28);
+        border-radius: 22px;
+        box-shadow:
+          0 28px 64px -18px rgba(44, 34, 25, 0.24),
+          0 10px 24px -10px rgba(44, 34, 25, 0.10),
+          inset 0 1px 0 rgba(255, 255, 255, 0.75);
+        display: flex;
+        flex-direction: column;
+        transform: translateY(10px) scale(0.96);
+        opacity: 0;
+        transition: transform 250ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .cr-modal-overlay.is-open .cr-modal-dialog {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      /* Concentric Inner Core */
+      .cr-modal-core {
+        background: #fdfcfa;
+        border: 1px solid rgba(156, 110, 56, 0.16);
+        border-radius: 16px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-height: 100%;
+        flex: 1;
+        min-height: 0;
+      }
+
+      .cr-modal-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 26px 15px;
+        background: linear-gradient(180deg, #faf6ef 0%, #f6f0e6 100%);
+        border-bottom: 1px solid rgba(184, 136, 62, 0.18);
+        flex-shrink: 0;
+      }
+
+      .cr-modal-title-wrap {
+        text-align: right;
+        min-width: 0;
+      }
+
+      .cr-modal-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #8e4a24;
+        background: rgba(184, 136, 62, 0.12);
+        border: 1px solid rgba(184, 136, 62, 0.22);
+        padding: 2px 10px;
+        border-radius: 999px;
+        margin-bottom: 7px;
+      }
+
+      .cr-modal-title {
+        font-size: 1.18rem;
+        font-weight: 800;
+        color: var(--c-brown-deep, #2c2219);
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+
+      .cr-modal-subtitle {
+        font-size: 0.84rem;
+        color: #6b6359;
+        margin: 4px 0 0;
+      }
+
+      .cr-modal-subtitle strong {
+        color: var(--c-brown-deep, #2c2219);
+        font-weight: 700;
+      }
+
+      .cr-modal-close {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid rgba(156, 110, 56, 0.2);
+        background: #ffffff;
+        color: #5a4e42;
+        font-size: 1.15rem;
+        line-height: 1;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px -2px rgba(44, 34, 25, 0.08);
+        transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .cr-modal-close:hover:not(:disabled) {
+        background: #f3ebe0;
+        color: #1c1a17;
+        border-color: rgba(184, 136, 62, 0.4);
+      }
+
+      .cr-modal-close:active:not(:disabled) {
+        transform: scale(0.94);
+      }
+
+      .cr-modal-close:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .cr-modal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 26px 22px;
+        background: #fdfcfa;
+        overscroll-behavior: contain;
+      }
+
+      .cr-form-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .cr-form-section {
+        padding: 0;
+        border: none;
+        background: transparent;
+      }
+
+      .cr-form-section + .cr-form-section {
+        padding-top: 15px;
+        border-top: 1px solid rgba(184, 136, 62, 0.16);
+      }
+
+      .cr-form-section__title {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #6b452b;
+        margin: 0 0 11px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .cr-form-section__dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 7px;
+        background: rgba(184, 136, 62, 0.13);
+        border: 1px solid rgba(184, 136, 62, 0.24);
+        color: #8e4a24;
+        display: grid;
+        place-items: center;
+        font-size: 0.7rem;
+        flex-shrink: 0;
+      }
+
+      .cr-form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 11px 14px;
+        align-items: start;
+      }
+
+      .cr-form-grid--2col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cr-col-full {
+        grid-column: 1 / -1;
+      }
+
+      .cr-modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        padding: 14px 26px;
+        background: linear-gradient(180deg, #faf6ef 0%, #f5efe4 100%);
+        border-top: 1px solid rgba(184, 136, 62, 0.18);
+        flex-shrink: 0;
+      }
+
+      .cr-modal-footer .cr-submit-btn {
+        width: auto;
+        min-width: 210px;
+        margin-top: 0;
+        background: linear-gradient(135deg, #9c5328 0%, #7d3e1c 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 999px;
+        padding: 6px 20px 6px 7px;
+        min-height: 42px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px -8px rgba(125, 62, 28, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease, filter 180ms ease;
+      }
+
+      .cr-submit-btn__icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        display: grid;
+        place-items: center;
+        font-size: 0.76rem;
+        flex-shrink: 0;
+        transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 180ms ease;
+      }
+
+      .cr-modal-footer .cr-submit-btn:hover:not(:disabled) {
+        filter: brightness(1.05);
+        box-shadow: 0 12px 24px -8px rgba(125, 62, 28, 0.52), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      }
+
+      .cr-modal-footer .cr-submit-btn:hover:not(:disabled) .cr-submit-btn__icon {
+        transform: translateX(-2px);
+        background: rgba(255, 255, 255, 0.26);
+      }
+
+      .cr-modal-footer .cr-submit-btn:active:not(:disabled) {
+        transform: scale(0.97);
+      }
+
+      .cr-modal-footer .cr-submit-btn:disabled {
+        opacity: 0.72;
+        cursor: wait;
+        transform: none;
+      }
+
+      .cr-modal-cancel-btn {
+        min-height: 40px;
+        padding: 8px 22px;
+        border-radius: 999px;
+        border: 1px solid rgba(156, 110, 56, 0.22);
+        background: #ffffff;
+        color: #53483c;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 160ms ease, border-color 160ms ease, transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .cr-modal-cancel-btn:hover:not(:disabled) {
+        background: #f3ebe0;
+        border-color: rgba(156, 110, 56, 0.38);
+      }
+
+      .cr-modal-cancel-btn:active:not(:disabled) {
+        transform: scale(0.97);
+      }
+
+      .cr-modal-cancel-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      @media (max-width: 900px) {
+        .cr-modal-dialog {
+          width: calc(100vw - 24px);
+        }
+        .cr-form-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .cr-modal-overlay {
+          padding: 6px;
+        }
+        .cr-modal-dialog {
+          width: calc(100vw - 12px);
+          max-height: calc(100dvh - 12px);
+          padding: 4px;
+          border-radius: 18px;
+        }
+        .cr-modal-core {
+          border-radius: 14px;
+        }
+        .cr-modal-header {
+          padding: 13px 16px 11px;
+        }
+        .cr-modal-body {
+          padding: 14px 16px 16px;
+        }
+        .cr-form-grid,
+        .cr-form-grid--2col {
+          grid-template-columns: 1fr;
+        }
+        .cr-modal-footer {
+          padding: 12px 16px;
+          flex-direction: column-reverse;
+          align-items: stretch;
+        }
+        .cr-modal-footer .cr-submit-btn,
+        .cr-modal-cancel-btn {
+          width: 100%;
+          min-height: 44px;
+        }
+        .cr-modal-footer .cr-submit-btn {
+          justify-content: center;
+          padding: 10px 18px;
+        }
+      }
+
+      /* حقول النموذج الموحد */
+      .bdy-field {
+        margin-bottom: 0;
+      }
+
+      .bdy-label {
+        display: block;
+        font-size: 0.77rem;
+        font-weight: 600;
+        color: #4a4137;
+        margin-bottom: 5px;
+      }
+
+      .bdy-input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .bdy-input-icon {
+        position: absolute;
+        right: 11px;
+        color: #9c856b;
+        font-size: 0.78rem;
+        pointer-events: none;
+      }
+
+      .bdy-input {
+        width: 100%;
+        height: 38px;
+        padding: 7px 32px 7px 11px;
+        border-radius: 8px;
+        border: 1px solid rgba(184, 136, 62, 0.34);
+        background: #fdfcfa;
+        font-family: inherit;
+        font-size: 0.83rem;
+        color: var(--c-text-primary, #1c1a17);
+        transition: border-color .2s, box-shadow .2s, background-color .2s;
+        box-sizing: border-box;
+      }
+
+      textarea.bdy-input {
+        height: auto;
+        min-height: 68px;
+        padding: 8px 12px;
+        resize: vertical;
+      }
+
+      .bdy-input:focus {
+        outline: none;
+        background: #ffffff;
+        border-color: var(--c-gold, #b8883e);
+        box-shadow: 0 0 0 3px rgba(184, 136, 62, 0.13);
+      }
+
+      .bdy-input.invalid {
+        border-color: #c5221f !important;
+        background: #fff8f7;
+      }
+
+      .bdy-err {
+        font-size: 0.72rem;
+        color: #c5221f;
+        margin-top: 3px;
+        min-height: 12px;
+      }
+
+      /* حقل رفع السيرة الذاتية المختصر والأنيق */
+      .cr-dropzone {
+        border: 1px dashed rgba(184, 136, 62, 0.45);
+        border-radius: 8px;
+        background: #fbf9f5;
+        padding: 9px 12px;
+        cursor: pointer;
+        transition: border-color .2s ease, background-color .2s ease;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .cr-dropzone:hover, .cr-dropzone.dragover {
+        border-color: var(--c-gold, #b8883e);
+        background: rgba(184, 136, 62, 0.06);
+      }
+
+      .cr-dropzone input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+      }
+
+      .cr-dz-main {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+        text-align: right;
+      }
+
+      .cr-dz-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        background: #ffffff;
+        border: 1px solid rgba(184, 136, 62, 0.25);
+        color: var(--c-gold, #b8883e);
+        display: grid;
+        place-items: center;
+        font-size: 0.82rem;
+        flex-shrink: 0;
+      }
+
+      .cr-dz-text {
+        font-size: 0.79rem;
+        font-weight: 600;
+        color: var(--c-text-primary, #1c1a17);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .cr-dz-hint {
+        font-size: 0.7rem;
+        color: var(--c-text-muted, #8a8478);
+      }
+
+      .cr-dz-pick {
+        font-size: 0.74rem;
+        font-weight: 700;
+        color: #7d5336;
+        background: #ffffff;
+        border: 1px solid rgba(184, 136, 62, 0.32);
+        border-radius: 999px;
+        padding: 4px 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .cr-file-preview {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        background: #fbf9f5;
+        border: 1px solid rgba(184, 136, 62, 0.34);
+        border-radius: 8px;
+        padding: 8px 12px;
+      }
+
+      .cr-file-preview.active {
+        display: flex;
+      }
+
+      .cr-file-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        overflow: hidden;
+      }
+
+      .cr-file-info i {
+        color: #c5221f;
+        font-size: 1.2rem;
+      }
+
+      .cr-file-name {
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: var(--c-text-primary, #1c1a17);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 180px;
+      }
+
+      .cr-file-size {
+        font-size: 0.72rem;
+        color: var(--c-text-muted, #8a8478);
+      }
+
+      .cr-file-remove {
+        background: none;
+        border: none;
+        color: var(--c-text-muted, #8a8478);
+        cursor: pointer;
+        padding: 4px;
+        font-size: 0.85rem;
+        border-radius: 4px;
+        transition: color .2s;
+      }
+
+      .cr-file-remove:hover {
+        color: #c5221f;
+      }
+
+      /* الإقرار وزر الإرسال */
+      .bdy-consent {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 0.82rem;
+        line-height: 1.6;
+        color: var(--c-text-secondary, #5a5650);
+        cursor: pointer;
+      }
+
+      .bdy-consent input {
+        width: auto;
+        margin-top: 3px;
+        flex-shrink: 0;
+        accent-color: var(--c-gold, #b8883e);
+        cursor: pointer;
+      }
+
+      .cr-submit-btn {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 20px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--c-gold, #b8883e) 0%, var(--c-gold-deep, #9c6e38) 100%);
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 0.98rem;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 24px -4px rgba(184, 136, 62, 0.35);
+        transition: all .25s ease;
+        margin-top: 8px;
+      }
+
+      .cr-submit-btn:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px -4px rgba(184, 136, 62, 0.45);
+      }
+
+      .cr-submit-btn:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+
+      /* حالة الوظيفة المغلقة */
+      .cr-closed-banner {
+        text-align: center;
+        padding: 28px 16px;
+        background: var(--c-bg-soft, #fbf9f5);
+        border: 1px dashed rgba(28, 26, 23, 0.15);
+        border-radius: 16px;
+      }
+
+      .cr-closed-banner .ico {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: rgba(197, 34, 31, 0.08);
+        color: #c5221f;
+        display: grid;
+        place-items: center;
+        font-size: 1.25rem;
+        margin: 0 auto 12px;
+      }
+
+      .cr-closed-banner h4 {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--c-text-primary, #1c1a17);
+        margin: 0 0 6px;
+      }
+
+      .cr-closed-banner p {
+        font-size: 0.88rem;
+        color: var(--c-text-secondary, #5a5650);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      /* شاشة تأكيد النجاح */
+      .cr-success-view {
+        text-align: center;
+        padding: 40px 20px;
+        animation: crFadeIn .3s ease-out;
+      }
+
+      .cr-success-ico {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: rgba(46, 139, 87, 0.1);
+        color: #2e8b57;
+        display: grid;
+        place-items: center;
+        font-size: 2rem;
+        margin: 0 auto 18px;
+      }
+
+      .cr-success-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: var(--c-text-primary, #1c1a17);
+        margin-bottom: 8px;
+      }
+
+      .cr-success-desc {
+        font-size: 0.92rem;
+        color: var(--c-text-secondary, #5a5650);
+        line-height: 1.8;
+        max-width: 380px;
+        margin: 0 auto 24px;
+      }
+
+      /* ═══ حركة الإرسال (الورقة والصقر) ═══ */
+      .cr-send-stage { position: relative; }
+      .cr-send-body { transition: opacity .4s ease, transform .4s ease; }
+      .cr-send-stage.sending .cr-send-body { opacity: 0; transform: scale(.96); pointer-events: none; }
+
       .cr-paper {
-        --paper: var(--c-surface, #ffffff);
-        --paper-line: var(--c-border, rgba(28,26,23,.14));
-        --paper-accent: var(--c-gold, #b8883e);
-        --paper-ink: var(--c-text-primary, #1c1a17);
-        --paper-muted: var(--c-text-secondary, #5a5650);
+        --paper: #ffffff;
+        --paper-line: rgba(28,26,23,.14);
+        --paper-accent: #b8883e;
+        --paper-ink: #1c1a17;
+        --paper-muted: #5a5650;
         --roll-light: #fff7e9;
         --roll-mid: #f0e0c2;
         --roll-dark: #d4a855;
-        --ribbon: var(--c-gold-deep, #9c6e38);
-        position:fixed; z-index:1001; pointer-events:none;
+        --ribbon: #9c6e38;
+        position: fixed; z-index: 2601; pointer-events: none;
       }
-      .cr-paper__sheet { position:absolute; inset:0; overflow:hidden; background:var(--paper); border-radius:18px; box-shadow:0 25px 60px rgba(74,44,20,.3); }
-      .cr-paper__lines { position:absolute; inset:30px 24px auto 24px; display:flex; flex-direction:column; gap:13px; opacity:0; transition:opacity .4s ease; }
-      .cr-paper.is-sheet .cr-paper__lines { opacity:1; }
-      .cr-paper__lines span { display:block; height:6px; border-radius:3px; background:var(--paper-line); opacity:0; transition:opacity .4s ease; }
-      .cr-paper.is-written .cr-paper__lines span { opacity:1; transition-delay:.9s; }
-      .cr-paper__lines span:nth-of-type(2) { width:88%; }
-      .cr-paper__lines span:nth-of-type(4) { width:72%; }
-      .cr-paper__lines span:nth-of-type(5) { width:45%; }
-      .cr-paper__label, .cr-paper__name, .cr-paper__phone { margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; clip-path:inset(0 0 0 100%); }
-      .cr-paper__label { font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--paper-accent); }
-      .cr-paper__name { margin-top:-6px; font-size:16px; font-weight:700; color:var(--paper-ink); }
-      .cr-paper__phone { margin-top:-8px; font-size:12px; color:var(--paper-muted); direction:ltr; text-align:right; letter-spacing:.05em; }
-      .cr-paper__rule { height:1px; background:var(--paper-line); transform:scaleX(0); transform-origin:100% 50%; }
-      .cr-paper.is-written .cr-paper__label { animation:crWrite .3s ease-out forwards; }
-      .cr-paper.is-written .cr-paper__name  { animation:crWrite .45s cubic-bezier(.4,0,.2,1) .2s forwards; }
-      .cr-paper.is-written .cr-paper__phone { animation:crWrite .4s cubic-bezier(.4,0,.2,1) .55s forwards; }
-      .cr-paper.is-written .cr-paper__rule  { animation:crRule .35s ease-out .7s forwards; }
-      @keyframes crWrite { to { clip-path:inset(0 0 0 0); } }
-      @keyframes crRule  { to { transform:scaleX(1); } }
-      .cr-paper__roll { position:absolute; left:-5px; right:-5px; bottom:-14px; height:28px; border-radius:14px; background:linear-gradient(to bottom, var(--roll-light) 0%, var(--roll-mid) 45%, var(--roll-dark) 100%); box-shadow:0 8px 16px -6px rgba(74,44,20,.35), inset 0 1px 0 rgba(255,255,255,.8); opacity:0; transform:scaleY(.4); transition:opacity .25s ease, transform .35s cubic-bezier(.3,1.4,.5,1); }
-      .cr-paper.is-rolling .cr-paper__roll { opacity:1; transform:none; }
-      .cr-paper__ribbon { position:absolute; top:-3px; bottom:-3px; left:50%; width:14px; margin-left:-7px; border-radius:3px; background:var(--ribbon); transform:scaleY(0); transition:transform .4s cubic-bezier(.3,1.6,.5,1); }
-      .cr-paper.is-tied .cr-paper__ribbon { transform:none; }
+      .cr-paper__sheet { position: absolute; inset: 0; overflow: hidden; background: var(--paper); border-radius: 18px; box-shadow: 0 25px 60px rgba(74,44,20,.3); }
+      .cr-paper__lines { position: absolute; inset: 30px 24px auto 24px; display: flex; flex-direction: column; gap: 13px; opacity: 0; transition: opacity .4s ease; }
+      .cr-paper.is-sheet .cr-paper__lines { opacity: 1; }
+      .cr-paper__lines span { display: block; height: 6px; border-radius: 3px; background: var(--paper-line); opacity: 0; transition: opacity .4s ease; }
+      .cr-paper.is-written .cr-paper__lines span { opacity: 1; transition-delay: .9s; }
+      .cr-paper__lines span:nth-of-type(2) { width: 88%; }
+      .cr-paper__lines span:nth-of-type(4) { width: 72%; }
+      .cr-paper__lines span:nth-of-type(5) { width: 45%; }
+      .cr-paper__label, .cr-paper__name, .cr-paper__phone { margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; clip-path: inset(0 0 0 100%); }
+      .cr-paper__label { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--paper-accent); }
+      .cr-paper__name { margin-top: -6px; font-size: 16px; font-weight: 700; color: var(--paper-ink); }
+      .cr-paper__phone { margin-top: -8px; font-size: 12px; color: var(--paper-muted); direction: ltr; text-align: right; letter-spacing: .05em; }
+      .cr-paper__rule { height: 1px; background: var(--paper-line); transform: scaleX(0); transform-origin: 100% 50%; }
+      .cr-paper.is-written .cr-paper__label { animation: crWrite .3s ease-out forwards; }
+      .cr-paper.is-written .cr-paper__name  { animation: crWrite .45s cubic-bezier(.4,0,.2,1) .2s forwards; }
+      .cr-paper.is-written .cr-paper__phone { animation: crWrite .4s cubic-bezier(.4,0,.2,1) .55s forwards; }
+      .cr-paper.is-written .cr-paper__rule  { animation: crRule .35s ease-out .7s forwards; }
+      @keyframes crWrite { to { clip-path: inset(0 0 0 0); } }
+      @keyframes crRule  { to { transform: scaleX(1); } }
+      .cr-paper__roll { position: absolute; left: -5px; right: -5px; bottom: -14px; height: 28px; border-radius: 14px; background: linear-gradient(to bottom, var(--roll-light) 0%, var(--roll-mid) 45%, var(--roll-dark) 100%); box-shadow: 0 8px 16px -6px rgba(74,44,20,.35), inset 0 1px 0 rgba(255,255,255,.8); opacity: 0; transform: scaleY(.4); transition: opacity .25s ease, transform .35s cubic-bezier(.3,1.4,.5,1); }
+      .cr-paper.is-rolling .cr-paper__roll { opacity: 1; transform: none; }
+      .cr-paper__ribbon { position: absolute; top: -3px; bottom: -3px; left: 50%; width: 14px; margin-left: -7px; border-radius: 3px; background: var(--ribbon); transform: scaleY(0); transition: transform .4s cubic-bezier(.3,1.6,.5,1); }
+      .cr-paper.is-tied .cr-paper__ribbon { transform: none; }
 
-      /* ===== الصقر ===== */
       .cr-bird {
-        position:fixed; z-index:1002; width:196px; height:261px; pointer-events:none;
+        position: fixed; z-index: 2602; width: 196px; height: 261px; pointer-events: none;
         filter: drop-shadow(0 10px 14px rgba(15, 23, 42, 0.25));
       }
-      .cr-bird svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+      .cr-bird svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
       .cr-bird .wing {
         transform-box: fill-box;
         animation-duration: 0.42s;
@@ -123,121 +1421,204 @@
       }
       .cr-bird .wing--near { transform-origin: 33% 97%; animation-name: crFlapNear; }
       .cr-bird .wing--far  { transform-origin: 97% 95%; animation-name: crFlapFar; }
-      @keyframes crFlapNear {
-        from { transform: rotate(-4deg); }
-        to   { transform: rotate(32deg) scale(0.92, 0.82); }
+      @keyframes crFlapNear { from { transform: rotate(-4deg); } to { transform: rotate(32deg) scale(0.92, 0.82); } }
+      @keyframes crFlapFar  { from { transform: rotate(4deg); }  to { transform: rotate(-30deg) scale(0.92, 0.82); } }
+
+      @media (prefers-reduced-motion: reduce){
+        .cr-send-stage.sending * { animation-duration: .01ms!important; animation-delay: 0s!important; }
       }
-      @keyframes crFlapFar {
-        from { transform: rotate(4deg); }
-        to   { transform: rotate(-30deg) scale(0.92, 0.82); }
-      }
-      @media (prefers-reduced-motion:reduce){ .cr-send-stage.sending *{animation-duration:.01ms!important;animation-delay:0s!important;} }
     </style>
 </head>
 <body>
 
-<div class="site-wrapper">
-
+    <!-- التنقل الرئيسي -->
     <nav class="nav-container" id="mainNav" aria-label="التنقل الرئيسي">
-        <div class="logo-area-nav">
+        <button type="button" class="nav-drawer-trigger" id="navDrawerTrigger" aria-label="فتح القائمة الرئيسية" aria-expanded="false" aria-controls="navDrawer">
+            <svg class="nav-drawer-trigger-svg" viewBox="0 0 24 24" aria-hidden="true">
+                <line class="nd-bar nd-bar-top" x1="4" y1="8.5" x2="20" y2="8.5" />
+                <line class="nd-bar nd-bar-bot" x1="20" y1="15.5" x2="4" y2="15.5" />
+                <path class="nd-gem" d="M5.2 13.7 L7 15.5 L5.2 17.3 L3.4 15.5 Z" />
+            </svg>
+            <span class="nav-drawer-trigger-label">القائمة</span>
+        </button>
+        <a href="/" class="logo-area-nav" aria-label="الانتقال إلى الصفحة الرئيسية — جمعية إرث وحضارة بالقريات">
             <img src="../assets/الشعار/الشعار.png" alt="شعار جمعية إرث وحضارة بالقريات" class="nav-logo-img" loading="eager">
             <span class="association-name-nav">جمعية إرث وحضارة بالقريات</span>
-        </div>
-        <div class="nav-links">
-            <a href="/">الرئيسية</a>
-            <a href="/activities/">الفعاليات</a>
-            <a href="/workshops/">ورش العمل</a>
-            <a href="/volunteer/">التطوع</a>
-            <a href="/news/">الأخبار</a>
-            <a href="/calendar/">الرزنامة</a>
-            <a href="/friends/">أصدقاء الجمعية</a>
-            <a href="/crafts/">بيدي حرفة</a>
-            <a href="/partnerships/">الشراكات</a>
-            <a href="/reports/">الحوكمة</a>
-            <a href="/board/">مجلس الإدارة</a>
-            <a href="/careers/" class="active">التوظيف</a>
-            <a href="/contact/">اتصل بنا</a>
-        </div>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobileMenu">
-            <span class="mobile-toggle-bar"></span>
-            <span class="mobile-toggle-bar"></span>
-            <span class="mobile-toggle-bar"></span>
-        </button>
+        </a>
     </nav>
 
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-        <div class="mobile-menu-panel">
-            <div class="mobile-menu-head">
-                <span class="association-name-nav">القائمة</span>
-                <button class="mobile-close" id="mobileClose" aria-label="إغلاق القائمة">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-                </button>
+    <!-- ══ MAIN DRAWER NAVIGATION ══ -->
+    <div class="nav-drawer-overlay" id="navDrawerOverlay" aria-hidden="true"></div>
+    <aside class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="القائمة الرئيسية" aria-hidden="true">
+        <div class="nav-drawer-head">
+            <div class="nav-drawer-brand">
+                <img src="../assets/الشعار/الشعار.png" alt="شعار جمعية إرث وحضارة بالقريات" class="nav-drawer-brand-logo">
+                <div class="nav-drawer-brand-text">
+                    <span class="nav-drawer-brand-title">جمعية إرث وحضارة</span>
+                    <span class="nav-drawer-brand-sub">القريات · منطقة الجوف</span>
+                </div>
             </div>
-            <nav class="mobile-menu-links" aria-label="التنقل في الجوال">
-                <a href="/">الرئيسية</a>
-                <a href="/activities/">الفعاليات</a>
-                <a href="/workshops/">ورش العمل</a>
-                <a href="/volunteer/">التطوع</a>
-                <a href="/news/">الأخبار</a>
-                <a href="/calendar/">الرزنامة</a>
-                <a href="/friends/">أصدقاء الجمعية</a>
-                <a href="/crafts/">بيدي حرفة</a>
-                <a href="/partnerships/">الشراكات</a>
-                <a href="/reports/">الحوكمة</a>
-                <a href="/board/">مجلس الإدارة</a>
-                <a href="/careers/" class="active">التوظيف</a>
-                <a href="/contact/">اتصل بنا</a>
-            </nav>
+            <button type="button" class="nav-drawer-close" id="navDrawerClose" aria-label="إغلاق القائمة">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+            </button>
         </div>
-    </div>
 
-    <!-- PAGE INTRO -->
-    <header class="ws-intro">
-        <div class="ws-intro-eyebrow-row">
-            <div class="ws-intro-rule"></div>
-            <span class="ws-intro-eyebrow">Careers · التوظيف</span>
-            <div class="ws-intro-diamond"></div>
+        <nav class="nav-drawer-body" aria-label="روابط الموقع">
+            <ul class="nav-drawer-list">
+                <li class="nav-drawer-item">
+                    <a href="/" class="nav-drawer-link">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>الرئيسية</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-drawer-item nav-drawer-group">
+                    <button type="button" class="nav-drawer-accordion-btn" aria-expanded="false" aria-controls="navGroupPrograms">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>البرامج والفعاليات</span>
+                        </span>
+                        <svg class="nav-drawer-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-drawer-accordion-panel" id="navGroupPrograms" aria-hidden="true">
+                        <div class="nav-drawer-accordion-inner">
+                            <ul class="nav-drawer-sublist">
+                                <li class="nav-drawer-subitem"><a href="/activities/" class="nav-drawer-sublink">الفعاليات</a></li>
+                                <li class="nav-drawer-subitem"><a href="/workshops/" class="nav-drawer-sublink">ورش العمل</a></li>
+                                <li class="nav-drawer-subitem"><a href="/crafts/" class="nav-drawer-sublink">بيدي حرفة</a></li>
+                                <li class="nav-drawer-subitem"><a href="/calendar/" class="nav-drawer-sublink">الرزنامة</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-drawer-item nav-drawer-group">
+                    <button type="button" class="nav-drawer-accordion-btn" aria-expanded="false" aria-controls="navGroupCommunity">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>المجتمع والشراكات</span>
+                        </span>
+                        <svg class="nav-drawer-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-drawer-accordion-panel" id="navGroupCommunity" aria-hidden="true">
+                        <div class="nav-drawer-accordion-inner">
+                            <ul class="nav-drawer-sublist">
+                                <li class="nav-drawer-subitem"><a href="/volunteer/" class="nav-drawer-sublink">التطوع</a></li>
+                                <li class="nav-drawer-subitem"><a href="/friends/" class="nav-drawer-sublink">أصدقاء الجمعية</a></li>
+                                <li class="nav-drawer-subitem"><a href="/partnerships/" class="nav-drawer-sublink">الشراكات</a></li>
+                                <li class="nav-drawer-subitem"><a href="/trainers/" class="nav-drawer-sublink">تسجيل المدربين والمدربات</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-drawer-item nav-drawer-group">
+                    <button type="button" class="nav-drawer-accordion-btn" aria-expanded="false" aria-controls="navGroupAbout">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>الجمعية والحوكمة</span>
+                        </span>
+                        <svg class="nav-drawer-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="nav-drawer-accordion-panel" id="navGroupAbout" aria-hidden="true">
+                        <div class="nav-drawer-accordion-inner">
+                            <ul class="nav-drawer-sublist">
+                                <li class="nav-drawer-subitem"><a href="/board/" class="nav-drawer-sublink">مجلس الإدارة</a></li>
+                                <li class="nav-drawer-subitem"><a href="/reports/" class="nav-drawer-sublink">الحوكمة</a></li>
+                                <li class="nav-drawer-subitem"><a href="/careers/" class="nav-drawer-sublink active">اعمل معنا</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-drawer-item">
+                    <a href="/news/" class="nav-drawer-link">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>الأخبار</span>
+                        </span>
+                    </a>
+                </li>
+
+                <li class="nav-drawer-item">
+                    <a href="/contact/" class="nav-drawer-link">
+                        <span class="nav-drawer-item-label">
+                            <span class="nav-drawer-item-dot" aria-hidden="true"></span>
+                            <span>اتصل بنا</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="nav-drawer-foot">
+            <p class="nav-drawer-foot-text">حفظ التراث وبناء الهوية الثقافية</p>
         </div>
-        <h1 class="ws-intro-title">اصنع مستقبلك معنا</h1>
-        <p class="ws-intro-desc">
-            نبحث عن الكفاءات والطموحات التي تسعى للتطور وصناعة الفرق. اكتشف الفرص الوظيفية المتاحة في جمعية إرث وحضارة بالقريات، وكن جزءًا من فريق يؤمن بالعمل المشترك وتحقيق الأثر.
-        </p>
-    </header>
+    </aside>
 
-    <!-- JOBS GRID -->
-    <section class="ws-grid-section">
-        <div id="crJobsArea">
-            <div class="ws-empty-state" style="border:none;background:transparent;">
-                <div class="ws-empty-icon"><i class="fas fa-spinner fa-spin"></i></div>
-                <p class="ws-empty-text">جارٍ تحميل الوظائف المتاحة…</p>
+<div class="site-wrapper">
+    <!-- ═══════════════════════════════════════════════════════════════════
+         1. شاشة صفحة «اعمل معنا» والوظائف المنشورة (LIST VIEW)
+    ═══════════════════════════════════════════════════════════════════ -->
+    <main id="crListView" class="cr-view-section">
+        <!-- القسم العلوي (Hero) -->
+        <section class="cr-page-hero" aria-label="اعمل معنا">
+            <img src="../assets/الترحيب/صورة ترحيبية.jpeg" alt="معلم تراثي سعودي — جمعية إرث وحضارة" class="cr-page-hero__bg" loading="eager">
+            <div class="cr-page-hero__overlay" aria-hidden="true"></div>
+            <div class="cr-page-hero__content">
+                <div class="cr-page-hero__eyebrow">جمعية إرث وحضارة بالقريات</div>
+                <h1 class="cr-page-hero__title">اعمل معنا</h1>
             </div>
+            <div class="cr-page-hero__accent" aria-hidden="true"></div>
+        </section>
+
+        <!-- القسم التعريفي -->
+        <section class="cr-intro-band" aria-label="نبذة عن الانضمام للفريق">
+            <p class="cr-intro-lead">
+                كن جزءاً من فريق يسهم في المحافظة على التراث وإحياء الموروث الثقافي، وشاركنا صناعة أثر مستدام من خلال الفرص الوظيفية المتاحة في جمعية إرث وحضارة.
+            </p>
+            <div class="cr-intro-divider" aria-hidden="true"></div>
+        </section>
+
+        <!-- قسم أحدث الوظائف -->
+        <section class="cr-jobs-section" aria-labelledby="crJobsHeading">
+            <div class="cr-section-head">
+                <h2 class="cr-section-title" id="crJobsHeading">أحدث الوظائف</h2>
+            </div>
+            <div id="crJobsArea">
+                <div class="ws-empty-state" style="border:none;background:transparent;">
+                    <div class="ws-empty-icon"><i class="fas fa-spinner fa-spin"></i></div>
+                    <p class="ws-empty-text">جارٍ تحميل الوظائف المنشورة…</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         2. شاشة تفاصيل الوظيفة والتقديم بكامل الصفحة (FULL-PAGE DETAIL VIEW)
+    ═══════════════════════════════════════════════════════════════════ -->
+    <section id="crDetailView" class="cr-view-section is-hidden" aria-live="polite">
+        <div id="crDetailContent">
+            <!-- يُحقن محتوى الوظيفة بالكامل عبر JavaScript -->
         </div>
     </section>
 
 </div><!-- /.site-wrapper -->
 
-<!-- ══════════ MODAL ══════════ -->
-<div class="ws-modal-overlay" id="crOverlay" aria-hidden="true">
-  <div class="cr-send-stage" id="crSendStage" style="width:100%;max-width:580px;position:relative;">
-    <div class="ws-modal-shell cr-send-body" role="dialog" aria-modal="true" aria-labelledby="crModalTitle" style="max-width:none;width:100%;">
-        <div class="ws-modal-head">
-            <div>
-                <div class="ws-modal-title-eyebrow" id="crModalDept">التوظيف</div>
-                <h2 class="ws-modal-title" id="crModalTitle">—</h2>
-            </div>
-            <button class="ws-modal-close" id="crClose" aria-label="إغلاق">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </button>
-        </div>
-        <div class="ws-modal-body" id="crModalBody"></div>
-    </div>
-
-  </div>
-</div>
-
+<!-- كود جافاسكريبت وربط Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, query, where, limit, orderBy, serverTimestamp, writeBatch }
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, query, where, orderBy, serverTimestamp, writeBatch }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -253,178 +1634,727 @@ const db  = getFirestore(app);
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const TYPES = { full:'دوام كامل', part:'دوام جزئي', temp:'مؤقت', intern:'تدريب', volunteer:'تطوع' };
+const TYPES = {
+    full:'دوام كامل',
+    part:'دوام جزئي',
+    temp:'مؤقت',
+    intern:'تدريب',
+    volunteer:'تطوع',
+    remote:'عن بُعد',
+    hybrid:'دوام مرن / هجين'
+};
 
-function toDate(ts){ if(!ts) return null; if(ts.toDate) return ts.toDate(); if(ts.seconds) return new Date(ts.seconds*1000); const d=new Date(ts); return isNaN(d)?null:d; }
-function fmtDate(ts){ const d=toDate(ts); if(!d) return '—'; return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`; }
-function isExpired(job){ const d=toDate(job.deadline); if(!d) return false; const end=new Date(d); end.setHours(23,59,59,999); return Date.now()>end.getTime(); }
+function toDate(ts){
+    if(!ts) return null;
+    if(ts.toDate) return ts.toDate();
+    if(ts.seconds) return new Date(ts.seconds*1000);
+    const d=new Date(ts);
+    return isNaN(d)?null:d;
+}
+function fmtDate(ts){
+    const d=toDate(ts);
+    if(!d) return 'غير محدد';
+    try {
+        return new Intl.DateTimeFormat('ar-SA-u-ca-gregory', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        }).format(d);
+    } catch(_){
+        return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+    }
+}
+function isExpired(job){
+    const d=toDate(job.deadline);
+    if(!d) return false;
+    const end=new Date(d);
+    end.setHours(23,59,59,999);
+    return Date.now()>end.getTime();
+}
+function isNotStarted(job){
+    const d=toDate(job.startDate);
+    if(!d) return false;
+    const start=new Date(d);
+    start.setHours(0,0,0,0);
+    return Date.now()<start.getTime();
+}
+function getJobFormConfig(job){
+    const raw = (job && job.formConfig) ? job.formConfig : {};
+    return {
+        email: raw.email || 'required',
+        qualification: raw.qualification || 'required',
+        major: raw.major || 'optional',
+        experienceYears: raw.experienceYears || 'optional',
+        bio: raw.bio || 'optional',
+        cv: raw.cv || 'optional',
+        extraDocs: Array.isArray(raw.extraDocs) ? raw.extraDocs.filter(d => d && d.label && d.label.trim()) : []
+    };
+}
 
 let activeJob = null;
 let JOBS = [];
+let selectedCvFile = null;
+let selectedExtraFiles = {};
+let isSubmittingApplication = false;
+let applicationSubmitted = false;
 
+// تحميل الوظائف المنشورة والفعالة فقط من Firestore
 async function loadJobs(){
     const area = $('crJobsArea');
     try {
         let snap;
-        try { snap = await getDocs(query(collection(db,'jobs'), where('status','in',['published','closed']), orderBy('publishedAt','desc'))); }
-        catch(e){ snap = await getDocs(query(collection(db,'jobs'), where('status','in',['published','closed']))); }
+        try {
+            snap = await getDocs(query(collection(db,'jobs'), where('status','==','published'), orderBy('publishedAt','desc')));
+        } catch(e){
+            snap = await getDocs(query(collection(db,'jobs'), where('status','==','published')));
+        }
 
         JOBS = snap.docs.map(d=>({id:d.id, ...d.data()}))
-            .filter(j => (j.status==='published' || j.status==='closed') && !isExpired(j));
+            .filter(j => j.status === 'published' && !isExpired(j) && !isNotStarted(j))
+            .sort((a,b) => (toDate(b.publishedAt || b.createdAt)?.getTime() || 0) - (toDate(a.publishedAt || a.createdAt)?.getTime() || 0));
 
         if (JOBS.length === 0){
             area.innerHTML = `
-              <div class="ws-empty-state">
-                <div class="ws-empty-icon"><i class="fas fa-briefcase"></i></div>
-                <h3 class="ws-empty-title">لا توجد وظائف متاحة حاليًا</h3>
-                <p class="ws-empty-text">تابعنا للاطلاع على الفرص القادمة.</p>
+              <div class="ws-empty-state" style="background:var(--c-sand,#f5f1e9);border:1px solid rgba(156,110,56,0.16);border-radius:18px;padding:48px 24px;">
+                <div class="ws-empty-icon" style="color:var(--c-olive,#6d7448);"><i class="fas fa-briefcase"></i></div>
+                <h3 class="ws-empty-title" style="color:var(--c-brown-deep,#2c2219);">الوظائف غير متاحة حالياً</h3>
+                <p class="ws-empty-text">نشكركم على اهتمامكم بالانضمام إلى فريق جمعية إرث وحضارة. لا توجد فرص وظيفية متاحة في الوقت الراهن، وندعوكم لمتابعة هذه الصفحة للاطلاع على الفرص فور نشرها.</p>
               </div>`;
             return;
         }
 
-        area.innerHTML = `<div class="ws-grid">${JOBS.map(renderCard).join('')}</div>`;
-        area.querySelectorAll('[data-job]').forEach(btn =>
-            btn.addEventListener('click', () => openJob(btn.dataset.job)));
+        area.innerHTML = `<div class="job-rows-list">${JOBS.map(renderCard).join('')}</div>`;
+        
+        // ربط حدث النقر على زر «قدّم الآن» فقط لفتح صفحة تفاصيل الوظيفة
+        area.querySelectorAll('[data-job-apply]').forEach(btn => {
+            btn.addEventListener('click', () => showJobDetail(btn.dataset.jobApply, true));
+        });
+
+        // التحقق من الرابط المباشر (مثل ?job=ID أو #job-ID)
+        checkDirectJobUrl();
+
     } catch(err){
         console.error('loadJobs', err);
         area.innerHTML = `
           <div class="ws-empty-state">
             <div class="ws-empty-icon"><i class="fas fa-triangle-exclamation"></i></div>
             <h3 class="ws-empty-title">تعذّر تحميل الوظائف</h3>
-            <p class="ws-empty-text">يرجى المحاولة لاحقًا.</p>
+            <p class="ws-empty-text">يرجى التحقق من الاتصال والمحاولة لاحقاً.</p>
           </div>`;
     }
 }
 
+// رسم بطاقة الوظيفة الأفقية بالخلفية الرملية والزر الزيتوني
 function renderCard(j){
-    const closed = j.status==='closed';
+    const typeLabel = TYPES[j.type] || j.type || 'دوام كامل';
+    const deadlineText = j.deadline ? fmtDate(j.deadline) : 'مفتوح حتى الاكتفاء';
+    const locationText = j.location || 'القريات - المملكة العربية السعودية';
+
     return `
-    <div class="ws-card${closed?' ws-card-closed':''}">
-        <div class="ws-card-head">
-            <span class="ws-card-category">${esc(j.department || 'وظيفة')}</span>
-            ${closed ? `<span class="ws-card-badge ws-badge-closed">مغلق التسجيل</span>` : (j.type ? `<span class="ws-card-badge ws-badge-open">${esc(TYPES[j.type]||j.type)}</span>` : '')}
+    <article class="job-row-card">
+        <div class="job-row-title-col">
+            <h3 class="job-row-title">${esc(j.title || 'وظيفة شاغرة')}</h3>
+            ${j.department ? `<span class="job-row-dept">${esc(j.department)}</span>` : ''}
         </div>
-        <div class="ws-card-body">
-            <h3 class="ws-card-title">${esc(j.title||'وظيفة')}</h3>
-            ${j.description ? `<p class="ws-card-desc">${esc(j.description)}</p>` : '<p class="ws-card-desc"></p>'}
-            <div class="ws-card-meta-list">
-                ${j.location ? `<div class="ws-meta-item"><i class="fas fa-location-dot"></i><span>${esc(j.location)}</span></div>` : ''}
-                <div class="ws-meta-item"><i class="fas fa-calendar-day"></i><span>تاريخ النشر: <strong>${fmtDate(j.publishedAt||j.createdAt)}</strong></span></div>
-                ${j.deadline ? `<div class="ws-meta-item"><i class="fas fa-hourglass-half"></i><span>آخر موعد: <strong>${fmtDate(j.deadline)}</strong></span></div>` : ''}
+
+        <div class="job-row-meta">
+            <div class="job-row-meta-item">
+                <span class="job-row-meta-label">نوع الدوام:</span>
+                <span class="job-row-meta-val">${esc(typeLabel)}</span>
             </div>
-            <button class="ws-card-cta" data-job="${esc(j.id)}">
-                <span>${closed ? 'عرض التفاصيل' : 'التفاصيل والتقديم'}</span>
+            <div class="job-row-meta-item">
+                <span class="job-row-meta-label">آخر موعد للتقديم:</span>
+                <span class="job-row-meta-val">${esc(deadlineText)}</span>
+            </div>
+            <div class="job-row-meta-item">
+                <span class="job-row-meta-label">الموقع:</span>
+                <span class="job-row-meta-val">${esc(locationText)}</span>
+            </div>
+        </div>
+
+        <div class="job-row-action">
+            <button type="button" class="job-apply-pill" data-job-apply="${esc(j.id)}">
+                <span>قدّم الآن</span>
                 <i class="fas fa-arrow-left"></i>
             </button>
         </div>
-    </div>`;
+    </article>`;
 }
 
-function openJob(id){
-    const j = JOBS.find(x=>x.id===id);
-    if(!j) return;
+// الانتقال إلى عرض تفاصيل الوظيفة
+window.showJobDetail = function(jobId, pushState = true){
+    const j = JOBS.find(x => x.id === jobId);
+    if (!j) return;
+
+    closeApplyModal(true);
     activeJob = j;
-    $('crModalTitle').textContent = j.title || 'وظيفة';
-    $('crModalDept').textContent = [j.department, j.type?TYPES[j.type]||j.type:''].filter(Boolean).join(' · ') || 'التوظيف';
-    renderDetail(j);
-    $('crOverlay').classList.add('open');
-    $('crOverlay').setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    document.documentElement.style.overflow='hidden';
-}
+    selectedCvFile = null;
+    selectedExtraFiles = {};
+    isSubmittingApplication = false;
+    applicationSubmitted = false;
 
-function closeModal(){
-    $('crOverlay').classList.remove('open');
-    $('crOverlay').setAttribute('aria-hidden','true');
-    document.body.style.overflow='';
-    document.documentElement.style.overflow='';
+    $('crListView').classList.add('is-hidden');
+    const detailView = $('crDetailView');
+    detailView.classList.remove('is-hidden');
+
+    renderFullJobPage(j);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (pushState) {
+        history.pushState({ jobId: j.id }, '', `#job-${j.id}`);
+    }
+};
+
+// العودة إلى قائمة الوظائف
+window.backToJobsList = function(pushState = true){
+    closeApplyModal(true);
+    $('crApplyModal')?.remove();
     activeJob = null;
-    // إعادة تهيئة حالة حركة المظروف لئلا تبقى النافذة مصغّرة عند إعادة الفتح
-    const st = $('crSendStage'); if(st) st.classList.remove('sending');
+    selectedCvFile = null;
+    selectedExtraFiles = {};
+    isSubmittingApplication = false;
+    applicationSubmitted = false;
+
+    $('crDetailView').classList.add('is-hidden');
+    $('crListView').classList.remove('is-hidden');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (pushState) {
+        history.pushState(null, '', window.location.pathname);
+    }
+};
+
+// التعامل مع أزرار الرجوع والتقدم في المتصفح
+window.addEventListener('popstate', e => {
+    if (e.state && e.state.jobId) {
+        showJobDetail(e.state.jobId, false);
+    } else {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#job-')) {
+            showJobDetail(hash.replace('#job-', ''), false);
+        } else {
+            backToJobsList(false);
+        }
+    }
+});
+
+// التحقق من الرابط المباشر عند بدء التحميل
+function checkDirectJobUrl(){
+    const params = new URLSearchParams(window.location.search);
+    const qJob = params.get('job');
+    const hash = window.location.hash;
+
+    const targetId = qJob || (hash.startsWith('#job-') ? hash.replace('#job-', '') : null);
+    if (targetId && JOBS.some(j => j.id === targetId)) {
+        showJobDetail(targetId, false);
+    }
 }
 
-// قسم نصي (فقرة واحدة)
-function secText(icon, title, val){
-    if (!val || !String(val).trim()) return '';
-    return `<div class="jd-sec"><h4><i class="fas ${icon}"></i>${title}</h4><div class="body">${esc(val)}</div></div>`;
-}
-// قسم على هيئة قائمة نقطية (كل سطر عنصر)
-function secList(icon, title, val){
-    if (!val || !String(val).trim()) return '';
-    const lines = String(val).split(/\r?\n/).map(l=>l.replace(/^\s*[-•*]\s*/,'').trim()).filter(Boolean);
-    if (lines.length <= 1) return secText(icon, title, val);
-    return `<div class="jd-sec"><h4><i class="fas ${icon}"></i>${title}</h4><ul class="jd-list">${lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`;
+// تحويل النصوص إلى أسطر نقطية منسقة
+function parseToListItems(text){
+    if (!text || !String(text).trim()) return '';
+    return String(text)
+        .split(/\r?\n/)
+        .map(l => l.replace(/^\s*[-•*]\s*/, '').trim())
+        .filter(Boolean)
+        .map(item => `<li>${esc(item)}</li>`)
+        .join('');
 }
 
-function renderDetail(j){
-    const meta = [];
-    if (j.position) meta.push(['fa-id-badge','المسمى الوظيفي', j.position]);
-    if (j.type) meta.push(['fa-briefcase','نوع الوظيفة', TYPES[j.type]||j.type]);
-    if (j.location) meta.push(['fa-location-dot','موقع العمل', j.location]);
-    meta.push(['fa-calendar-day','تاريخ النشر', fmtDate(j.publishedAt||j.createdAt)]);
-    if (j.deadline) meta.push(['fa-hourglass-half','آخر موعد للتقديم', fmtDate(j.deadline)]);
+// بناء محتوى شاشة تفاصيل الوظيفة ونموذج التقديم الخاص بها
+function renderFullJobPage(j){
+    const typeLabel = TYPES[j.type] || j.type || 'دوام كامل';
+    const cfg = getJobFormConfig(j);
+    const container = $('crDetailContent');
 
-    $('crModalBody').innerHTML = `
-        <div class="jd-meta">
-            ${meta.map(m=>`<div class="item"><div class="ic"><i class="fas ${m[0]}"></i></div><div><div class="lbl">${m[1]}</div><div class="val">${esc(m[2])}</div></div></div>`).join('')}
+    const secIcon = `<svg class="cr-sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>`;
+
+    const responsibilitiesHtml = j.responsibilities && j.responsibilities.trim() 
+        ? `<section class="cr-sec-block">
+             <h2 class="cr-sec-heading">${secIcon}<span>المسؤوليات</span></h2>
+             <ul class="cr-sec-list">${parseToListItems(j.responsibilities)}</ul>
+           </section>`
+        : '';
+
+    const qualificationsHtml = j.qualifications && j.qualifications.trim()
+        ? `<section class="cr-sec-block">
+             <h2 class="cr-sec-heading">${secIcon}<span>المؤهلات</span></h2>
+             <ul class="cr-sec-list">${parseToListItems(j.qualifications)}</ul>
+           </section>`
+        : '';
+
+    const benefitsText = (j.benefits && j.benefits.trim()) ? j.benefits : (j.skills && j.skills.trim() ? j.skills : '');
+    const benefitsHtml = benefitsText
+        ? `<section class="cr-sec-block">
+             <h2 class="cr-sec-heading">${secIcon}<span>المزايا والتعويضات</span></h2>
+             <div class="cr-sec-text">${esc(benefitsText)}</div>
+           </section>`
+        : '';
+
+    const reqMark = mode => mode === 'required'
+        ? `<span style="color:#c5221f;">*</span>`
+        : `<span style="color:var(--c-text-muted,#8a8478);font-weight:400;font-size:0.76rem;">(اختياري)</span>`;
+
+    const extraDocsHtml = cfg.extraDocs.map((docItem, idx) => `
+        <div class="bdy-field">
+            <label class="bdy-label" for="apExtraDoc_${idx}">${esc(docItem.label)} ${reqMark(docItem.required ? 'required' : 'optional')}</label>
+            <div class="cr-extra-doc-box">
+                <input type="file" id="apExtraDoc_${idx}" class="cr-extra-doc-input" data-extra-idx="${idx}" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png">
+                <div class="cr-dz-hint" style="margin-top:4px;">PDF أو صورة (JPG/PNG) بحد أقصى 5 ميجابايت</div>
+            </div>
+            <div class="bdy-err" id="err_extra_${idx}"></div>
         </div>
-        ${secText('fa-align-right','وصف الوظيفة', j.description)}
-        ${secList('fa-list-check','المهام والمسؤوليات', j.responsibilities)}
-        ${secList('fa-circle-check','المؤهلات والشروط', j.qualifications)}
-        ${secList('fa-star','المهارات المطلوبة', j.skills)}
-        ${j.status==='closed'
-            ? `<div class="cr-closed-note"><i class="fas fa-lock"></i><span>التسجيل على هذه الوظيفة مغلق حاليًا.</span></div>`
-            : `<button class="bdy-btn-primary" id="crShowApply" style="margin-top:8px;"><i class="fas fa-paper-plane"></i> التقديم على هذه الوظيفة</button>`}
+    `).join('');
+
+    const fullJobHeading = j.position ? `${j.title || 'وظيفة'} – ${j.position}` : (j.title || 'وظيفة');
+
+    $('crApplyModal')?.remove();
+    container.innerHTML = `
+        <!-- بانر عنوان الوظيفة المتدرج بعرض الشاشة -->
+        <header class="cr-detail-banner">
+            <div class="cr-detail-banner__inner">
+                <nav class="cr-breadcrumb" aria-label="مسار التنقل">
+                    <a href="#" id="bcBackJobs">اعمل معنا</a>
+                    <span aria-hidden="true">/</span>
+                    <span>الوظائف المنشورة</span>
+                    <span aria-hidden="true">/</span>
+                    <span>${esc(j.title || 'تفاصيل الوظيفة')}</span>
+                </nav>
+                <h1 class="cr-banner-title">${esc(fullJobHeading)}</h1>
+            </div>
+        </header>
+
+        <!-- التخطيط الرئيسي ذو العمودين (مطابق للمرجع الثاني) -->
+        <div class="cr-main-layout">
+            
+            <!-- العمود الأيمن: تفاصيل الوظيفة (ملخص، مسؤوليات، مؤهلات، مزايا) -->
+            <div class="cr-details-col">
+                ${j.description ? `
+                <section class="cr-sec-block">
+                    <h2 class="cr-sec-heading">${secIcon}<span>ملخص الوظيفة</span></h2>
+                    <div class="cr-sec-text">${esc(j.description)}</div>
+                </section>` : ''}
+
+                ${responsibilitiesHtml}
+                ${qualificationsHtml}
+                ${benefitsHtml}
+            </div>
+
+            <!-- العمود الأيسر: معلومات الوظيفة وزر التقديم فقط -->
+            <aside class="cr-apply-col">
+                <div class="cr-meta-table">
+                    <div class="cr-meta-row">
+                        <span class="cr-meta-row__label">نوع الدوام:</span>
+                        <span class="cr-meta-row__val">${esc(typeLabel)}</span>
+                    </div>
+                    <div class="cr-meta-row">
+                        <span class="cr-meta-row__label">آخر موعد للتقديم:</span>
+                        <span class="cr-meta-row__val">${j.deadline ? fmtDate(j.deadline) : 'مفتوح حتى الاكتفاء'}</span>
+                    </div>
+                    <div class="cr-meta-row">
+                        <span class="cr-meta-row__label">الموقع:</span>
+                        <span class="cr-meta-row__val">${esc(j.location || 'القريات - المملكة العربية السعودية')}</span>
+                    </div>
+                </div>
+
+                <button type="button" class="cr-bronze-apply-btn" id="btnRevealApplyForm">
+                    <span>قدّم الآن</span>
+                    <i class="fas fa-arrow-left" style="font-size:0.78rem;"></i>
+                </button>
+
+                <div class="cr-detail-actions-sub">
+                    <button type="button" class="cr-text-link-btn" onclick="backToJobsList()">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>العودة للوظائف</span>
+                    </button>
+                    <button type="button" class="cr-text-link-btn" id="btnShareJob">
+                        <i class="fas fa-share-nodes"></i>
+                        <span>مشاركة الوظيفة</span>
+                    </button>
+                </div>
+            </aside>
+
+        </div>
+
+        <!-- نافذة التقديم المنبثقة (Application Modal) -->
+        <div class="cr-modal-overlay" id="crApplyModal" role="dialog" aria-modal="true" aria-labelledby="crApplyTitle" aria-hidden="true">
+            <div class="cr-modal-dialog">
+                <div class="cr-modal-core">
+                <div class="cr-modal-header">
+                    <div class="cr-modal-title-wrap">
+                        <span class="cr-modal-eyebrow">طلب التحاق وظيفي</span>
+                        <h3 class="cr-modal-title" id="crApplyTitle">التقديم على الوظيفة</h3>
+                        <p class="cr-modal-subtitle">الوظيفة: <strong>${esc(fullJobHeading)}</strong></p>
+                    </div>
+                    <button type="button" class="cr-modal-close" id="crModalClose" aria-label="إغلاق النافذة" title="إغلاق">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="cr-modal-body" id="crApplyModalBody">
+                    <div class="cr-send-stage" id="crSendStage">
+                        <form id="crApplyForm" class="cr-send-body cr-form-sections" novalidate>
+                            <!-- 1. المعلومات الشخصية -->
+                            <section class="cr-form-section" aria-label="المعلومات الشخصية">
+                                <h4 class="cr-form-section__title"><span class="cr-form-section__dot"><i class="fas fa-user"></i></span><span>المعلومات الشخصية</span></h4>
+                                <div class="cr-form-grid">
+                                    <div class="bdy-field">
+                                        <label class="bdy-label" for="apName">الاسم الكامل <span style="color:#c5221f;">*</span></label>
+                                        <div class="bdy-input-wrap">
+                                            <i class="fas fa-user bdy-input-icon"></i>
+                                            <input type="text" id="apName" class="bdy-input" required placeholder="الاسم ثلاثي أو رباعي" autocomplete="name">
+                                        </div>
+                                        <div class="bdy-err" id="err_name"></div>
+                                    </div>
+
+                                    <div class="bdy-field">
+                                        <label class="bdy-label" for="apPhone">رقم الجوال <span style="color:#c5221f;">*</span></label>
+                                        <div class="bdy-input-wrap">
+                                            <i class="fas fa-mobile-screen-button bdy-input-icon"></i>
+                                            <input type="tel" id="apPhone" class="bdy-input" dir="ltr" style="text-align:right" inputmode="numeric" placeholder="05XXXXXXXX" required autocomplete="tel">
+                                        </div>
+                                        <div class="bdy-err" id="err_phone"></div>
+                                    </div>
+
+                                    ${cfg.email !== 'hidden' ? `
+                                    <div class="bdy-field">
+                                        <label class="bdy-label" for="apEmail">البريد الإلكتروني ${reqMark(cfg.email)}</label>
+                                        <div class="bdy-input-wrap">
+                                            <i class="fas fa-envelope bdy-input-icon"></i>
+                                            <input type="email" id="apEmail" class="bdy-input" dir="ltr" style="text-align:right" placeholder="name@example.com" ${cfg.email === 'required' ? 'required' : ''} autocomplete="email">
+                                        </div>
+                                        <div class="bdy-err" id="err_email"></div>
+                                    </div>` : ''}
+                                </div>
+                            </section>
+
+                            <!-- 2. المعلومات المهنية -->
+                            ${(cfg.qualification !== 'hidden' || cfg.major !== 'hidden' || cfg.experienceYears !== 'hidden' || cfg.bio !== 'hidden') ? `
+                            <section class="cr-form-section" aria-label="المعلومات المهنية">
+                                <h4 class="cr-form-section__title"><span class="cr-form-section__dot"><i class="fas fa-briefcase"></i></span><span>المعلومات المهنية</span></h4>
+                                <div class="cr-form-grid">
+                                    ${cfg.qualification !== 'hidden' ? `
+                                    <div class="bdy-field">
+                                        <label class="bdy-label" for="apQualification">المؤهل العلمي ${reqMark(cfg.qualification)}</label>
+                                        <div class="bdy-input-wrap">
+                                            <i class="fas fa-graduation-cap bdy-input-icon"></i>
+                                            <select id="apQualification" class="bdy-input" ${cfg.qualification === 'required' ? 'required' : ''}>
+                                                <option value="">اختر المؤهل العلمي</option>
+                                                <option value="ثانوي">ثانوي</option>
+                                                <option value="دبلوم">دبلوم</option>
+                                                <option value="بكالوريوس">بكالوريوس</option>
+                                                <option value="ماجستير">ماجستير</option>
+                                                <option value="دكتوراه">دكتوراه</option>
+                                                <option value="أخرى">أخرى</option>
+                                            </select>
+                                        </div>
+                                        <div class="bdy-err" id="err_qualification"></div>
+                                    </div>` : ''}
+
+                                    ${cfg.major !== 'hidden' ? `
+                                    <div class="bdy-field">
+                                        <label class="bdy-label" for="apMajor">التخصص ${reqMark(cfg.major)}</label>
+                                        <div class="bdy-input-wrap">
+                                            <i class="fas fa-book-open bdy-input-icon"></i>
+                                            <input type="text" id="apMajor" class="bdy-input" placeholder="مثال: إدارة الأعمال، التراث والسياحة" ${cfg.major === 'required' ? 'required' : ''}>
+                                        </div>
+                                        <div class="bdy-err" id="err_major"></div>
+                                    </div>` : ''}
+
+                                    ${cfg.experienceYears !== 'hidden' ? `
+                                    <div class="bdy-field">
+                                        <label class="bdy-label" for="apExperienceYears">سنوات الخبرة ${reqMark(cfg.experienceYears)}</label>
+                                        <div class="bdy-input-wrap">
+                                            <i class="fas fa-briefcase bdy-input-icon"></i>
+                                            <select id="apExperienceYears" class="bdy-input" ${cfg.experienceYears === 'required' ? 'required' : ''}>
+                                                <option value="">اختر سنوات الخبرة</option>
+                                                <option value="حديث تخرج / بدون خبرة">حديث تخرج / بدون خبرة</option>
+                                                <option value="1 - 2 سنة">1 - 2 سنة</option>
+                                                <option value="3 - 5 سنوات">3 - 5 سنوات</option>
+                                                <option value="6 - 10 سنوات">6 - 10 سنوات</option>
+                                                <option value="أكثر من 10 سنوات">أكثر من 10 سنوات</option>
+                                            </select>
+                                        </div>
+                                        <div class="bdy-err" id="err_experienceYears"></div>
+                                    </div>` : ''}
+
+                                    ${cfg.bio !== 'hidden' ? `
+                                    <div class="bdy-field cr-col-full">
+                                        <label class="bdy-label" for="apBio">نبذة عن المتقدم ${reqMark(cfg.bio)}</label>
+                                        <textarea id="apBio" class="bdy-input" rows="2" placeholder="نبذة مختصرة عن خبراتك ومهاراتك…" ${cfg.bio === 'required' ? 'required' : ''}></textarea>
+                                        <div class="bdy-err" id="err_bio"></div>
+                                    </div>` : ''}
+                                </div>
+                            </section>` : ''}
+
+                            <!-- 3. المرفقات -->
+                            ${(cfg.cv !== 'hidden' || extraDocsHtml) ? `
+                            <section class="cr-form-section" aria-label="المرفقات">
+                                <h4 class="cr-form-section__title"><span class="cr-form-section__dot"><i class="fas fa-paperclip"></i></span><span>المرفقات</span></h4>
+                                <div class="cr-form-grid cr-form-grid--2col">
+                                    ${cfg.cv !== 'hidden' ? `
+                                    <div class="bdy-field ${cfg.extraDocs.length === 0 ? 'cr-col-full' : ''}">
+                                        <label class="bdy-label">إرفاق السيرة الذاتية (PDF) ${reqMark(cfg.cv)}</label>
+                                        <div class="cr-dropzone" id="cvDropzone">
+                                            <input type="file" id="apCv" accept="application/pdf">
+                                            <div class="cr-dz-main">
+                                                <div class="cr-dz-icon"><i class="fas fa-file-arrow-up"></i></div>
+                                                <div>
+                                                    <div class="cr-dz-text">اختر ملف السيرة الذاتية أو اسحبه هنا</div>
+                                                    <div class="cr-dz-hint">PDF فقط · بحد أقصى 10 ميجابايت</div>
+                                                </div>
+                                            </div>
+                                            <span class="cr-dz-pick">اختيار ملف</span>
+                                        </div>
+
+                                        <div class="cr-file-preview" id="cvFilePreview">
+                                            <div class="cr-file-info">
+                                                <i class="fas fa-file-pdf"></i>
+                                                <div>
+                                                    <div class="cr-file-name" id="cvFileName">—</div>
+                                                    <div class="cr-file-size" id="cvFileSize">—</div>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="cr-file-remove" id="btnRemoveCv" title="إزالة الملف">
+                                                <i class="fas fa-trash-can"></i>
+                                            </button>
+                                        </div>
+                                        <div class="bdy-err" id="err_cv"></div>
+                                    </div>` : ''}
+
+                                    ${extraDocsHtml}
+                                </div>
+                            </section>` : ''}
+
+                            <!-- 4. الإقرار -->
+                            <section class="cr-form-section" aria-label="الإقرار">
+                                <label class="bdy-consent" style="align-items:center;">
+                                    <input type="checkbox" id="apConsent">
+                                    <span>أقرّ بأن جميع البيانات والمعلومات المرفقة صحيحة، وأوافق على سياسة التقديم ومعالجة بياناتي لأغراض التوظيف لدى الجمعية.</span>
+                                </label>
+                                <div class="bdy-err" id="err_consent"></div>
+                            </section>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="cr-modal-footer" id="crApplyModalFooter">
+                    <button type="submit" form="crApplyForm" class="cr-submit-btn" id="apSubmit">
+                        <span>إرسال طلب التوظيف</span>
+                        <span class="cr-submit-btn__icon"><i class="fas fa-arrow-left"></i></span>
+                    </button>
+                    <button type="button" class="cr-modal-cancel-btn" id="crModalCancel">إلغاء</button>
+                </div>
+                </div>
+            </div>
+        </div>
     `;
-    if(j.status!=='closed') $('crShowApply').addEventListener('click', renderApplyForm);
+
+    $('bcBackJobs')?.addEventListener('click', e => {
+        e.preventDefault();
+        backToJobsList();
+    });
+
+    // تفعيل أحداث المشاركة
+    const btnShare = $('btnShareJob');
+    if (btnShare) {
+        btnShare.addEventListener('click', () => {
+            const shareUrl = `${window.location.origin}${window.location.pathname}?job=${j.id}`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    showJobToast('تم نسخ رابط الوظيفة بنجاح!');
+                }).catch(() => {
+                    prompt('انسخ رابط الوظيفة:', shareUrl);
+                });
+            } else {
+                prompt('انسخ رابط الوظيفة:', shareUrl);
+            }
+        });
+    }
+
+    // نقل نافذة التقديم مباشرة إلى document.body لتجاوز أي stacking context داخل .site-wrapper
+    const modalEl = $('crApplyModal');
+    if (modalEl && modalEl.parentElement !== document.body) {
+        document.body.appendChild(modalEl);
+    }
+
+    $('btnRevealApplyForm')?.addEventListener('click', openApplyModal);
+    $('crModalClose')?.addEventListener('click', () => closeApplyModal(false));
+    $('crModalCancel')?.addEventListener('click', () => closeApplyModal(false));
+    $('crApplyModal')?.addEventListener('click', e => {
+        if (e.target === $('crApplyModal')) closeApplyModal(false);
+    });
+
+    setupApplyFormEvents();
 }
 
-function renderApplyForm(){
-    $('crModalBody').innerHTML = `
-        <form id="crApplyForm" novalidate>
-            <div class="bdy-field">
-                <label class="bdy-label" for="apName">الاسم الكامل <span style="color:#8c2518">*</span></label>
-                <input type="text" id="apName" class="bdy-input" required placeholder="الاسم كما في الهوية">
-                <div class="bdy-err" id="err_name"></div>
-            </div>
-            <div class="bdy-field">
-                <label class="bdy-label" for="apPhone">رقم الجوال <span style="color:#8c2518">*</span></label>
-                <input type="tel" id="apPhone" class="bdy-input" dir="ltr" style="text-align:right" inputmode="numeric" placeholder="05XXXXXXXX" required>
-                <div class="bdy-err" id="err_phone"></div>
-            </div>
-            <div class="bdy-field">
-                <label class="bdy-label" for="apCv">السيرة الذاتية (PDF) <span style="color:var(--c-text-muted,#8a8478);font-weight:400;">(اختياري)</span></label>
-                <input type="file" id="apCv" class="bdy-input" accept="application/pdf" style="padding:9px 14px;">
-                <div class="bdy-file-note">ملف PDF فقط، الحد الأقصى 10 ميجابايت.</div>
-                <div class="bdy-err" id="err_cv"></div>
-            </div>
-            <div class="bdy-field">
-                <label class="bdy-consent">
-                    <input type="checkbox" id="apConsent">
-                    <span>أقرّ بأن جميع البيانات والمعلومات المقدمة صحيحة وأتحمّل مسؤوليتها.</span>
-                </label>
-                <div class="bdy-err" id="err_consent"></div>
-            </div>
-            <button type="submit" class="bdy-btn-primary" id="apSubmit"><i class="fas fa-paper-plane"></i> إرسال الطلب</button>
-        </form>
-    `;
-
-    $('apPhone').addEventListener('input', e => { e.target.value = normDigits(e.target.value).replace(/\D/g,''); });
-    $('crApplyForm').addEventListener('submit', submitApplication);
+function hasUnsavedApplicationData(){
+    if (applicationSubmitted) return false;
+    const ids = ['apName', 'apPhone', 'apEmail', 'apQualification', 'apMajor', 'apExperienceYears', 'apBio'];
+    if (ids.some(id => ($(id)?.value || '').trim().length > 0)) return true;
+    if (selectedCvFile || ($('apCv')?.files && $('apCv').files.length > 0)) return true;
+    if (Object.keys(selectedExtraFiles).length > 0) return true;
+    if ($('apConsent')?.checked) return true;
+    return false;
 }
 
-function normDigits(s){ return String(s||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)); }
-function setErr(id,m){ const e=$(id); if(e) e.textContent=m||''; }
+function openApplyModal(){
+    const modal = $('crApplyModal');
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('cr-modal-open');
+    document.body.classList.add('cr-modal-open');
+    setTimeout(() => $('apName')?.focus({ preventScroll: true }), 180);
+}
 
-/* ═══ حركة الورقة والطير ═══ */
+function closeApplyModal(force = false){
+    const modal = $('crApplyModal');
+    if (!modal || !modal.classList.contains('is-open')) {
+        document.documentElement.classList.remove('cr-modal-open');
+        document.body.classList.remove('cr-modal-open');
+        return;
+    }
+    if (isSubmittingApplication && !force) return;
+    if (!force && hasUnsavedApplicationData()) {
+        if (!window.confirm('لديك بيانات غير محفوظة في نموذج التقديم. هل تريد إغلاق النافذة وإلغاء التقديم؟')) {
+            return;
+        }
+    }
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('cr-modal-open');
+    document.body.classList.remove('cr-modal-open');
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && $('crApplyModal')?.classList.contains('is-open')) {
+        closeApplyModal(false);
+    }
+});
+
+// تفعيل وتجهيز أحداث نموذج التقديم
+function setupApplyFormEvents(){
+    const form = $('crApplyForm');
+    const phoneInput = $('apPhone');
+    const fileInput = $('apCv');
+    const dropzone = $('cvDropzone');
+    const preview = $('cvFilePreview');
+    const btnRemove = $('btnRemoveCv');
+
+    if (phoneInput) {
+        phoneInput.addEventListener('input', e => {
+            e.target.value = normDigits(e.target.value).replace(/\D/g, '');
+        });
+    }
+
+    if (fileInput) {
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files && fileInput.files[0]) {
+                handleCvFileSelection(fileInput.files[0]);
+            }
+        });
+    }
+
+    if (dropzone) {
+        ['dragenter', 'dragover'].forEach(name => {
+            dropzone.addEventListener(name, e => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+        });
+        ['dragleave', 'drop'].forEach(name => {
+            dropzone.addEventListener(name, e => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+            });
+        });
+        dropzone.addEventListener('drop', e => {
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+                handleCvFileSelection(e.dataTransfer.files[0]);
+            }
+        });
+    }
+
+    if (btnRemove) {
+        btnRemove.addEventListener('click', () => {
+            selectedCvFile = null;
+            if (fileInput) fileInput.value = '';
+            if (preview) preview.classList.remove('active');
+            if (dropzone) dropzone.style.display = '';
+            setErr('err_cv', '');
+        });
+    }
+
+    document.querySelectorAll('.cr-extra-doc-input').forEach(inp => {
+        inp.addEventListener('change', () => {
+            const idx = inp.dataset.extraIdx;
+            setErr(`err_extra_${idx}`, '');
+            const f = inp.files && inp.files[0];
+            if (!f) {
+                delete selectedExtraFiles[idx];
+                return;
+            }
+            const okType = f.type === 'application/pdf' || f.type === 'image/jpeg' || f.type === 'image/png' || /\.(pdf|jpe?g|png)$/i.test(f.name);
+            if (!okType) {
+                setErr(`err_extra_${idx}`, 'يُقبل ملف PDF أو صورة (JPG / PNG) فقط.');
+                inp.value = '';
+                delete selectedExtraFiles[idx];
+                return;
+            }
+            if (f.size > 5 * 1024 * 1024) {
+                setErr(`err_extra_${idx}`, 'حجم الملف يتجاوز الحد المسموح (5 ميجابايت).');
+                inp.value = '';
+                delete selectedExtraFiles[idx];
+                return;
+            }
+            selectedExtraFiles[idx] = f;
+        });
+    });
+
+    if (form) {
+        form.addEventListener('submit', submitApplication);
+    }
+}
+
+function handleCvFileSelection(file){
+    setErr('err_cv', '');
+    if (!file) return;
+
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+        setErr('err_cv', 'يُقبل ملف بصيغة PDF فقط.');
+        return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+        setErr('err_cv', 'حجم الملف يتجاوز الحد المسموح (10 ميجابايت).');
+        return;
+    }
+
+    selectedCvFile = file;
+    const preview = $('cvFilePreview');
+    const dropzone = $('cvDropzone');
+    $('cvFileName').textContent = file.name;
+    $('cvFileSize').textContent = (file.size / (1024 * 1024)).toFixed(2) + ' ميجابايت';
+
+    if (dropzone) dropzone.style.display = 'none';
+    if (preview) preview.classList.add('active');
+}
+
+function normDigits(s){
+    return String(s||'').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+}
+function setErr(id, m){
+    const e = $(id);
+    if (e) e.textContent = m || '';
+}
+
+/* ═══ حركة الورقة والصقر التراثية ═══ */
 const crWait = ms => new Promise(r => setTimeout(r, ms));
 const CR_PAPER_W = 220, CR_PAPER_H = 280, CR_ROLL_H = 28, CR_FEET = { x:73, y:215 };
-const CR_BIRD_SVG = `<svg viewBox="21 -23 157 209" aria-hidden="true"><defs><pattern id="fb1" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-258.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb2" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-248.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb3" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-238.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb4" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-228.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb5" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-218.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb6" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-208.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb7" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-198.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb8" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-194.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb9" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-184.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb10" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-174.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb11" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-164.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb12" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-154.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb13" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-144.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb14" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-134.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb15" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-124.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb16" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-114.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb17" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-104.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb18" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-72.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb19" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-60.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb20" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-48.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb21" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-36.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb22" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-24.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb23" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-12.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern></defs><g class="wing wing--far" style="filter:brightness(.8)"><path d="M77.1 75.9 L45.9 67.3 Q33.4 63.9 28.7 70.2 Q30.4 77.9 43.2 80.0 L75.2 84.8 Z" fill="url(#fb1)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M76.2 80.3 L39.5 72.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M78.3 74.8 L41.7 57.9 Q29.8 52.4 24.2 57.8 Q24.5 65.7 36.8 69.9 L74.9 83.2 Z" fill="url(#fb2)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M76.6 79.0 L34.4 62.0" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M79.6 73.9 L43.1 48.8 Q32.4 41.3 25.9 45.7 Q24.8 53.5 36.2 59.8 L74.8 81.6 Z" fill="url(#fb3)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M77.2 77.8 L35.2 51.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M81.1 73.3 L49.5 42.2 Q40.3 33.0 33.1 36.1 Q30.7 43.6 40.8 51.8 L75.0 80.0 Z" fill="url(#fb4)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M78.1 76.6 L41.3 43.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M82.7 72.9 L59.4 39.9 Q51.9 29.3 44.3 31.1 Q40.6 38.1 49.1 47.9 L75.5 78.5 Z" fill="url(#fb5)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M79.1 75.7 L51.1 39.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M84.3 72.8 L69.9 41.6 Q64.4 29.8 56.5 30.3 Q51.7 36.5 58.4 47.7 L76.2 77.1 Z" fill="url(#fb6)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M80.2 74.9 L61.7 40.1" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M85.9 73.0 L79.6 47.4 Q76.2 34.8 68.4 33.9 Q62.6 39.2 67.2 51.4 L77.2 75.8 Z" fill="url(#fb7)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M81.5 74.4 L71.8 44.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M84.0 82.0 L54.3 77.8 L55.4 72.9 L57.4 68.2 L60.1 63.9 L63.5 60.1 L67.5 57.0 L71.9 54.5 L76.7 52.9 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".6"/><circle cx="55.4" cy="72.9" r="3.6" fill="#efdfc4"/><circle cx="57.4" cy="68.2" r="3.6" fill="#efdfc4"/><circle cx="60.1" cy="63.9" r="3.6" fill="#efdfc4"/><circle cx="63.5" cy="60.1" r="3.6" fill="#efdfc4"/><circle cx="67.5" cy="57.0" r="3.6" fill="#efdfc4"/><circle cx="71.9" cy="54.5" r="3.6" fill="#efdfc4"/><ellipse cx="74.9" cy="76.4" rx="1.5" ry="2.3" transform="rotate(-59 74.9 76.4)" fill="#6b4529"/><ellipse cx="78.3" cy="75.0" rx="1.5" ry="2.3" transform="rotate(-39 78.3 75.0)" fill="#6b4529"/><ellipse cx="73.1" cy="71.4" rx="1.5" ry="2.3" transform="rotate(-46 73.1 71.4)" fill="#6b4529"/><ellipse cx="66.5" cy="77.2" rx="1.5" ry="2.3" transform="rotate(-75 66.5 77.2)" fill="#6b4529"/><ellipse cx="67.9" cy="77.9" rx="1.5" ry="2.3" transform="rotate(-76 67.9 77.9)" fill="#6b4529"/><ellipse cx="75.0" cy="79.4" rx="1.5" ry="2.3" transform="rotate(-74 75.0 79.4)" fill="#6b4529"/><ellipse cx="64.3" cy="66.9" rx="1.5" ry="2.3" transform="rotate(-53 64.3 66.9)" fill="#6b4529"/><ellipse cx="72.5" cy="77.9" rx="1.5" ry="2.3" transform="rotate(-71 72.5 77.9)" fill="#6b4529"/><ellipse cx="66.3" cy="61.1" rx="1.5" ry="2.3" transform="rotate(-40 66.3 61.1)" fill="#6b4529"/><ellipse cx="73.1" cy="70.5" rx="1.5" ry="2.3" transform="rotate(-43 73.1 70.5)" fill="#6b4529"/><ellipse cx="81.2" cy="74.0" rx="1.5" ry="2.3" transform="rotate(-19 81.2 74.0)" fill="#6b4529"/><ellipse cx="77.9" cy="69.8" rx="1.5" ry="2.3" transform="rotate(-26 77.9 69.8)" fill="#6b4529"/><ellipse cx="74.7" cy="78.5" rx="1.5" ry="2.3" transform="rotate(-69 74.7 78.5)" fill="#6b4529"/><ellipse cx="62.8" cy="69.5" rx="1.5" ry="2.3" transform="rotate(-59 62.8 69.5)" fill="#6b4529"/><ellipse cx="65.8" cy="74.3" rx="1.5" ry="2.3" transform="rotate(-67 65.8 74.3)" fill="#6b4529"/><ellipse cx="74.2" cy="70.2" rx="1.5" ry="2.3" transform="rotate(-40 74.2 70.2)" fill="#6b4529"/></g><g class="wing wing--near"><path d="M111.5 76.9 L98.4 14.6 Q95.3 -1.1 85.8 -2.9 Q78.3 3.1 82.9 18.5 L100.6 79.6 Z" fill="url(#fb8)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M106.1 78.2 L89.1 10.3" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M113.0 77.6 L110.3 4.0 Q110.0 -12.0 100.9 -15.4 Q92.4 -10.7 94.3 5.2 L101.9 78.4 Z" fill="url(#fb9)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M107.4 78.0 L101.9 -1.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M114.4 78.6 L124.9 1.7 Q127.4 -14.1 119.0 -19.0 Q109.9 -16.0 109.0 0.0 L103.3 77.5 Z" fill="url(#fb10)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M108.8 78.0 L117.6 -5.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M115.6 79.9 L138.7 7.8 Q143.9 -7.3 136.6 -13.6 Q127.0 -12.2 123.4 3.4 L104.8 76.8 Z" fill="url(#fb11)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M110.2 78.3 L132.8 -0.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M116.5 81.3 L149.2 19.8 Q156.9 5.7 150.8 -1.7 Q141.1 -2.0 134.8 12.7 L106.5 76.4 Z" fill="url(#fb12)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M111.5 78.8 L144.8 10.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.2 82.8 L155.4 34.4 Q165.4 21.9 160.7 13.5 Q151.2 11.6 142.4 25.0 L108.2 76.2 Z" fill="url(#fb13)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M112.7 79.5 L152.7 24.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.6 84.5 L156.4 50.4 Q168.5 39.8 165.3 30.7 Q156.3 27.2 145.3 38.8 L109.9 76.4 Z" fill="url(#fb14)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M113.8 80.4 L155.5 40.2" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.8 86.2 L155.3 63.8 Q169.0 55.5 167.4 46.0 Q159.1 40.9 146.3 50.5 L111.5 76.9 Z" fill="url(#fb15)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M114.6 81.5 L156.1 53.6" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.6 87.9 L151.1 75.6 Q166.0 69.8 166.1 60.1 Q158.9 53.7 144.6 61.0 L113.0 77.6 Z" fill="url(#fb16)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M115.3 82.7 L153.7 65.7" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.1 89.5 L144.5 85.1 Q160.2 82.1 161.9 72.5 Q155.9 65.0 140.6 69.6 L114.4 78.6 Z" fill="url(#fb17)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M115.8 84.1 L148.8 75.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M108.0 86.0 L91.6 40.9 L100.8 38.5 L110.2 38.1 L119.6 39.4 L128.5 42.6 L136.7 47.5 L143.7 53.9 L149.3 61.5 L153.3 70.1 L155.5 79.3 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".6"/><circle cx="100.8" cy="38.5" r="5.8" fill="#efdfc4"/><circle cx="110.2" cy="38.1" r="5.8" fill="#efdfc4"/><circle cx="119.6" cy="39.4" r="5.8" fill="#efdfc4"/><circle cx="128.5" cy="42.6" r="5.8" fill="#efdfc4"/><circle cx="136.7" cy="47.5" r="5.8" fill="#efdfc4"/><circle cx="143.7" cy="53.9" r="5.8" fill="#efdfc4"/><circle cx="149.3" cy="61.5" r="5.8" fill="#efdfc4"/><circle cx="153.3" cy="70.1" r="5.8" fill="#efdfc4"/><ellipse cx="116.2" cy="74.5" rx="1.5" ry="2.3" transform="rotate(35 116.2 74.5)" fill="#6b4529"/><ellipse cx="104.6" cy="67.4" rx="1.5" ry="2.3" transform="rotate(-10 104.6 67.4)" fill="#6b4529"/><ellipse cx="127.6" cy="68.3" rx="1.5" ry="2.3" transform="rotate(48 127.6 68.3)" fill="#6b4529"/><ellipse cx="115.4" cy="55.2" rx="1.5" ry="2.3" transform="rotate(14 115.4 55.2)" fill="#6b4529"/><ellipse cx="117.9" cy="66.3" rx="1.5" ry="2.3" transform="rotate(27 117.9 66.3)" fill="#6b4529"/><ellipse cx="138.3" cy="67.5" rx="1.5" ry="2.3" transform="rotate(59 138.3 67.5)" fill="#6b4529"/><ellipse cx="111.8" cy="54.9" rx="1.5" ry="2.3" transform="rotate(7 111.8 54.9)" fill="#6b4529"/><ellipse cx="130.8" cy="51.4" rx="1.5" ry="2.3" transform="rotate(33 130.8 51.4)" fill="#6b4529"/><ellipse cx="125.2" cy="72.8" rx="1.5" ry="2.3" transform="rotate(53 125.2 72.8)" fill="#6b4529"/><ellipse cx="123.5" cy="82.2" rx="1.5" ry="2.3" transform="rotate(76 123.5 82.2)" fill="#6b4529"/><ellipse cx="122.8" cy="51.6" rx="1.5" ry="2.3" transform="rotate(23 122.8 51.6)" fill="#6b4529"/><ellipse cx="107.1" cy="57.6" rx="1.5" ry="2.3" transform="rotate(-2 107.1 57.6)" fill="#6b4529"/><ellipse cx="100.7" cy="52.3" rx="1.5" ry="2.3" transform="rotate(-12 100.7 52.3)" fill="#6b4529"/><ellipse cx="133.9" cy="68.5" rx="1.5" ry="2.3" transform="rotate(56 133.9 68.5)" fill="#6b4529"/><ellipse cx="128.6" cy="76.9" rx="1.5" ry="2.3" transform="rotate(66 128.6 76.9)" fill="#6b4529"/><ellipse cx="132.3" cy="65.2" rx="1.5" ry="2.3" transform="rotate(49 132.3 65.2)" fill="#6b4529"/><ellipse cx="125.0" cy="64.6" rx="1.5" ry="2.3" transform="rotate(39 125.0 64.6)" fill="#6b4529"/><ellipse cx="147.0" cy="66.1" rx="1.5" ry="2.3" transform="rotate(63 147.0 66.1)" fill="#6b4529"/><ellipse cx="124.4" cy="55.9" rx="1.5" ry="2.3" transform="rotate(29 124.4 55.9)" fill="#6b4529"/><ellipse cx="101.6" cy="51.0" rx="1.5" ry="2.3" transform="rotate(-10 101.6 51.0)" fill="#6b4529"/><ellipse cx="140.0" cy="53.8" rx="1.5" ry="2.3" transform="rotate(45 140.0 53.8)" fill="#6b4529"/><ellipse cx="126.9" cy="75.6" rx="1.5" ry="2.3" transform="rotate(61 126.9 75.6)" fill="#6b4529"/><ellipse cx="119.9" cy="53.7" rx="1.5" ry="2.3" transform="rotate(20 119.9 53.7)" fill="#6b4529"/><ellipse cx="101.4" cy="59.3" rx="1.5" ry="2.3" transform="rotate(-14 101.4 59.3)" fill="#6b4529"/><ellipse cx="107.9" cy="70.1" rx="1.5" ry="2.3" transform="rotate(-0 107.9 70.1)" fill="#6b4529"/><ellipse cx="101.1" cy="48.8" rx="1.5" ry="2.3" transform="rotate(-10 101.1 48.8)" fill="#6b4529"/><ellipse cx="106.6" cy="65.7" rx="1.5" ry="2.3" transform="rotate(-4 106.6 65.7)" fill="#6b4529"/><ellipse cx="122.6" cy="47.4" rx="1.5" ry="2.3" transform="rotate(21 122.6 47.4)" fill="#6b4529"/><ellipse cx="104.0" cy="59.2" rx="1.5" ry="2.3" transform="rotate(-8 104.0 59.2)" fill="#6b4529"/><ellipse cx="132.3" cy="52.1" rx="1.5" ry="2.3" transform="rotate(36 132.3 52.1)" fill="#6b4529"/><ellipse cx="143.9" cy="66.1" rx="1.5" ry="2.3" transform="rotate(61 143.9 66.1)" fill="#6b4529"/><ellipse cx="112.6" cy="60.5" rx="1.5" ry="2.3" transform="rotate(10 112.6 60.5)" fill="#6b4529"/><ellipse cx="120.7" cy="46.3" rx="1.5" ry="2.3" transform="rotate(18 120.7 46.3)" fill="#6b4529"/><ellipse cx="124.4" cy="81.3" rx="1.5" ry="2.3" transform="rotate(74 124.4 81.3)" fill="#6b4529"/><ellipse cx="108.2" cy="66.2" rx="1.5" ry="2.3" transform="rotate(1 108.2 66.2)" fill="#6b4529"/><ellipse cx="110.9" cy="57.9" rx="1.5" ry="2.3" transform="rotate(6 110.9 57.9)" fill="#6b4529"/><ellipse cx="121.2" cy="69.9" rx="1.5" ry="2.3" transform="rotate(39 121.2 69.9)" fill="#6b4529"/><ellipse cx="101.0" cy="60.9" rx="1.5" ry="2.3" transform="rotate(-16 101.0 60.9)" fill="#6b4529"/><ellipse cx="118.0" cy="56.6" rx="1.5" ry="2.3" transform="rotate(19 118.0 56.6)" fill="#6b4529"/><ellipse cx="141.8" cy="76.1" rx="1.5" ry="2.3" transform="rotate(74 141.8 76.1)" fill="#6b4529"/><ellipse cx="125.6" cy="58.4" rx="1.5" ry="2.3" transform="rotate(32 125.6 58.4)" fill="#6b4529"/><ellipse cx="118.2" cy="76.7" rx="1.5" ry="2.3" transform="rotate(48 118.2 76.7)" fill="#6b4529"/><ellipse cx="143.6" cy="72.0" rx="1.5" ry="2.3" transform="rotate(69 143.6 72.0)" fill="#6b4529"/><ellipse cx="143.5" cy="70.3" rx="1.5" ry="2.3" transform="rotate(66 143.5 70.3)" fill="#6b4529"/><ellipse cx="117.1" cy="62.3" rx="1.5" ry="2.3" transform="rotate(21 117.1 62.3)" fill="#6b4529"/><ellipse cx="104.4" cy="52.9" rx="1.5" ry="2.3" transform="rotate(-6 104.4 52.9)" fill="#6b4529"/></g><g><path d="M124.2 134.2 L154.4 146.4 Q168.4 151.8 174.5 145.1 Q173.5 136.1 159.0 132.1 L127.4 124.2 Z" fill="url(#fb18)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.8 129.2 L162.4 141.1" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M122.8 134.5 L149.9 152.7 Q162.5 160.9 169.8 155.6 Q170.7 146.6 157.4 139.8 L128.1 125.5 Z" fill="url(#fb19)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.5 130.0 L158.8 149.2" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M121.5 134.6 L144.1 158.0 Q154.8 168.6 163.1 165.0 Q165.8 156.3 154.1 146.8 L128.5 126.8 Z" fill="url(#fb20)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.0 130.7 L153.6 156.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M120.1 134.3 L137.4 161.9 Q145.6 174.5 154.5 172.7 Q158.9 164.8 149.5 153.1 L128.6 128.2 Z" fill="url(#fb21)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M124.4 131.2 L147.0 162.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M118.8 133.8 L130.0 164.4 Q135.4 178.4 144.5 178.5 Q150.5 171.7 143.7 158.3 L128.4 129.5 Z" fill="url(#fb22)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M123.6 131.7 L139.3 166.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.7 133.0 L122.3 165.3 Q124.6 180.1 133.5 182.0 Q140.8 176.7 136.9 162.1 L128.0 130.8 Z" fill="url(#fb23)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M122.8 131.9 L130.8 169.6" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/></g>
+const CR_BIRD_SVG = `<svg viewBox="21 -23 157 209" aria-hidden="true"><defs><pattern id="fb1" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-258.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb2" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-248.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb3" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-238.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb4" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-228.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb5" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-218.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb6" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-208.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb7" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-198.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb8" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-194.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb9" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-184.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb10" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-174.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb11" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-164.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb12" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-154.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb13" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-144.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb14" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-134.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb15" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-124.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb16" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-114.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb17" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-104.0)"><rect width="40" height="9.6" fill="#d8bb93"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb18" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-72.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb19" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-60.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb20" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-48.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb21" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-36.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb22" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-24.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern><pattern id="fb23" width="40" height="9.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-12.0)"><rect width="40" height="9.6" fill="#e6cfab"/><rect width="40" height="3.4" fill="#5d3e29"/></pattern></defs><g class="wing wing--far" style="filter:brightness(.8)"><path d="M77.1 75.9 L45.9 67.3 Q33.4 63.9 28.7 70.2 Q30.4 77.9 43.2 80.0 L75.2 84.8 Z" fill="url(#fb1)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M76.2 80.3 L39.5 72.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M78.3 74.8 L41.7 57.9 Q29.8 52.4 24.2 57.8 Q24.5 65.7 36.8 69.9 L74.9 83.2 Z" fill="url(#fb2)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M76.6 79.0 L34.4 62.0" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M79.6 73.9 L43.1 48.8 Q32.4 41.3 25.9 45.7 Q24.8 53.5 36.2 59.8 L74.8 81.6 Z" fill="url(#fb3)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M77.2 77.8 L35.2 51.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M81.1 73.3 L49.5 42.2 Q40.3 33.0 33.1 36.1 Q30.7 43.6 40.8 51.8 L75.0 80.0 Z" fill="url(#fb4)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M78.1 76.6 L41.3 43.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M82.7 72.9 L59.4 39.9 Q51.9 29.3 44.3 31.1 Q40.6 38.1 49.1 47.9 L75.5 78.5 Z" fill="url(#fb5)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M79.1 75.7 L51.1 39.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M84.3 72.8 L69.9 41.6 Q64.4 29.8 56.5 30.3 Q51.7 36.5 58.4 47.7 L76.2 77.1 Z" fill="url(#fb6)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M80.2 74.9 L61.7 40.1" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M85.9 73.0 L79.6 47.4 Q76.2 34.8 68.4 33.9 Q62.6 39.2 67.2 51.4 L77.2 75.8 Z" fill="url(#fb7)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M81.5 74.4 L71.8 44.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M84.0 82.0 L54.3 77.8 L55.4 72.9 L57.4 68.2 L60.1 63.9 L63.5 60.1 L67.5 57.0 L71.9 54.5 L76.7 52.9 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".6"/><circle cx="55.4" cy="72.9" r="3.6" fill="#efdfc4"/><circle cx="57.4" cy="68.2" r="3.6" fill="#efdfc4"/><circle cx="60.1" cy="63.9" r="3.6" fill="#efdfc4"/><circle cx="63.5" cy="60.1" r="3.6" fill="#efdfc4"/><circle cx="67.5" cy="57.0" r="3.6" fill="#efdfc4"/><circle cx="71.9" cy="54.5" r="3.6" fill="#efdfc4"/></g><g class="wing wing--near"><path d="M111.5 76.9 L98.4 14.6 Q95.3 -1.1 85.8 -2.9 Q78.3 3.1 82.9 18.5 L100.6 79.6 Z" fill="url(#fb8)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M106.1 78.2 L89.1 10.3" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M113.0 77.6 L110.3 4.0 Q110.0 -12.0 100.9 -15.4 Q92.4 -10.7 94.3 5.2 L101.9 78.4 Z" fill="url(#fb9)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M107.4 78.0 L101.9 -1.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M114.4 78.6 L124.9 1.7 Q127.4 -14.1 119.0 -19.0 Q109.9 -16.0 109.0 0.0 L103.3 77.5 Z" fill="url(#fb10)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M108.8 78.0 L117.6 -5.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M115.6 79.9 L138.7 7.8 Q143.9 -7.3 136.6 -13.6 Q127.0 -12.2 123.4 3.4 L104.8 76.8 Z" fill="url(#fb11)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M110.2 78.3 L132.8 -0.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M116.5 81.3 L149.2 19.8 Q156.9 5.7 150.8 -1.7 Q141.1 -2.0 134.8 12.7 L106.5 76.4 Z" fill="url(#fb12)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M111.5 78.8 L144.8 10.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.2 82.8 L155.4 34.4 Q165.4 21.9 160.7 13.5 Q151.2 11.6 142.4 25.0 L108.2 76.2 Z" fill="url(#fb13)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M112.7 79.5 L152.7 24.5" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.6 84.5 L156.4 50.4 Q168.5 39.8 165.3 30.7 Q156.3 27.2 145.3 38.8 L109.9 76.4 Z" fill="url(#fb14)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M113.8 80.4 L155.5 40.2" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.8 86.2 L155.3 63.8 Q169.0 55.5 167.4 46.0 Q159.1 40.9 146.3 50.5 L111.5 76.9 Z" fill="url(#fb15)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M114.6 81.5 L156.1 53.6" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.6 87.9 L151.1 75.6 Q166.0 69.8 166.1 60.1 Q158.9 53.7 144.6 61.0 L113.0 77.6 Z" fill="url(#fb16)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M115.3 82.7 L153.7 65.7" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.1 89.5 L144.5 85.1 Q160.2 82.1 161.9 72.5 Q155.9 65.0 140.6 69.6 L114.4 78.6 Z" fill="url(#fb17)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M115.8 84.1 L148.8 75.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M108.0 86.0 L91.6 40.9 L100.8 38.5 L110.2 38.1 L119.6 39.4 L128.5 42.6 L136.7 47.5 L143.7 53.9 L149.3 61.5 L153.3 70.1 L155.5 79.3 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".6"/><circle cx="100.8" cy="38.5" r="5.8" fill="#efdfc4"/><circle cx="110.2" cy="38.1" r="5.8" fill="#efdfc4"/><circle cx="119.6" cy="39.4" r="5.8" fill="#efdfc4"/><circle cx="128.5" cy="42.6" r="5.8" fill="#efdfc4"/><circle cx="136.7" cy="47.5" r="5.8" fill="#efdfc4"/><circle cx="143.7" cy="53.9" r="5.8" fill="#efdfc4"/><circle cx="149.3" cy="61.5" r="5.8" fill="#efdfc4"/><circle cx="153.3" cy="70.1" r="5.8" fill="#efdfc4"/></g><g><path d="M124.2 134.2 L154.4 146.4 Q168.4 151.8 174.5 145.1 Q173.5 136.1 159.0 132.1 L127.4 124.2 Z" fill="url(#fb18)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.8 129.2 L162.4 141.1" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M122.8 134.5 L149.9 152.7 Q162.5 160.9 169.8 155.6 Q170.7 146.6 157.4 139.8 L128.1 125.5 Z" fill="url(#fb19)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.5 130.0 L158.8 149.2" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M121.5 134.6 L144.1 158.0 Q154.8 168.6 163.1 165.0 Q165.8 156.3 154.1 146.8 L128.5 126.8 Z" fill="url(#fb20)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M125.0 130.7 L153.6 156.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M120.1 134.3 L137.4 161.9 Q145.6 174.5 154.5 172.7 Q158.9 164.8 149.5 153.1 L128.6 128.2 Z" fill="url(#fb21)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M124.4 131.2 L147.0 162.4" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M118.8 133.8 L130.0 164.4 Q135.4 178.4 144.5 178.5 Q150.5 171.7 143.7 158.3 L128.4 129.5 Z" fill="url(#fb22)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M123.6 131.7 L139.3 166.8" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/><path d="M117.7 133.0 L122.3 165.3 Q124.6 180.1 133.5 182.0 Q140.8 176.7 136.9 162.1 L128.0 130.8 Z" fill="url(#fb23)" stroke="#2e2016" stroke-width=".6" stroke-linejoin="round"/><path d="M122.8 131.9 L130.8 169.6" stroke="#f3e4cb" stroke-width=".7" opacity=".7"/></g>
 <path d="M58 76 C70 64 98 68 114 88 C128 106 133 126 126 136 C115 145 96 134 86 120 C76 106 57 92 58 76 Z" fill="#efdfc4" stroke="#3a281b" stroke-width=".8"/>
-<path d="M74 65 C95 64 110 76 118 92 C122 100 124 108 124 114 C116 100 104 90 92 86 C84 80 79 72 74 65 Z" fill="#8a5f3f"/>
-<path d="M82.1 90.5 C83.7 92.1 83.5 94.9 82.1 95.5 C80.7 94.9 80.5 92.1 82.1 90.5 Z" fill="#6b4529"/><path d="M89.7 84.3 C91.3 85.9 91.1 88.7 89.7 89.3 C88.3 88.7 88.1 85.9 89.7 84.3 Z" fill="#6b4529"/><path d="M75.9 101.8 C77.5 103.4 77.3 106.2 75.9 106.8 C74.5 106.2 74.3 103.4 75.9 101.8 Z" fill="#6b4529"/><path d="M84.6 100.9 C86.2 102.5 86.0 105.3 84.6 105.9 C83.2 105.3 83.0 102.5 84.6 100.9 Z" fill="#6b4529"/><path d="M91.1 88.3 C92.7 89.9 92.5 92.7 91.1 93.3 C89.7 92.7 89.5 89.9 91.1 88.3 Z" fill="#6b4529"/><path d="M119.2 137.0 C120.8 138.6 120.6 141.4 119.2 142.0 C117.8 141.4 117.6 138.6 119.2 137.0 Z" fill="#6b4529"/><path d="M97.0 108.5 C98.6 110.1 98.4 112.9 97.0 113.5 C95.6 112.9 95.4 110.1 97.0 108.5 Z" fill="#6b4529"/><path d="M89.9 96.2 C91.5 97.8 91.3 100.6 89.9 101.2 C88.5 100.6 88.3 97.8 89.9 96.2 Z" fill="#6b4529"/><path d="M120.1 120.4 C121.7 122.0 121.5 124.8 120.1 125.4 C118.7 124.8 118.5 122.0 120.1 120.4 Z" fill="#6b4529"/><path d="M85.1 101.9 C86.7 103.5 86.5 106.3 85.1 106.9 C83.7 106.3 83.5 103.5 85.1 101.9 Z" fill="#6b4529"/><path d="M100.9 125.0 C102.5 126.6 102.3 129.4 100.9 130.0 C99.5 129.4 99.3 126.6 100.9 125.0 Z" fill="#6b4529"/><path d="M89.1 93.9 C90.7 95.5 90.5 98.3 89.1 98.9 C87.7 98.3 87.5 95.5 89.1 93.9 Z" fill="#6b4529"/><path d="M117.1 136.6 C118.7 138.2 118.5 141.0 117.1 141.6 C115.7 141.0 115.5 138.2 117.1 136.6 Z" fill="#6b4529"/><path d="M119.5 126.5 C121.1 128.1 120.9 130.9 119.5 131.5 C118.1 130.9 117.9 128.1 119.5 126.5 Z" fill="#6b4529"/><path d="M117.5 122.8 C119.1 124.4 118.9 127.2 117.5 127.8 C116.1 127.2 115.9 124.4 117.5 122.8 Z" fill="#6b4529"/><path d="M83.2 110.4 C84.8 112.0 84.6 114.8 83.2 115.4 C81.8 114.8 81.6 112.0 83.2 110.4 Z" fill="#6b4529"/><path d="M90.6 83.0 C92.2 84.6 92.0 87.4 90.6 88.0 C89.2 87.4 89.0 84.6 90.6 83.0 Z" fill="#6b4529"/><path d="M71.6 97.0 C73.2 98.6 73.0 101.4 71.6 102.0 C70.2 101.4 70.0 98.6 71.6 97.0 Z" fill="#6b4529"/><path d="M124.3 136.7 C125.9 138.3 125.7 141.1 124.3 141.7 C122.9 141.1 122.7 138.3 124.3 136.7 Z" fill="#6b4529"/><path d="M82.8 94.1 C84.4 95.7 84.2 98.5 82.8 99.1 C81.4 98.5 81.2 95.7 82.8 94.1 Z" fill="#6b4529"/><path d="M81.4 92.8 C83.0 94.4 82.8 97.2 81.4 97.8 C80.0 97.2 79.8 94.4 81.4 92.8 Z" fill="#6b4529"/><path d="M107.9 126.2 C109.5 127.8 109.3 130.6 107.9 131.2 C106.5 130.6 106.3 127.8 107.9 126.2 Z" fill="#6b4529"/><path d="M122.8 125.2 C124.4 126.8 124.2 129.6 122.8 130.2 C121.4 129.6 121.2 126.8 122.8 125.2 Z" fill="#6b4529"/><path d="M113.5 108.2 C115.1 109.8 114.9 112.6 113.5 113.2 C112.1 112.6 111.9 109.8 113.5 108.2 Z" fill="#6b4529"/><path d="M77.4 89.9 C79.0 91.5 78.8 94.3 77.4 94.9 C76.0 94.3 75.8 91.5 77.4 89.9 Z" fill="#6b4529"/><path d="M122.5 126.6 C124.1 128.2 123.9 131.0 122.5 131.6 C121.1 131.0 120.9 128.2 122.5 126.6 Z" fill="#6b4529"/><path d="M90.3 112.1 C91.9 113.7 91.7 116.5 90.3 117.1 C88.9 116.5 88.7 113.7 90.3 112.1 Z" fill="#6b4529"/><path d="M84.6 97.8 C86.2 99.4 86.0 102.2 84.6 102.8 C83.2 102.2 83.0 99.4 84.6 97.8 Z" fill="#6b4529"/><path d="M85.0 104.9 C86.6 106.5 86.4 109.3 85.0 109.9 C83.6 109.3 83.4 106.5 85.0 104.9 Z" fill="#6b4529"/><path d="M90.5 107.1 C92.1 108.7 91.9 111.5 90.5 112.1 C89.1 111.5 88.9 108.7 90.5 107.1 Z" fill="#6b4529"/><path d="M99.1 111.2 C100.7 112.8 100.5 115.6 99.1 116.2 C97.7 115.6 97.5 112.8 99.1 111.2 Z" fill="#6b4529"/><path d="M95.5 91.7 C97.1 93.3 96.9 96.1 95.5 96.7 C94.1 96.1 93.9 93.3 95.5 91.7 Z" fill="#6b4529"/><path d="M80.0 107.9 C81.6 109.5 81.4 112.3 80.0 112.9 C78.6 112.3 78.4 109.5 80.0 107.9 Z" fill="#6b4529"/><path d="M112.1 112.6 C113.7 114.2 113.5 117.0 112.1 117.6 C110.7 117.0 110.5 114.2 112.1 112.6 Z" fill="#6b4529"/><path d="M88.9 110.4 C90.5 112.0 90.3 114.8 88.9 115.4 C87.5 114.8 87.3 112.0 88.9 110.4 Z" fill="#6b4529"/><path d="M102.2 125.3 C103.8 126.9 103.6 129.7 102.2 130.3 C100.8 129.7 100.6 126.9 102.2 125.3 Z" fill="#6b4529"/><path d="M84.4 96.9 C86.0 98.5 85.8 101.3 84.4 101.9 C83.0 101.3 82.8 98.5 84.4 96.9 Z" fill="#6b4529"/><path d="M114.8 109.8 C116.4 111.4 116.2 114.2 114.8 114.8 C113.4 114.2 113.2 111.4 114.8 109.8 Z" fill="#6b4529"/><path d="M102.6 124.0 C104.2 125.6 104.0 128.4 102.6 129.0 C101.2 128.4 101.0 125.6 102.6 124.0 Z" fill="#6b4529"/><path d="M105.5 109.7 C107.1 111.3 106.9 114.1 105.5 114.7 C104.1 114.1 103.9 111.3 105.5 109.7 Z" fill="#6b4529"/><path d="M99.7 120.2 C101.3 121.8 101.1 124.6 99.7 125.2 C98.3 124.6 98.1 121.8 99.7 120.2 Z" fill="#6b4529"/><path d="M96.2 111.3 C97.8 112.9 97.6 115.7 96.2 116.3 C94.8 115.7 94.6 112.9 96.2 111.3 Z" fill="#6b4529"/>
-<path d="M78 112 C84 122 94 130 100 128 C96 120 90 114 84 108 Z" fill="#f6ead3"/>
-
 <circle cx="66" cy="72" r="15.5" fill="#efdfc4" stroke="#3a281b" stroke-width=".8"/>
 <path d="M52 69 C52 57 70 51 80 60 C84 64 84 72 80 77 C74 70 63 66 52 69 Z" fill="#7a5236"/>
 <path d="M56.5 66.5 C62 66 66 72 66 82 C65.4 86 61.4 86.2 60.6 82 C60 76 58 72.5 54 71.5 Z" fill="#33231a"/>
@@ -441,11 +2371,12 @@ const CR_BIRD_SVG = `<svg viewBox="21 -23 157 209" aria-hidden="true"><defs><pat
 <path d="M74.0 139.0 L69.3 140.7" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M69.3 140.7 Q65.5 142.1 64.2 139.1" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M74.0 139.0 L71.0 144.2" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M71.0 144.2 Q69.0 147.7 66.1 146.2" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M74.0 139.0 L74.4 144.0" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M74.4 144.0 Q74.8 148.0 71.5 148.4" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M84.0 142.0 L79.3 143.7" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M79.3 143.7 Q75.5 145.1 74.2 142.1" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M84.0 142.0 L81.0 147.2" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M81.0 147.2 Q79.0 150.7 76.1 149.2" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/><path d="M84.0 142.0 L84.4 147.0" stroke="#e9b949" stroke-width="3.2" stroke-linecap="round"/><path d="M84.4 147.0 Q84.8 151.0 81.5 151.4" fill="none" stroke="#14100c" stroke-width="1.7" stroke-linecap="round"/>
 </svg>`;
 
-// النافذة تصغر إلى ورقة، يُكتب عليها الاسم والجوال، ثم تلتف وتُربط
 async function crRollIntoPaper(name, phone){
-    const shell = document.querySelector('#crSendStage .ws-modal-shell');
+    const shell = $('crApplyBox');
+    if (!shell) return null;
     const rect = shell.getBoundingClientRect();
-    const cx = rect.left + rect.width/2, cy = rect.top + rect.height/2;
+    const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+
     const paper = document.createElement('div');
     paper.className = 'cr-paper';
     paper.innerHTML =
@@ -463,6 +2394,7 @@ async function crRollIntoPaper(name, phone){
     const sheet = paper.querySelector('.cr-paper__sheet');
     const left = cx - CR_PAPER_W/2, top = cy - CR_PAPER_H/2;
     paper.classList.add('is-sheet');
+
     await Promise.all([
         paper.animate([
             { left:rect.left+'px', top:rect.top+'px', width:rect.width+'px', height:rect.height+'px' },
@@ -472,19 +2404,19 @@ async function crRollIntoPaper(name, phone){
     ]);
 
     paper.classList.add('is-written');
-    await crWait(1150);
+    await crWait(1100);
 
     paper.classList.add('is-rolling');
-    await paper.animate([{ height:CR_PAPER_H+'px' }, { height:(CR_ROLL_H/2)+'px' }], { duration:680, easing:'cubic-bezier(.55,0,.25,1)', fill:'forwards' }).finished;
+    await paper.animate([{ height:CR_PAPER_H+'px' }, { height:(CR_ROLL_H/2)+'px' }], { duration:650, easing:'cubic-bezier(.55,0,.25,1)', fill:'forwards' }).finished;
     sheet.style.opacity = '0';
 
     paper.classList.add('is-tied');
-    paper.animate([{ transform:'rotate(0)' }, { transform:'rotate(-4deg) translateY(-4px)' }], { duration:380, easing:'cubic-bezier(.3,1.4,.5,1)', fill:'forwards' });
-    await crWait(340);
+    paper.animate([{ transform:'rotate(0)' }, { transform:'rotate(-4deg) translateY(-4px)' }], { duration:360, easing:'cubic-bezier(.3,1.4,.5,1)', fill:'forwards' });
+    await crWait(320);
+
     return { paper, x:cx, y:top + CR_ROLL_H/2 };
 }
 
-// يجيء الطير، يمسك اللفّة، ويطير بها خارج الصفحة
 async function crBirdTakesIt({ paper, x, y }){
     const bird = document.createElement('div');
     bird.className = 'cr-bird';
@@ -500,7 +2432,7 @@ async function crBirdTakesIt({ paper, x, y }){
         { transform:`translate(${startX*0.45}px, ${startY*0.25}px)`, offset:0.55 },
         { transform:'translate(-6px, -18px)', offset:0.85 },
         { transform:'translate(0, 0)' },
-    ], { duration:980, easing:'cubic-bezier(.25,.6,.3,1)', fill:'forwards' }).finished;
+    ], { duration:960, easing:'cubic-bezier(.25,.6,.3,1)', fill:'forwards' }).finished;
 
     paper.getAnimations().forEach(a => a.commitStyles && a.commitStyles());
     paper.getAnimations().forEach(a => a.cancel());
@@ -516,79 +2448,230 @@ async function crBirdTakesIt({ paper, x, y }){
         { transform:'translate(4px, 12px)', offset:0.18, easing:'cubic-bezier(.5,0,.8,.4)' },
         { transform:`translate(${endX*0.35}px, ${endY*0.15}px) rotate(-6deg)`, offset:0.55 },
         { transform:`translate(${endX}px, ${endY}px) rotate(-14deg) scale(.8)` },
-    ], { duration:1150, fill:'forwards' }).finished;
+    ], { duration:1100, fill:'forwards' }).finished;
     bird.remove();
 }
 
+// دالة إرسال الطلب وحفظ البيانات في Firestore
 async function submitApplication(e){
     e.preventDefault();
-    if(!activeJob) return;
+    if (!activeJob || isSubmittingApplication) return;
 
-    ['err_name','err_phone','err_cv','err_consent'].forEach(i=>setErr(i,''));
-    ['apName','apPhone'].forEach(i=>$(i)?.classList.remove('invalid'));
+    const cfg = getJobFormConfig(activeJob);
+    ['err_name','err_phone','err_email','err_qualification','err_major','err_experienceYears','err_bio','err_cv','err_consent']
+        .forEach(i => setErr(i, ''));
+    cfg.extraDocs.forEach((_, idx) => setErr(`err_extra_${idx}`, ''));
+    ['apName','apPhone','apEmail','apQualification','apMajor','apExperienceYears','apBio']
+        .forEach(i => $(i)?.classList.remove('invalid'));
 
-    const name = $('apName').value.trim();
-    const phone = normDigits($('apPhone').value).replace(/\D/g,'');
-    const cvFile = $('apCv').files && $('apCv').files[0];
-    const consent = $('apConsent').checked;
+    const name = ($('apName')?.value || '').trim();
+    const phone = normDigits($('apPhone')?.value || '').replace(/\D/g, '');
+    const email = ($('apEmail')?.value || '').trim().toLowerCase();
+    const qualification = ($('apQualification')?.value || '').trim();
+    const major = ($('apMajor')?.value || '').trim();
+    const experienceYears = ($('apExperienceYears')?.value || '').trim();
+    const bio = ($('apBio')?.value || '').trim();
+    const cvFile = selectedCvFile || ($('apCv')?.files && $('apCv').files[0]);
+    const consent = $('apConsent')?.checked;
 
     let ok = true;
-    if(!name){ setErr('err_name','الرجاء إدخال الاسم الكامل'); $('apName').classList.add('invalid'); ok=false; }
-    if(!/^05\d{8}$/.test(phone)){ setErr('err_phone','رقم جوال غير صحيح (05XXXXXXXX)'); $('apPhone').classList.add('invalid'); ok=false; }
-    // السيرة الذاتية اختيارية مؤقتًا — تُفحص فقط إذا أُرفقت
-    if(cvFile && cvFile.type!=='application/pdf' && !cvFile.name.toLowerCase().endsWith('.pdf')){ setErr('err_cv','يُقبل ملف PDF فقط'); ok=false; }
-    else if(cvFile && cvFile.size > 10*1024*1024){ setErr('err_cv','حجم الملف كبير جدًا (الحد 10 ميجابايت)'); ok=false; }
-    if(!consent){ setErr('err_consent','يجب الإقرار قبل الإرسال'); ok=false; }
-    if(!ok) return;
+    if (!name || name.length < 3) {
+        setErr('err_name', 'الرجاء إدخال الاسم الكامل');
+        $('apName')?.classList.add('invalid');
+        ok = false;
+    }
+    if (!/^05\d{8}$/.test(phone)) {
+        setErr('err_phone', 'رقم جوال غير صحيح (يجب أن يبدأ بـ 05 ويتكون من 10 أرقام)');
+        $('apPhone')?.classList.add('invalid');
+        ok = false;
+    }
+    if (cfg.email !== 'hidden') {
+        if (cfg.email === 'required' && !email) {
+            setErr('err_email', 'الرجاء إدخال البريد الإلكتروني');
+            $('apEmail')?.classList.add('invalid');
+            ok = false;
+        } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setErr('err_email', 'صيغة البريد الإلكتروني غير صحيحة');
+            $('apEmail')?.classList.add('invalid');
+            ok = false;
+        }
+    }
+    if (cfg.qualification === 'required' && !qualification) {
+        setErr('err_qualification', 'الرجاء اختيار المؤهل العلمي');
+        $('apQualification')?.classList.add('invalid');
+        ok = false;
+    }
+    if (cfg.major === 'required' && !major) {
+        setErr('err_major', 'الرجاء إدخال التخصص');
+        $('apMajor')?.classList.add('invalid');
+        ok = false;
+    }
+    if (cfg.experienceYears === 'required' && !experienceYears) {
+        setErr('err_experienceYears', 'الرجاء اختيار سنوات الخبرة');
+        $('apExperienceYears')?.classList.add('invalid');
+        ok = false;
+    }
+    if (cfg.bio === 'required' && !bio) {
+        setErr('err_bio', 'الرجاء كتابة نبذة مختصرة عنك');
+        $('apBio')?.classList.add('invalid');
+        ok = false;
+    }
+    if (cfg.cv !== 'hidden') {
+        if (cfg.cv === 'required' && !cvFile) {
+            setErr('err_cv', 'الرجاء إرفاق السيرة الذاتية بصيغة PDF');
+            ok = false;
+        } else if (cvFile && cvFile.type !== 'application/pdf' && !cvFile.name.toLowerCase().endsWith('.pdf')) {
+            setErr('err_cv', 'يُقبل ملف بصيغة PDF فقط');
+            ok = false;
+        } else if (cvFile && cvFile.size > 10 * 1024 * 1024) {
+            setErr('err_cv', 'حجم الملف كبير جداً (الحد الأقصى 10 ميجابايت)');
+            ok = false;
+        }
+    }
+    cfg.extraDocs.forEach((docItem, idx) => {
+        const f = selectedExtraFiles[idx];
+        if (docItem.required && !f) {
+            setErr(`err_extra_${idx}`, `الرجاء إرفاق ${docItem.label}`);
+            ok = false;
+        }
+    });
+    if (!consent) {
+        setErr('err_consent', 'يجب الموافقة والإقرار بصحة البيانات قبل الإرسال');
+        ok = false;
+    }
+    if (!ok) {
+        const firstErr = $('crApplyForm')?.querySelector('.invalid, .bdy-err:not(:empty)');
+        firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
 
+    isSubmittingApplication = true;
     const btn = $('apSubmit');
-    btn.disabled = true;
+    const cancelBtn = $('crModalCancel');
+    const closeBtn = $('crModalClose');
+    const origBtnHtml = btn ? btn.innerHTML : '';
+    if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i><span>جارٍ إرسال الطلب...</span>`;
+    }
+    if (cancelBtn) cancelBtn.disabled = true;
+    if (closeBtn) closeBtn.disabled = true;
 
-    // تبدأ الحركة فوراً عند الضغط، والرفع يجري في الخلفية بالتوازي
     const stage = $('crSendStage');
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-    if(stage && !reduce) stage.classList.add('sending');
-    // النافذة تتحول لورقة تلتف (بالتوازي مع الرفع)؛ null في وضع تقليل الحركة
-    const rollPromise = (stage && !reduce) ? crRollIntoPaper(name, phone) : Promise.resolve(null);
+    if (stage && !reduce) stage.classList.add('sending');
 
+    const rollPromise = (stage && !reduce) ? crRollIntoPaper(name, phone) : Promise.resolve(null);
     const appId = `${activeJob.id}_${phone}`;
 
-    // دالة الرفع الفعلي (في الخلفية)
+    // الرفع الفعلي للبيانات والملفات
     const upload = (async () => {
         const CHUNK = 600000;
         const parts = [];
-        if(cvFile){
+        if (cvFile) {
             const dataUrl = await readFileAsDataURL(cvFile);
-            for(let i=0;i<dataUrl.length;i+=CHUNK) parts.push(dataUrl.slice(i,i+CHUNK));
+            for (let i = 0; i < dataUrl.length; i += CHUNK) {
+                parts.push(dataUrl.slice(i, i + CHUNK));
+            }
         }
-        // إنشاء مستند الطلب أولاً — شرط !exists في القواعد يمنع التكرار على مستوى الخادم
-        await setDoc(doc(db,'jobApplications',appId), {
+
+        const extraDocsMeta = [];
+        const extraChunkWrites = [];
+        for (let dIdx = 0; dIdx < cfg.extraDocs.length; dIdx++) {
+            const f = selectedExtraFiles[dIdx];
+            if (!f) continue;
+            const dUrl = await readFileAsDataURL(f);
+            const dParts = [];
+            for (let i = 0; i < dUrl.length; i += CHUNK) {
+                dParts.push(dUrl.slice(i, i + CHUNK));
+            }
+            extraDocsMeta.push({
+                idx: dIdx,
+                label: cfg.extraDocs[dIdx].label,
+                fileName: f.name,
+                fileSize: f.size,
+                chunks: dParts.length
+            });
+            dParts.forEach((p, cIdx) => {
+                extraChunkWrites.push({
+                    id: `${appId}_doc_${dIdx}_${cIdx}`,
+                    idx: cIdx,
+                    data: p
+                });
+            });
+        }
+
+        // كتابة سجل البريد الإلكتروني لمنع التكرار (إن وجد بريد إلكتروني)
+        const mainBatch = writeBatch(db);
+        mainBatch.set(doc(db, 'jobApplications', appId), {
             jobId: activeJob.id,
             jobTitle: activeJob.title || '',
-            name, phone,
-            email: '',
+            name,
+            phone,
+            email,
+            qualification,
+            major,
+            experienceYears,
+            bio,
             cvChunks: parts.length,
             cvName: cvFile ? cvFile.name : '',
             cvSize: cvFile ? cvFile.size : 0,
+            extraDocs: extraDocsMeta,
             status: 'جديد',
             reviewed: false,
             consent: true,
             submittedAt: serverTimestamp(),
             createdAt: serverTimestamp()
         });
-        // كتابة قطع الملف بعد نجاح إنشاء الطلب
-        let batch = writeBatch(db); let ops=0;
-        for(let idx=0; idx<parts.length; idx++){
-            batch.set(doc(db,'jobApplication_chunks',`${appId}_${idx}`), { appId, jobId:activeJob.id, idx, data:parts[idx] });
-            if(++ops>=450){ await batch.commit(); batch=writeBatch(db); ops=0; }
+
+        if (email) {
+            mainBatch.set(doc(db, 'jobApplication_emails', `${activeJob.id}_${email}`), {
+                jobId: activeJob.id,
+                email,
+                appId,
+                createdAt: serverTimestamp()
+            });
         }
-        if(ops>0) await batch.commit();
-        // إشعار الإدارة بطلب توظيف جديد (ثابت حتى يفتحه الأدمن)
+
+        await mainBatch.commit();
+
+        // تجزئة السيرة الذاتية والمستندات الإضافية
+        let batch = writeBatch(db);
+        let ops = 0;
+        for (let idx = 0; idx < parts.length; idx++) {
+            batch.set(doc(db, 'jobApplication_chunks', `${appId}_${idx}`), {
+                appId,
+                jobId: activeJob.id,
+                idx,
+                data: parts[idx]
+            });
+            if (++ops >= 450) {
+                await batch.commit();
+                batch = writeBatch(db);
+                ops = 0;
+            }
+        }
+        for (const item of extraChunkWrites) {
+            batch.set(doc(db, 'jobApplication_chunks', item.id), {
+                appId,
+                jobId: activeJob.id,
+                idx: item.idx,
+                data: item.data
+            });
+            if (++ops >= 450) {
+                await batch.commit();
+                batch = writeBatch(db);
+                ops = 0;
+            }
+        }
+        if (ops > 0) await batch.commit();
+
+        // إشعار لوحة تحكم الإدارة
         try {
-            await addDoc(collection(db,'admin_notifications'), {
+            await addDoc(collection(db, 'admin_notifications'), {
                 type: 'job',
                 name,
-                label: 'التوظيف',
+                label: 'الوظائف',
                 activityTitle: activeJob.title || 'وظيفة',
                 title: `طلب توظيف جديد — ${activeJob.title || 'وظيفة'}`,
                 jobId: activeJob.id,
@@ -596,94 +2679,144 @@ async function submitApplication(e){
                 read: false,
                 createdAt: serverTimestamp()
             });
-        } catch(e){ console.warn('notifyAdmin job', e); }
+        } catch(e){
+            console.warn('notifyAdmin job', e);
+        }
     })();
 
     try {
-        // ننتظر اكتمال الرفع والتفاف الورقة معاً
-        const [ , roll ] = await Promise.all([upload, rollPromise]);
-        if(roll){
-            // يأتي الطير ويطير بالورقة خارج الصفحة
+        const [, roll] = await Promise.all([upload, rollPromise]);
+        if (roll) {
             await crBirdTakesIt(roll);
-            await crWait(180);
+            await crWait(150);
         }
-        // بعد أن يطير الطير: تُغلق نافذة التوظيف
-        closeModal();
+
+        // عرض بطاقة تأكيد النجاح في نفس الصفحة
+        renderSuccessView(name);
+
     } catch(err){
         console.error('submitApplication', err);
-        // إزالة الورقة وإرجاع النافذة
-        try { const r = await rollPromise; if(r && r.paper){ r.paper.remove(); } } catch(_){ }
-        if(stage) stage.classList.remove('sending');
-        btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الطلب';
-        if(err && err.code === 'permission-denied'){
-            setErr('err_consent','تعذّر إرسال الطلب: إمّا أنك قدّمت مسبقًا بنفس رقم الجوال، أو أن التقديم على الوظيفة أُغلق.');
+        try {
+            const r = await rollPromise;
+            if (r && r.paper) r.paper.remove();
+        } catch(_){}
+
+        if (stage) stage.classList.remove('sending');
+        isSubmittingApplication = false;
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = origBtnHtml;
+        }
+        if (cancelBtn) cancelBtn.disabled = false;
+        if (closeBtn) closeBtn.disabled = false;
+
+        if (err && err.code === 'permission-denied') {
+            setErr('err_consent', 'تعذّر إرسال الطلب: قد تكون قدّمت مسبقاً بنفس رقم الجوال أو البريد الإلكتروني لهذه الوظيفة، أو أن التقديم أُغلق.');
         } else {
-            setErr('err_consent','تعذّر إرسال الطلب حاليًا. حاول مرة أخرى.');
+            setErr('err_consent', 'حدث خطأ أثناء إرسال الطلب، يُرجى المحاولة مرة أخرى.');
         }
     }
+}
+
+function renderSuccessView(name){
+    isSubmittingApplication = false;
+    applicationSubmitted = true;
+
+    const modalBody = $('crApplyModalBody');
+    const modalFooter = $('crApplyModalFooter');
+    const closeBtn = $('crModalClose');
+    if (closeBtn) closeBtn.disabled = false;
+    if (modalFooter) modalFooter.style.display = 'none';
+    if (!modalBody) return;
+
+    modalBody.innerHTML = `
+        <div class="cr-success-view">
+            <div class="cr-success-ico"><i class="fas fa-check"></i></div>
+            <h3 class="cr-success-title">تم استلام طلبك بنجاح!</h3>
+            <p class="cr-success-desc">
+                شكراً لك يا <strong>${esc(name)}</strong>، تم تسجيل طلبك لوظيفة <strong>${esc(activeJob.title)}</strong> بنجاح. سيقوم فريق الموارد البشرية بالجمعية بمراجعة ملفك والتواصل معك عند مطابقة الشروط.
+            </p>
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+                <button type="button" class="cr-bronze-apply-btn" style="width:auto;padding:10px 26px;" onclick="backToJobsList()">
+                    <span>العودة لكافة الوظائف</span>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button type="button" class="cr-modal-cancel-btn" id="crSuccessCloseBtn">إغلاق</button>
+            </div>
+        </div>
+    `;
+    $('crSuccessCloseBtn')?.addEventListener('click', () => closeApplyModal(true));
+    modalBody.scrollTop = 0;
 }
 
 function readFileAsDataURL(file){
-    return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
+    return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(file);
+    });
 }
 
 function showJobToast(msg){
-    let t = document.getElementById('crJobToast');
-    if(!t){
+    let t = $('crJobToast');
+    if (!t) {
         t = document.createElement('div');
         t.id = 'crJobToast';
-        t.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1c1a17;color:#fff;padding:13px 22px;border-radius:999px;font-family:inherit;font-weight:700;font-size:14px;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);z-index:3000;display:flex;align-items:center;gap:9px;opacity:0;transition:opacity .3s,transform .3s;';
+        t.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:#1c1a17;color:#fff;padding:12px 24px;border-radius:999px;font-family:inherit;font-weight:700;font-size:14px;box-shadow:0 14px 34px -12px rgba(0,0,0,.5);z-index:3000;display:flex;align-items:center;gap:10px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;';
         document.body.appendChild(t);
     }
-    t.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7ac47a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16 10"/></svg><span>${esc(msg)}</span>`;
-    requestAnimationFrame(()=>{ t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; });
+    t.innerHTML = `<i class="fas fa-check-circle" style="color:var(--c-gold,#b8883e);font-size:16px;"></i><span>${esc(msg)}</span>`;
+    requestAnimationFrame(() => {
+        t.style.opacity = '1';
+        t.style.transform = 'translateX(-50%) translateY(0)';
+    });
     clearTimeout(showJobToast._t);
-    showJobToast._t = setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 4500);
+    showJobToast._t = setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 3800);
 }
 
-// Modal close bindings
-$('crClose').addEventListener('click', closeModal);
-$('crOverlay').addEventListener('click', e => { if(e.target===$('crOverlay')) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape' && $('crOverlay').classList.contains('open')) closeModal(); });
-
-// Mobile nav + scrolled state
-(function(){
-    const t=$('mobileToggle'), m=$('mobileMenu'), c=$('mobileClose');
-    if(t&&m){ t.addEventListener('click',()=>{m.classList.add('open');m.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}); }
-    if(c&&m){ c.addEventListener('click',()=>{m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow='';}); }
-    const nav=$('mainNav');
-    if(nav){ const s=()=>nav.classList.toggle('scrolled',window.scrollY>20); window.addEventListener('scroll',s,{passive:true}); s(); }
-})();
-
-// بوابة التفعيل: إن كان القسم مخفياً من الإدارة لا نعرض الوظائف
+// فحص تفعيل قسم التوظيف من لوحة الإدارة
 async function initCareers(){
     try {
-        const s = await getDoc(doc(db,'settings','site'));
+        const s = await getDoc(doc(db, 'settings', 'site'));
         const enabled = !s.exists() || s.data().careersEnabled !== false;
-        if(!enabled){
+        if (!enabled) {
             const area = $('crJobsArea');
-            if(area) area.innerHTML = `
-              <div class="ws-empty-state">
-                <div class="ws-empty-icon"><i class="fas fa-lock"></i></div>
-                <h3 class="ws-empty-title">قسم التوظيف غير متاح حالياً</h3>
-                <p class="ws-empty-text">نعتذر، باب التوظيف مغلق في الوقت الحالي. تابعنا للاطلاع على الفرص القادمة.</p>
-              </div>`;
-            document.querySelectorAll('a[href="/careers/"], a[href="/careers"]').forEach(a => { const li = a.closest('li'); (li||a).style.display = 'none'; });
+            if (area) {
+                area.innerHTML = `
+                  <div class="ws-empty-state">
+                    <div class="ws-empty-icon"><i class="fas fa-lock"></i></div>
+                    <h3 class="ws-empty-title">قسم التوظيف غير متاح حالياً</h3>
+                    <p class="ws-empty-text">نعتذر، باب التوظيف مغلق في الوقت الحالي. تابعنا للاطلاع على الفرص القادمة.</p>
+                  </div>`;
+            }
+            document.querySelectorAll('a[href="/careers/"], a[href="/careers"]').forEach(a => {
+                const li = a.closest('li');
+                (li || a).style.display = 'none';
+            });
             return;
         }
-    } catch(e){ console.warn('careers gate', e); }
+    } catch(e){
+        console.warn('careers gate', e);
+    }
     loadJobs();
 }
+
 initCareers();
 </script>
+<script src="../nav-drawer.js" defer></script>
 <script type="module" src="../maintenance.js"></script>
 
-<!-- ════════ FOOTER (black) — جمعية إرث وحضارة ════════ -->
+<!-- ═══════════════════════════════════════════════════════════════════
+     FOOTER — جمعية إرث وحضارة بالقريات
+═══════════════════════════════════════════════════════════════════ -->
 <style>
   .ehf { position:relative; background:#111111; color:#d8d4cc; margin-top:5rem; direction:rtl;
          font-family:inherit; padding-top:34px;
          box-shadow:0 0 0 100vw #111111; clip-path:inset(0 -100vw 0 -100vw); }
-  /* شريط نقوش سدو تراثية بسيطة أعلى الفوتر بدل الخط البني */
   .ehf::before { content:""; position:absolute; top:0; left:0; right:0; height:14px; opacity:.5;
     background-image:
       linear-gradient(135deg, rgba(255,255,255,.14) 25%, transparent 25%),
@@ -748,7 +2881,7 @@ initCareers();
         <li><a href="/volunteer/">التطوع</a></li>
         <li><a href="/news/">الأخبار</a></li>
         <li><a href="/crafts/">بيدي حرفة</a></li>
-        <li><a href="/careers/">التوظيف</a></li>
+        <li><a href="/careers/">اعمل معنا</a></li>
         <li><a href="/board/">مجلس الإدارة</a></li>
       </ul>
     </div>
